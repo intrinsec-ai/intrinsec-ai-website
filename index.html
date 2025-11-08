@@ -39,6 +39,8 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            max-width: 100%;
+            word-wrap: break-word;
         }
         
         html {
@@ -49,6 +51,8 @@
             max-width: 1040px;
             margin: 0 auto;
             padding: 0 32px;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         /* Header */
@@ -2599,51 +2603,61 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 24px;
+                padding: 0 20px;
             }
 
             header {
-                padding: 24px 0;
+                padding: 20px 0;
+            }
+
+            .logo {
+                font-size: 15px;
             }
 
             .hero {
-                padding: 80px 0 100px;
+                padding: 60px 0 80px;
             }
 
             h1 {
-                margin-bottom: 24px;
+                margin-bottom: 20px;
+                line-height: 1.2;
             }
 
             .tagline {
                 font-size: 1.125rem;
+                padding: 0 10px;
             }
 
             section {
-                padding: 80px 0;
+                padding: 60px 0;
             }
 
             h2 {
                 margin-bottom: 20px;
+                padding: 0 10px;
             }
 
             .section-subtitle {
-                margin-bottom: 60px;
+                margin-bottom: 50px;
                 font-size: 1rem;
+                padding: 0 10px;
             }
 
             .problem-summary {
                 gap: 16px;
-                margin-bottom: 60px;
-                padding: 20px;
+                margin-bottom: 50px;
+                padding: 20px 16px;
             }
 
             .problem-item {
                 padding: 12px 0;
                 gap: 10px;
+                flex-direction: column;
             }
 
             .problem-prompt {
-                font-size: 0.9375rem;
+                font-size: 0.875rem;
+                margin-bottom: 4px;
             }
 
             .problem-title {
@@ -2658,52 +2672,96 @@
                 grid-template-columns: 1fr;
             }
 
+            .threat-source {
+                padding: 24px 20px;
+            }
+
             .reasoning-space {
                 aspect-ratio: auto;
-                min-height: 500px;
-                padding: 40px 28px;
-                border-radius: 24px;
+                min-height: 450px;
+                padding: 32px 24px;
+                border-radius: 20px;
             }
 
             .bubble-title {
-                font-size: 1.5rem;
+                font-size: 1.375rem;
             }
 
             .bubble-desc {
-                font-size: 1rem;
+                font-size: 0.9375rem;
+            }
+
+            .threat-bubble {
+                font-size: 0.8125rem;
+                padding: 8px 16px;
             }
 
             .adaptive-attacks-message {
-                margin-top: 60px;
+                margin-top: 50px;
             }
 
             .message-content {
-                padding: 36px 40px;
+                padding: 32px 24px;
+                margin: 0 10px;
             }
 
             .message-title {
-                font-size: 1.5rem;
+                font-size: 1.375rem;
             }
 
             .message-subtitle {
-                font-size: 1rem;
+                font-size: 0.9375rem;
             }
 
             .policy-design-visual {
-                padding: 36px 24px;
+                padding: 32px 20px;
+                margin: 0 10px;
             }
 
             .design-title {
                 font-size: 1.25rem;
-                margin-bottom: 36px;
+                margin-bottom: 32px;
+                padding: 0 10px;
             }
 
             .design-flow {
-                gap: 32px;
+                gap: 24px;
+                flex-direction: column;
+            }
+
+            .design-arrow {
+                width: 60px;
+                height: 60px;
+                transform: rotate(90deg);
+                margin: 10px auto;
             }
 
             .design-step {
-                min-width: 240px;
+                min-width: 100%;
+                width: 100%;
+            }
+
+            .step-icon {
+                font-size: 2rem;
+            }
+
+            .highlighted-tokens-mini {
+                padding: 20px 16px;
+            }
+
+            .token-mini {
+                font-size: 0.8125rem;
+                padding: 8px 14px;
+            }
+
+            .policy-blocks-mini {
+                padding: 20px 16px;
+                gap: 10px;
+            }
+
+            .policy-mini {
+                font-size: 0.8125rem;
+                padding: 10px 18px;
             }
 
             .token-clear-center {
@@ -2716,80 +2774,282 @@
             }
 
             .demo {
-                padding: 40px 24px;
-                margin: 60px 0;
+                padding: 32px 20px;
+                margin: 50px 0;
+            }
+
+            .demo-title {
+                font-size: 1.5rem;
             }
 
             .policy-callout {
-                padding: 24px 20px;
+                padding: 24px 18px;
+            }
+
+            .policy-text {
+                font-size: 1rem;
             }
 
             .token-stream {
-                padding: 24px 16px;
+                padding: 20px 14px;
+            }
+
+            .token {
+                font-size: 0.8125rem;
+                padding: 8px 14px;
             }
 
             .how-cycle {
-                min-height: 600px;
-                padding: 60px 0;
+                min-height: 550px;
+                padding: 50px 0;
             }
 
             .how-cycle::before {
-                width: 450px;
-                height: 450px;
-            }
-
-            .how-cycle::after {
                 width: 400px;
                 height: 400px;
             }
 
+            .how-cycle::after {
+                width: 350px;
+                height: 350px;
+            }
+
             .how-step {
-                width: 240px;
-                padding: 28px 24px;
+                width: 220px;
+                padding: 24px 20px;
+            }
+
+            .how-step:nth-child(1) {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .how-step:nth-child(2) {
+                bottom: 50px;
+                left: 10px;
+            }
+
+            .how-step:nth-child(3) {
+                bottom: 50px;
+                right: 10px;
             }
 
             .how-step h3 {
-                font-size: 1.125rem;
+                font-size: 1.0625rem;
                 margin-bottom: 12px;
             }
 
             .how-step h3::before {
-                width: 40px;
-                height: 40px;
-                font-size: 1.125rem;
+                width: 36px;
+                height: 36px;
+                font-size: 1.0625rem;
             }
 
             .how-step p {
-                font-size: 0.9375rem;
+                font-size: 0.875rem;
             }
 
             .cycle-arrow-1 {
-                top: 55%;
-                left: 25%;
-                width: 220px;
-                height: 50px;
+                top: 50%;
+                left: 20%;
+                width: 180px;
+                height: 45px;
             }
 
             .cycle-arrow-2 {
-                bottom: 100px;
-                width: 260px;
-                height: 50px;
+                bottom: 80px;
+                width: 240px;
+                height: 45px;
             }
 
             .cycle-arrow-3 {
-                top: 55%;
-                right: 25%;
-                width: 220px;
-                height: 50px;
+                top: 50%;
+                right: 20%;
+                width: 180px;
+                height: 45px;
+            }
+
+            .security-pyramid {
+                padding: 50px 0;
+                margin: 50px auto;
+            }
+
+            .pyramid-tier {
+                margin-bottom: 30px;
+            }
+
+            .traditional-controls-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .pyramid-item {
+                padding: 24px 20px;
+            }
+
+            .pyramid-title {
+                font-size: 1.25rem;
+            }
+
+            .pyramid-desc {
+                font-size: 0.875rem;
+            }
+
+            .pyramid-tier.tier-4 .pyramid-title {
+                font-size: 1.375rem;
+            }
+
+            .pyramid-tier.tier-4 .pyramid-desc {
+                font-size: 0.9375rem;
+            }
+
+            .convergence-zone {
+                padding: 40px 20px;
+            }
+
+            .convergence-title {
+                font-size: 1.375rem;
+            }
+
+            .convergence-subtitle {
+                font-size: 0.9375rem;
+            }
+
+            .example-connector {
+                margin: 24px 0;
+            }
+
+            .example-label {
+                font-size: 0.8125rem;
+                padding: 6px 16px;
+            }
+
+            .example-arrow {
+                width: 50px;
+                height: 70px;
+            }
+
+            .reasoning-visualization {
+                padding: 32px 20px;
+                min-height: 500px;
+            }
+
+            .token-scoring-visualization {
+                padding: 28px 18px;
+                width: 95%;
+            }
+
+            .token-scoring-title {
+                font-size: 1.25rem;
+            }
+
+            .token-scoring-policy {
+                font-size: 0.875rem;
+            }
+
+            .token-scoring-stream {
+                padding: 20px 14px;
+                min-height: 100px;
+            }
+
+            .token-scoring-stream .token {
+                font-size: 0.75rem;
+                padding: 8px 12px;
+            }
+
+            .stat-value {
+                font-size: 1.125rem;
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+            }
+
+            .dynamic-policy-section {
+                margin: 60px 0;
+                padding: 50px 0;
+            }
+
+            .dynamic-policy-container {
+                padding: 0 20px;
+            }
+
+            .dynamic-policy-title {
+                font-size: 1.75rem;
+            }
+
+            .dynamic-policy-subtitle {
+                font-size: 1rem;
+            }
+
+            .policy-enrichment-visual {
+                padding: 32px 20px;
+                min-height: 500px;
+            }
+
+            .policy-core {
+                width: 260px;
+                height: 260px;
+                padding: 28px;
+            }
+
+            .policy-core-title {
+                font-size: 1.25rem;
+            }
+
+            .policy-core-state {
+                font-size: 0.8125rem;
+            }
+
+            .signal-source {
+                width: 120px;
+                padding: 16px 12px;
+            }
+
+            .signal-icon {
+                font-size: 1.5rem;
+            }
+
+            .signal-name {
+                font-size: 0.8125rem;
+            }
+
+            .signal-value {
+                font-size: 1rem;
+            }
+
+            .token-stream-source {
+                width: 160px;
+                padding: 16px 12px;
+                left: 2%;
+            }
+
+            .token-stream-icon {
+                font-size: 1.5rem;
+            }
+
+            .token-stream-name {
+                font-size: 0.8125rem;
+            }
+
+            .token-queue {
+                max-height: 100px;
+            }
+
+            .token-item {
+                font-size: 0.7rem;
+                padding: 5px 10px;
             }
 
             .cta {
-                padding: 80px 0;
+                padding: 60px 0;
             }
 
             .cta-button {
-                padding: 18px 44px;
-                font-size: 1rem;
+                padding: 16px 36px;
+                font-size: 0.9375rem;
+                min-width: 200px;
             }
         }
 
@@ -3623,22 +3883,63 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: 0 20px;
+                padding: 0 16px;
+            }
+
+            header {
+                padding: 16px 0;
+            }
+
+            .logo {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 50px 0 60px;
+            }
+
+            h1 {
+                font-size: clamp(2rem, 8vw, 2.5rem);
+                margin-bottom: 16px;
+                line-height: 1.15;
+            }
+
+            .tagline {
+                font-size: 1rem;
+                padding: 0 5px;
+            }
+
+            section {
+                padding: 50px 0;
+            }
+
+            h2 {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                margin-bottom: 16px;
+                padding: 0 5px;
+            }
+
+            .section-subtitle {
+                margin-bottom: 40px;
+                font-size: 0.9375rem;
+                padding: 0 5px;
             }
 
             .problem-summary {
                 gap: 12px;
-                margin-bottom: 50px;
-                padding: 16px;
+                margin-bottom: 40px;
+                padding: 16px 12px;
             }
 
             .problem-item {
-                padding: 12px 0;
+                padding: 10px 0;
                 gap: 8px;
+                flex-direction: column;
             }
 
             .problem-prompt {
-                font-size: 0.875rem;
+                font-size: 0.8125rem;
+                margin-bottom: 4px;
             }
 
             .problem-title {
@@ -3647,188 +3948,267 @@
 
             .problem-desc {
                 font-size: 0.75rem;
+                word-break: break-word;
+            }
+
+            .threat-sources {
+                grid-template-columns: 1fr;
+            }
+
+            .threat-source {
+                padding: 20px 16px;
+            }
+
+            .source-name {
+                font-size: 0.9375rem;
+            }
+
+            .source-threats {
+                font-size: 0.8125rem;
             }
 
             .reasoning-space {
-                padding: 32px 24px;
-                min-height: 480px;
+                padding: 28px 20px;
+                min-height: 420px;
+                border-radius: 16px;
+            }
+
+            .bubble-title {
+                font-size: 1.25rem;
+            }
+
+            .bubble-desc {
+                font-size: 0.875rem;
             }
 
             .threat-bubble {
-                font-size: 0.8125rem;
-                padding: 8px 16px;
-            }
-
-            .token {
-                font-size: 0.8125rem;
-                padding: 8px 14px;
+                font-size: 0.75rem;
+                padding: 6px 14px;
             }
 
             .convergence-arrows {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
+                margin-bottom: 24px;
             }
 
             .adaptive-attacks-message {
-                margin-top: 50px;
+                margin-top: 40px;
             }
 
             .message-content {
-                padding: 32px 28px;
+                padding: 28px 20px;
+                margin: 0 5px;
             }
 
             .message-title {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
                 margin-bottom: 12px;
             }
 
             .message-subtitle {
-                font-size: 0.9375rem;
+                font-size: 0.875rem;
             }
 
             .policy-design-visual {
-                padding: 28px 20px;
+                padding: 24px 16px;
+                margin: 0 5px;
             }
 
             .design-title {
                 font-size: 1.125rem;
-                margin-bottom: 32px;
+                margin-bottom: 28px;
+                padding: 0 5px;
             }
 
             .design-flow {
-                gap: 24px;
+                gap: 20px;
                 flex-direction: column;
             }
 
             .design-arrow {
-                width: 80px;
+                width: 50px;
+                height: 50px;
                 transform: rotate(90deg);
+                margin: 8px auto;
             }
 
             .design-step {
                 min-width: 100%;
+                width: 100%;
+            }
+
+            .step-icon {
+                font-size: 1.75rem;
+            }
+
+            .step-label {
+                font-size: 0.875rem;
+            }
+
+            .highlighted-tokens-mini {
+                padding: 16px 12px;
+                gap: 6px;
             }
 
             .token-mini {
-                font-size: 0.8125rem;
-                padding: 8px 14px;
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+
+            .policy-blocks-mini {
+                padding: 16px 12px;
+                gap: 8px;
             }
 
             .policy-mini {
-                font-size: 0.8125rem;
-                padding: 10px 18px;
+                font-size: 0.75rem;
+                padding: 8px 16px;
             }
 
-            .token-clear-center {
+            .demo {
+                padding: 28px 16px;
+                margin: 40px 0;
+            }
+
+            .demo-title {
+                font-size: 1.375rem;
+            }
+
+            .policy-callout {
+                padding: 20px 16px;
+            }
+
+            .policy-text {
+                font-size: 0.9375rem;
+            }
+
+            .token-stream {
+                padding: 16px 12px;
+            }
+
+            .token {
                 font-size: 0.75rem;
-                padding: 8px 14px;
+                padding: 6px 12px;
             }
 
             .how-cycle {
-                min-height: 550px;
-                padding: 50px 0;
+                min-height: 500px;
+                padding: 40px 0;
             }
 
             .how-cycle::before {
-                width: 350px;
-                height: 350px;
+                width: 320px;
+                height: 320px;
             }
 
             .how-cycle::after {
-                width: 300px;
-                height: 300px;
+                width: 280px;
+                height: 280px;
             }
 
             .how-step {
-                width: 200px;
-                padding: 24px 20px;
+                width: 180px;
+                padding: 20px 16px;
             }
 
             .how-step:nth-child(1) {
-                top: -10px;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .how-step:nth-child(2) {
-                bottom: 50px;
-                left: 10px;
+                bottom: 40px;
+                left: 5px;
             }
 
             .how-step:nth-child(3) {
-                bottom: 50px;
-                right: 10px;
+                bottom: 40px;
+                right: 5px;
             }
 
             .how-step h3 {
-                font-size: 1rem;
+                font-size: 0.9375rem;
                 margin-bottom: 10px;
             }
 
             .how-step h3::before {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
+                width: 32px;
+                height: 32px;
+                font-size: 0.9375rem;
             }
 
             .how-step p {
-                font-size: 0.875rem;
+                font-size: 0.8125rem;
             }
 
             .cycle-arrow-1 {
-                top: 55%;
-                left: 20%;
-                width: 180px;
-                height: 40px;
+                top: 48%;
+                left: 15%;
+                width: 150px;
+                height: 35px;
             }
 
             .cycle-arrow-2 {
-                bottom: 80px;
-                width: 200px;
-                height: 40px;
+                bottom: 70px;
+                width: 180px;
+                height: 35px;
             }
 
             .cycle-arrow-3 {
-                top: 55%;
-                right: 20%;
-                width: 180px;
-                height: 40px;
+                top: 48%;
+                right: 15%;
+                width: 150px;
+                height: 35px;
             }
 
             .security-pyramid {
                 padding: 40px 0;
+                margin: 40px auto;
             }
 
             .pyramid-tier {
-                margin-bottom: 30px;
+                margin-bottom: 24px;
             }
 
             .pyramid-tier::before {
-                height: 30px;
-                bottom: -30px;
+                height: 24px;
+                bottom: -24px;
             }
 
             .pyramid-to-convergence-connector {
-                height: 30px;
-                margin: 30px auto;
+                height: 24px;
+                margin: 24px auto;
             }
 
             .traditional-controls-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
                 max-width: 100%;
             }
 
-            .pyramid-tier.tier-1 .pyramid-item {
-                max-width: 100%;
-                margin: 0;
+            .traditional-control {
+                padding: 20px 16px;
             }
 
+            .control-name {
+                font-size: 1rem;
+            }
+
+            .control-desc {
+                font-size: 0.8125rem;
+            }
+
+            .pyramid-tier.tier-1 .pyramid-item,
             .pyramid-tier.tier-2 .pyramid-item,
             .pyramid-tier.tier-3 .pyramid-item,
             .pyramid-tier.tier-4 .pyramid-item {
                 max-width: 100%;
+                margin: 0;
             }
 
             .pyramid-item {
-                padding: 24px 20px;
+                padding: 20px 16px;
             }
 
             .pyramid-title {
@@ -3836,7 +4216,8 @@
             }
 
             .pyramid-desc {
-                font-size: 0.875rem;
+                font-size: 0.8125rem;
+                word-break: break-word;
             }
 
             .pyramid-tier.tier-4 .pyramid-title {
@@ -3844,69 +4225,77 @@
             }
 
             .pyramid-tier.tier-4 .pyramid-desc {
-                font-size: 0.9375rem;
+                font-size: 0.875rem;
             }
 
             .convergence-zone {
-                padding: 40px 24px;
+                padding: 32px 16px;
             }
 
             .convergence-zone .pyramid-tier {
-                margin-top: 24px !important;
-                margin-bottom: 24px !important;
+                margin-top: 20px !important;
+                margin-bottom: 20px !important;
             }
 
             .convergence-zone .pyramid-item {
                 max-width: 100% !important;
-                padding: 24px 20px;
+                padding: 20px 16px;
+            }
+
+            .convergence-title {
+                font-size: 1.25rem;
+            }
+
+            .convergence-subtitle {
+                font-size: 0.875rem;
             }
 
             .example-connector {
-                margin: 20px 0;
+                margin: 16px 0;
             }
 
             .example-label {
                 font-size: 0.75rem;
-                padding: 6px 16px;
+                padding: 5px 14px;
             }
 
             .example-arrow {
-                width: 50px;
-                height: 70px;
+                width: 40px;
+                height: 60px;
             }
 
             .reasoning-visualization {
-                min-height: 500px;
-                padding: 24px;
-            }
-
-            .system-prompt-layer {
-                width: 140px;
-                padding: 16px;
-                font-size: 0.7rem;
+                min-height: 450px;
+                padding: 20px 16px;
             }
 
             .token-scoring-visualization {
-                width: 95%;
-                padding: 24px;
+                width: 98%;
+                padding: 20px 14px;
             }
 
             .token-scoring-title {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
             }
 
             .token-scoring-policy {
                 font-size: 0.8125rem;
+                word-break: break-word;
             }
 
             .token-scoring-stream {
-                padding: 20px;
-                min-height: 100px;
+                padding: 16px 12px;
+                min-height: 90px;
             }
 
             .token-scoring-stream .token {
-                font-size: 0.75rem;
-                padding: 8px 14px;
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
+
+            .token-scoring-stats {
+                flex-direction: column;
+                gap: 12px;
             }
 
             .stat-value {
@@ -3914,13 +4303,183 @@
             }
 
             .stat-label {
-                font-size: 0.7rem;
+                font-size: 0.6875rem;
+            }
+
+            .dynamic-policy-section {
+                margin: 50px 0;
+                padding: 40px 0;
+            }
+
+            .dynamic-policy-container {
+                padding: 0 16px;
+            }
+
+            .dynamic-policy-title {
+                font-size: 1.5rem;
+            }
+
+            .dynamic-policy-subtitle {
+                font-size: 0.9375rem;
+            }
+
+            .policy-enrichment-visual {
+                padding: 24px 16px;
+                min-height: 450px;
+            }
+
+            .policy-core {
+                width: 220px;
+                height: 220px;
+                padding: 24px;
+            }
+
+            .policy-core-title {
+                font-size: 1.125rem;
+            }
+
+            .policy-core-state {
+                font-size: 0.75rem;
+            }
+
+            .policy-metadata {
+                max-width: 200px;
+            }
+
+            .metadata-item {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+
+            .signal-source {
+                width: 100px;
+                padding: 12px 10px;
+            }
+
+            .signal-icon {
+                font-size: 1.25rem;
+            }
+
+            .signal-name {
+                font-size: 0.75rem;
+            }
+
+            .signal-value {
+                font-size: 0.9375rem;
+            }
+
+            .token-stream-source {
+                width: 140px;
+                padding: 12px 10px;
+                left: 1%;
+            }
+
+            .token-stream-icon {
+                font-size: 1.25rem;
+            }
+
+            .token-stream-name {
+                font-size: 0.75rem;
+            }
+
+            .token-queue {
+                max-height: 80px;
+            }
+
+            .token-item {
+                font-size: 0.6875rem;
+                padding: 4px 8px;
             }
 
             .streaming-token {
-                font-size: 0.75rem;
-                padding: 6px 12px;
+                font-size: 0.6875rem;
+                padding: 5px 10px;
             }
+
+            .cta {
+                padding: 50px 0;
+            }
+
+            .cta h2 {
+                font-size: 1.5rem;
+                margin-bottom: 32px;
+            }
+
+            .cta-button {
+                padding: 14px 32px;
+                font-size: 0.875rem;
+                min-width: 180px;
+                min-height: 44px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 12px;
+            }
+
+            h1 {
+                font-size: clamp(1.75rem, 10vw, 2.25rem);
+            }
+
+            h2 {
+                font-size: clamp(1.25rem, 8vw, 1.75rem);
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.8125rem;
+                min-width: 160px;
+            }
+
+            .policy-core {
+                width: 200px;
+                height: 200px;
+                padding: 20px;
+            }
+
+            .how-step {
+                width: 160px;
+                padding: 18px 14px;
+            }
+
+            .token-scoring-visualization {
+                width: 99%;
+                padding: 18px 12px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .cta-button,
+            .token,
+            .threat-bubble,
+            .policy-mini,
+            .token-mini {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .how-step,
+            .pyramid-item,
+            .traditional-control {
+                cursor: default;
+            }
+        }
+
+        /* Prevent text overflow */
+        p, .problem-desc, .pyramid-desc, .bubble-desc, .message-subtitle,
+        .section-subtitle, .tagline, .convergence-subtitle, .dynamic-policy-subtitle {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Ensure images and media don't overflow */
+        img, video, iframe {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
