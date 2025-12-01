@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Future of Generative AI Security is Compressive | Intrinsec AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #0a0f1a;
+            --navy-light: #151b2b;
+            --navy-lighter: #1f2937;
+            --ice: #7dd3fc;
+            --ice-bright: #38bdf8;
+            --ice-glow: rgba(125, 211, 252, 0.12);
+            --ice-glow-strong: rgba(125, 211, 252, 0.2);
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-dim: #94a3b8;
+            --text-subtle: #64748b;
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.15);
+        }
+        
+        /* Light theme variables */
+        [data-theme="light"] {
+            --navy: #ffffff;
+            --navy-light: #f8fafc;
+            --navy-lighter: #f1f5f9;
+            --ice: #0284c7;
+            --ice-bright: #0369a1;
+            --ice-glow: rgba(2, 132, 199, 0.1);
+            --ice-glow-strong: rgba(2, 132, 199, 0.15);
+            --text: #0f172a;
+            --text-secondary: #1e293b;
+            --text-dim: #475569;
+            --text-subtle: #64748b;
+            --red: #dc2626;
+            --red-glow: rgba(220, 38, 38, 0.1);
+        }
+        
+        [data-theme="light"] body {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 32px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Header */
+        header {
+            padding: 32px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav a {
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ice);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--ice);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a[style*="border-bottom"]::after {
+            display: none;
+        }
+        
+        .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        [data-theme="light"] .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--navy-light);
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+        
+        [data-theme="light"] .theme-toggle:hover {
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+        
+        .theme-toggle-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:active .theme-toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(125, 211, 252, 0.3) 50%, 
+                transparent 100%);
+            opacity: 0.5;
+        }
+        
+        .logo {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            margin-bottom: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--ice);
+        }
+        
+        /* Article Header */
+        .article-header {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            color: var(--text);
+        }
+        
+        .article-meta {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            margin-bottom: 40px;
+        }
+        
+        .article-intro {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 32px;
+            background: rgba(125, 211, 252, 0.05);
+            border-left: 3px solid var(--ice);
+            border-radius: 8px;
+        }
+        
+        [data-theme="light"] .article-intro {
+            background: rgba(2, 132, 199, 0.05);
+        }
+        
+        [data-theme="light"] .article-intro p[style*="background: rgba(125, 211, 252"] {
+            background: rgba(2, 132, 199, 0.08) !important;
+        }
+        
+        /* Article Content */
+        .article-content {
+            padding: 0 0 80px;
+        }
+        
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 60px 0 24px;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 40px 0 16px;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        
+        .article-content p {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin: 24px 0;
+            padding-left: 32px;
+        }
+        
+        .article-content li {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        
+        .article-content a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        
+        .article-content a:hover {
+            border-bottom-color: var(--ice);
+        }
+        
+        .article-content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .article-content em {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* Images */
+        .article-image {
+            width: 100%;
+            margin: 40px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="light"] .article-image {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-image-caption {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            margin-top: 12px;
+            margin-bottom: 40px;
+        }
+        
+        /* Callout Boxes */
+        .callout {
+            padding: 24px 28px;
+            margin: 40px 0;
+            border-radius: 12px;
+            border-left: 3px solid var(--ice);
+            background: rgba(125, 211, 252, 0.08);
+        }
+        
+        [data-theme="light"] .callout {
+            background: rgba(2, 132, 199, 0.08);
+        }
+        
+        [data-theme="light"] .callout[style*="background: linear-gradient"] {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(3, 105, 161, 0.08) 100%) !important;
+        }
+        
+        .callout-title {
+            color: var(--ice);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 12px;
+        }
+        
+        .callout-content {
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 1.8;
+        }
+        
+        .callout-warning {
+            border-left-color: var(--red);
+            background: rgba(239, 68, 68, 0.08);
+        }
+        
+        .callout-warning .callout-title {
+            color: var(--red);
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(125, 211, 252, 0.2);
+        }
+        
+        .solution-title {
+            color: var(--ice);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .solution-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .solution-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .solution-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .solution-list strong {
+            color: var(--ice);
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 80px;
+        }
+        
+        [data-theme="light"] footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
+            color: var(--navy);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(125, 211, 252, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(125, 211, 252, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+            
+            .article-header {
+                padding: 60px 0 40px;
+            }
+            
+            .article-content h2 {
+                font-size: 1.75rem;
+            }
+            
+            .article-content h3 {
+                font-size: 1.25rem;
+            }
+            
+            .solution-section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: 32px;">
+                    <a href="../index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
+                    <nav style="display: flex; gap: 24px; align-items: center;">
+                        <a href="../products.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: color 0.3s ease; font-weight: 500;">Products</a>
+                        <a href="adaptive-prompt-injections.html" style="color: var(--ice); text-decoration: none; font-size: 0.9375rem; font-weight: 500; border-bottom: 2px solid var(--ice);">Research</a>
+                    </nav>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Dark</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <article class="article-header">
+        <div class="container">
+            <a href="../index.html" class="back-link">← Back to Home</a>
+            <h1 class="article-title">The Future of Generative AI Security is Compressive</h1>
+            <div class="article-meta">Research & Insights</div>
+            <div class="article-intro">
+                <p style="margin-bottom: 24px;">
+                    Significant efforts have been made to repurpose Generative AI for security—creating customized AI agents that monitor and classify the contents of other AI agents. However, at their core, these repurposed models inherit the same fundamental challenges of adversarial AI security.
+                </p>
+                <p style="font-size: 1.125rem; font-weight: 600; color: var(--ice); margin: 24px 0; padding: 20px; background: rgba(125, 211, 252, 0.08); border-left: 3px solid var(--ice); border-radius: 8px; font-style: italic; text-align: center;">
+                    "We cannot solve our problems with the same thinking we used when we created them."
+                </p>
+                <p style="margin-top: 24px;">
+                    We need models that have been fundamentally designed to ignore policy-violating data, distracting content, and irrelevant information—not models that simply wrap existing generative AI with external security layers.
+                </p>
+            </div>
+        </div>
+    </article>
+
+    <article class="article-content">
+        <div class="container">
+            <h2>The Challenge</h2>
+            
+            <p>
+                Context is the attack surface of LLM agents and can be accessed from anywhere: a random ad on a webpage, an image containing a malicious invisible attack, a poisoned tool generating data, or simply a user sharing what they should not.
+            </p>
+            
+            <p>
+                Traditional guardrails operate at the I/O boundary as policy-agnostic classifiers. They cannot:
+            </p>
+            
+            <ul>
+                <li>Protect against adaptive prompt injections and adversarial perturbations</li>
+                <li>Map security policies to token-level visibility</li>
+                <li>Intelligently compress and filter content</li>
+            </ul>
+            
+            <div class="callout" style="margin: 60px 0; padding: 32px; background: linear-gradient(135deg, rgba(125, 211, 252, 0.12) 0%, rgba(56, 189, 248, 0.08) 100%); border-left: 4px solid var(--ice); border-radius: 12px;">
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--ice); margin-bottom: 16px; line-height: 1.3;">
+                    Simply Wrapping LLMs Is Not Enough
+                </div>
+                <div style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.8;">
+                    Wrapping generative AI with external security layers treats security as an afterthought. Security must be intrinsic—models fundamentally designed and trained with security as a core capability.
+                </div>
+            </div>
+            
+            <h2>Research Evidence: Guardrails Fail Against Adaptive Attacks</h2>
+            
+            <p>
+                A <a href="https://arxiv.org/pdf/2510.09023" target="_blank" rel="noopener noreferrer">comprehensive study</a> evaluated 12 recent defenses against adaptive attacks. The results: <strong>most defenses achieved attack success rates above 90%</strong>, compared to near-zero rates reported against static attacks.
+            </p>
+            
+            <div class="callout callout-warning">
+                <div class="callout-title">Key Finding</div>
+                <div class="callout-content">
+                    Defenses evaluated against static datasets or weak optimization methods create false security. Adaptive attackers who modify their strategy to counter defenses reliably bypass protections.
+                </div>
+            </div>
+            
+            <p>
+                Most defenses are evaluated against static datasets, weak optimization methods, or non-adaptive attackers. In adversarial ML, a defense is only as robust as its performance against the strongest adaptive attacker.
+            </p>
+            
+            <h2>The Solution: Compressive Security</h2>
+            
+            <div class="solution-section">
+                <h3 class="solution-title">Intrinsec AI's Flagship Model</h3>
+                
+                <p>
+                    Our flagship model uses smart compression—learning to ignore policy-violating data, distracting content, and irrelevant information while maintaining focus. Unlike I/O boundary guardrails, we provide:
+                </p>
+                
+                <ul class="solution-list">
+                    <li>
+                        <strong>Intelligent Compression:</strong> Ignores distracting ads, irrelevant content, and policy-violating data—preventing agents from going off the rails
+                    </li>
+                    <li>
+                        <strong>Token-Level Visibility:</strong> Detects malicious intent before it manifests as actions
+                    </li>
+                    <li>
+                        <strong>Policy-Aware Classification:</strong> Maps your security policies directly onto the token stream
+                    </li>
+                    <li>
+                        <strong>Context-Aware Filtering:</strong> Filters irrelevant data from any source
+                    </li>
+                    <li>
+                        <strong>Adaptive Defense:</strong> Handles adaptive attacks and adversarial perturbations
+                    </li>
+                </ul>
+            </div>
+            
+            <h3>Visual Evidence</h3>
+            
+            <p style="margin-bottom: 24px; color: var(--text-dim); font-size: 0.9375rem;">
+                <strong>Methodology:</strong> Perturbations were generated using <a href="https://arxiv.org/abs/2507.19457" target="_blank" rel="noopener noreferrer" style="color: var(--ice); text-decoration: underline;">Reflective Prompt Evolution</a> search. All classification prompts use GPT-4o and are identical, except in the Intrinsec case where we add "pay closer attention to this part of prompt" to guide the model's focus.
+            </p>
+            
+            <img src="robustness_comparison_sensitive.png" alt="Sensitive content robustness comparison" class="article-image">
+            <div class="article-image-caption">Sensitive content detection robustness</div>
+            
+            <h3>Building Robust Systems</h3>
+            
+            <p>
+                The flagship model enables:
+            </p>
+            
+            <ul>
+                <li><strong>Robust Search:</strong> Token-level content indexing that understands context and policy</li>
+                <li><strong>Policy Optimization:</strong> Continuous refinement based on token-level analysis</li>
+                <li><strong>Proactive Detection:</strong> Identifies violations during reasoning, before execution</li>
+                <li><strong>Compliance:</strong> Granular tracking and enforcement of policies</li>
+            </ul>
+            
+            <h2>Conclusion</h2>
+            
+            <p>
+                The future of generative AI security is compressive. Models must learn to ignore policy-violating data, distracting content, and irrelevant information. This prevents scenarios where a random webpage ad, malicious image, or poisoned tool can derail an AI agent's mission.
+            </p>
+            
+            <p>
+                Traditional guardrails fail against adaptive prompt injections and adversarial perturbations. The solution requires compressive, token-level security with policy-aware visibility and intelligent filtering. Intrinsec AI's smart compression enables robust, adaptive defenses that maintain focus on what matters.
+            </p>
+            
+            <p>
+                The era of static, policy-agnostic security is ending. The future belongs to compressive, token-level security systems that have been trained with least privilege concept in mind and know what to ignore.
+            </p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <h3 style="margin-bottom: 24px; color: var(--text);">Ready to Step Up Your AI Security?</h3>
+            <p style="margin-bottom: 32px; color: var(--text-secondary);">
+                Learn how Intrinsec AI can help protect your AI agents with token-level security.
+            </p>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
+        </div>
+    </footer>
+
+    <script>
+    // Theme Toggle Functionality
+    (function() {
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        
+        // Get saved theme or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeUI(savedTheme);
+        
+        function updateThemeUI(theme) {
+            if (theme === 'light') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeUI(newTheme);
+        });
+    })();
+    </script>
+</body>
+</html>
+

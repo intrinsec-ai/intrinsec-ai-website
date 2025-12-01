@@ -28,6 +28,29 @@
             --red-glow: rgba(239, 68, 68, 0.15);
         }
         
+        /* Light theme variables */
+        [data-theme="light"] {
+            --navy: #ffffff;
+            --navy-light: #f8fafc;
+            --navy-lighter: #f1f5f9;
+            --ice: #0284c7;
+            --ice-bright: #0369a1;
+            --ice-glow: rgba(2, 132, 199, 0.1);
+            --ice-glow-strong: rgba(2, 132, 199, 0.15);
+            --text: #0f172a;
+            --text-secondary: #1e293b;
+            --text-dim: #475569;
+            --text-subtle: #64748b;
+            --red: #dc2626;
+            --red-glow: rgba(220, 38, 38, 0.1);
+        }
+        
+        [data-theme="light"] body {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
+        }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--navy);
@@ -66,6 +89,80 @@
             z-index: 100;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             transition: all 0.3s ease;
+        }
+        
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav a {
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ice);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--ice);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        [data-theme="light"] .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--navy-light);
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+        
+        [data-theme="light"] .theme-toggle:hover {
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+        
+        .theme-toggle-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:active .theme-toggle-icon {
+            transform: rotate(180deg);
         }
         
         header::after {
@@ -2578,6 +2675,79 @@
             hyphens: auto;
         }
 
+        /* Robustness Section */
+        .robustness-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.03) 0%, transparent 100%);
+        }
+        
+        [data-theme="light"] .robustness-section {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.02) 0%, transparent 100%);
+        }
+        
+        .robustness-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .robustness-image-container {
+            margin: 40px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        [data-theme="light"] .robustness-image-container {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .robustness-image-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.15);
+        }
+        
+        .robustness-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .robustness-caption {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            margin-top: 16px;
+            padding: 0 20px;
+        }
+        
+        .robustness-highlight {
+            background: rgba(125, 211, 252, 0.08);
+            border-left: 3px solid var(--ice);
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin: 40px 0;
+        }
+        
+        [data-theme="light"] .robustness-highlight {
+            background: rgba(2, 132, 199, 0.08);
+        }
+        
+        .robustness-highlight-title {
+            color: var(--ice);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 12px;
+        }
+        
+        .robustness-highlight-text {
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 1.8;
+        }
+        
         /* CTA */
         .cta {
             text-align: center;
@@ -3324,7 +3494,19 @@
             line-height: 1.7;
             margin-bottom: 0;
         }
-
+        
+        .pyramid-desc a {
+            color: var(--ice);
+            text-decoration: underline;
+            text-decoration-color: rgba(125, 211, 252, 0.4);
+            transition: text-decoration-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .pyramid-desc a:hover {
+            color: var(--ice-bright);
+            text-decoration-color: var(--ice-bright);
+        }
+        
         .pyramid-tier.tier-4 .pyramid-title {
             color: var(--ice);
             font-size: 1.5rem;
@@ -4674,7 +4856,19 @@
 <body>
     <header>
         <div class="container">
-            <div class="logo">Intrinsec AI</div>
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: 32px;">
+                    <a href="index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
+                    <nav style="display: flex; gap: 24px; align-items: center;">
+                        <a href="products.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: color 0.3s ease; font-weight: 500;">Products</a>
+                        <a href="blog/adaptive-prompt-injections.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: color 0.3s ease; font-weight: 500;">Research</a>
+                    </nav>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Dark</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -4724,7 +4918,7 @@
                     <div class="pyramid-item">
                         <div class="pyramid-label">I/O Boundary</div>
                         <div class="pyramid-title">AI Guardrails</div>
-                        <div class="pyramid-desc">Operate closer to reasoning than traditional controls—but are policy-agnostic coarse classifiers at the I/O boundary. They can detect obvious violations but cannot map your specific security policies to token-level visibility or distinguish legitimate business logic from malicious intent, let alone protect against adaptive prompt injections.</div>
+                        <div class="pyramid-desc">Operate closer to reasoning than traditional controls—but are policy-agnostic coarse classifiers at the I/O boundary. They can detect obvious violations but cannot map your specific security policies to token-level visibility or distinguish legitimate business logic from malicious intent, let alone protect against <a href="blog/adaptive-prompt-injections.html">adaptive prompt injections</a>.</div>
                     </div>
                 </div>
             </div>
@@ -4812,6 +5006,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="robustness-section">
+        <div class="container">
+            <div class="robustness-content">
+                <h2>Superior Robustness</h2>
+                <p class="section-intro">
+                    Our flagship model demonstrates exceptional robustness, especially when handling sensitive prompts and content. 
+                    Token-level intelligence enables precise classification and monitoring that traditional approaches cannot match.
+                </p>
+                
+                <div class="robustness-image-container">
+                    <img src="blog/robustness_comparison_sensitive.png" alt="Robustness comparison for sensitive content detection">
+                </div>
+                <div class="robustness-caption">
+                    Robustness analysis comparing our flagship model against traditional approaches for sensitive content detection
+                </div>
+                
+                <div class="robustness-highlight">
+                    <div class="robustness-highlight-title">Why This Matters</div>
+                    <div class="robustness-highlight-text">
+                        Our flagship model's token-level visibility allows it to identify and classify sensitive content with 
+                        unprecedented accuracy. This capability powers our search engine, policy optimization engine, and can be 
+                        integrated into any security organization's workflow for event discovery and classification.
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="products.html" class="cta-button" style="display: inline-block;">Explore Our Products</a>
                 </div>
             </div>
         </div>
@@ -5003,6 +5229,37 @@
     </section>
 
     <script>
+    // Theme Toggle Functionality
+    (function() {
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        
+        // Get saved theme or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeUI(savedTheme);
+        
+        function updateThemeUI(theme) {
+            if (theme === 'light') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeUI(newTheme);
+        });
+    })();
+    
     // Scroll animations for sections
     const sections = document.querySelectorAll('section');
     const sectionObserver = new IntersectionObserver((entries) => {
