@@ -657,11 +657,14 @@
         }
         
         .mosaic-diagram {
-            margin: 60px 0;
-            padding: 40px;
+            margin: 40px 0;
+            padding: 24px;
             background: var(--navy-light);
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         [data-theme="light"] .mosaic-diagram {
@@ -669,22 +672,22 @@
         }
         
         .mosaic-diagram-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             text-align: center;
         }
         
         .mosaic-scenario {
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
         
         .mosaic-scenario-title {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             text-align: center;
         }
         
@@ -692,20 +695,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
+            gap: 16px;
             position: relative;
         }
         
         .mosaic-input-box {
-            padding: 20px 32px;
+            padding: 12px 20px;
             background: var(--navy-lighter);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 8px;
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: var(--text-secondary);
             text-align: center;
-            min-width: 300px;
+            min-width: 240px;
             transition: all 0.3s ease;
         }
         
@@ -722,8 +725,8 @@
         }
         
         .mosaic-arrow {
-            width: 3px;
-            height: 40px;
+            width: 2px;
+            height: 28px;
             background: var(--ice);
             position: relative;
             opacity: 0.6;
@@ -732,31 +735,31 @@
         .mosaic-arrow::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 12px solid var(--ice);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid var(--ice);
         }
         
         .mosaic-components {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 24px 0;
+            margin: 16px 0;
         }
         
         .mosaic-component {
-            padding: 16px 24px;
+            padding: 10px 16px;
             background: var(--navy-lighter);
             border: 2px solid rgba(125, 211, 252, 0.3);
-            border-radius: 8px;
+            border-radius: 6px;
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             color: var(--ice);
             transition: all 0.3s ease;
             opacity: 0;
@@ -769,25 +772,26 @@
         }
         
         .mosaic-llm-box {
-            padding: 32px 48px;
+            padding: 20px 32px;
             background: var(--navy-lighter);
             border: 2px solid var(--ice);
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
             color: var(--ice);
             text-align: center;
-            min-width: 200px;
+            min-width: 150px;
+            font-size: 0.9375rem;
         }
         
         .mosaic-result {
-            padding: 20px 32px;
+            padding: 12px 20px;
             background: var(--navy-lighter);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1rem;
             text-align: center;
-            min-width: 200px;
+            min-width: 150px;
             transition: all 0.3s ease;
         }
         
@@ -804,13 +808,13 @@
         }
         
         .mosaic-recompose {
-            margin-top: 24px;
-            padding: 20px 32px;
+            margin-top: 16px;
+            padding: 12px 20px;
             background: var(--red-glow);
             border: 2px solid var(--red);
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: var(--red);
             text-align: center;
             opacity: 0;
@@ -824,12 +828,12 @@
         }
         
         .mosaic-caption {
-            margin-top: 32px;
-            padding: 24px;
+            margin-top: 24px;
+            padding: 16px;
             background: rgba(125, 211, 252, 0.05);
             border-left: 3px solid var(--ice);
             border-radius: 8px;
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             color: var(--text-dim);
             line-height: 1.7;
         }
