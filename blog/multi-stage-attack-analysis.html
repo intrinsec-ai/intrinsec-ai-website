@@ -255,10 +255,10 @@
         
         /* Visualization Container */
         .viz-container {
-            margin: 60px 0;
-            padding: 40px;
+            margin: 40px 0;
+            padding: 24px;
             background: var(--navy-light);
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
@@ -270,29 +270,29 @@
         }
         
         .viz-header {
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
         
         .viz-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .viz-subtitle {
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: var(--text-dim);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .prompt-type-badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .badge-benign {
@@ -306,14 +306,14 @@
         }
         
         .full-prompt-box {
-            padding: 20px;
+            padding: 14px;
             background: rgba(125, 211, 252, 0.05);
             border-left: 3px solid var(--ice);
             border-radius: 8px;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.9375rem;
-            line-height: 1.6;
+            font-size: 0.8125rem;
+            line-height: 1.5;
             color: var(--text-secondary);
         }
         
@@ -322,10 +322,10 @@
         }
         
         .token-window {
-            margin: 32px 0;
-            padding: 24px;
+            margin: 20px 0;
+            padding: 16px;
             background: var(--navy-lighter);
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         
@@ -335,26 +335,26 @@
         }
         
         .token-window-label {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-dim);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-family: 'Monaco', 'Courier New', monospace;
         }
         
         .tokens-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
         }
         
         .token {
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: var(--navy-light);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+            border-radius: 4px;
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-secondary);
             transition: all 0.3s ease;
             position: relative;
@@ -384,11 +384,11 @@
         .score-display {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin: 32px 0;
-            padding: 24px;
+            gap: 12px;
+            margin: 20px 0;
+            padding: 16px;
             background: var(--navy-lighter);
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         
@@ -402,13 +402,13 @@
         }
         
         .score-label {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .score-value {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--ice);
             font-variant-numeric: tabular-nums;
@@ -423,7 +423,7 @@
         }
         
         .score-change {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
             margin-top: 4px;
         }
@@ -438,11 +438,11 @@
         
         .chart-container {
             position: relative;
-            height: 400px;
-            margin: 32px 0;
-            padding: 24px;
+            height: 280px;
+            margin: 20px 0;
+            padding: 16px;
             background: var(--navy-lighter);
-            border-radius: 12px;
+            border-radius: 8px;
         }
         
         [data-theme="light"] .chart-container {
@@ -450,10 +450,10 @@
         }
         
         .neighbors-section {
-            margin: 32px 0;
-            padding: 24px;
+            margin: 20px 0;
+            padding: 16px;
             background: var(--navy-lighter);
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         
@@ -462,23 +462,23 @@
         }
         
         .neighbors-title {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .windows-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
         }
         
         .window-card {
-            padding: 16px;
+            padding: 12px;
             background: var(--navy-light);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 2px solid rgba(255, 255, 255, 0.06);
             transition: all 0.3s ease;
         }
@@ -497,9 +497,9 @@
         }
         
         .window-label {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-family: 'Monaco', 'Courier New', monospace;
         }
         
@@ -507,18 +507,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 8px;
+            margin-top: 6px;
         }
         
         .window-belief-value {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--ice);
             font-variant-numeric: tabular-nums;
         }
         
         .window-belief-change {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-dim);
         }
         
@@ -552,21 +552,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin: 24px 0;
-            padding: 20px;
+            gap: 12px;
+            margin: 16px 0;
+            padding: 14px;
             background: var(--navy-lighter);
-            border-radius: 12px;
+            border-radius: 8px;
         }
         
         .play-button {
-            padding: 12px 24px;
+            padding: 8px 16px;
             background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
             color: var(--navy);
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.875rem;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 16px rgba(125, 211, 252, 0.3);
@@ -585,15 +585,16 @@
         
         .iteration-slider {
             flex: 1;
-            max-width: 400px;
+            max-width: 300px;
         }
         
         .iteration-display {
-            min-width: 80px;
+            min-width: 70px;
             text-align: center;
             font-weight: 600;
             color: var(--ice);
             font-variant-numeric: tabular-nums;
+            font-size: 0.875rem;
         }
         
         input[type="range"] {
@@ -844,32 +845,243 @@
         
         @media (max-width: 768px) {
             .container {
-                padding: 0 24px;
+                padding: 0 20px;
             }
             
             .viz-container {
-                padding: 24px;
+                padding: 16px;
+                margin: 30px 0;
+            }
+            
+            .viz-title {
+                font-size: 1.125rem;
+            }
+            
+            .viz-subtitle {
+                font-size: 0.8125rem;
+            }
+            
+            .full-prompt-box {
+                padding: 12px;
+                font-size: 0.75rem;
+                margin-bottom: 16px;
+            }
+            
+            .token-window {
+                padding: 12px;
+                margin: 16px 0;
+            }
+            
+            .token-window-label {
+                font-size: 0.75rem;
+                margin-bottom: 10px;
+            }
+            
+            .token {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+            
+            .tokens-container {
+                gap: 4px;
             }
             
             .score-display {
                 flex-direction: column;
-                gap: 24px;
+                gap: 16px;
+                padding: 12px;
+                margin: 16px 0;
+            }
+            
+            .score-label {
+                font-size: 0.75rem;
+            }
+            
+            .score-value {
+                font-size: 1.25rem;
+            }
+            
+            .score-change {
+                font-size: 0.875rem;
+            }
+            
+            .chart-container {
+                height: 220px;
+                padding: 12px;
+                margin: 16px 0;
+            }
+            
+            .neighbors-section {
+                padding: 12px;
+                margin: 16px 0;
+            }
+            
+            .neighbors-title {
+                font-size: 0.9375rem;
+                margin-bottom: 12px;
+            }
+            
+            .windows-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 12px;
+            }
+            
+            .window-card {
+                padding: 10px;
+            }
+            
+            .window-label {
+                font-size: 0.75rem;
+            }
+            
+            .window-belief-value {
+                font-size: 0.9375rem;
+            }
+            
+            .window-belief-change {
+                font-size: 0.75rem;
             }
             
             .animation-controls {
                 flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+                margin: 12px 0;
+            }
+            
+            .play-button {
+                padding: 10px 20px;
+                font-size: 0.8125rem;
+                width: 100%;
             }
             
             .iteration-slider {
                 max-width: 100%;
+                width: 100%;
+            }
+            
+            .iteration-display {
+                font-size: 0.8125rem;
+                min-width: auto;
+            }
+            
+            .mosaic-diagram {
+                padding: 16px;
+                margin: 30px 0;
+            }
+            
+            .mosaic-diagram-title {
+                font-size: 1.125rem;
+                margin-bottom: 20px;
+            }
+            
+            .mosaic-scenario {
+                margin-bottom: 30px;
+            }
+            
+            .mosaic-scenario-title {
+                font-size: 0.9375rem;
+                margin-bottom: 12px;
+            }
+            
+            .mosaic-flow {
+                gap: 12px;
+            }
+            
+            .mosaic-input-box {
+                padding: 10px 16px;
+                font-size: 0.8125rem;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .mosaic-arrow {
+                height: 20px;
             }
             
             .mosaic-components {
                 flex-direction: column;
+                gap: 10px;
+                margin: 12px 0;
             }
             
             .mosaic-component {
                 width: 100%;
+                padding: 10px 14px;
+                font-size: 0.75rem;
+            }
+            
+            .mosaic-llm-box {
+                padding: 16px 24px;
+                min-width: auto;
+                width: 100%;
+                font-size: 0.875rem;
+            }
+            
+            .mosaic-result {
+                padding: 10px 16px;
+                font-size: 0.875rem;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .mosaic-recompose {
+                padding: 10px 16px;
+                font-size: 0.875rem;
+                margin-top: 12px;
+            }
+            
+            .mosaic-caption {
+                padding: 12px;
+                font-size: 0.8125rem;
+                margin-top: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .viz-container {
+                padding: 12px;
+                margin: 24px 0;
+            }
+            
+            .viz-title {
+                font-size: 1rem;
+            }
+            
+            .full-prompt-box {
+                padding: 10px;
+                font-size: 0.6875rem;
+            }
+            
+            .token {
+                padding: 4px 6px;
+                font-size: 0.6875rem;
+            }
+            
+            .score-value {
+                font-size: 1.125rem;
+            }
+            
+            .chart-container {
+                height: 200px;
+                padding: 10px;
+            }
+            
+            .mosaic-diagram {
+                padding: 12px;
+            }
+            
+            .mosaic-input-box,
+            .mosaic-component,
+            .mosaic-llm-box,
+            .mosaic-result {
+                font-size: 0.6875rem;
+                padding: 8px 12px;
             }
         }
     </style>
