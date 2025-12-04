@@ -557,6 +557,9 @@
             padding: 14px;
             background: var(--navy-lighter);
             border-radius: 8px;
+            position: relative;
+            z-index: 5;
+            touch-action: manipulation;
         }
         
         .play-button {
@@ -570,6 +573,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 16px rgba(125, 211, 252, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+            z-index: 10;
         }
         
         .play-button:hover {
@@ -577,10 +586,16 @@
             box-shadow: 0 6px 24px rgba(125, 211, 252, 0.4);
         }
         
+        .play-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(125, 211, 252, 0.3);
+        }
+        
         .play-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+            pointer-events: none;
         }
         
         .iteration-slider {
@@ -605,27 +620,43 @@
             outline: none;
             -webkit-appearance: none;
             appearance: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: var(--ice);
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(125, 211, 252, 0.4);
+            touch-action: manipulation;
         }
         
         input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: var(--ice);
             cursor: pointer;
             border: none;
             box-shadow: 0 2px 8px rgba(125, 211, 252, 0.4);
+            touch-action: manipulation;
+        }
+        
+        @media (max-width: 768px) {
+            input[type="range"]::-webkit-slider-thumb {
+                width: 28px;
+                height: 28px;
+            }
+            
+            input[type="range"]::-moz-range-thumb {
+                width: 28px;
+                height: 28px;
+            }
         }
         
         footer {
@@ -1983,7 +2014,12 @@
             let animationId = null;
             let isPlaying = false;
             
-            playButton.addEventListener('click', () => {
+            function handlePlayPause(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
                 if (isPlaying) {
                     // Stop
                     if (animationId) {
@@ -2018,9 +2054,21 @@
                     
                     animate();
                 }
-            });
+            }
+            
+            // Add both click and touch events for mobile support
+            playButton.addEventListener('click', handlePlayPause);
+            playButton.addEventListener('touchend', handlePlayPause);
             
             slider.addEventListener('input', (e) => {
+                if (!isPlaying) {
+                    const iter = parseInt(e.target.value);
+                    updateVisualization(key, iter);
+                }
+            });
+            
+            // Also support touch events for slider
+            slider.addEventListener('touchmove', (e) => {
                 if (!isPlaying) {
                     const iter = parseInt(e.target.value);
                     updateVisualization(key, iter);
@@ -2161,7 +2209,12 @@
             let animationId = null;
             let isPlaying = false;
             
-            playButton.addEventListener('click', () => {
+            function handleMosaicPlayPause(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
                 if (isPlaying) {
                     if (animationId) {
                         cancelAnimationFrame(animationId);
@@ -2190,9 +2243,20 @@
                     }
                     animate();
                 }
-            });
+            }
+            
+            // Add both click and touch events for mobile support
+            playButton.addEventListener('click', handleMosaicPlayPause);
+            playButton.addEventListener('touchend', handleMosaicPlayPause);
             
             slider.addEventListener('input', (e) => {
+                if (!isPlaying) {
+                    updateMosaicVisualization(parseInt(e.target.value));
+                }
+            });
+            
+            // Also support touch events for slider
+            slider.addEventListener('touchmove', (e) => {
                 if (!isPlaying) {
                     updateMosaicVisualization(parseInt(e.target.value));
                 }
