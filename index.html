@@ -2748,6 +2748,107 @@
             line-height: 1.8;
         }
         
+        /* Use Cases Section */
+        .use-cases-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.03) 0%, transparent 100%);
+        }
+        
+        [data-theme="light"] .use-cases-section {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.02) 0%, transparent 100%);
+        }
+        
+        .use-cases-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+        
+        .use-case-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid rgba(125, 211, 252, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        [data-theme="light"] .use-case-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
+            border: 2px solid rgba(2, 132, 199, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--ice);
+            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                        0 0 60px rgba(125, 211, 252, 0.15);
+        }
+        
+        .use-case-card h3 {
+            color: var(--ice);
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .use-case-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .use-case-card li {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .use-case-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--ice);
+            font-weight: 600;
+        }
+        
+        .use-case-card li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .use-case-card .blog-link {
+            margin-top: 20px;
+            font-size: 0.9375rem;
+            display: block;
+        }
+        
+        .use-case-card .blog-link a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid var(--ice);
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+        
+        .use-case-card .blog-link a:hover {
+            opacity: 0.8;
+        }
+        
         /* CTA */
         .cta {
             text-align: center;
@@ -5011,33 +5112,53 @@
         </div>
     </section>
 
-    <section class="robustness-section">
+    <section class="use-cases-section">
         <div class="container">
-            <div class="robustness-content">
-                <h2>Superior Robustness</h2>
+            <div class="use-cases-content">
+                <h2>Downstream Integration & Use Cases</h2>
                 <p class="section-intro">
-                    Our flagship model demonstrates exceptional robustness, especially when handling sensitive prompts and content. 
-                    Token-level intelligence enables precise classification and monitoring that traditional approaches cannot match.
+                    The extracted content from Intrinsec AI provides actionable intelligence for your security operations.
                 </p>
                 
-                <div class="robustness-image-container">
-                    <img src="blog/robustness_comparison_sensitive.png" alt="Robustness comparison for sensitive content detection">
-                </div>
-                <div class="robustness-caption">
-                    Robustness analysis comparing our flagship model against traditional approaches for sensitive content detection
-                </div>
-                
-                <div class="robustness-highlight">
-                    <div class="robustness-highlight-title">Why This Matters</div>
-                    <div class="robustness-highlight-text">
-                        Our flagship model's token-level visibility allows it to identify and classify sensitive content with 
-                        unprecedented accuracy. This capability powers our search engine, policy optimization engine, and can be 
-                        integrated into any security organization's workflow for event discovery and classification.
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h3>SIEM Correlation & Analysis</h3>
+                        <ul>
+                            <li>Feed extracted policy violations and suspicious content into your SIEM</li>
+                            <li>Correlate AI-specific threats with broader security events</li>
+                            <li>Create unified visibility across traditional and AI-driven attack vectors</li>
+                        </ul>
                     </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="products.html" class="cta-button" style="display: inline-block;">Explore Our Products</a>
+                    
+                    <div class="use-case-card">
+                        <h3>Multi-Stage AI Attack Detection</h3>
+                        <ul>
+                            <li>Track suspicious interactions across multiple requests</li>
+                            <li>Identify attack chains where adversaries probe and refine their approaches</li>
+                            <li>Connect the dots between reconnaissance, exploitation, and data exfiltration attempts</li>
+                        </ul>
+                        <div class="blog-link">
+                            <a href="blog/multi-stage-attack-analysis.html">Learn more about multi-stage attack analysis →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Alert Enrichment</h3>
+                        <ul>
+                            <li>Provide context-rich security events rather than raw data dumps</li>
+                            <li>Reduce alert fatigue by surfacing only validated threats</li>
+                            <li>Enable faster incident response with pre-analyzed, extracted content</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Compliance & Governance</h3>
+                        <ul>
+                            <li>Monitor and report on PII exposure in AI interactions</li>
+                            <li>Demonstrate policy enforcement for audit requirements</li>
+                            <li>Track and remediate data handling violations</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
