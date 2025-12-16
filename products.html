@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - Intrinsec AI</title>
+    <meta name="description" content="Explore Intrinsec AI products: flagship thought-level intelligence model, intelligent search, and policy optimization for AI-native security workflows.">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0a0f1a">
+    <meta property="og:title" content="Intrinsec AI Products">
+    <meta property="og:description" content="AI-native security solutions powered by thought-level intelligence.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="demo-page-screenshot.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+        // Set theme early to avoid a flash on first paint.
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -67,6 +88,42 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Skip link (a11y) */
+        .skip-link {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--navy-lighter);
+            color: var(--text);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            text-decoration: none;
+            transform: translateY(-150%);
+            transition: transform 0.2s ease;
+            z-index: 1000;
+        }
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        /* Keyboard focus */
+        :focus-visible {
+            outline: 2px solid var(--ice);
+            outline-offset: 3px;
+            border-radius: 10px;
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
         
         .container {
             max-width: 1200px;
@@ -125,6 +182,73 @@
         
         nav a[style*="border-bottom"]::after {
             display: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link[aria-current="page"] {
+            color: var(--ice);
+        }
+
+        .nav-link[aria-current="page"]::after {
+            width: 100%;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 44px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.08);
+        }
+        [data-theme="light"] footer {
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+        .footer-links a:hover {
+            color: var(--ice);
+            border-color: rgba(125, 211, 252, 0.4);
+        }
+        .footer-note {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
         }
         
         .logo {
@@ -378,6 +502,107 @@
             line-height: 1.7;
         }
         
+        /* Use Cases Section */
+        .use-cases-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.03) 0%, transparent 100%);
+        }
+        
+        [data-theme="light"] .use-cases-section {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.02) 0%, transparent 100%);
+        }
+        
+        .use-cases-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+        
+        .use-case-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid rgba(125, 211, 252, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        [data-theme="light"] .use-case-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
+            border: 2px solid rgba(2, 132, 199, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--ice);
+            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                        0 0 60px rgba(125, 211, 252, 0.15);
+        }
+        
+        .use-case-card h3 {
+            color: var(--ice);
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .use-case-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .use-case-card li {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .use-case-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--ice);
+            font-weight: 600;
+        }
+        
+        .use-case-card li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .use-case-card .blog-link {
+            margin-top: 20px;
+            font-size: 0.9375rem;
+            display: block;
+        }
+        
+        .use-case-card .blog-link a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid var(--ice);
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+        
+        .use-case-card .blog-link a:hover {
+            opacity: 0.8;
+        }
+        
         /* CTA */
         .cta {
             text-align: center;
@@ -421,17 +646,19 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header>
         <div class="container">
             <div class="header-content">
-                <div style="display: flex; align-items: center; gap: 32px;">
+                <div class="header-left">
                     <a href="index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
-                    <nav style="display: flex; gap: 24px; align-items: center;">
-                        <a href="products.html" style="color: var(--ice); text-decoration: none; font-size: 0.9375rem; font-weight: 500; border-bottom: 2px solid var(--ice);">Products</a>
-                        <a href="blog/index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: color 0.3s ease; font-weight: 500;">Research</a>
+                    <nav class="nav" aria-label="Primary">
+                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link" href="products.html" aria-current="page">Products</a>
+                        <a class="nav-link" href="blog/index.html">Research</a>
                     </nav>
                 </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false">
                     <span class="theme-toggle-icon" id="themeIcon">🌙</span>
                     <span id="themeText">Dark</span>
                 </button>
@@ -439,10 +666,12 @@
         </div>
     </header>
 
+    <main id="main">
+
     <section class="hero">
         <div class="container">
             <h1>Our <span class="gradient">Products</span></h1>
-            <p>AI-native security solutions powered by token-level intelligence</p>
+            <p>AI-native security solutions powered by Thought-level intelligence</p>
         </div>
     </section>
 
@@ -450,7 +679,7 @@
         <div class="container">
             <h2>Enterprise Security Solutions</h2>
             <p class="section-intro">
-                Built on our flagship model, these products integrate seamlessly into your security organization's workflow, 
+                Built on our flagship model, these products integrate into your security workflow, 
                 focusing on the most important content—whether pixels in images or tokens in text.
             </p>
             
@@ -460,15 +689,14 @@
                     <span class="product-icon">🎯</span>
                     <h3 class="product-title">Flagship Model</h3>
                     <p class="product-description">
-                        Our core AI model that zooms in on the essence of the most important content. 
-                        Like focusing on pixels in an image, it identifies critical tokens in text, enabling 
-                        precise event discovery and classification.
+                        Our core AI model that identifies critical thoughts in text and images, enabling precise event discovery and classification. 
+                        Extracts and scores security-relevant concepts at the thought level.
                     </p>
                     <div class="product-highlight">
-                        <strong>Integration Ready:</strong> Can be seamlessly integrated into any security organization's workflow.
+                        <strong>Integration Ready:</strong> Integrates into any security workflow.
                     </div>
                     <ul class="product-features">
-                        <li>Token-level content analysis</li>
+                        <li>Thought-level content analysis</li>
                         <li>Event discovery and classification</li>
                         <li>Works with any security workflow</li>
                         <li>Powers all Intrinsec AI products</li>
@@ -480,9 +708,8 @@
                     <span class="product-icon">🔍</span>
                     <h3 class="product-title">Intelligent Search Engine</h3>
                     <p class="product-description">
-                        A search engine with an "important event first" mentality. Reranks content using 
-                        our flagship model to surface the most critical security events and information 
-                        when you need it most.
+                        Search engine with "important event first" prioritization. Reranks content using 
+                        our flagship model to surface the most critical security events when you need them.
                     </p>
                     <img src="demo-page-screenshot.png" alt="Intelligent Search Engine demo showing important event first prioritization" class="product-image">
                     <div class="product-highlight">
@@ -501,19 +728,76 @@
                     <span class="product-icon">⚙️</span>
                     <h3 class="product-title">Policy Optimization Engine</h3>
                     <p class="product-description">
-                        Continuously optimizes your security policies using our flagship model. Analyzes 
-                        token-level patterns to refine and improve policy effectiveness, ensuring your 
-                        security posture evolves with emerging threats.
+                        Continuously optimizes security policies using our flagship model. Analyzes 
+                        thought-level patterns to refine policy effectiveness and adapt to emerging threats.
                     </p>
                     <div class="product-highlight">
                         <strong>Continuous Improvement:</strong> Leverages flagship model insights for policy refinement.
                     </div>
                     <ul class="product-features">
                         <li>Automated policy optimization</li>
-                        <li>Token-level pattern analysis</li>
+                        <li>Thought-level pattern analysis</li>
                         <li>Adaptive threat response</li>
                         <li>Real-time policy refinement</li>
                     </ul>
+                    <div class="product-highlight" style="margin-top: 18px;">
+                        <strong>Policy Engine Deep Dive:</strong> See adaptive policy design + dynamic enrichment signals in action.
+                        <div style="margin-top: 10px;">
+                            <a href="policy.html" style="color: var(--ice); text-decoration: none; border-bottom: 1px solid var(--ice); font-weight: 600;">Open the deep dive →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="use-cases-section">
+        <div class="container">
+            <div class="use-cases-content">
+                <h2>Downstream Integration & Use Cases</h2>
+                <p class="section-intro">
+                    The extracted content from Intrinsec AI provides actionable intelligence for your security operations.
+                </p>
+                
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h3>SIEM Correlation & Analysis</h3>
+                        <ul>
+                            <li>Feed extracted policy violations and suspicious content into your SIEM</li>
+                            <li>Correlate AI-specific threats with broader security events</li>
+                            <li>Create unified visibility across traditional and AI-driven attack vectors</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Multi-Stage AI Attack Detection</h3>
+                        <ul>
+                            <li>Track suspicious interactions across multiple requests</li>
+                            <li>Identify attack chains where adversaries probe and refine their approaches</li>
+                            <li>Connect the dots between reconnaissance, exploitation, and data exfiltration attempts</li>
+                        </ul>
+                        <div class="blog-link">
+                            <a href="blog/multi-stage-attack-analysis.html">Learn more about multi-stage attack analysis →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Alert Enrichment</h3>
+                        <ul>
+                            <li>Provide context-rich security events rather than raw data dumps</li>
+                            <li>Reduce alert fatigue by surfacing only validated threats</li>
+                            <li>Enable faster incident response with pre-analyzed, extracted content</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Compliance & Governance</h3>
+                        <ul>
+                            <li>Monitor and report on PII exposure in AI interactions</li>
+                            <li>Demonstrate policy enforcement for audit requirements</li>
+                            <li>Track and remediate data handling violations</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -523,11 +807,26 @@
         <div class="container">
             <h2>Ready to Integrate?</h2>
             <p style="color: var(--text-secondary); margin-bottom: 32px; font-size: 1.125rem;">
-                Learn how our products can enhance your security organization's workflow.
+                Learn how our products can enhance your security workflow.
             </p>
             <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
         </div>
     </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-note">© <span id="footerYear">2025</span> Intrinsec AI</div>
+                <div class="footer-links" aria-label="Footer">
+                    <a href="index.html">Home</a>
+                    <a href="blog/index.html">Research</a>
+                    <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
     // Theme Toggle Functionality
@@ -536,10 +835,10 @@
         const themeIcon = document.getElementById('themeIcon');
         const themeText = document.getElementById('themeText');
         
-        // Get saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeUI(savedTheme);
+        // Theme is set early in <head>; keep UI in sync (and allow toggling).
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateThemeUI(initialTheme);
+        themeToggle.setAttribute('aria-pressed', initialTheme === 'light' ? 'true' : 'false');
         
         function updateThemeUI(theme) {
             if (theme === 'light') {
@@ -558,7 +857,14 @@
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeUI(newTheme);
+            themeToggle.setAttribute('aria-pressed', newTheme === 'light' ? 'true' : 'false');
         });
+    })();
+
+    // Footer year
+    (function () {
+        const el = document.getElementById('footerYear');
+        if (el) el.textContent = String(new Date().getFullYear());
     })();
     </script>
 </body>
