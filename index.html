@@ -5572,14 +5572,14 @@
                             <div class="value-card-label">Traditional <span class="chip">Event-Level</span></div>
                             <div style="font-size: 1.5rem; line-height: 1;">🧾</div>
                         </div>
-                        <div class="value-card-title">Monitors outcomes</div>
+                        <div class="value-card-title">Sees what happened</div>
                         <div class="value-card-desc">
-                            Great at tracking production events—but often too late for agentic, multi-step threats.
+                            Monitors system events after they occur—logins, file access, network connections. By the time you see the event, the attack has already progressed.
                         </div>
                         <ul class="value-card-list">
-                            <li>Policy violations, unauthorized access</li>
-                            <li>Credential exposure, privilege escalation</li>
-                            <li>Network/file activity after the decision is made</li>
+                            <li>Reactive: detects threats after execution</li>
+                            <li>Limited visibility into agent reasoning</li>
+                            <li>Cannot see intent before it becomes action</li>
                         </ul>
                     </div>
 
@@ -5588,20 +5588,20 @@
                             <div class="value-card-label">Intrinsec AI <span class="chip">Thought-Level</span></div>
                             <div style="font-size: 1.5rem; line-height: 1;">🧠</div>
                         </div>
-                        <div class="value-card-title">Monitors intent</div>
+                        <div class="value-card-title">Extracts critical thoughts as signals</div>
                         <div class="value-card-desc">
-                            Turns prompts, tool calls, and multimodal context into security signals you can monitor and correlate.
+                            Identifies and scores security-relevant concepts—manipulation, exfiltration planning, privilege-seeking—from prompts, reasoning, and tool calls. These thought-level signals appear before events.
                         </div>
                         <ul class="value-card-list">
-                            <li>Manipulation, coercion, and override attempts</li>
-                            <li>Privilege-seeking and tool permission probing</li>
-                            <li>Exfiltration planning before execution</li>
+                            <li>Proactive: detects intent before execution</li>
+                            <li>Extracts abstract concepts as security signals</li>
+                            <li>No fixed taxonomy—discovers emergent threats</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="value-prop-footnote">
-                    Result: your SOC gets <strong>actionable, correlatable</strong> signals—built for SIEM workflows, without relying on a fixed taxonomy.
+                    Result: your SOC gets <strong>thought-level security signals</strong>—extracted critical reasonings and intents that can be monitored, scored, and correlated in SIEM workflows, giving you visibility where attacks take shape first.
                 </div>
             </div>
         </div>
@@ -5622,17 +5622,17 @@
                         <div class="traditional-control">
                             <div class="control-label">System Boundary (Event-Level)</div>
                             <div class="control-name">Access Control</div>
-                            <div class="control-desc">Manages permissions at system boundaries—but cannot observe agent reasoning or detect authorization bypasses during execution</div>
+                            <div class="control-desc">Cannot see authorization bypass intent before it becomes action.</div>
                         </div>
                         <div class="traditional-control">
                             <div class="control-label">System Boundary (Event-Level)</div>
                             <div class="control-name">Data Protection</div>
-                            <div class="control-desc">Monitors data movement and storage—but misses exfiltration planned in reasoning steps or sensitive data reconstructed through agent interactions</div>
+                            <div class="control-desc">Cannot see exfiltration intent before execution.</div>
                         </div>
                         <div class="traditional-control">
                             <div class="control-label">System Boundary (Event-Level)</div>
                             <div class="control-name">Threat Monitoring</div>
-                            <div class="control-desc">Tracks system activity and threats—but cannot capture reasoning chains or detect malicious intent before it manifests as observable actions</div>
+                            <div class="control-desc">Cannot see malicious intent before it becomes action.</div>
                         </div>
                     </div>
                 </div>
@@ -5642,7 +5642,7 @@
                     <div class="pyramid-item">
                         <div class="pyramid-label">I/O Boundary</div>
                         <div class="pyramid-title">AI Guardrails</div>
-                        <div class="pyramid-desc">Not granular enough to extract suspicious thoughts and reasonings. Cannot map security policies to Thought-level visibility. Fail against <strong>distributed threats</strong> where individual prompts don't trigger guardrails, but threats emerge when fragments assemble across time, contexts, or agents.</div>
+                        <div class="pyramid-desc">Lacks granularity to extract suspicious thoughts and reasonings. Cannot map security policies to thought-level visibility. Vulnerable to <strong>distributed threats</strong> where harmless individual prompts assemble into attacks across time, contexts, or agents.</div>
                     </div>
                 </div>
             </div>
