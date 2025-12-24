@@ -6649,6 +6649,17 @@
             .eco-label {
                 font-size: 0.5625rem;
                 letter-spacing: 1px;
+                padding: 6px 12px;
+            }
+            
+            .eco-label[data-type="text-prompts"],
+            .eco-label[data-type="image-prompts"] {
+                top: 5% !important;
+            }
+            
+            .eco-label[data-type="tools"],
+            .eco-label[data-type="context"] {
+                bottom: 8% !important;
             }
             
             .zoom-lens {
@@ -6791,8 +6802,8 @@
                     
                     <!-- Floating Labels -->
                     <div class="ecosystem-labels">
-                        <div class="eco-label" data-type="text-prompts" style="top: 12%; left: 8%;">Text Prompts</div>
-                        <div class="eco-label" data-type="image-prompts" style="top: 12%; right: 8%;">Image Prompts</div>
+                        <div class="eco-label" data-type="text-prompts" style="top: 8%; left: 8%;">Text Prompts</div>
+                        <div class="eco-label" data-type="image-prompts" style="top: 8%; right: 8%;">Image Prompts</div>
                         <div class="eco-label" data-type="tools" style="bottom: 12%; left: 8%;">Tools</div>
                         <div class="eco-label" data-type="context" style="bottom: 12%; right: 8%;">Context</div>
                     </div>
@@ -6832,7 +6843,6 @@
                             <div class="warp-ring"></div>
                         </div>
                         <div class="substrate-core"></div>
-                        <div class="substrate-label">Cognitive Substrate</div>
                     </div>
                 </div>
             </div>
@@ -7243,7 +7253,7 @@
                 'Role manipulation',
                 'Instruction hierarchy override',
                 'Credential harvesting',
-                'Context boundary crossing',
+                'Cognitive overloading',
                 'Multi-turn conversation pattern',
                 'Authority impersonation'
             ],
@@ -7765,12 +7775,13 @@
             const colors = getThemeColors();
             const settled = assembledParticles.filter(p => p.settled);
             if (settled.length < 2) return;
-            c.lineWidth = 2;
+            // Slightly more visible "graph building" edges (keep density the same).
+            c.lineWidth = 2.3;
             for (let i = 0; i < settled.length - 1; i++) {
                 for (let j = i + 1; j < settled.length; j++) {
                     const d = Math.hypot(settled[i].x - settled[j].x, settled[i].y - settled[j].y);
                     if (d < 120) {
-                        const alpha = (1 - d / 120) * 0.6;
+                        const alpha = (1 - d / 120) * 0.75;
                         const gradient = c.createLinearGradient(settled[i].x, settled[i].y, settled[j].x, settled[j].y);
                         gradient.addColorStop(0, colors.particle.replace('1)', `${alpha})`));
                         gradient.addColorStop(0.5, colors.particleBright.replace('1)', `${alpha * 1.2})`));
@@ -7781,7 +7792,7 @@
                         c.lineTo(settled[j].x, settled[j].y);
                         c.strokeStyle = gradient;
                         c.shadowColor = colors.particleGlow.replace('0.6)', '0.5)');
-                        c.shadowBlur = 5;
+                        c.shadowBlur = 7;
                         c.stroke();
                         c.shadowBlur = 0;
                     }
