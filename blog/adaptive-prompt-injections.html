@@ -28,27 +28,26 @@
             --red-glow: rgba(239, 68, 68, 0.15);
         }
         
-        /* Light theme variables */
+        /* Light theme variables - vibrant and clean */
         [data-theme="light"] {
             --navy: #ffffff;
             --navy-light: #f8fafc;
-            --navy-lighter: #f1f5f9;
-            --ice: #0284c7;
-            --ice-bright: #0369a1;
-            --ice-glow: rgba(2, 132, 199, 0.1);
-            --ice-glow-strong: rgba(2, 132, 199, 0.15);
-            --text: #0f172a;
-            --text-secondary: #1e293b;
-            --text-dim: #475569;
-            --text-subtle: #64748b;
+            --navy-lighter: #f0f9ff;
+            --ice: #0ea5e9;
+            --ice-bright: #0284c7;
+            --ice-glow: rgba(14, 165, 233, 0.15);
+            --ice-glow-strong: rgba(14, 165, 233, 0.25);
+            --text: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-dim: #0284c7;
+            --text-subtle: #38bdf8;
             --red: #dc2626;
-            --red-glow: rgba(220, 38, 38, 0.1);
+            --red-glow: rgba(220, 38, 38, 0.15);
         }
         
         [data-theme="light"] body {
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            background-attachment: fixed;
         }
         
         body {
@@ -92,8 +91,9 @@
         }
         
         [data-theme="light"] header {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
         }
         
         .header-content {
@@ -145,8 +145,8 @@
         }
         
         [data-theme="light"] .theme-toggle {
-            background: var(--navy-lighter);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #f0f9ff;
+            border: 1px solid rgba(14, 165, 233, 0.2);
         }
         
         .theme-toggle:hover {
@@ -156,8 +156,7 @@
         }
         
         [data-theme="light"] .theme-toggle:hover {
-            border-color: var(--ice);
-            color: var(--ice);
+            border-color: rgba(14, 165, 233, 0.4);
         }
         
         .theme-toggle-icon {
@@ -259,11 +258,12 @@
         }
         
         [data-theme="light"] .article-intro {
-            background: rgba(2, 132, 199, 0.05);
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.6) 0%, rgba(240, 249, 255, 0.9) 100%);
+            border-left-color: rgba(14, 165, 233, 0.5);
         }
         
         [data-theme="light"] .article-intro p[style*="background: rgba(125, 211, 252"] {
-            background: rgba(2, 132, 199, 0.08) !important;
+            background: rgba(14, 165, 233, 0.12) !important;
         }
         
         /* Article Content */
@@ -337,8 +337,8 @@
         }
         
         [data-theme="light"] .article-image {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.15);
         }
         
         .article-image-caption {
@@ -359,11 +359,12 @@
         }
         
         [data-theme="light"] .callout {
-            background: rgba(2, 132, 199, 0.08);
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.7) 0%, rgba(240, 249, 255, 0.9) 100%);
+            border-left-color: rgba(14, 165, 233, 0.5);
         }
         
         [data-theme="light"] .callout[style*="background: linear-gradient"] {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(3, 105, 161, 0.08) 100%) !important;
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.8) 0%, rgba(240, 249, 255, 0.95) 100%) !important;
         }
         
         .callout-title {
@@ -433,7 +434,7 @@
         }
         
         [data-theme="light"] footer {
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-top: 1px solid rgba(14, 165, 233, 0.15);
         }
         
         .cta-button {

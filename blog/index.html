@@ -26,25 +26,24 @@
             --text-subtle: #64748b;
         }
         
-        /* Light theme variables */
+        /* Light theme variables - vibrant and clean */
         [data-theme="light"] {
             --navy: #ffffff;
             --navy-light: #f8fafc;
-            --navy-lighter: #f1f5f9;
-            --ice: #0284c7;
-            --ice-bright: #0369a1;
-            --ice-glow: rgba(2, 132, 199, 0.1);
-            --ice-glow-strong: rgba(2, 132, 199, 0.15);
-            --text: #0f172a;
-            --text-secondary: #1e293b;
-            --text-dim: #475569;
-            --text-subtle: #64748b;
+            --navy-lighter: #f0f9ff;
+            --ice: #0ea5e9;
+            --ice-bright: #0284c7;
+            --ice-glow: rgba(14, 165, 233, 0.15);
+            --ice-glow-strong: rgba(14, 165, 233, 0.25);
+            --text: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-dim: #0284c7;
+            --text-subtle: #38bdf8;
         }
         
         [data-theme="light"] body {
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            background-attachment: fixed;
         }
         
         body {
@@ -86,8 +85,9 @@
         }
         
         [data-theme="light"] header {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
         }
         
         .header-content {
@@ -140,8 +140,12 @@
         }
         
         [data-theme="light"] .theme-toggle {
-            background: var(--navy-lighter);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #f0f9ff;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        
+        [data-theme="light"] .theme-toggle:hover {
+            border-color: rgba(14, 165, 233, 0.4);
         }
         
         .theme-toggle:hover {
@@ -233,6 +237,12 @@
             color: inherit;
         }
         
+        [data-theme="light"] .blog-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 2px solid rgba(14, 165, 233, 0.25);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.1);
+        }
+        
         .blog-card::before {
             content: '';
             position: absolute;
@@ -263,6 +273,13 @@
                         0 0 60px var(--ice-glow);
         }
         
+        [data-theme="light"] .blog-card:hover {
+            border-color: rgba(14, 165, 233, 0.5);
+            box-shadow: 0 12px 48px rgba(14, 165, 233, 0.2),
+                        inset 0 1px 0 rgba(14, 165, 233, 0.1),
+                        0 0 60px rgba(14, 165, 233, 0.15);
+        }
+        
         .blog-card::after {
             content: '';
             position: absolute;
@@ -282,6 +299,17 @@
             z-index: 0;
             opacity: 0;
             transition: opacity 0.4s ease;
+        }
+        
+        [data-theme="light"] .blog-card::after {
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg,
+                rgba(14, 165, 233, 0.08) 90deg,
+                transparent 180deg,
+                rgba(14, 165, 233, 0.08) 270deg,
+                transparent 360deg
+            );
         }
         
         @keyframes rotate {
@@ -341,6 +369,12 @@
             color: var(--ice);
             font-size: 0.75rem;
             font-weight: 500;
+        }
+        
+        [data-theme="light"] .blog-card-tag {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(224, 242, 254, 0.8) 100%);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: #0284c7;
         }
         
         .read-more {
