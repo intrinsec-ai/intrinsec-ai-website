@@ -393,6 +393,72 @@
             opacity: 1;
         }
         
+        /* Featured Product Card */
+        .product-card--featured {
+            position: relative;
+            background: linear-gradient(135deg, 
+                rgba(125, 211, 252, 0.08) 0%, 
+                var(--navy-light) 50%, 
+                rgba(56, 189, 248, 0.06) 100%);
+            border: 2px solid var(--ice);
+            box-shadow: 0 8px 40px rgba(125, 211, 252, 0.25),
+                        0 0 80px rgba(125, 211, 252, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: featured-glow 4s ease-in-out infinite;
+        }
+        
+        [data-theme="light"] .product-card--featured {
+            background: linear-gradient(135deg, 
+                rgba(2, 132, 199, 0.05) 0%, 
+                var(--navy-light) 50%, 
+                rgba(2, 132, 199, 0.03) 100%);
+            border: 2px solid var(--ice);
+            box-shadow: 0 8px 40px rgba(2, 132, 199, 0.2),
+                        0 0 60px rgba(2, 132, 199, 0.1);
+        }
+        
+        .product-card--featured::before {
+            opacity: 1;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--ice) 20%, 
+                var(--ice-bright) 50%, 
+                var(--ice) 80%, 
+                transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        .product-card--featured:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(125, 211, 252, 0.35),
+                        0 0 100px rgba(125, 211, 252, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        @keyframes featured-glow {
+            0%, 100% {
+                box-shadow: 0 8px 40px rgba(125, 211, 252, 0.25),
+                            0 0 80px rgba(125, 211, 252, 0.15),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                box-shadow: 0 8px 40px rgba(125, 211, 252, 0.35),
+                            0 0 100px rgba(125, 211, 252, 0.25),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
         .product-icon {
             font-size: 3rem;
             margin-bottom: 24px;
@@ -402,12 +468,17 @@
         .product-icon.mindmap-icon {
             width: 80px;
             height: 80px;
+            transition: transform 0.4s ease;
         }
 
         .product-icon.mindmap-icon svg {
             width: 80px;
             height: 80px;
             display: block;
+        }
+        
+        .product-card--featured:hover .product-icon.mindmap-icon {
+            transform: scale(1.1);
         }
 
         /* Thought Access Broker icon */
@@ -555,6 +626,32 @@
             font-weight: 600;
         }
         
+        /* Enhanced Features List */
+        .product-features--enhanced li {
+            padding: 16px 0 16px 48px;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="light"] .product-features--enhanced li {
+            border-bottom: 1px solid rgba(2, 132, 199, 0.15);
+        }
+        
+        .product-features--enhanced li:hover {
+            background: rgba(125, 211, 252, 0.05);
+            padding-left: 52px;
+            border-left: 3px solid var(--ice);
+            border-radius: 8px;
+        }
+        
+        .product-features--enhanced li::before {
+            content: attr(data-icon);
+            font-size: 1.5rem;
+            left: 12px;
+            filter: drop-shadow(0 2px 4px rgba(125, 211, 252, 0.3));
+        }
+        
         .product-highlight {
             background: rgba(125, 211, 252, 0.08);
             border-left: 3px solid var(--ice);
@@ -568,6 +665,24 @@
         
         [data-theme="light"] .product-highlight {
             background: rgba(2, 132, 199, 0.08);
+        }
+        
+        .product-highlight--featured {
+            background: linear-gradient(135deg, 
+                rgba(125, 211, 252, 0.15) 0%, 
+                rgba(56, 189, 248, 0.1) 100%);
+            border: 2px solid var(--ice);
+            border-left-width: 4px;
+            box-shadow: 0 4px 16px rgba(125, 211, 252, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        [data-theme="light"] .product-highlight--featured {
+            background: linear-gradient(135deg, 
+                rgba(2, 132, 199, 0.12) 0%, 
+                rgba(2, 132, 199, 0.08) 100%);
         }
         
         .product-image {
@@ -597,6 +712,16 @@
         .product-card:hover .product-image {
             transform: translateY(-4px);
             box-shadow: 0 12px 48px rgba(125, 211, 252, 0.15);
+        }
+        
+        .product-card--featured .product-image {
+            border: 2px solid rgba(125, 211, 252, 0.3);
+            box-shadow: 0 8px 32px rgba(125, 211, 252, 0.2);
+        }
+        
+        .product-card--featured:hover .product-image {
+            border-color: var(--ice);
+            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.3);
         }
         
         /* Section */
@@ -806,25 +931,17 @@
             <div class="products-grid">
                 <!-- Product 1: Flagship Model -->
                 <div class="product-card">
-                    <span class="product-icon">🎯</span>
                     <h3 class="product-title">Flagship Model</h3>
                     <p class="product-description">
-                        Our core AI model that identifies critical thoughts in text and images, enabling precise event discovery and classification. 
-                        Extracts and scores security-relevant concepts at the thought level.
+                        Our core AI model that identifies critical thoughts in text and images. Extracts and scores security-relevant concepts at the thought level for precise event discovery and classification.
                     </p>
                     <div class="product-highlight">
-                        <strong>Integration Ready:</strong> Integrates into any security workflow.
+                        Powers all Intrinsec AI products. Integrates into any security workflow.
                     </div>
-                    <ul class="product-features">
-                        <li>Thought-level content analysis</li>
-                        <li>Event discovery and classification</li>
-                        <li>Works with any security workflow</li>
-                        <li>Powers all Intrinsec AI products</li>
-                    </ul>
                 </div>
 
                 <!-- Product 2: Thought Access Broker -->
-                <div class="product-card">
+                <div class="product-card product-card--featured">
                     <span class="product-icon mindmap-icon" aria-hidden="true">
                         <svg viewBox="0 0 80 80" focusable="false">
                             <defs>
@@ -895,18 +1012,12 @@
                     </span>
                     <h3 class="product-title">Thought Access Broker</h3>
                     <p class="product-description">
-                        Extracts thought entities and relationships to build a mindmap without relying on a fixed taxonomy.
-                        Delivers an unprecedented 360-degree view of suspicious attacks and concerning behaviors in AI agent environments.
+                        A CASB-equivalent for AI agents. Instead of monitoring inputs/outputs (typical guardrails) or downstream events, we enforce policy at the <strong style="color: var(--ice);">thought/intent layer</strong>—before thoughts become actions.
                     </p>
-                    <div class="product-highlight">
-                        <strong>Taxonomy-Free Insight:</strong> Policy-based compression for clear, high-signal agent intelligence.
+                    
+                    <div class="product-highlight product-highlight--featured">
+                        Monitor and defend against compositional threats & promptware
                     </div>
-                    <ul class="product-features">
-                        <li>Extracts thought entities and relationships</li>
-                        <li>No fixed taxonomy required</li>
-                        <li>Highlights suspicious attacks and behaviors</li>
-                        <li>Policy-based compression for signal over noise</li>
-                    </ul>
 
                     <img
                         src="graph-example.svg"
@@ -918,43 +1029,27 @@
 
                 <!-- Product 3: Search Engine -->
                 <div class="product-card">
-                    <span class="product-icon">🔍</span>
                     <h3 class="product-title">Intelligent Search Engine</h3>
                     <p class="product-description">
-                        Search engine with "critical thoughts first" prioritization. Reranks content using 
-                        our flagship model to surface the most critical thought-level security signals when you need them.
+                        Search with "critical thoughts first" prioritization. Reranks content using our flagship model to surface the most critical thought-level security signals.
                     </p>
                     <img src="demo-page-screenshot.png" alt="Intelligent Search Engine demo showing critical thoughts first prioritization" class="product-image">
                     <div class="product-highlight">
-                        <strong>Smart Reranking:</strong> Uses flagship model intelligence to prioritize critical thoughts and thought-level concepts.
+                        Context-aware search that prioritizes what matters most
                     </div>
-                    <ul class="product-features">
-                        <li>Critical thoughts first prioritization</li>
-                        <li>Thought-level content reranking</li>
-                        <li>Fast, accurate results</li>
-                        <li>Context-aware search</li>
-                    </ul>
                 </div>
 
                 <!-- Product 4: Policy Optimization -->
                 <div class="product-card">
-                    <span class="product-icon">⚙️</span>
                     <h3 class="product-title">Policy Optimization Engine</h3>
                     <p class="product-description">
-                        Continuously optimizes security policies using our flagship model. Analyzes 
-                        thought-level patterns to refine policy effectiveness and adapt to emerging threats.
+                        Continuously optimizes security policies using our flagship model. Analyzes thought-level patterns to refine policy effectiveness and adapt to emerging threats.
                     </p>
                     <div class="product-highlight">
-                        <strong>Continuous Improvement:</strong> Leverages flagship model insights for policy refinement.
+                        Automated policy refinement using thought-level pattern analysis
                     </div>
-                    <ul class="product-features">
-                        <li>Automated policy optimization</li>
-                        <li>Thought-level pattern analysis</li>
-                        <li>Adaptive threat response</li>
-                        <li>Real-time policy refinement</li>
-                    </ul>
                     <div class="product-highlight" style="margin-top: 18px;">
-                        <strong>Policy Engine Deep Dive:</strong> See adaptive policy design + dynamic enrichment signals in action.
+                        <strong>Deep Dive:</strong> See adaptive policy design + dynamic enrichment signals in action.
                         <div style="margin-top: 10px;">
                             <a href="policy.html" style="color: var(--ice); text-decoration: none; border-bottom: 1px solid var(--ice); font-weight: 600;">Open the deep dive →</a>
                         </div>
