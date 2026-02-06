@@ -1297,6 +1297,83 @@
             100% { stroke-dashoffset: -100; }
         }
 
+        /* Light mode overrides for Policy Design Visualization */
+        [data-theme="light"] .policy-design-visual {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            box-shadow: 0 8px 40px rgba(2, 132, 199, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="light"] .policy-design-visual:hover {
+            box-shadow: 0 12px 60px rgba(2, 132, 199, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="light"] .highlighted-tokens-mini {
+            background: rgba(2, 132, 199, 0.05);
+            border: 1px solid rgba(2, 132, 199, 0.25);
+        }
+
+        [data-theme="light"] .design-arrow svg {
+            filter: drop-shadow(0 0 8px rgba(2, 132, 199, 0.25));
+        }
+
+        [data-theme="light"] .design-flow::before {
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(2, 132, 199, 0.15) 20%,
+                rgba(2, 132, 199, 0.35) 50%,
+                rgba(2, 132, 199, 0.15) 80%,
+                transparent 100%);
+        }
+
+        @keyframes tokenMiniShimmerLight {
+            0%, 100% {
+                background-position: 0% 50%;
+                box-shadow: 0 0 20px rgba(2, 132, 199, 0.15),
+                            0 0 0 1px rgba(2, 132, 199, 0.25);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 0 0 30px rgba(2, 132, 199, 0.2),
+                            0 0 0 1px rgba(2, 132, 199, 0.35);
+            }
+        }
+
+        [data-theme="light"] .token-mini.threat {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(2, 132, 199, 0.08) 100%);
+            background-size: 200% 200%;
+            border: 2px solid var(--ice);
+            color: var(--ice-bright);
+            box-shadow: 0 0 20px rgba(2, 132, 199, 0.15),
+                        0 0 0 1px rgba(2, 132, 199, 0.25);
+            animation: tokenMiniPulse 2s ease-in-out infinite, tokenMiniShimmerLight 3s ease-in-out infinite;
+        }
+
+        [data-theme="light"] .token-mini.threat::before {
+            background: linear-gradient(135deg, var(--ice), var(--ice-bright));
+            opacity: 0;
+        }
+
+        [data-theme="light"] .policy-mini {
+            background: #ffffff;
+            border: 2px solid rgba(2, 132, 199, 0.3);
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .policy-mini.active {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: var(--ice);
+            color: var(--ice-bright);
+        }
+
+        [data-theme="light"] .policy-blocks-mini {
+            background: rgba(2, 132, 199, 0.08);
+            border: 2px solid var(--ice);
+            box-shadow: 0 0 30px rgba(2, 132, 199, 0.15);
+        }
+
         .policy-blocks-mini {
             display: flex;
             flex-wrap: wrap;
@@ -5702,9 +5779,9 @@
 
     <section class="cta">
         <div class="container">
-            <h2>Upgrade your AI Security Layer</h2>
+            <h2>A Modern Control Plane for AI Agent Security</h2>
             <p class="section-intro" style="margin-bottom: 28px;">
-                <span class="quote-callout quote-callout--cta-sub">Events are no longer the earliest meaningful signal. Thoughts are.</span>
+                <span class="quote-callout quote-callout--cta-sub">Events are no longer the earliest meaningful signal. Intent is.</span>
             </p>
             <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
         </div>
