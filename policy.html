@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Policy Engine - Intrinsec AI</title>
-    <meta name="description" content="Explore Intrinsec AI’s policy engine: adaptive policy design and dynamic policy enrichment for thought-level security signals.">
+    <title>Policy Optimization Engine - Intrinsec AI</title>
+    <meta name="description" content="Explore Intrinsec AI's policy optimization engine: adaptive policy design and dynamic policy enrichment for intent-level security signals from our control plane.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
-    <meta property="og:title" content="Policy Engine - Intrinsec AI">
-    <meta property="og:description" content="Adaptive policy design + dynamic enrichment for thought-level security signals.">
+    <meta property="og:title" content="Policy Optimization Engine - Intrinsec AI">
+    <meta property="og:description" content="Adaptive policy design + dynamic enrichment for intent-level security signals from the control plane.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -5503,10 +5503,10 @@
     <section class="hero">
         <div class="container">
             <h1>
-                Policy Engine <br><span class="gradient">Deep Dive</span>
+                Policy Optimization Engine <br><span class="gradient">Deep Dive</span>
             </h1>
             <p class="tagline">
-                Adaptive policy design + dynamic enrichment for thought-level security signals.
+                Adaptive policy design + dynamic enrichment for intent-level security signals.
             </p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
@@ -5518,19 +5518,19 @@
 
     <section id="policyEngine">
         <div class="container">
-            <h2>Policy Engine</h2>
-            <p class="section-intro">Adaptive policy design + dynamic enrichment for thought-level security signals.</p>
+            <h2>Policy Optimization Engine</h2>
+            <p class="section-intro">Adaptive policy design + dynamic enrichment for intent-level security signals from our control plane.</p>
         </div>
         <section>
             <div class="container">
             <h2>Adaptive Policy Design</h2>
             <p class="section-intro">
-                Building on Thought-level visibility, adaptive policy design enables continuous refinement of security policies based on discovered threats and evolving attack patterns.
+                Building on intent-level visibility from our control plane, adaptive policy design enables continuous refinement of security policies based on discovered threats and evolving attack patterns.
             </p>
             
             <!-- Policy Design Visualization -->
             <div class="policy-design-visual">
-                <div class="design-title">Design Adaptive Policies with Thought-Level Intelligence</div>
+                <div class="design-title">Design Adaptive Policies with Intent-Level Intelligence</div>
                 
                 <div class="design-flow">
                     <!-- Highlighted Tokens -->
@@ -5575,20 +5575,20 @@
                 <div class="how-cycle">
                     <!-- Step 1: Top -->
                     <div class="how-step">
-                        <h3 data-number="1">Thought-Level Intelligence</h3>
-                        <p>Thought-level concept extraction and scoring for AI agents. Identify critical thoughts and policy violations—zoom into what matters</p>
+                        <h3 data-number="1">Intent-Level Intelligence</h3>
+                        <p>Intent-level concept extraction and scoring for AI agents. Identify critical intents and policy violations—zoom into what matters</p>
                     </div>
                     
                     <!-- Step 2: Bottom Left -->
                     <div class="how-step">
-                        <h3 data-number="2">Policy Refinement</h3>
-                        <p>Policies evolve with attack patterns—continuous refinement from discovered token intelligence</p>
+                        <h3 data-number="2">Policy Optimization</h3>
+                        <p>Policies evolve with attack patterns—continuous optimization from discovered intent intelligence</p>
                     </div>
                     
                     <!-- Step 3: Bottom Right -->
                     <div class="how-step">
-                        <h3 data-number="3">Enforcement</h3>
-                        <p>Enforce policies on discovered violations—block unsafe tokens before execution</p>
+                        <h3 data-number="3">Control Plane Management</h3>
+                        <p>Manage policies on discovered violations—control plane orchestrates responses across the agent lifecycle</p>
                     </div>
                     
                     <!-- Cycle Arrows -->
@@ -5631,7 +5631,7 @@
                 <!-- Policy Core -->
                 <div class="policy-core" id="policyCore">
                     <div class="policy-core-label">Policy Core</div>
-                    <div class="policy-core-title">Thought-Level Intelligence Policy</div>
+                    <div class="policy-core-title">Intent-Level Intelligence Policy</div>
                     <div class="policy-core-state" id="policyState">Initializing...</div>
                     <div class="policy-metadata" id="policyMetadata">
                         <div class="metadata-item" id="metadataUeba">
@@ -5680,7 +5680,7 @@
 
                 <div class="signal-source tdr" id="signalTdr">
                     <div class="signal-icon">🛡️</div>
-                    <div class="signal-name">TDR/SIEM</div>
+                    <div class="signal-name">Threat Intel</div>
                     <div class="signal-value" id="signalTdrValue">0</div>
                     <div class="signal-pulse" id="pulseTdr"></div>
                     <div class="signal-connection" id="connectionTdr"></div>
@@ -5689,7 +5689,7 @@
                 <!-- Token Stream Source -->
                 <div class="token-stream-source" id="tokenStreamSource">
                     <div class="token-stream-icon">✨</div>
-                    <div class="token-stream-name">Thought-Level Intelligence</div>
+                    <div class="token-stream-name">Intent-Level Intelligence</div>
                     <div class="token-queue" id="tokenQueue">
                         <!-- Tokens will be dynamically added here -->
                     </div>
@@ -5877,7 +5877,7 @@
           value: 'signalApiValue', metadata: 'apiValue', label: 'API/Observability', 
           format: (v) => Math.round(v).toString(), range: [0, 150], pos: { bottom: '10%', left: '10%', center: { x: 0.1, y: 0.9 } } },
         { id: 'tdr', source: 'signalTdr', pulse: 'pulseTdr', connection: 'connectionTdr', 
-          value: 'signalTdrValue', metadata: 'tdrValue', label: 'TDR/SIEM', 
+          value: 'signalTdrValue', metadata: 'tdrValue', label: 'Threat Intel', 
           format: (v) => Math.round(v).toString(), range: [0, 100], pos: { bottom: '10%', right: '10%', center: { x: 0.9, y: 0.9 } } }
     ];
 
