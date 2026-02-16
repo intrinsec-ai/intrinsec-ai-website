@@ -15,12 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script>
-        // Set theme early to avoid a flash on first paint.
+        // Set theme early to avoid a flash on first paint. Default to dark; only light if user chose it via the toggle.
         (function () {
             try {
                 const savedTheme = localStorage.getItem('theme');
-                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-                const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+                const theme = savedTheme || 'dark';
                 document.documentElement.setAttribute('data-theme', theme);
             } catch (e) {}
         })();
@@ -6293,6 +6292,410 @@
             z-index: 1;
         }
         
+        /* Control Plane Advantage – visual cards */
+        .advantage-visual-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 36px;
+            margin-bottom: 48px;
+        }
+        @media (max-width: 900px) {
+            .advantage-visual-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .advantage-card {
+            background: linear-gradient(165deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
+            border-radius: 16px;
+            border: 2px solid rgba(125, 211, 252, 0.18);
+            padding: 0;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        [data-theme="light"] .advantage-card {
+            background: linear-gradient(165deg, #ffffff 0%, #e8edf2 100%);
+            border-color: rgba(14, 165, 233, 0.22);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.08);
+        }
+        .advantage-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(125, 211, 252, 0.35);
+            box-shadow: 0 16px 48px rgba(125, 211, 252, 0.12);
+        }
+        [data-theme="light"] .advantage-card:hover {
+            border-color: rgba(14, 165, 233, 0.45);
+            box-shadow: 0 16px 48px rgba(14, 165, 233, 0.15);
+        }
+        .advantage-visual {
+            aspect-ratio: 4/3;
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+        .advantage-visual--data-plane {
+            background: radial-gradient(ellipse 80% 70% at 50% 30%, rgba(125, 211, 252, 0.08) 0%, transparent 60%);
+        }
+        .advantage-visual--volume {
+            background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(125, 211, 252, 0.1) 0%, transparent 65%);
+        }
+        .advantage-visual--identity {
+            background: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(125, 211, 252, 0.12) 0%, transparent 60%);
+        }
+        /* Diagram: data plane → slip-through → rearchitected control plane + feedback loop */
+        .diagram-data-plane {
+            width: 100%;
+            max-width: 260px;
+            height: 140px;
+            position: relative;
+        }
+        .diagram-data-plane .flow {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        /* Feedback loop: curved path from control → data plane (adaptive policy), on left */
+        .diagram-data-plane .feedback-loop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 8px 0 6px;
+            pointer-events: none;
+        }
+        .diagram-data-plane .feedback-loop .feedback-curve {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 32px;
+            width: 56px;
+            height: auto;
+        }
+        .diagram-data-plane .feedback-loop .feedback-path {
+            stroke: var(--ice);
+            opacity: 0.95;
+        }
+        [data-theme="light"] .diagram-data-plane .feedback-loop .feedback-path {
+            stroke: var(--ice-bright);
+        }
+        .diagram-data-plane .feedback-loop .feedback-label {
+            font-size: 0.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--ice);
+            text-align: center;
+            line-height: 1.2;
+            max-width: 44px;
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+        }
+        /* Top: data plane (I/O + guardrails) – where threats originate / slip through */
+        .diagram-data-plane .data-plane-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .diagram-data-plane .data-plane-zone .zone-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+        .diagram-data-plane .data-plane-zone .barrier {
+            width: 100px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(125, 211, 252, 0.4);
+            background: rgba(125, 211, 252, 0.08);
+            position: relative;
+        }
+        .diagram-data-plane .data-plane-zone .barrier .crack {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.08));
+            border-left: 1px dashed var(--red);
+            border-right: 1px dashed var(--red);
+        }
+        .diagram-data-plane .slip-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .diagram-data-plane .slip-arrow {
+            width: 12px;
+            height: 22px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .diagram-data-plane .slip-arrow svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .diagram-data-plane .slip-arrow svg path,
+        .diagram-data-plane .slip-arrow svg line {
+            stroke: var(--red);
+            stroke-width: 1.5;
+            vector-effect: non-scaling-stroke;
+        }
+        .diagram-data-plane .slip-arrow svg .arrow-fill {
+            fill: var(--red);
+        }
+        .diagram-data-plane .slip-label {
+            font-size: 0.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--red);
+            opacity: 0.95;
+        }
+        /* Bottom: control plane – rearchitected (the answer) */
+        .diagram-data-plane .control-plane-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px 10px;
+            border-radius: 10px;
+            border: 2px solid var(--ice);
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.15) 0%, rgba(125, 211, 252, 0.06) 100%);
+            box-shadow: 0 0 20px rgba(125, 211, 252, 0.2);
+        }
+        [data-theme="light"] .diagram-data-plane .control-plane-zone {
+            border-color: var(--ice-bright);
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.18) 0%, rgba(14, 165, 233, 0.06) 100%);
+            box-shadow: 0 0 24px rgba(14, 165, 233, 0.25);
+        }
+        .diagram-data-plane .control-plane-zone .zone-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ice);
+        }
+        .diagram-data-plane .control-plane-zone .rearch-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-secondary);
+        }
+        /* Diagram: volume → information bottleneck */
+        .diagram-volume {
+            width: 100%;
+            max-width: 210px;
+            height: 130px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .diagram-volume svg {
+            width: 100%;
+            height: 100%;
+        }
+        .diagram-volume .bn-shape {
+            fill: rgba(125, 211, 252, 0.04);
+            stroke: rgba(125, 211, 252, 0.22);
+            stroke-width: 0.8;
+        }
+        [data-theme="light"] .diagram-volume .bn-shape {
+            fill: rgba(14, 165, 233, 0.03);
+            stroke: rgba(14, 165, 233, 0.18);
+        }
+        .diagram-volume .bn-flow-line {
+            stroke: rgba(125, 211, 252, 0.09);
+            stroke-width: 0.5;
+            fill: none;
+        }
+        [data-theme="light"] .diagram-volume .bn-flow-line {
+            stroke: rgba(14, 165, 233, 0.07);
+        }
+        .diagram-volume .bn-particle {
+            fill: rgba(125, 211, 252, 0.85);
+        }
+        [data-theme="light"] .diagram-volume .bn-particle {
+            fill: rgba(14, 165, 233, 0.75);
+        }
+        .diagram-volume .bn-scatter-dot {
+            fill: var(--text-dim);
+            opacity: 0.4;
+        }
+        .diagram-volume .bn-neck-glow {
+            fill: rgba(125, 211, 252, 0.08);
+            animation: bnNeckPulse 3s ease-in-out infinite;
+        }
+        [data-theme="light"] .diagram-volume .bn-neck-glow {
+            fill: rgba(14, 165, 233, 0.06);
+        }
+        .diagram-volume .bn-output-glow {
+            fill: rgba(125, 211, 252, 0.2);
+            animation: bnOutputPulse 2.5s ease-in-out infinite;
+        }
+        [data-theme="light"] .diagram-volume .bn-output-glow {
+            fill: rgba(14, 165, 233, 0.15);
+        }
+        .diagram-volume .bn-output-core {
+            fill: var(--ice);
+            animation: bnOutputPulse 2.5s ease-in-out infinite 0.3s;
+        }
+        .diagram-volume .bn-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-anchor: middle;
+            text-transform: uppercase;
+        }
+        .diagram-volume .bn-label-top {
+            font-size: 5px;
+            fill: var(--text-dim);
+            opacity: 0.75;
+        }
+        .diagram-volume .bn-label-bottom {
+            font-size: 5.5px;
+            fill: var(--ice);
+            opacity: 0.9;
+        }
+        @keyframes bnNeckPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        @keyframes bnOutputPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        /* Diagram: identity – cryptographic (one key) vs abstract (parameters) */
+        .diagram-identity {
+            width: 100%;
+            max-width: 220px;
+            height: 110px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .diagram-identity .crypto-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .diagram-identity .old-id {
+            width: 36px;
+            height: 44px;
+            border-radius: 6px 6px 20px 20px;
+            border: 2px solid rgba(125, 211, 252, 0.4);
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.1) 0%, rgba(125, 211, 252, 0.02) 100%);
+            position: relative;
+        }
+        .diagram-identity .old-id::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(125, 211, 252, 0.55);
+        }
+        .diagram-identity .old-id::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 14px;
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.5), rgba(125, 211, 252, 0.25));
+            border-radius: 2px;
+        }
+        .diagram-identity .arrow-id {
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(125, 211, 252, 0.4), var(--ice));
+            flex-shrink: 0;
+        }
+        .diagram-identity .abstract-side {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .diagram-identity .abstract-side .param-node {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--ice), rgba(125, 211, 252, 0.4));
+            box-shadow: 0 0 12px rgba(125, 211, 252, 0.35);
+        }
+        .diagram-identity .abstract-side .param-node:nth-child(1) { width: 14px; height: 14px; top: 8px; left: 50%; transform: translateX(-50%); }
+        .diagram-identity .abstract-side .param-node:nth-child(2) { width: 10px; height: 10px; top: 28px; left: 8px; }
+        .diagram-identity .abstract-side .param-node:nth-child(3) { width: 12px; height: 12px; top: 28px; right: 8px; left: auto; }
+        .diagram-identity .abstract-side .param-node:nth-child(4) { width: 10px; height: 10px; bottom: 18px; left: 18px; }
+        .diagram-identity .abstract-side .param-node:nth-child(5) { width: 14px; height: 14px; bottom: 8px; left: 50%; transform: translateX(-50%); }
+        .diagram-identity .abstract-side .param-node:nth-child(6) { width: 10px; height: 10px; bottom: 18px; right: 18px; left: auto; }
+        .diagram-identity .abstract-side .param-connector {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.35), transparent);
+            transform-origin: left center;
+        }
+        .diagram-identity .abstract-side .param-connector:nth-child(7) { width: 24px; top: 18px; left: 50%; transform: translateX(-50%) rotate(-25deg); }
+        .diagram-identity .abstract-side .param-connector:nth-child(8) { width: 28px; top: 34px; left: 50%; transform: translateX(-50%); }
+        .diagram-identity .abstract-side .param-connector:nth-child(9) { width: 22px; bottom: 26px; left: 50%; transform: translateX(-50%) rotate(20deg); }
+        .advantage-card-caption {
+            padding: 18px 20px 20px;
+            border-top: 1px solid rgba(125, 211, 252, 0.12);
+        }
+        [data-theme="light"] .advantage-card-caption {
+            border-top-color: rgba(14, 165, 233, 0.15);
+        }
+        .advantage-card-caption .title {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ice);
+            margin-bottom: 6px;
+        }
+        .advantage-card-caption .text {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .advantage-card-caption .text strong {
+            color: var(--ice);
+            font-weight: 700;
+        }
         #ecosystemCanvas {
             position: absolute;
             top: 0;
@@ -7091,16 +7494,166 @@
         <div class="container">
             <div class="guardrails-bridge-content">
                 <h2>The Control Plane Advantage</h2>
-                <div class="section-intro" style="max-width: 800px; margin: 0 auto;">
-                    <p style="margin-bottom: 20px; line-height: 1.7;">
-                        Guardrails operate at the data plane, scanning inputs and outputs in isolation. Compositional attacks (🧩) and adversarial threats (♟️) slip through.
-                    </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7;">
-                        Classical control planes can't solve this—they'd drown in the volume. With context windows and generations reaching millions of tokens across agent workflows, traditional monitoring simply can't handle the throughput.
-                    </p>
-                    <p style="margin: 0; line-height: 1.7;">
-                        <strong>Intrinsec's innovation:</strong> a compression-first control plane that extracts compact intent signals.
-                    </p>
+                <div class="advantage-visual-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-visual advantage-visual--data-plane">
+                            <div class="diagram-data-plane" aria-hidden="true">
+                                <div class="flow">
+                                    <div class="data-plane-zone">
+                                        <span class="zone-label">Data plane</span>
+                                        <div class="barrier"><span class="crack" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="slip-group">
+                                        <div class="slip-arrow" title="Slip through">
+                                        <svg viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <line x1="6" y1="0" x2="6" y2="16" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path class="arrow-fill" d="M6 22 L2 16 L10 16 Z" fill="var(--red)"/>
+                                        </svg>
+                                    </div>
+                                        <span class="slip-label">Slip through</span>
+                                    </div>
+                                    <div class="control-plane-zone">
+                                        <span class="zone-label">Control plane</span>
+                                        <span class="rearch-label">Reinvented</span>
+                                    </div>
+                                </div>
+                                <div class="feedback-loop" title="Adaptive policy feedback">
+                                    <svg class="feedback-curve" viewBox="0 0 60 140" preserveAspectRatio="xMinYMid meet" overflow="visible" aria-hidden="true">
+                                        <defs>
+                                            <marker id="feedback-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+                                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--ice)" />
+                                            </marker>
+                                        </defs>
+                                        <path class="feedback-path" d="M 50 118 C 6 118 8 28 50 18" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" marker-end="url(#feedback-arrow)" />
+                                    </svg>
+                                    <span class="feedback-label">Adaptive policy</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="advantage-card-caption">
+                            <div class="title">Data plane isn’t enough</div>
+                            <p class="text">Adaptive and compositional threats will slip through the data plane.</p>
+                        </div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-visual advantage-visual--volume">
+                            <div class="diagram-volume" aria-hidden="true">
+                                <svg viewBox="0 0 200 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <path id="vp1" d="M 25,15 Q 40,50 100,85 L 100,112"/>
+                                        <path id="vp2" d="M 50,15 Q 58,48 100,85 L 100,112"/>
+                                        <path id="vp3" d="M 75,15 Q 80,46 100,85 L 100,112"/>
+                                        <path id="vp4" d="M 100,15 Q 100,46 100,85 L 100,112"/>
+                                        <path id="vp5" d="M 125,15 Q 120,46 100,85 L 100,112"/>
+                                        <path id="vp6" d="M 150,15 Q 142,48 100,85 L 100,112"/>
+                                        <path id="vp7" d="M 175,15 Q 160,50 100,85 L 100,112"/>
+                                    </defs>
+
+                                    <!-- Bottleneck shape -->
+                                    <path class="bn-shape" d="M 15,15 L 185,15 C 185,42 142,58 115,78 L 115,108 C 115,117 85,117 85,108 L 85,78 C 58,58 15,42 15,15 Z"/>
+
+                                    <!-- Converging flow guide lines -->
+                                    <path class="bn-flow-line" d="M 35,18 Q 50,48 100,85"/>
+                                    <path class="bn-flow-line" d="M 65,18 Q 74,46 100,85"/>
+                                    <path class="bn-flow-line" d="M 100,18 Q 100,46 100,85"/>
+                                    <path class="bn-flow-line" d="M 135,18 Q 126,46 100,85"/>
+                                    <path class="bn-flow-line" d="M 165,18 Q 150,48 100,85"/>
+
+                                    <!-- Scattered input dots (millions of tokens) -->
+                                    <g>
+                                        <circle class="bn-scatter-dot" cx="22" cy="18" r="1.3"/>
+                                        <circle class="bn-scatter-dot" cx="36" cy="20" r="0.9"/>
+                                        <circle class="bn-scatter-dot" cx="48" cy="17" r="1.1"/>
+                                        <circle class="bn-scatter-dot" cx="62" cy="19" r="0.8"/>
+                                        <circle class="bn-scatter-dot" cx="76" cy="17" r="1.2"/>
+                                        <circle class="bn-scatter-dot" cx="88" cy="18" r="0.7"/>
+                                        <circle class="bn-scatter-dot" cx="100" cy="16" r="1"/>
+                                        <circle class="bn-scatter-dot" cx="112" cy="18" r="0.8"/>
+                                        <circle class="bn-scatter-dot" cx="124" cy="17" r="1.2"/>
+                                        <circle class="bn-scatter-dot" cx="138" cy="19" r="0.9"/>
+                                        <circle class="bn-scatter-dot" cx="152" cy="17" r="1.1"/>
+                                        <circle class="bn-scatter-dot" cx="164" cy="20" r="0.8"/>
+                                        <circle class="bn-scatter-dot" cx="178" cy="18" r="1.3"/>
+                                        <circle class="bn-scatter-dot" cx="30" cy="24" r="0.7"/>
+                                        <circle class="bn-scatter-dot" cx="44" cy="26" r="1"/>
+                                        <circle class="bn-scatter-dot" cx="58" cy="23" r="0.6"/>
+                                        <circle class="bn-scatter-dot" cx="72" cy="25" r="0.9"/>
+                                        <circle class="bn-scatter-dot" cx="86" cy="23" r="0.8"/>
+                                        <circle class="bn-scatter-dot" cx="100" cy="24" r="0.7"/>
+                                        <circle class="bn-scatter-dot" cx="114" cy="23" r="0.9"/>
+                                        <circle class="bn-scatter-dot" cx="128" cy="25" r="0.6"/>
+                                        <circle class="bn-scatter-dot" cx="142" cy="23" r="1"/>
+                                        <circle class="bn-scatter-dot" cx="156" cy="26" r="0.7"/>
+                                        <circle class="bn-scatter-dot" cx="170" cy="24" r="0.9"/>
+                                    </g>
+
+                                    <!-- Neck glow -->
+                                    <ellipse class="bn-neck-glow" cx="100" cy="90" rx="16" ry="22"/>
+
+                                    <!-- Animated particles converging through bottleneck -->
+                                    <circle class="bn-particle" r="1.8" opacity="0">
+                                        <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath href="#vp1"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="1.5" opacity="0">
+                                        <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.5s"><mpath href="#vp2"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="1.6" opacity="0">
+                                        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1s"><mpath href="#vp3"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="2" opacity="0">
+                                        <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.3s"><mpath href="#vp4"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;1;1;0.4;0" dur="2.5s" repeatCount="indefinite" begin="0.3s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="1.6" opacity="0">
+                                        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.3s"><mpath href="#vp5"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="1.5" opacity="0">
+                                        <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.7s"><mpath href="#vp6"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.7s"/>
+                                    </circle>
+                                    <circle class="bn-particle" r="1.8" opacity="0">
+                                        <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#vp7"/></animateMotion>
+                                        <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+                                    </circle>
+
+                                    <!-- Output glow + compressed signal -->
+                                    <ellipse class="bn-output-glow" cx="100" cy="112" rx="12" ry="5"/>
+                                    <circle class="bn-output-core" cx="100" cy="112" r="3.5"/>
+
+                                    <!-- Labels -->
+                                    <text class="bn-label bn-label-top" x="100" y="9">MILLIONS OF TOKENS</text>
+                                    <text class="bn-label bn-label-bottom" x="100" y="132">COMPACT SIGNALS</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="advantage-card-caption">
+                            <div class="title">Volume</div>
+                            <p class="text">Classical control planes drown in scale. Ours is compression-first: we extract compact intent signals.</p>
+                        </div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-visual advantage-visual--identity">
+                            <div class="diagram-identity" aria-hidden="true">
+                                <div class="crypto-side">
+                                    <div class="old-id" title="Cryptographic identity"></div>
+                                </div>
+                                <div class="arrow-id"></div>
+                                <div class="abstract-side" title="Abstract notions & parameters">
+                                    <span class="param-node"></span><span class="param-node"></span><span class="param-node"></span>
+                                    <span class="param-node"></span><span class="param-node"></span><span class="param-node"></span>
+                                    <span class="param-connector"></span><span class="param-connector"></span><span class="param-connector"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="advantage-card-caption">
+                            <div class="title">Identity</div>
+                            <p class="text">Modern control needs new notions of identity: abstract parameters and semantic roles, not only cryptographic keys.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
