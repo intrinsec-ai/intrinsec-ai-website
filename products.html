@@ -724,6 +724,218 @@
             box-shadow: 0 16px 56px rgba(125, 211, 252, 0.3);
         }
         
+        /* Control Plane Hero Product */
+        .control-plane-hero {
+            padding: 0 0 100px;
+        }
+        
+        .cp-hero-card {
+            background: linear-gradient(135deg, 
+                rgba(125, 211, 252, 0.06) 0%, 
+                var(--navy-light) 40%, 
+                rgba(56, 189, 248, 0.04) 100%);
+            border: 2px solid rgba(125, 211, 252, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.18),
+                        0 0 80px rgba(125, 211, 252, 0.08);
+            position: relative;
+            animation: featured-glow 4s ease-in-out infinite;
+        }
+        
+        [data-theme="light"] .cp-hero-card {
+            background: linear-gradient(135deg, 
+                rgba(2, 132, 199, 0.04) 0%, 
+                var(--navy-light) 40%, 
+                rgba(2, 132, 199, 0.02) 100%);
+            border: 2px solid rgba(2, 132, 199, 0.2);
+            box-shadow: 0 12px 48px rgba(2, 132, 199, 0.12);
+        }
+        
+        .cp-hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--ice) 20%, 
+                var(--ice-bright) 50%, 
+                var(--ice) 80%, 
+                transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        .cp-hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: center;
+        }
+        
+        .cp-hero-text {
+            padding: 56px 48px;
+        }
+        
+        .cp-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(125, 211, 252, 0.12);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            border-radius: 24px;
+            padding: 6px 16px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--ice);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 24px;
+        }
+        
+        [data-theme="light"] .cp-hero-badge {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: rgba(2, 132, 199, 0.3);
+        }
+        
+        .cp-hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--ice);
+            animation: cp-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes cp-pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        
+        .cp-hero-title {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+        
+        .cp-hero-title .gradient {
+            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 50%, var(--ice) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cp-hero-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        
+        .cp-hero-capabilities {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .cp-hero-capabilities li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        
+        .cp-hero-capabilities li .cap-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: rgba(125, 211, 252, 0.12);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--ice);
+            margin-top: 2px;
+        }
+        
+        [data-theme="light"] .cp-hero-capabilities li .cap-icon {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: rgba(2, 132, 199, 0.2);
+        }
+        
+        .cp-hero-visual {
+            position: relative;
+            padding: 24px 24px 24px 0;
+        }
+        
+        .cp-hero-visual img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3),
+                        0 0 60px rgba(125, 211, 252, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        [data-theme="light"] .cp-hero-visual img {
+            border-color: rgba(2, 132, 199, 0.15);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cp-hero-card:hover .cp-hero-visual img {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.25),
+                        0 0 80px rgba(125, 211, 252, 0.15);
+        }
+        
+        .components-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .components-label-line {
+            height: 1px;
+            flex: 1;
+            max-width: 120px;
+            background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.3), transparent);
+        }
+        
+        .components-label-text {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--ice);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        @media (max-width: 900px) {
+            .cp-hero-inner {
+                grid-template-columns: 1fr;
+            }
+            .cp-hero-text {
+                padding: 40px 32px 24px;
+            }
+            .cp-hero-visual {
+                padding: 0 24px 32px;
+            }
+        }
+        
         /* Section */
         section {
             padding: 80px 0;
@@ -888,6 +1100,280 @@
                 padding: 60px 0 40px;
             }
         }
+
+        /* ── Bento Grid: Core Components ── */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .bento-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .bento-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(248, 250, 252, 0.95) 100%);
+            border-color: rgba(2, 132, 199, 0.12);
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ice), transparent);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(125, 211, 252, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(125, 211, 252, 0.1);
+        }
+
+        .bento-card:hover::before { opacity: 1; }
+
+        .bento-card--span2 { grid-column: span 2; }
+
+        .bento-card--featured {
+            border: 2px solid var(--ice);
+            background: linear-gradient(135deg,
+                rgba(125, 211, 252, 0.06) 0%,
+                var(--navy-light) 50%,
+                rgba(56, 189, 248, 0.04) 100%);
+            box-shadow: 0 8px 40px rgba(125, 211, 252, 0.15),
+                        0 0 60px rgba(125, 211, 252, 0.08);
+            animation: featured-glow 4s ease-in-out infinite;
+        }
+
+        [data-theme="light"] .bento-card--featured {
+            background: linear-gradient(135deg,
+                rgba(2, 132, 199, 0.04) 0%,
+                var(--navy-light) 50%,
+                rgba(2, 132, 199, 0.02) 100%);
+            border-color: var(--ice);
+            box-shadow: 0 8px 40px rgba(2, 132, 199, 0.12);
+        }
+
+        .bento-card--featured::before {
+            opacity: 1;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, var(--ice) 20%, var(--ice-bright) 50%, var(--ice) 80%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .bento-card--featured:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.25),
+                        0 0 80px rgba(125, 211, 252, 0.12);
+        }
+
+        .bento-card-inner {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .bento-card-text { flex: 1; min-width: 0; }
+
+        .bento-card-visual {
+            flex: 0 0 46%;
+            max-width: 46%;
+        }
+
+        .bento-card-visual img {
+            width: 100%;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        [data-theme="light"] .bento-card-visual img {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(2, 132, 199, 0.1);
+        }
+
+        .bento-card--featured:hover .bento-card-visual img {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(125, 211, 252, 0.2);
+        }
+
+        .bento-card .product-icon.mindmap-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 16px;
+        }
+
+        .bento-card .product-icon.mindmap-icon svg {
+            width: 56px;
+            height: 56px;
+        }
+
+        .bento-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            background: rgba(125, 211, 252, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            color: var(--ice);
+        }
+
+        [data-theme="light"] .bento-icon {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.12);
+        }
+
+        .bento-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .bento-card p {
+            font-size: 0.9375rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .bento-tag {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ice);
+            background: rgba(125, 211, 252, 0.1);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+        }
+
+        .bento-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--ice);
+            text-decoration: none;
+            transition: gap 0.2s ease;
+        }
+
+        .bento-link:hover { gap: 10px; }
+
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card--span2 { grid-column: span 1; }
+            .bento-card-inner { flex-direction: column; }
+            .bento-card-visual { flex: none; max-width: 100%; }
+        }
+
+        /* ── Use Case Tiles ── */
+        .usecase-tiles {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .usecase-tile {
+            text-align: center;
+            padding: 28px 16px;
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.08);
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] .usecase-tile {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border-color: rgba(2, 132, 199, 0.08);
+        }
+
+        .usecase-tile:hover {
+            border-color: rgba(125, 211, 252, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(125, 211, 252, 0.1);
+        }
+
+        .usecase-tile-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            background: rgba(125, 211, 252, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            color: var(--ice);
+        }
+
+        [data-theme="light"] .usecase-tile-icon {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.1);
+        }
+
+        .usecase-tile h3 {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+
+        .usecase-tile p {
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .usecase-tile .tile-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .usecase-tile .tile-link:hover { border-color: var(--ice); }
+
+        @media (max-width: 1100px) {
+            .usecase-tiles { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 680px) {
+            .usecase-tiles { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 440px) {
+            .usecase-tiles { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -920,140 +1406,166 @@
         </div>
     </section>
 
+    <section class="control-plane-hero">
+        <div class="container">
+            <div class="cp-hero-card">
+                <div class="cp-hero-inner">
+                    <div class="cp-hero-text">
+                        <div class="cp-hero-badge">
+                            <span class="cp-hero-badge-dot"></span>
+                            Primary Product
+                        </div>
+                        <h2 class="cp-hero-title">
+                            The <span class="gradient">Control Plane</span> Dashboard
+                        </h2>
+                        <p class="cp-hero-desc">
+                            Converge identity signals, threat intelligence, and intent envelope analytics into a single, decisive view. Monitor how agent identities evolve, surface emerging threats in real time, and track intent boundaries—all from one unified command surface.
+                        </p>
+                        <ul class="cp-hero-capabilities">
+                            <li>
+                                <span class="cap-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Identity drift monitoring</strong> — Track how agent roles, permissions, and semantic identities shift over time</span>
+                            </li>
+                            <li>
+                                <span class="cap-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Intent envelope analytics</strong> — Visualize the boundary between expected behavior and anomalous intent in real time</span>
+                            </li>
+                            <li>
+                                <span class="cap-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Threat surface mapping</strong> — Correlate top assets, actors, actions, policies, and logics into a coherent threat narrative</span>
+                            </li>
+                            <li>
+                                <span class="cap-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Critical content scoring</strong> — Rank and surface the most security-relevant text and images by combined surprise and suspicion scores</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cp-hero-visual">
+                        <img 
+                            src="control-plane-dashboard.png" 
+                            alt="Control Plane Dashboard showing identity monitoring, threat analytics, and intent envelope tracking" 
+                            loading="lazy"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="products-section">
         <div class="container">
-            <h2>Enterprise Control Plane Components</h2>
+            <div class="components-label">
+                <span class="components-label-line"></span>
+                <span class="components-label-text">What Powers the Control Plane</span>
+                <span class="components-label-line"></span>
+            </div>
+            <h2>Core Components</h2>
             <p class="section-intro">
-                Our control plane architecture monitors intent and optimizes policy across the agent lifecycle, 
-                defending against adaptive and compositional threats—whether in pixels or tokens.
+                Five integrated layers securing the full agent lifecycle.
             </p>
-            
-            <div class="products-grid">
-                <!-- Product 1: Flagship Model -->
-                <div class="product-card">
-                    <h3 class="product-title">Flagship Model</h3>
-                    <p class="product-description">
-                        Our core AI model that powers the control plane. Identifies critical intent in text and images, extracting and scoring security-relevant concepts at the thought level for precise threat detection and policy optimization.
-                    </p>
-                    <div class="product-highlight">
-                        Foundation of the control plane. Integrates into any security workflow.
+
+            <div class="bento-grid">
+                <!-- Flagship Model -->
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M12 22V12"/><path d="M20.5 7L12 12 3.5 7"/></svg>
                     </div>
+                    <h3>Flagship Model</h3>
+                    <p>Identifies critical intent in text and images. Scores security concepts at the thought level.</p>
+                    <span class="bento-tag">Foundation</span>
                 </div>
 
-                <!-- Product 2: Intent Access Broker -->
-                <div class="product-card product-card--featured">
-                    <span class="product-icon mindmap-icon" aria-hidden="true">
-                        <svg viewBox="0 0 80 80" focusable="false">
-                            <defs>
-                                <linearGradient id="tabFill" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0" stop-color="var(--navy-light)" stop-opacity="0.95"></stop>
-                                    <stop offset="1" stop-color="var(--ice-glow)" stop-opacity="0.95"></stop>
-                                </linearGradient>
-                                <radialGradient id="tabCore" cx="50%" cy="40%" r="70%">
-                                    <stop offset="0" stop-color="var(--ice-bright)" stop-opacity="0.85"></stop>
-                                    <stop offset="1" stop-color="var(--ice)" stop-opacity="0.35"></stop>
-                                </radialGradient>
-                                <radialGradient id="tabDot" cx="50%" cy="40%" r="70%">
-                                    <stop offset="0" stop-color="var(--ice-bright)" stop-opacity="0.95"></stop>
-                                    <stop offset="1" stop-color="var(--ice)" stop-opacity="0.55"></stop>
-                                </radialGradient>
-                                <filter id="tabGlow" x="-40%" y="-40%" width="180%" height="180%">
-                                    <feGaussianBlur stdDeviation="2.2" result="blur"></feGaussianBlur>
-                                    <feMerge>
-                                        <feMergeNode in="blur"></feMergeNode>
-                                        <feMergeNode in="SourceGraphic"></feMergeNode>
-                                    </feMerge>
-                                </filter>
-                                <filter id="tabGlowStrong" x="-60%" y="-60%" width="220%" height="220%">
-                                    <feGaussianBlur stdDeviation="3.2" result="blur"></feGaussianBlur>
-                                    <feMerge>
-                                        <feMergeNode in="blur"></feMergeNode>
-                                        <feMergeNode in="SourceGraphic"></feMergeNode>
-                                    </feMerge>
-                                </filter>
-                                <clipPath id="tabClip">
-                                    <path d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"></path>
-                                </clipPath>
-                            </defs>
-
-                            <!-- Trail dots (classic thought bubble) -->
-                            <circle class="tab-dot d1" cx="26" cy="62" r="2.6"></circle>
-                            <circle class="tab-dot d2" cx="21.5" cy="67" r="1.9"></circle>
-                            <circle class="tab-dot d3" cx="18.2" cy="71" r="1.2"></circle>
-
-                            <!-- Bubble (fill + stroke) -->
-                            <g class="tab-bubble">
-                                <path class="tab-bubble-fill" d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"></path>
-                                <path class="tab-bubble-stroke" d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"></path>
-                            </g>
-
-                            <!-- Inside bubble: flows + graph + broker gate -->
-                            <g clip-path="url(#tabClip)">
-                                <!-- Streams converging into the broker -->
-                                <path class="tab-stream s1" d="M8 38 C 18 38, 22 38, 28 40"></path>
-                                <path class="tab-stream s2" d="M72 36 C 60 36, 56 36, 52 40"></path>
-                                <path class="tab-stream s3" d="M40 10 C 40 20, 40 26, 40 32"></path>
-                                <path class="tab-stream s4" d="M52 54 C 48 50, 46 48, 44 45"></path>
-
-                                <!-- Thought graph -->
-                                <path class="tab-link l1" d="M28 30 L 36 34 L 30 42"></path>
-                                <path class="tab-link l2" d="M52 28 L 44 34 L 50 42"></path>
-                                <path class="tab-link l3" d="M30 42 L 40 46 L 50 42"></path>
-                                <circle class="tab-node n1" cx="28" cy="30" r="2.4"></circle>
-                                <circle class="tab-node n2" cx="52" cy="28" r="2.4"></circle>
-                                <circle class="tab-node n3" cx="30" cy="42" r="2.4"></circle>
-                                <circle class="tab-node n4" cx="50" cy="42" r="2.4"></circle>
-
-                                <!-- Broker core / gate -->
-                                <rect class="tab-core" x="34" y="32" width="12" height="12" rx="3"></rect>
-                                <path class="tab-keyhole" d="M40 36.2c-1.2 0-2.2 1-2.2 2.2c0 .9.5 1.7 1.3 2v2.2h1.8v-2.2c.8-.3 1.3-1.1 1.3-2c0-1.2-1-2.2-2.2-2.2z"></path>
-                            </g>
-                        </svg>
-                    </span>
-                    <h3 class="product-title">Intent Access Broker</h3>
-                    <p class="product-description">
-                        The core of our control plane for AI agents. Instead of monitoring inputs/outputs (typical guardrails) or downstream events, we manage policy at the <strong style="color: var(--ice);">intent layer</strong>—before intent becomes action. Monitor and control agent behavior across the entire lifecycle.
-                    </p>
-                    
-                    <div class="product-highlight product-highlight--featured">
-                        Control plane defense against compositional threats & adaptive attacks
-                    </div>
-
-                    <img
-                        src="graph-example.svg"
-                        alt="Example graph output showing extracted entities and relationships"
-                        class="product-image product-image--example"
-                        loading="lazy"
-                    >
-                </div>
-
-                <!-- Product 3: Search Engine -->
-                <div class="product-card">
-                    <h3 class="product-title">Intelligent Search Engine</h3>
-                    <p class="product-description">
-                        Control plane visibility with "critical intent first" prioritization. Reranks content using our flagship model to surface the most critical security signals across the agent lifecycle.
-                    </p>
-                    <img src="demo-page-screenshot.png" alt="Intelligent Search Engine demo showing critical intent first prioritization" class="product-image">
-                    <div class="product-highlight">
-                        Context-aware control plane search that prioritizes what matters most
-                    </div>
-                </div>
-
-                <!-- Product 4: Policy Optimization -->
-                <div class="product-card">
-                    <h3 class="product-title">Policy Optimization Engine</h3>
-                    <p class="product-description">
-                        Control plane optimization across the agent lifecycle. Continuously refines security policies using our flagship model, analyzing intent patterns to adapt to emerging compositional and adaptive threats.
-                    </p>
-                    <div class="product-highlight">
-                        Automated control plane policy refinement using intent pattern analysis
-                    </div>
-                    <div class="product-highlight" style="margin-top: 18px;">
-                        <strong>Deep Dive:</strong> See adaptive policy design + dynamic enrichment signals in action.
-                        <div style="margin-top: 10px;">
-                            <a href="policy.html" style="color: var(--ice); text-decoration: none; border-bottom: 1px solid var(--ice); font-weight: 600;">Open the deep dive →</a>
+                <!-- Intent Access Broker (Featured) -->
+                <div class="bento-card bento-card--span2 bento-card--featured">
+                    <div class="bento-card-inner">
+                        <div class="bento-card-text">
+                            <span class="product-icon mindmap-icon" aria-hidden="true">
+                                <svg viewBox="0 0 80 80" focusable="false">
+                                    <defs>
+                                        <linearGradient id="tabFill" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stop-color="var(--navy-light)" stop-opacity="0.95"/>
+                                            <stop offset="1" stop-color="var(--ice-glow)" stop-opacity="0.95"/>
+                                        </linearGradient>
+                                        <radialGradient id="tabCore" cx="50%" cy="40%" r="70%">
+                                            <stop offset="0" stop-color="var(--ice-bright)" stop-opacity="0.85"/>
+                                            <stop offset="1" stop-color="var(--ice)" stop-opacity="0.35"/>
+                                        </radialGradient>
+                                        <radialGradient id="tabDot" cx="50%" cy="40%" r="70%">
+                                            <stop offset="0" stop-color="var(--ice-bright)" stop-opacity="0.95"/>
+                                            <stop offset="1" stop-color="var(--ice)" stop-opacity="0.55"/>
+                                        </radialGradient>
+                                        <filter id="tabGlow" x="-40%" y="-40%" width="180%" height="180%">
+                                            <feGaussianBlur stdDeviation="2.2" result="blur"/>
+                                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                        </filter>
+                                        <filter id="tabGlowStrong" x="-60%" y="-60%" width="220%" height="220%">
+                                            <feGaussianBlur stdDeviation="3.2" result="blur"/>
+                                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                        </filter>
+                                        <clipPath id="tabClip">
+                                            <path d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"/>
+                                        </clipPath>
+                                    </defs>
+                                    <circle class="tab-dot d1" cx="26" cy="62" r="2.6"/>
+                                    <circle class="tab-dot d2" cx="21.5" cy="67" r="1.9"/>
+                                    <circle class="tab-dot d3" cx="18.2" cy="71" r="1.2"/>
+                                    <g class="tab-bubble">
+                                        <path class="tab-bubble-fill" d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"/>
+                                        <path class="tab-bubble-stroke" d="M18 38c0-6 4-11 10-12c2-5 7-8 13-6c4-3 10-2 13 2c6 0 11 5 11 11c0 4-2 8-5 10c1 6-4 12-11 12c-2 0-4 0-5-1c-4 3-9 3-13 0c-7 2-13-3-13-10c-4-2-6-5-6-6z"/>
+                                    </g>
+                                    <g clip-path="url(#tabClip)">
+                                        <path class="tab-stream s1" d="M8 38 C 18 38, 22 38, 28 40"/>
+                                        <path class="tab-stream s2" d="M72 36 C 60 36, 56 36, 52 40"/>
+                                        <path class="tab-stream s3" d="M40 10 C 40 20, 40 26, 40 32"/>
+                                        <path class="tab-stream s4" d="M52 54 C 48 50, 46 48, 44 45"/>
+                                        <path class="tab-link l1" d="M28 30 L 36 34 L 30 42"/>
+                                        <path class="tab-link l2" d="M52 28 L 44 34 L 50 42"/>
+                                        <path class="tab-link l3" d="M30 42 L 40 46 L 50 42"/>
+                                        <circle class="tab-node n1" cx="28" cy="30" r="2.4"/>
+                                        <circle class="tab-node n2" cx="52" cy="28" r="2.4"/>
+                                        <circle class="tab-node n3" cx="30" cy="42" r="2.4"/>
+                                        <circle class="tab-node n4" cx="50" cy="42" r="2.4"/>
+                                        <rect class="tab-core" x="34" y="32" width="12" height="12" rx="3"/>
+                                        <path class="tab-keyhole" d="M40 36.2c-1.2 0-2.2 1-2.2 2.2c0 .9.5 1.7 1.3 2v2.2h1.8v-2.2c.8-.3 1.3-1.1 1.3-2c0-1.2-1-2.2-2.2-2.2z"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <h3>Intent Access Broker</h3>
+                            <p>Policy enforcement at the <strong style="color: var(--ice);">intent layer</strong> — before intent becomes action. The core of the control plane.</p>
+                            <span class="bento-tag">Control Plane Core</span>
+                        </div>
+                        <div class="bento-card-visual">
+                            <img src="graph-example.svg" alt="Intent graph showing extracted entities and relationships" loading="lazy">
                         </div>
                     </div>
+                </div>
+
+                <!-- Search Engine -->
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <h3>Intelligent Search</h3>
+                    <p>Critical-intent-first prioritization. Surfaces the most relevant security signals across the lifecycle.</p>
+                </div>
+
+                <!-- Surprise Detection -->
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Surprise Detection</h3>
+                    <p>Behavioral identity envelope for every agent. Detects drift, impersonation, and role violation in real time.</p>
+                </div>
+
+                <!-- Policy Optimization -->
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                    </div>
+                    <h3>Policy Optimization</h3>
+                    <p>Continuously refines security policies through intent pattern analysis.</p>
+                    <a href="policy.html" class="bento-link">Deep dive <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </div>
@@ -1061,51 +1573,51 @@
 
     <section class="use-cases-section">
         <div class="container">
-            <div class="use-cases-content">
-                <h2>Downstream Integration & Use Cases</h2>
-                <p class="section-intro">
-                    The extracted content from Intrinsec AI provides actionable intelligence for your security operations.
-                </p>
-                
-                <div class="use-cases-grid">
-                    <div class="use-case-card">
-                        <h3>Security Operations Integration</h3>
-                        <ul>
-                            <li>Export intent-level security signals to your security tools</li>
-                            <li>Correlate AI-specific threats with broader security events</li>
-                            <li>Create unified visibility across traditional and AI-driven attack vectors</li>
-                        </ul>
+            <h2>Downstream Integration & Use Cases</h2>
+            <p class="section-intro">
+                Actionable intelligence for your security operations.
+            </p>
+
+            <div class="usecase-tiles">
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    
-                    <div class="use-case-card">
-                        <h3>Multi-Stage AI Attack Detection</h3>
-                        <ul>
-                            <li>Track suspicious interactions across multiple requests</li>
-                            <li>Identify attack chains where adversaries probe and refine their approaches</li>
-                            <li>Connect the dots between reconnaissance, exploitation, and data exfiltration attempts</li>
-                        </ul>
-                        <div class="blog-link">
-                            <a href="blog/multi-stage-attack-analysis.html">Learn more about multi-stage attack analysis →</a>
-                        </div>
+                    <h3>Security Operations</h3>
+                    <p>Export intent signals to existing tools for unified AI + traditional threat visibility.</p>
+                </div>
+
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     </div>
-                    
-                    <div class="use-case-card">
-                        <h3>Alert Enrichment</h3>
-                        <ul>
-                            <li>Provide context-rich security events rather than raw data dumps</li>
-                            <li>Reduce alert fatigue by surfacing only validated threats</li>
-                            <li>Enable faster incident response with pre-analyzed, extracted content</li>
-                        </ul>
+                    <h3>Multi-Stage Attack Detection</h3>
+                    <p>Correlate suspicious interactions across requests to identify full attack chains.</p>
+                    <a href="blog/multi-stage-attack-analysis.html" class="tile-link">Learn more →</a>
+                </div>
+
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                     </div>
-                    
-                    <div class="use-case-card">
-                        <h3>Compliance & Governance</h3>
-                        <ul>
-                            <li>Monitor and report on PII exposure in AI interactions</li>
-                            <li>Demonstrate policy management for audit requirements</li>
-                            <li>Track and remediate data handling violations</li>
-                        </ul>
+                    <h3>Alert Enrichment</h3>
+                    <p>Context-rich events with pre-analyzed content. Reduce alert fatigue, accelerate response.</p>
+                </div>
+
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
                     </div>
+                    <h3>Compliance & Governance</h3>
+                    <p>Monitor PII exposure, enforce policy, and satisfy audit requirements automatically.</p>
+                </div>
+
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg>
+                    </div>
+                    <h3>Agent Identity & Drift</h3>
+                    <p>Behavioral baselines and surprise scores for zero-trust agent identity frameworks.</p>
                 </div>
             </div>
         </div>
