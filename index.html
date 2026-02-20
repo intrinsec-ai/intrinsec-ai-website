@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intrinsec AI - Modern Control Plane for AI Agents</title>
-    <meta name="description" content="Intrinsec AI provides a modern control plane for AI agents—monitoring intent and optimizing policy across the agent lifecycle to defend against adaptive and compositional threats.">
+    <meta name="description" content="Intrinsec AI provides a modern control plane for AI agent security. Detect Intent, Identity, Threat — enforce Policy. Agent-native security from prompt to outcome.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
     <meta property="og:title" content="Intrinsec AI - Modern Control Plane for AI Agents">
-    <meta property="og:description" content="Monitor intent and optimize policy across the agent lifecycle. A modern control plane for AI agent security.">
+    <meta property="og:description" content="Intent · Identity · Threat → Policy — one control plane for AI agent security.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -24,7 +24,7 @@
             } catch (e) {}
         })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -517,12 +517,96 @@
         .tagline {
             font-size: 1.375rem;
             color: var(--text-secondary);
-            max-width: 580px;
+            max-width: 700px;
             margin: 0 auto;
             font-weight: 400;
             line-height: 1.6;
             animation: fadeInUp 0.8s ease-out 0.2s both;
             position: relative;
+        }
+
+        .tagline-pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1.25rem;
+        }
+
+        .pipeline-label {
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 900;
+            font-size: 1.7rem;
+            letter-spacing: 0.12em;
+            background: linear-gradient(180deg, var(--ice-bright) 0%, var(--ice) 40%, rgba(125, 211, 252, 0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 14px var(--ice-glow-strong)) drop-shadow(0 1px 0 rgba(0,0,0,0.4));
+            position: relative;
+        }
+
+        [data-theme="light"] .pipeline-label {
+            background: linear-gradient(180deg, #0369a1 0%, var(--ice-bright) 50%, #0c4a6e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.2));
+        }
+
+        .pipeline-stages {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(125, 211, 252, 0.06);
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            border-radius: 999px;
+            padding: 8px 18px;
+            backdrop-filter: blur(8px);
+        }
+
+        [data-theme="light"] .pipeline-stages {
+            background: rgba(14, 165, 233, 0.06);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .pipeline-stage {
+            font-weight: 600;
+            color: var(--ice);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pipeline-dot {
+            color: var(--ice);
+            opacity: 0.3;
+            font-size: 1.1em;
+            font-weight: 700;
+            user-select: none;
+        }
+
+        .pipeline-enforce-arrow {
+            color: var(--ice);
+            opacity: 0.5;
+            font-size: 0.9em;
+            margin-left: 2px;
+            animation: pulseEnforce 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseEnforce {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 0.9; }
+        }
+
+        .pipeline-stage--enforce {
+            opacity: 0.85;
+        }
+
+        .pipeline-suffix {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 1.1rem;
         }
 
         .hero-cta {
@@ -3832,6 +3916,24 @@
                 padding: 0 10px;
             }
 
+            .tagline-pipeline {
+                font-size: 1.05rem;
+                gap: 8px;
+            }
+
+            .pipeline-label {
+                font-size: 1.4rem;
+            }
+
+            .pipeline-stages {
+                padding: 6px 14px;
+                gap: 5px;
+            }
+
+            .pipeline-suffix {
+                font-size: 0.95rem;
+            }
+
             .hero-cta {
                 margin-top: 26px;
                 gap: 12px;
@@ -5370,6 +5472,26 @@
                 padding: 0 5px;
             }
 
+            .tagline-pipeline {
+                flex-direction: column;
+                font-size: 0.95rem;
+                gap: 6px;
+            }
+
+            .pipeline-label {
+                font-size: 1.2rem;
+            }
+
+            .pipeline-stages {
+                padding: 6px 12px;
+                gap: 4px;
+                font-size: 0.9rem;
+            }
+
+            .pipeline-suffix {
+                font-size: 0.85rem;
+            }
+
             .section-intro {
                 font-size: 1rem;
                 padding: 0 5px;
@@ -6590,7 +6712,7 @@
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
-        /* Diagram: identity – cryptographic (one key) vs abstract (parameters) */
+        /* Diagram: identity – static credential vs behavioral persona space */
         .diagram-identity {
             width: 100%;
             max-width: 220px;
@@ -7353,18 +7475,28 @@
             <h1>
                 Modern Control Plane for <br><span class="gradient">AI Agents</span>
             </h1>
-            <p class="tagline">
-            Monitor intent and optimize policy across the agent lifecycle.
-            </p>
+            <div class="tagline tagline-pipeline">
+                <span class="pipeline-label">I²TP</span>
+                <span class="pipeline-stages">
+                    <span class="pipeline-stage" data-stage="1">Intent</span>
+                    <span class="pipeline-dot">·</span>
+                    <span class="pipeline-stage" data-stage="2">Identity</span>
+                    <span class="pipeline-dot">·</span>
+                    <span class="pipeline-stage" data-stage="3">Threat</span>
+                    <span class="pipeline-enforce-arrow">→</span>
+                    <span class="pipeline-stage pipeline-stage--enforce" data-stage="4">Policy</span>
+                </span>
+                <span class="pipeline-suffix">— one control plane.</span>
+            </div>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
                 <a href="products.html" class="hero-secondary">See Products <span style="opacity: 0.9;">→</span></a>
             </div>
 
             <div class="hero-proof" aria-label="Key capabilities">
-                <span class="proof-pill"><span class="proof-icon"></span>Compositional threat defense</span>
-                <span class="proof-pill"><span class="proof-icon"></span>Signal, not noise</span>
+                <span class="proof-pill"><span class="proof-icon"></span>Agent-native security</span>
                 <span class="proof-pill"><span class="proof-icon"></span>Adaptive policy optimization</span>
+                <span class="proof-pill"><span class="proof-icon"></span>Minimal alert fatigue</span>
                 <span class="proof-pill"><span class="proof-icon"></span>Multimodal (text + images)</span>
             </div>
         </div>
@@ -7373,9 +7505,9 @@
     <!-- Elegant Abstract Ecosystem Scanning Section -->
     <section class="scanning-section">
         <div class="container">
-            <h2>Control plane for intent monitoring and policy optimization.</h2>
+            <h2>Intent · Identity · Threat → Policy.</h2>
             <p class="section-subtitle">
-                Before network, data access, or other risky events occur, the AI agent's intent forms. Our control plane monitors intent and optimizes policy across <strong>prompts, sessions, tools, and context</strong>—to surface <strong>compositional threats</strong> and defend against adaptive attacks across the agent lifecycle.
+                Before network, data access, or other risky events occur, the AI agent's <strong>intent</strong> forms. Our control plane captures the intent envelope, detects <strong>persona drift</strong> across agents, sessions, and tool use, surfaces <strong>threats</strong> in context—then enforces adaptive <strong>policy</strong> across the agent lifecycle.
             </p>
             
             <div class="ecosystem-canvas-wrapper scanning-visual-stack" id="ecosystemWrapper">
@@ -7632,17 +7764,17 @@
                         </div>
                         <div class="advantage-card-caption">
                             <div class="title">Volume</div>
-                            <p class="text">Classical control planes drown in scale. Ours is compression-first: we extract compact intent signals.</p>
+                            <p class="text">Classical control planes drown in scale. Ours is compression-first: the first anomaly scores high, repeated patterns score progressively lower — compact signals, not redundant alerts.</p>
                         </div>
                     </div>
                     <div class="advantage-card">
                         <div class="advantage-visual advantage-visual--identity">
                             <div class="diagram-identity" aria-hidden="true">
                                 <div class="crypto-side">
-                                    <div class="old-id" title="Cryptographic identity"></div>
+                                    <div class="old-id" title="Static credential"></div>
                                 </div>
                                 <div class="arrow-id"></div>
-                                <div class="abstract-side" title="Abstract notions & parameters">
+                                <div class="abstract-side" title="Behavioral persona space">
                                     <span class="param-node"></span><span class="param-node"></span><span class="param-node"></span>
                                     <span class="param-node"></span><span class="param-node"></span><span class="param-node"></span>
                                     <span class="param-connector"></span><span class="param-connector"></span><span class="param-connector"></span>
@@ -7651,7 +7783,7 @@
                         </div>
                         <div class="advantage-card-caption">
                             <div class="title">Identity</div>
-                            <p class="text">Modern control needs new notions of identity: abstract parameters and semantic roles, not only cryptographic certs.</p>
+                            <p class="text">Agent identity is a behavioral signature, not a credential. We detect persona drift across agents, sessions, and tool use.</p>
                         </div>
                     </div>
                 </div>
@@ -7661,7 +7793,7 @@
 
     <section class="cta">
         <div class="container">
-            <h2>A Modern Control Plane for AI Agent Security</h2>
+            <h2>I²TP — One Control Plane for AI Agent Security</h2>
             <p class="section-intro" style="margin-bottom: 28px;">
                 <span class="quote-callout quote-callout--cta-sub">Events are no longer the earliest meaningful signal. Intent is.</span>
             </p>

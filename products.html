@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - Intrinsec AI</title>
-    <meta name="description" content="Explore Intrinsec AI's modern control plane for AI agents: monitor intent, optimize policy, and manage security across the agent lifecycle.">
+    <meta name="description" content="Explore Intrinsec AI's modern control plane for AI agents: detect intent, identity, and threat — enforce policy across the agent lifecycle.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
     <meta property="og:title" content="Intrinsec AI Products">
-    <meta property="og:description" content="Modern control plane for AI agents—monitor intent and optimize policy across the agent lifecycle.">
+    <meta property="og:description" content="Modern control plane for AI agents — detect intent, identity, and threat. Enforce policy across the agent lifecycle.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -901,28 +901,6 @@
                         0 0 80px rgba(125, 211, 252, 0.15);
         }
         
-        .components-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .components-label-line {
-            height: 1px;
-            flex: 1;
-            max-width: 120px;
-            background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.3), transparent);
-        }
-        
-        .components-label-text {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--ice);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
         
         @media (max-width: 900px) {
             .cp-hero-inner {
@@ -1143,6 +1121,7 @@
         .bento-card:hover::before { opacity: 1; }
 
         .bento-card--span2 { grid-column: span 2; }
+        .bento-card--span3 { grid-column: span 3; }
 
         .bento-card--featured {
             border: 2px solid var(--ice);
@@ -1285,6 +1264,7 @@
         @media (max-width: 900px) {
             .bento-grid { grid-template-columns: 1fr; }
             .bento-card--span2 { grid-column: span 1; }
+            .bento-card--span3 { grid-column: span 1; }
             .bento-card-inner { flex-direction: column; }
             .bento-card-visual { flex: none; max-width: 100%; }
         }
@@ -1292,8 +1272,8 @@
         /* ── Use Case Tiles ── */
         .usecase-tiles {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             margin-top: 48px;
         }
 
@@ -1363,15 +1343,7 @@
 
         .usecase-tile .tile-link:hover { border-color: var(--ice); }
 
-        @media (max-width: 1100px) {
-            .usecase-tiles { grid-template-columns: repeat(3, 1fr); }
-        }
-
         @media (max-width: 680px) {
-            .usecase-tiles { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 440px) {
             .usecase-tiles { grid-template-columns: 1fr; }
         }
     </style>
@@ -1402,7 +1374,7 @@
     <section class="hero">
         <div class="container">
             <h1>Modern Control Plane for <span class="gradient">AI Agents</span></h1>
-            <p>Monitor intent and optimize policy across the agent lifecycle</p>
+            <p>Detect intent, identity, and threat — enforce policy across the agent lifecycle</p>
         </div>
     </section>
 
@@ -1419,24 +1391,16 @@
                             The <span class="gradient">Control Plane</span> Dashboard
                         </h2>
                         <p class="cp-hero-desc">
-                            Converge identity signals, threat intelligence, and intent envelope analytics into a single, decisive view. Monitor how agent identities evolve, surface emerging threats in real time, and track intent boundaries—all from one unified command surface.
+                            Persona-drift signals, threat intelligence, and intent analytics — one decisive view. Surface emerging threats, track intent boundaries, detect behavioral identity shifts across agents and sessions.
                         </p>
                         <ul class="cp-hero-capabilities">
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Identity drift monitoring</strong> — Track how agent roles, permissions, and semantic identities shift over time</span>
+                                <span><strong style="color: var(--text);">Intent envelope analytics</strong> — boundary between expected behavior and anomalous intent</span>
                             </li>
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Intent envelope analytics</strong> — Visualize the boundary between expected behavior and anomalous intent in real time</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Threat surface mapping</strong> — Correlate top assets, actors, actions, policies, and logics into a coherent threat narrative</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Critical content scoring</strong> — Rank and surface the most security-relevant text and images by combined surprise and suspicion scores</span>
+                                <span><strong style="color: var(--text);">Threat surface mapping</strong> — assets, actors, actions, and policies in one coherent narrative</span>
                             </li>
                         </ul>
                     </div>
@@ -1454,29 +1418,11 @@
 
     <section class="products-section">
         <div class="container">
-            <div class="components-label">
-                <span class="components-label-line"></span>
-                <span class="components-label-text">What Powers the Control Plane</span>
-                <span class="components-label-line"></span>
-            </div>
             <h2>Core Components</h2>
-            <p class="section-intro">
-                Five integrated layers securing the full agent lifecycle.
-            </p>
 
             <div class="bento-grid">
-                <!-- Flagship Model -->
-                <div class="bento-card">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M12 22V12"/><path d="M20.5 7L12 12 3.5 7"/></svg>
-                    </div>
-                    <h3>Flagship Model</h3>
-                    <p>Identifies critical intent in text and images. Scores security concepts at the thought level.</p>
-                    <span class="bento-tag">Foundation</span>
-                </div>
-
                 <!-- Intent Access Broker (Featured) -->
-                <div class="bento-card bento-card--span2 bento-card--featured">
+                <div class="bento-card bento-card--span3 bento-card--featured">
                     <div class="bento-card-inner">
                         <div class="bento-card-text">
                             <span class="product-icon mindmap-icon" aria-hidden="true">
@@ -1555,7 +1501,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     </div>
                     <h3>Surprise Detection</h3>
-                    <p>Behavioral identity envelope for every agent. Detects drift, impersonation, and role violation in real time.</p>
+                    <p>Information-theoretic scoring that separates signal from noise. The first anomaly scores high — repeated patterns score progressively lower. Fewer alerts, higher fidelity.</p>
                 </div>
 
                 <!-- Policy Optimization -->
@@ -1573,10 +1519,7 @@
 
     <section class="use-cases-section">
         <div class="container">
-            <h2>Downstream Integration & Use Cases</h2>
-            <p class="section-intro">
-                Actionable intelligence for your security operations.
-            </p>
+            <h2>Use Cases</h2>
 
             <div class="usecase-tiles">
                 <div class="usecase-tile">
@@ -1598,26 +1541,10 @@
 
                 <div class="usecase-tile">
                     <div class="usecase-tile-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    </div>
-                    <h3>Alert Enrichment</h3>
-                    <p>Context-rich events with pre-analyzed content. Reduce alert fatigue, accelerate response.</p>
-                </div>
-
-                <div class="usecase-tile">
-                    <div class="usecase-tile-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
                     </div>
                     <h3>Compliance & Governance</h3>
                     <p>Monitor PII exposure, enforce policy, and satisfy audit requirements automatically.</p>
-                </div>
-
-                <div class="usecase-tile">
-                    <div class="usecase-tile-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg>
-                    </div>
-                    <h3>Agent Identity & Drift</h3>
-                    <p>Behavioral baselines and surprise scores for zero-trust agent identity frameworks.</p>
                 </div>
             </div>
         </div>
@@ -1626,9 +1553,6 @@
     <section class="cta">
         <div class="container">
             <h2>Ready to Integrate?</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 32px; font-size: 1.125rem;">
-                Learn how our products can enhance your security workflow.
-            </p>
             <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
         </div>
     </section>
