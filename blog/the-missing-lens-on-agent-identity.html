@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Missing Lens on AI Agent Identity | Intrinsec AI</title>
+    <meta name="description" content="Agent identity is not a static concept. It's a trajectory through an information manifold — and every threat is a deviation from the intended path.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const theme = savedTheme || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0a0f1a;
+            --navy-light: #151b2b;
+            --navy-lighter: #1f2937;
+            --ice: #7dd3fc;
+            --ice-bright: #38bdf8;
+            --ice-glow: rgba(125, 211, 252, 0.12);
+            --ice-glow-strong: rgba(125, 211, 252, 0.2);
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-dim: #94a3b8;
+            --text-subtle: #64748b;
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.15);
+            --purple: #c084fc;
+            --green: #4ade80;
+        }
+
+        [data-theme="light"] {
+            --navy: #ffffff;
+            --navy-light: #f8fafc;
+            --navy-lighter: #f0f9ff;
+            --ice: #0ea5e9;
+            --ice-bright: #0284c7;
+            --ice-glow: rgba(14, 165, 233, 0.15);
+            --ice-glow-strong: rgba(14, 165, 233, 0.25);
+            --text: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-dim: #0284c7;
+            --text-subtle: #38bdf8;
+            --red: #dc2626;
+            --red-glow: rgba(220, 38, 38, 0.15);
+            --purple: #7c3aed;
+            --green: #16a34a;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            background-attachment: fixed;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* ── Progress bar ── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 300;
+            background: rgba(125, 211, 252, 0.08);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
+            transition: width 0.15s ease-out;
+        }
+
+        /* ── Header ── */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            top: 3px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s ease;
+        }
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
+        }
+        header.scrolled { padding: 12px 0; }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .logo:hover { color: var(--ice); }
+        nav { display: flex; gap: 20px; align-items: center; }
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ice);
+            transition: width 0.3s ease;
+        }
+        nav a:hover { color: var(--ice); }
+        nav a:hover::after { width: 100%; }
+        nav a.active-link { color: var(--ice); }
+        nav a.active-link::after { width: 100%; }
+        .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        [data-theme="light"] .theme-toggle {
+            background: #f0f9ff;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        .theme-toggle:hover {
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 32px 80px;
+            position: relative;
+        }
+        .hero-inner {
+            max-width: 800px;
+            width: 100%;
+        }
+        .hero-label {
+            display: inline-block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ice);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s ease forwards;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease forwards;
+        }
+        .hero-sub {
+            font-size: clamp(1.0625rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Content ── */
+        .content-section {
+            padding: 80px 32px;
+            position: relative;
+        }
+        .content-inner {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .content-inner p {
+            font-size: 1.0625rem;
+            line-height: 1.85;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+        .content-inner strong { color: var(--text); font-weight: 600; }
+        .content-inner em { color: var(--text-secondary); font-style: italic; }
+        .content-inner h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            margin: 64px 0 24px;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+        .content-inner h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 48px 0 16px;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .content-inner a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        .content-inner a:hover { border-bottom-color: var(--ice); }
+
+        /* ── Landscape pills ── */
+        .landscape-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 28px 0 40px;
+            justify-content: flex-start;
+        }
+        .landscape-pill {
+            padding: 8px 18px;
+            border-radius: 100px;
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            background: transparent;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.35s ease;
+            white-space: nowrap;
+        }
+        .landscape-pill:hover {
+            border-color: rgba(125, 211, 252, 0.4);
+            color: var(--ice);
+        }
+        [data-theme="light"] .landscape-pill {
+            border-color: rgba(14, 165, 233, 0.15);
+        }
+        [data-theme="light"] .landscape-pill:hover {
+            border-color: rgba(14, 165, 233, 0.4);
+        }
+
+        /* ── Key statement ── */
+        .key-statement {
+            font-size: clamp(1.375rem, 3vw, 1.875rem) !important;
+            font-weight: 600;
+            color: var(--ice) !important;
+            text-align: center;
+            max-width: 700px;
+            margin: 48px auto !important;
+            line-height: 1.5 !important;
+            position: relative;
+            padding: 40px 0;
+        }
+        .key-statement::before,
+        .key-statement::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ice), transparent);
+        }
+        .key-statement::before { top: 0; }
+        .key-statement::after { bottom: 0; }
+
+        /* ── Diagram wrapper ── */
+        .diagram-wrapper {
+            margin: 48px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .diagram-wrapper svg { max-width: 100%; height: auto; }
+
+        /* ── Threat list ── */
+        .threat-list {
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .threat-row {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.06);
+        }
+        .threat-row:last-child { border-bottom: none; }
+        .threat-name {
+            flex-shrink: 0;
+            width: 160px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #f87171;
+        }
+        [data-theme="light"] .threat-name { color: #dc2626; }
+        .threat-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ── Closing statement ── */
+        .closing {
+            text-align: center;
+            padding: 80px 32px 120px;
+        }
+        .closing-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .closing-question {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .closing-answer {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 600;
+            color: var(--ice);
+            line-height: 1.5;
+        }
+
+        /* ── Section break ── */
+        .section-break {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(125, 211, 252, 0.15) 50%, transparent 100%);
+            margin: 0;
+            border: none;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+            position: absolute;
+            top: 100px;
+            left: 32px;
+        }
+        .back-link:hover { color: var(--ice); }
+
+        /* ── Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero { padding: 100px 20px 60px; }
+            .content-section { padding: 60px 20px; }
+            .landscape-grid { grid-template-columns: 1fr; }
+            .threat-grid { grid-template-columns: 1fr; }
+            .back-link { left: 20px; top: 90px; }
+            .header-inner { padding: 0 20px; }
+            .closing { padding: 60px 20px 80px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.5rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .hero-label, .hero h1, .hero-sub {
+                opacity: 1;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Header -->
+<header id="mainHeader">
+    <div class="header-inner">
+        <div style="display: flex; align-items: center; gap: 24px;">
+            <a href="../index.html" class="logo">Intrinsec AI</a>
+            <nav>
+                <a href="../products.html">Products</a>
+                <a href="index.html" class="active-link">Research</a>
+            </nav>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark</span>
+        </button>
+    </div>
+</header>
+
+<a href="index.html" class="back-link">← Back to Research</a>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  HERO                                  -->
+<!-- ═══════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-label">Perspective · February 2026</div>
+        <h1>The Missing Lens on AI Agent Identity</h1>
+        <p class="hero-sub">Agent identity is not a static concept. It's a trajectory through an information manifold — and every threat is a deviation from the intended path.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  THE LANDSCAPE                         -->
+<!-- ═══════════════════════════════════════ -->
+<div class="content-section">
+    <div class="content-inner">
+        <p class="reveal">
+            A lot of smart people are building critical infrastructure at the intersection of identity and AI agents:
+        </p>
+
+        <div class="landscape-flow reveal reveal-delay-1">
+            <span class="landscape-pill">Agent Authentication</span>
+            <span class="landscape-pill">Delegation Chains</span>
+            <span class="landscape-pill">Reputation Scoring</span>
+            <span class="landscape-pill">Impersonation Detection</span>
+            <span class="landscape-pill">Cross-Platform Portability</span>
+            <span class="landscape-pill">Human-in-the-Loop Handoffs</span>
+            <span class="landscape-pill">Consent & Provenance</span>
+            <span class="landscape-pill">Multi-Tenant Isolation</span>
+            <span class="landscape-pill">Agent Notarization</span>
+            <span class="landscape-pill">Audit Trails</span>
+        </div>
+
+        <p class="reveal">
+            Real problems. Real customers. Real value.
+        </p>
+        <p class="reveal">
+            But I want to offer one perspective that I think is underappreciated.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- ═══════════════════════════════════════ -->
+<!--  THE REFRAME                           -->
+<!-- ═══════════════════════════════════════ -->
+<div class="content-section">
+    <div class="content-inner">
+        <p class="key-statement reveal">Agent identity is not a static concept. It's a trajectory.</p>
+
+        <p class="reveal">
+            In classical systems, identity is a key you present at the door:
+        </p>
+
+        <!-- Static identity diagram -->
+        <div class="diagram-wrapper reveal">
+            <svg width="520" height="100" viewBox="0 0 520 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowDim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#94a3b8"/>
+                    </marker>
+                </defs>
+                <!-- Person -->
+                <circle cx="60" cy="45" r="18" stroke="#94a3b8" stroke-width="1.5" fill="rgba(148,163,184,0.08)"/>
+                <text x="60" y="42" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="16">👤</text>
+                <text x="60" y="80" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">You</text>
+                <!-- Arrow 1 -->
+                <line x1="82" y1="45" x2="158" y2="45" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDim)"/>
+                <!-- Badge -->
+                <rect x="168" y="27" rx="8" width="80" height="36" stroke="#94a3b8" stroke-width="1.5" fill="rgba(148,163,184,0.06)"/>
+                <text x="208" y="50" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="11" font-weight="500">show badge</text>
+                <!-- Arrow 2 -->
+                <line x1="252" y1="45" x2="328" y2="45" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDim)"/>
+                <!-- System -->
+                <rect x="338" y="27" rx="8" width="140" height="36" stroke="#94a3b8" stroke-width="1.5" fill="rgba(148,163,184,0.06)"/>
+                <text x="408" y="50" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="11" font-weight="500">access granted</text>
+                <!-- Labels -->
+                <text x="260" y="88" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" opacity="0.6">static · binary · done</text>
+            </svg>
+        </div>
+
+        <p class="reveal">
+            In agent systems, identity is something that <strong>evolves continuously</strong> — token by token, tool call by tool call, agent by agent:
+        </p>
+
+        <!-- Fluid identity trajectory diagram -->
+        <div class="diagram-wrapper reveal">
+            <svg width="620" height="180" viewBox="0 0 620 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowIce" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#7dd3fc"/>
+                    </marker>
+                    <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.9"/>
+                    </linearGradient>
+                    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.15"/>
+                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+                <!-- "who it is" label -->
+                <text x="30" y="78" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="11" font-weight="500">who</text>
+                <text x="30" y="92" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="11" font-weight="500">it is</text>
+                <!-- Starting node -->
+                <circle cx="70" cy="84" r="14" fill="url(#nodeGlow)"/>
+                <circle cx="70" cy="84" r="6" fill="#7dd3fc" opacity="0.5"/>
+                <!-- Trajectory path - gentle curve -->
+                <path d="M 84 84 Q 140 70 200 76 Q 260 82 320 68 Q 380 54 440 62 Q 500 70 540 58" stroke="url(#trajGrad)" stroke-width="2.5" fill="none"/>
+                <!-- Token nodes along trajectory -->
+                <circle cx="140" cy="74" r="8" fill="rgba(125,211,252,0.08)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="140" y="78" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">t₁</text>
+                <circle cx="220" cy="78" r="8" fill="rgba(125,211,252,0.08)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="220" y="82" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">t₂</text>
+                <circle cx="300" cy="72" r="8" fill="rgba(125,211,252,0.08)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="300" y="76" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">t₃</text>
+                <circle cx="380" cy="58" r="8" fill="rgba(125,211,252,0.08)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="380" y="62" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">t₄</text>
+                <circle cx="460" cy="64" r="8" fill="rgba(125,211,252,0.08)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="460" y="68" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">t₅</text>
+                <!-- End node -->
+                <circle cx="546" cy="58" r="14" fill="url(#nodeGlow)"/>
+                <circle cx="546" cy="58" r="6" fill="#7dd3fc" opacity="0.8"/>
+                <!-- "who it became" label -->
+                <text x="596" y="54" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">who it</text>
+                <text x="596" y="68" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">became</text>
+                <!-- Token labels -->
+                <text x="140" y="108" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">token</text>
+                <text x="220" y="108" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">token</text>
+                <text x="300" y="108" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">tool call</text>
+                <text x="380" y="108" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">token</text>
+                <text x="460" y="108" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">agent</text>
+                <!-- Bottom label -->
+                <text x="310" y="150" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" font-weight="500" opacity="0.7">every input nudges the agent along a path in information space</text>
+                <!-- Vertical nudge arrows at each node -->
+                <line x1="140" y1="86" x2="140" y2="94" stroke="#7dd3fc" stroke-width="0.8" opacity="0.4"/>
+                <line x1="220" y1="90" x2="220" y2="98" stroke="#7dd3fc" stroke-width="0.8" opacity="0.4"/>
+                <line x1="300" y1="84" x2="300" y2="98" stroke="#7dd3fc" stroke-width="0.8" opacity="0.4"/>
+                <line x1="380" y1="70" x2="380" y2="98" stroke="#7dd3fc" stroke-width="0.8" opacity="0.4"/>
+                <line x1="460" y1="76" x2="460" y2="98" stroke="#7dd3fc" stroke-width="0.8" opacity="0.4"/>
+            </svg>
+        </div>
+
+        <p class="reveal">
+            Every input nudges the agent along a path in what I'd call an <strong>information manifold</strong> — a geometric surface where direction = identity and distance = intent preservation.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- ═══════════════════════════════════════ -->
+<!--  UNIFIED THREATS                       -->
+<!-- ═══════════════════════════════════════ -->
+<div class="content-section">
+    <div class="content-inner">
+        <p class="reveal">
+            This reframe is not just philosophical. It's operational. Here's why:
+        </p>
+
+        <h2 class="reveal">It unifies every threat category under one geometry.</h2>
+
+        <!-- Main attractor diagram -->
+        <div class="diagram-wrapper reveal">
+            <svg width="580" height="420" viewBox="0 0 580 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#c084fc"/>
+                    </marker>
+                    <marker id="arrowRed" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#f87171"/>
+                    </marker>
+                    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#4ade80"/>
+                    </marker>
+                    <radialGradient id="intendedGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#c084fc" stop-opacity="0.2"/>
+                        <stop offset="70%" stop-color="#c084fc" stop-opacity="0.05"/>
+                        <stop offset="100%" stop-color="#c084fc" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="hijackGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#f87171" stop-opacity="0.18"/>
+                        <stop offset="70%" stop-color="#f87171" stop-opacity="0.04"/>
+                        <stop offset="100%" stop-color="#f87171" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="exfilGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fb923c" stop-opacity="0.15"/>
+                        <stop offset="100%" stop-color="#fb923c" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="escapeGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.12"/>
+                        <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="originGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.15"/>
+                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Policy cone (green, faint) -->
+                <path d="M 80 210 L 480 80 L 480 180" fill="rgba(74,222,128,0.03)" stroke="none"/>
+                <line x1="80" y1="210" x2="500" y2="70" stroke="#4ade80" stroke-width="0.8" opacity="0.2" stroke-dasharray="6,4"/>
+                <line x1="80" y1="210" x2="500" y2="190" stroke="#4ade80" stroke-width="0.8" opacity="0.2" stroke-dasharray="6,4"/>
+                <text x="500" y="135" fill="#4ade80" font-family="Inter,sans-serif" font-size="9" opacity="0.45" font-weight="500">policy cone</text>
+
+                <!-- Intended persona attractor -->
+                <circle cx="460" cy="120" r="70" fill="url(#intendedGlow)"/>
+                <circle cx="460" cy="120" r="10" fill="#c084fc" opacity="0.35"/>
+                <circle cx="460" cy="120" r="3" fill="#c084fc" opacity="0.7"/>
+                <text x="460" y="100" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">intended</text>
+                <text x="460" y="112" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">persona</text>
+
+                <!-- Hijacked persona attractor (bottom-right) -->
+                <circle cx="430" cy="350" r="55" fill="url(#hijackGlow)"/>
+                <circle cx="430" cy="350" r="8" fill="#f87171" opacity="0.3"/>
+                <circle cx="430" cy="350" r="3" fill="#f87171" opacity="0.6"/>
+                <text x="430" y="340" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="10" font-weight="500">hijacked</text>
+                <text x="430" y="352" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="10" font-weight="500">persona</text>
+
+                <!-- Data exfiltration attractor (bottom-middle) -->
+                <circle cx="260" cy="380" r="40" fill="url(#exfilGlow)"/>
+                <circle cx="260" cy="380" r="6" fill="#fb923c" opacity="0.3"/>
+                <circle cx="260" cy="380" r="2.5" fill="#fb923c" opacity="0.6"/>
+                <text x="260" y="374" text-anchor="middle" fill="#fb923c" font-family="Inter,sans-serif" font-size="10" font-weight="500">private</text>
+                <text x="260" y="386" text-anchor="middle" fill="#fb923c" font-family="Inter,sans-serif" font-size="10" font-weight="500">data</text>
+
+                <!-- Escape attractor (top-left, outside cone) -->
+                <circle cx="180" cy="50" r="35" fill="url(#escapeGlow)"/>
+                <circle cx="180" cy="50" r="5" fill="#fbbf24" opacity="0.3"/>
+                <circle cx="180" cy="50" r="2" fill="#fbbf24" opacity="0.6"/>
+                <text x="180" y="44" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-size="10" font-weight="500">harmful</text>
+                <text x="180" y="56" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-size="10" font-weight="500">actions</text>
+
+                <!-- Origin: tokens -->
+                <circle cx="80" cy="210" r="24" fill="url(#originGlow)"/>
+                <circle cx="80" cy="210" r="12" stroke="#7dd3fc" stroke-width="1.5" fill="rgba(125,211,252,0.08)"/>
+                <text x="80" y="214" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">tokens</text>
+
+                <!-- Normal trajectory (to intended persona) -->
+                <path d="M 96 204 Q 220 170 340 145 Q 400 132 448 122" stroke="#c084fc" stroke-width="2.2" fill="none" marker-end="url(#arrowPurple)"/>
+                <circle cx="180" cy="178" r="3.5" fill="#c084fc" opacity="0.45"/>
+                <circle cx="270" cy="156" r="3.5" fill="#c084fc" opacity="0.5"/>
+                <circle cx="360" cy="139" r="3.5" fill="#c084fc" opacity="0.55"/>
+
+                <!-- Prompt injection trajectory (to hijacked persona) -->
+                <path d="M 96 218 Q 180 240 280 280 Q 360 310 422 344" stroke="#f87171" stroke-width="1.8" fill="none" stroke-dasharray="7,4" marker-end="url(#arrowRed)"/>
+                <circle cx="190" cy="244" r="3" fill="#f87171" opacity="0.45"/>
+                <circle cx="290" cy="284" r="3" fill="#f87171" opacity="0.5"/>
+                <circle cx="370" cy="316" r="3" fill="#f87171" opacity="0.55"/>
+
+                <!-- Data exfiltration trajectory -->
+                <path d="M 92 222 Q 140 270 180 310 Q 220 350 254 374" stroke="#fb923c" stroke-width="1.5" fill="none" stroke-dasharray="5,4" opacity="0.7"/>
+                <circle cx="160" cy="290" r="2.5" fill="#fb923c" opacity="0.4"/>
+                <circle cx="210" cy="340" r="2.5" fill="#fb923c" opacity="0.45"/>
+
+                <!-- Harmful action trajectory (outside cone) -->
+                <path d="M 84 196 Q 110 150 140 110 Q 155 80 174 56" stroke="#fbbf24" stroke-width="1.5" fill="none" stroke-dasharray="5,4" opacity="0.7"/>
+                <circle cx="120" cy="135" r="2.5" fill="#fbbf24" opacity="0.4"/>
+                <circle cx="150" cy="95" r="2.5" fill="#fbbf24" opacity="0.45"/>
+
+                <!-- Legend -->
+                <line x1="40" y1="408" x2="60" y2="408" stroke="#c084fc" stroke-width="2"/>
+                <text x="68" y="412" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">normal trajectory</text>
+                <line x1="180" y1="408" x2="200" y2="408" stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3"/>
+                <text x="208" y="412" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">threat trajectories</text>
+                <line x1="340" y1="408" x2="360" y2="408" stroke="#4ade80" stroke-width="0.8" stroke-dasharray="5,3"/>
+                <text x="368" y="412" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9">policy boundary</text>
+            </svg>
+        </div>
+
+        <div class="threat-list reveal">
+            <div class="threat-row">
+                <span class="threat-name">Prompt Injection</span>
+                <span class="threat-desc">Tokens pull the trajectory toward an attacker-controlled attractor — away from intent.</span>
+            </div>
+            <div class="threat-row">
+                <span class="threat-name">Persona Hijacking</span>
+                <span class="threat-desc">Angular rotation between persona attractors — identity forcibly redirected mid-task.</span>
+            </div>
+            <div class="threat-row">
+                <span class="threat-name">Data Exfiltration</span>
+                <span class="threat-desc">Trajectory bends toward encoding private data — orthogonal to intent-aligned directions.</span>
+            </div>
+            <div class="threat-row">
+                <span class="threat-name">Harmful Actions</span>
+                <span class="threat-desc">Direction escapes the policy cone — trajectory points outside permitted output space.</span>
+            </div>
+        </div>
+
+        <p class="key-statement reveal">Same geometry. Same detection. Different angles.</p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- ═══════════════════════════════════════ -->
+<!--  COMPOSITIONAL ATTACKS                 -->
+<!-- ═══════════════════════════════════════ -->
+<div class="content-section">
+    <div class="content-inner">
+        <p class="reveal">
+            The most dangerous attacks exploit this geometry: they decompose into N small steps, each below the detection threshold.
+        </p>
+
+        <div class="diagram-wrapper reveal">
+            <svg width="600" height="310" viewBox="0 0 600 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowRedC" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#f87171"/>
+                    </marker>
+                    <radialGradient id="safeZone" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#4ade80" stop-opacity="0.06"/>
+                        <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Divider -->
+                <line x1="290" y1="20" x2="290" y2="260" stroke="#94a3b8" stroke-width="0.5" opacity="0.12" stroke-dasharray="4,4"/>
+
+                <!-- LEFT: Single-step attack -->
+                <text x="140" y="18" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12" font-weight="600">single-step threat</text>
+
+                <!-- Safe zone -->
+                <circle cx="110" cy="70" r="55" fill="url(#safeZone)"/>
+                <circle cx="110" cy="70" r="55" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="5,4" fill="none" opacity="0.4"/>
+                <text x="170" y="52" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.6" font-weight="500">threshold ε</text>
+
+                <!-- Origin -->
+                <circle cx="110" cy="70" r="6" fill="#7dd3fc" opacity="0.6"/>
+
+                <!-- Big red arrow crossing boundary -->
+                <line x1="110" y1="70" x2="192" y2="220" stroke="#f87171" stroke-width="3" marker-end="url(#arrowRedC)"/>
+
+                <!-- X mark at boundary crossing -->
+                <text x="140" y="135" fill="#f87171" font-family="Inter,sans-serif" font-size="22" font-weight="700" opacity="0.6">✕</text>
+
+                <circle cx="196" cy="224" r="5" fill="#f87171" opacity="0.6"/>
+
+                <text x="140" y="268" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="12" font-weight="600">DETECTED</text>
+                <text x="140" y="286" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Δ crosses ε in one step</text>
+
+                <!-- RIGHT: Compositional attack -->
+                <text x="440" y="18" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12" font-weight="600">compositional threat</text>
+
+                <!-- Safe zone -->
+                <circle cx="380" cy="70" r="55" fill="url(#safeZone)"/>
+                <circle cx="380" cy="70" r="55" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="5,4" fill="none" opacity="0.4"/>
+                <text x="440" y="52" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.6" font-weight="500">threshold ε</text>
+
+                <!-- Origin -->
+                <circle cx="380" cy="70" r="6" fill="#7dd3fc" opacity="0.6"/>
+
+                <!-- Ghost direct path blocked -->
+                <line x1="380" y1="70" x2="408" y2="110" stroke="#f87171" stroke-width="2" opacity="0.15"/>
+                <text x="416" y="116" fill="#f87171" font-family="Inter,sans-serif" font-size="14" font-weight="700" opacity="0.3">✕</text>
+                <line x1="408" y1="110" x2="468" y2="224" stroke="#f87171" stroke-width="1" opacity="0.06" stroke-dasharray="4,3"/>
+
+                <!-- Staircase path with color gradient -->
+                <line x1="380" y1="70" x2="404" y2="92" stroke="#94a3b8" stroke-width="1.8" opacity="0.5"/>
+                <line x1="404" y1="92" x2="424" y2="118" stroke="#a09090" stroke-width="1.8" opacity="0.55"/>
+                <line x1="424" y1="118" x2="440" y2="148" stroke="#b88878" stroke-width="1.8" opacity="0.6"/>
+                <line x1="440" y1="148" x2="454" y2="178" stroke="#d07868" stroke-width="1.8" opacity="0.7"/>
+                <line x1="454" y1="178" x2="463" y2="204" stroke="#e87060" stroke-width="1.8" opacity="0.8"/>
+                <line x1="463" y1="204" x2="468" y2="224" stroke="#f87171" stroke-width="1.8" opacity="0.9"/>
+
+                <!-- Step nodes -->
+                <circle cx="404" cy="92" r="3.5" fill="#94a3b8" opacity="0.5"/>
+                <circle cx="424" cy="118" r="3.5" fill="#a09090" opacity="0.5"/>
+                <circle cx="440" cy="148" r="3.5" fill="#b88878" opacity="0.55"/>
+                <circle cx="454" cy="178" r="3.5" fill="#d07868" opacity="0.6"/>
+                <circle cx="463" cy="204" r="3.5" fill="#e87060" opacity="0.65"/>
+                <circle cx="468" cy="224" r="4.5" fill="#f87171" opacity="0.7"/>
+
+                <!-- Check marks -->
+                <text x="414" y="87" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+                <text x="434" y="113" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+                <text x="450" y="143" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+                <text x="464" y="173" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+                <text x="473" y="199" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+                <text x="478" y="221" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" opacity="0.5">✓</text>
+
+                <!-- Delta labels -->
+                <text x="388" y="86" fill="#94a3b8" font-family="Inter,sans-serif" font-size="8" opacity="0.5">δ₁</text>
+                <text x="410" y="112" fill="#94a3b8" font-family="Inter,sans-serif" font-size="8" opacity="0.5">δ₂</text>
+                <text x="428" y="143" fill="#94a3b8" font-family="Inter,sans-serif" font-size="8" opacity="0.5">δ₃</text>
+                <text x="442" y="173" fill="#94a3b8" font-family="Inter,sans-serif" font-size="8" opacity="0.5">δ₄</text>
+                <text x="452" y="200" fill="#94a3b8" font-family="Inter,sans-serif" font-size="8" opacity="0.5">δ₅</text>
+
+                <text x="440" y="268" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="12" font-weight="600">UNDETECTED</text>
+                <text x="440" y="286" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">each δᵢ &lt; ε — same total Δ</text>
+
+                <!-- Connecting line showing same Δ -->
+                <line x1="200" y1="226" x2="464" y2="226" stroke="#f87171" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.2"/>
+                <text x="332" y="244" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="9" opacity="0.35">same Δ</text>
+            </svg>
+        </div>
+
+        <p class="reveal">
+            Each step looks benign. The cumulative drift is not. You can only catch this by tracking the <strong>trajectory</strong>, not individual checkpoints.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- ═══════════════════════════════════════ -->
+<!--  CLOSING                               -->
+<!-- ═══════════════════════════════════════ -->
+<section class="closing">
+    <div class="closing-inner">
+        <p class="closing-question reveal">
+            This is why static identity — badges, tokens, OAuth — is necessary but not sufficient for agents. You need to measure the <strong>geometry of information flow</strong> — continuously.
+        </p>
+        <p class="closing-question reveal reveal-delay-1" style="margin-top: 32px;">
+            The question isn't "who is this agent?"
+        </p>
+        <p class="closing-answer reveal reveal-delay-2">
+            The question is: "where is this agent heading in information space, and is that where it should be?"
+        </p>
+    </div>
+</section>
+
+<script>
+(function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeUI(savedTheme);
+
+    function updateThemeUI(theme) {
+        themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+        themeText.textContent = theme === 'light' ? 'Light' : 'Dark';
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeUI(next);
+    });
+
+    const progressFill = document.getElementById('progressFill');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressFill.style.width = pct + '%';
+    }
+
+    const mainHeader = document.getElementById('mainHeader');
+    function updateHeader() {
+        mainHeader.classList.toggle('scrolled', window.scrollY > 80);
+    }
+
+    window.addEventListener('scroll', function() {
+        updateProgress();
+        updateHeader();
+    }, { passive: true });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+        revealObserver.observe(el);
+    });
+
+    updateProgress();
+    updateHeader();
+})();
+</script>
+</body>
+</html>
