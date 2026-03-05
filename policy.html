@@ -15,12 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script>
-        // Set theme early to avoid a flash on first paint.
+        // Set theme early to avoid a flash on first paint. Default to dark; only light if user chose it via the toggle.
         (function () {
             try {
                 const savedTheme = localStorage.getItem('theme');
-                const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-                const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+                const theme = savedTheme || 'dark';
                 document.documentElement.setAttribute('data-theme', theme);
             } catch (e) {}
         })();
