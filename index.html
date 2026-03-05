@@ -7522,8 +7522,21 @@
             letter-spacing: 0.18em;
             text-transform: uppercase;
             font-weight: 500;
+            transition: opacity 0.4s ease;
         }
         [data-theme="light"] .net-label { fill: rgba(14, 165, 233, 0.32); }
+
+        .scenario-tag {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            fill: rgba(125, 211, 252, 0.45);
+            text-anchor: middle;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: opacity 0.4s ease;
+        }
+        [data-theme="light"] .scenario-tag { fill: rgba(14, 165, 233, 0.5); }
 
         .hub-ring {
             fill: none;
@@ -7583,6 +7596,7 @@
             fill: rgba(125, 211, 252, 0.32);
             text-anchor: middle;
             font-weight: 500;
+            transition: opacity 0.4s ease;
         }
         [data-theme="light"] .agent-ring { stroke: rgba(14, 165, 233, 0.18); }
         [data-theme="light"] .agent-core { fill: rgba(14, 165, 233, 0.06); stroke: rgba(14, 165, 233, 0.32); }
@@ -7725,10 +7739,13 @@
                     <circle r="2" class="net-flow net-flow--dim"><animateMotion dur="4s" repeatCount="indefinite" begin="2.2s"><mpath href="#pDA"/></animateMotion></circle>
 
                     <!-- Edge labels -->
-                    <text class="net-label" x="400" y="38">sessions</text>
-                    <text class="net-label" x="734" y="244">tools</text>
-                    <text class="net-label" x="400" y="458">multimodal</text>
-                    <text class="net-label" x="66" y="244">context</text>
+                    <text class="net-label" data-edge="0" x="400" y="38">allocations</text>
+                    <text class="net-label" data-edge="1" x="734" y="244">market feeds</text>
+                    <text class="net-label" data-edge="2" x="400" y="458">audit trail</text>
+                    <text class="net-label" data-edge="3" x="66" y="244">exposures</text>
+
+                    <!-- Scenario indicator -->
+                    <text class="scenario-tag" id="scenarioTag" x="400" y="16">Financial Services</text>
 
                     <!-- Scan pulse rings -->
                     <circle cx="400" cy="240" fill="none" stroke="var(--ice)" stroke-width="1" r="36">
@@ -7755,28 +7772,28 @@
                         <circle cx="130" cy="100" r="19" class="agent-ring"/>
                         <circle cx="130" cy="100" r="8" class="agent-core"/>
                         <text class="agent-letter" x="130" y="104">α</text>
-                        <text class="agent-sublabel" x="130" y="140">Planner</text>
+                        <text class="agent-sublabel" x="130" y="140">Portfolio Mgr</text>
                     </g>
                     <g class="agent-node" data-agent="b">
                         <circle cx="670" cy="100" r="26" fill="url(#agentAura)"/>
                         <circle cx="670" cy="100" r="19" class="agent-ring"/>
                         <circle cx="670" cy="100" r="8" class="agent-core"/>
                         <text class="agent-letter" x="670" y="104">β</text>
-                        <text class="agent-sublabel" x="670" y="140">Coder</text>
+                        <text class="agent-sublabel" x="670" y="140">Trade Exec</text>
                     </g>
                     <g class="agent-node" data-agent="c">
                         <circle cx="670" cy="380" r="26" fill="url(#agentAura)"/>
                         <circle cx="670" cy="380" r="19" class="agent-ring"/>
                         <circle cx="670" cy="380" r="8" class="agent-core"/>
                         <text class="agent-letter" x="670" y="384">γ</text>
-                        <text class="agent-sublabel" x="670" y="420">Retriever</text>
+                        <text class="agent-sublabel" x="670" y="420">Compliance</text>
                     </g>
                     <g class="agent-node" data-agent="d">
                         <circle cx="130" cy="380" r="26" fill="url(#agentAura)"/>
                         <circle cx="130" cy="380" r="19" class="agent-ring"/>
                         <circle cx="130" cy="380" r="8" class="agent-core"/>
                         <text class="agent-letter" x="130" y="384">δ</text>
-                        <text class="agent-sublabel" x="130" y="420">Reviewer</text>
+                        <text class="agent-sublabel" x="130" y="420">Risk Analyst</text>
                     </g>
 
                     <!-- Phase indicators -->
@@ -9115,18 +9132,71 @@
         }
     })();
 
-    // Multi-Agent Intent Network – threat detection cycle
+    // Multi-Agent Intent Network – rotating enterprise scenarios with threat detection
     (function() {
-        const wrap = document.getElementById('intentNetWrap');
+        var wrap = document.getElementById('intentNetWrap');
         if (!wrap) return;
-        const svg = wrap.querySelector('.intent-net');
+        var svg = wrap.querySelector('.intent-net');
         if (!svg) return;
 
-        const crossIds = ['ab', 'bc', 'cd', 'da'];
-        const linkAgents = { ab: ['a','b'], bc: ['b','c'], cd: ['c','d'], da: ['d','a'] };
-        const phases = ['intent', 'identity', 'threat', 'policy'];
-        let idx = 0;
-        let running = false;
+        var scenarios = [
+            {
+                name: 'Financial Services',
+                agents: { a: 'Portfolio Mgr', b: 'Trade Exec', c: 'Compliance', d: 'Risk Analyst' },
+                edges: ['allocations', 'market feeds', 'audit trail', 'exposures']
+            },
+            {
+                name: 'Healthcare',
+                agents: { a: 'Triage', b: 'Diagnostics', c: 'Prescriber', d: 'Records' },
+                edges: ['vitals', 'imaging', 'formulary', 'EHR']
+            },
+            {
+                name: 'Supply Chain',
+                agents: { a: 'Procurement', b: 'Logistics', c: 'Inventory', d: 'Forecasting' },
+                edges: ['purchase orders', 'shipments', 'stock levels', 'forecasts']
+            },
+            {
+                name: 'Legal & Compliance',
+                agents: { a: 'Drafter', b: 'Research', c: 'Due Diligence', d: 'Filing' },
+                edges: ['clauses', 'case law', 'entity data', 'deadlines']
+            },
+            {
+                name: 'DevSecOps',
+                agents: { a: 'CI / CD', b: 'Scanner', c: 'Deployer', d: 'Monitor' },
+                edges: ['pipelines', 'vulnerabilities', 'configs', 'telemetry']
+            }
+        ];
+
+        var crossIds = ['ab', 'bc', 'cd', 'da'];
+        var linkAgents = { ab: ['a','b'], bc: ['b','c'], cd: ['c','d'], da: ['d','a'] };
+        var idx = 0;
+        var scenarioIdx = 0;
+        var running = false;
+
+        var sublabels = {};
+        ['a','b','c','d'].forEach(function(id) {
+            var node = svg.querySelector('[data-agent="' + id + '"]');
+            if (node) sublabels[id] = node.querySelector('.agent-sublabel');
+        });
+        var edgeLabels = svg.querySelectorAll('.net-label[data-edge]');
+        var scenarioTag = document.getElementById('scenarioTag');
+
+        function applyScenario(s) {
+            Object.keys(s.agents).forEach(function(id) {
+                if (sublabels[id]) sublabels[id].textContent = s.agents[id];
+            });
+            edgeLabels.forEach(function(el, i) {
+                if (s.edges[i] !== undefined) el.textContent = s.edges[i];
+            });
+            if (scenarioTag) scenarioTag.textContent = s.name;
+        }
+
+        function fadeLabels(opacity, cb) {
+            var els = Object.values(sublabels).concat(Array.from(edgeLabels));
+            if (scenarioTag) els.push(scenarioTag);
+            els.forEach(function(el) { if (el) el.style.opacity = opacity; });
+            setTimeout(cb, 420);
+        }
 
         function setPhase(name) {
             svg.querySelectorAll('.phase-step').forEach(function(s) {
@@ -9151,6 +9221,16 @@
         }
 
         function cycle() {
+            var nextScenario = scenarios[scenarioIdx % scenarios.length];
+            fadeLabels('0', function() {
+                applyScenario(nextScenario);
+                fadeLabels('', function() {
+                    runDetection();
+                });
+            });
+        }
+
+        function runDetection() {
             var linkId = crossIds[idx % crossIds.length];
             var link = svg.querySelector('[data-link="' + linkId + '"]');
             var agents = agentNodes(linkAgents[linkId]);
@@ -9180,6 +9260,7 @@
             setTimeout(function() {
                 cleanState();
                 idx++;
+                scenarioIdx++;
                 if (running) setTimeout(cycle, 1200);
             }, 6200);
         }
