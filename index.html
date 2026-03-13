@@ -6708,7 +6708,7 @@
             text-transform: uppercase;
         }
         .diagram-volume .bn-label-top {
-            font-size: 5px;
+            font-size: 4px;
             fill: var(--text-dim);
             opacity: 0.75;
         }
@@ -7712,7 +7712,7 @@
         <div class="container">
             <h2>Every agent threat is an identity deviation.</h2>
             <p class="section-subtitle">
-                The agent's identity isn't locked at authentication. It's continuously rewritten by its context window — every token, every tool call nudges it along a path. So every inbound threat is, at root, an identity threat: something that shifts what the agent is becoming.
+                The agent's identity isn't locked at authentication. Every token that enters the context window is a vote on its identity — a single token can shift its role, erode a constraint, or grant a capability. The identity plane detects when those votes accumulate into a trajectory that departs from the agent's declared purpose.
             </p>
             <p class="section-subtitle" style="margin-top: -0.5em;">
                 Prompt injection. Data exfiltration. Privilege escalation. Identity drift — same geometry, different angles. One pipeline: <strong>Intent · Identity · Threat → Policy.</strong> One identity plane to monitor, detect, and enforce.
@@ -7877,46 +7877,6 @@
                         </div>
                     </div>
                     <div class="advantage-card">
-                        <div class="advantage-visual advantage-visual--data-plane">
-                            <div class="diagram-data-plane" aria-hidden="true">
-                                <div class="flow">
-                                    <div class="data-plane-zone">
-                                        <span class="zone-label">Data plane</span>
-                                        <div class="barrier"><span class="crack" aria-hidden="true"></span></div>
-                                    </div>
-                                    <div class="slip-group">
-                                        <div class="slip-arrow" title="Slip through">
-                                        <svg viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <line x1="6" y1="0" x2="6" y2="16" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path class="arrow-fill" d="M6 22 L2 16 L10 16 Z" fill="var(--red)"/>
-                                        </svg>
-                                    </div>
-                                        <span class="slip-label">Slip through</span>
-                                    </div>
-                                    <div class="control-plane-zone">
-                                        <span class="zone-label">Identity plane</span>
-                                        <span class="rearch-label">Reinvented</span>
-                                    </div>
-                                </div>
-                                <div class="feedback-loop" title="Adaptive policy feedback">
-                                    <svg class="feedback-curve" viewBox="0 0 60 140" preserveAspectRatio="xMinYMid meet" overflow="visible" aria-hidden="true">
-                                        <defs>
-                                            <marker id="feedback-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
-                                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--ice)" />
-                                            </marker>
-                                        </defs>
-                                        <path class="feedback-path" d="M 50 118 C 6 118 8 28 50 18" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" marker-end="url(#feedback-arrow)" />
-                                    </svg>
-                                    <span class="feedback-label">Adaptive policy</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="advantage-card-caption">
-                            <div class="title">Guardrails are not enough.</div>
-                            <p class="text">Adaptive and compositional threats will slip through the data plane. Adaptive monitoring and policy enforcement are needed.</p>
-                        </div>
-                    </div>
-                    <div class="advantage-card">
                         <div class="advantage-visual advantage-visual--volume">
                             <div class="diagram-volume" aria-hidden="true">
                                 <svg viewBox="0 0 200 138" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8001,19 +7961,59 @@
                                         <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
                                     </circle>
 
-                                    <!-- Output glow + compressed signal -->
+                                    <!-- Output glow + compressed memory -->
                                     <ellipse class="bn-output-glow" cx="100" cy="112" rx="12" ry="5"/>
                                     <circle class="bn-output-core" cx="100" cy="112" r="3.5"/>
 
                                     <!-- Labels -->
-                                    <text class="bn-label bn-label-top" x="100" y="9">MILLIONS OF TOKENS</text>
-                                    <text class="bn-label bn-label-bottom" x="100" y="132">COMPACT SIGNALS</text>
+                                    <text class="bn-label bn-label-top" x="100" y="9">MILLIONS OF TOKENS ACROSS SESSIONS</text>
+                                    <text class="bn-label bn-label-bottom" x="100" y="132">COMPRESSED MEMORY</text>
                                 </svg>
                             </div>
                         </div>
                         <div class="advantage-card-caption">
-                            <div class="title">Compression</div>
-                            <p class="text">A persistent, compressed view of identity — retaining only what's novel, important, and application-relevant.</p>
+                            <div class="title">Persistent Memory</div>
+                            <p class="text">A continuous, compressed memory of the agent's identity across sessions — retaining only what's novel, important, and application-relevant.</p>
+                        </div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-visual advantage-visual--data-plane">
+                            <div class="diagram-data-plane" aria-hidden="true">
+                                <div class="flow">
+                                    <div class="data-plane-zone">
+                                        <span class="zone-label">Memoryless guardrails</span>
+                                        <div class="barrier"><span class="crack" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="slip-group">
+                                        <div class="slip-arrow" title="Slip through">
+                                        <svg viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <line x1="6" y1="0" x2="6" y2="16" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path class="arrow-fill" d="M6 22 L2 16 L10 16 Z" fill="var(--red)"/>
+                                        </svg>
+                                    </div>
+                                        <span class="slip-label">Slip through</span>
+                                    </div>
+                                    <div class="control-plane-zone">
+                                        <span class="zone-label">Identity plane</span>
+                                        <span class="rearch-label">Persistent</span>
+                                    </div>
+                                </div>
+                                <div class="feedback-loop" title="Adaptive policy feedback">
+                                    <svg class="feedback-curve" viewBox="0 0 60 140" preserveAspectRatio="xMinYMid meet" overflow="visible" aria-hidden="true">
+                                        <defs>
+                                            <marker id="feedback-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+                                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--ice)" />
+                                            </marker>
+                                        </defs>
+                                        <path class="feedback-path" d="M 50 118 C 6 118 8 28 50 18" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" marker-end="url(#feedback-arrow)" />
+                                    </svg>
+                                    <span class="feedback-label">Adaptive policy</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="advantage-card-caption">
+                            <div class="title">Continuous Enforcement</div>
+                            <p class="text">Identity tracking and persistent memory feed a closed loop — continuously adapting policy as the agent's context evolves.</p>
                         </div>
                     </div>
                 </div>
