@@ -529,6 +529,14 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
             position: relative;
         }
+        .tagline-second {
+            white-space: nowrap;
+        }
+        @media (max-width: 520px) {
+            .tagline-second {
+                white-space: normal;
+            }
+        }
 
         .tagline-pipeline {
             display: flex;
@@ -7684,7 +7692,7 @@
             <h1>
                 The Identity Plane for <br><span class="gradient">AI Agents</span>
             </h1>
-            <p class="tagline">Every agent threat is an identity deviation. One plane detects them all.</p>
+            <p class="tagline">Every agent threat is an identity deviation. <span class="tagline-second">One identity plane detects them all.</span></p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
                 <a href="products.html" class="hero-secondary">See Products <span style="opacity: 0.9;">→</span></a>

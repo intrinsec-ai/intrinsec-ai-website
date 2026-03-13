@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products — Intrinsec AI</title>
-    <meta name="description" content="Every agent threat is an identity deviation. One plane detects them all. Intrinsec AI — the identity plane for AI agents.">
+    <meta name="description" content="Every agent threat is an identity deviation. One identity plane detects them all. Intrinsec AI — the identity plane for AI agents.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
     <meta property="og:title" content="Intrinsec AI — The Identity Plane for AI Agents">
-    <meta property="og:description" content="Every agent threat is an identity deviation. One plane detects them all. Persistent identity tracking, adaptive policy enforcement, multimodal identity tracking.">
+    <meta property="og:description" content="Every agent threat is an identity deviation. One identity plane detects them all. Persistent identity tracking, adaptive policy enforcement, multimodal identity tracking.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -344,6 +344,14 @@
             color: var(--text-secondary);
             max-width: 700px;
             margin: 0 auto;
+        }
+        .tagline-second {
+            white-space: nowrap;
+        }
+        @media (max-width: 520px) {
+            .tagline-second {
+                white-space: normal;
+            }
         }
         
         /* Products Grid */
@@ -1272,7 +1280,7 @@
     <section class="hero">
         <div class="container">
             <h1>The Identity Plane for <span class="gradient">AI Agents</span></h1>
-            <p>Every agent threat is an identity deviation. One plane detects them all.</p>
+            <p>Every agent threat is an identity deviation. <span class="tagline-second">One identity plane detects them all.</span></p>
         </div>
     </section>
 
