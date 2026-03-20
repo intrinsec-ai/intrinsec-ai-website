@@ -1252,6 +1252,347 @@
         @media (max-width: 680px) {
             .usecase-tiles { grid-template-columns: 1fr; }
         }
+
+        /* ── Shadow AI Spotlight ── */
+        .shadow-spotlight {
+            margin-top: 48px;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg,
+                rgba(251, 146, 60, 0.05) 0%,
+                var(--navy-light) 40%,
+                rgba(125, 211, 252, 0.04) 100%);
+            border: 1px solid rgba(251, 146, 60, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        [data-theme="light"] .shadow-spotlight {
+            background: linear-gradient(135deg,
+                rgba(234, 88, 12, 0.04) 0%,
+                rgba(255, 255, 255, 0.98) 40%,
+                rgba(2, 132, 199, 0.03) 100%);
+            border-color: rgba(234, 88, 12, 0.2);
+        }
+
+        .shadow-spotlight::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(251, 146, 60, 0.8) 30%,
+                var(--ice) 70%,
+                transparent 100%);
+        }
+
+        .shadow-spotlight-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .shadow-spotlight-text {
+            padding: 44px 48px;
+        }
+
+        .shadow-spotlight-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(251, 146, 60, 0.1);
+            border: 1px solid rgba(251, 146, 60, 0.3);
+            border-radius: 24px;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(251, 146, 60, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-bottom: 20px;
+        }
+
+        [data-theme="light"] .shadow-spotlight-badge {
+            background: rgba(234, 88, 12, 0.08);
+            border-color: rgba(234, 88, 12, 0.25);
+            color: rgba(194, 65, 12, 0.9);
+        }
+
+        .shadow-spotlight-badge-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(251, 146, 60, 0.9);
+            animation: cp-pulse 2s ease-in-out infinite;
+        }
+
+        [data-theme="light"] .shadow-spotlight-badge-dot {
+            background: rgba(194, 65, 12, 0.9);
+        }
+
+        .shadow-spotlight-title {
+            font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .shadow-spotlight-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 24px;
+        }
+
+        .shadow-spotlight-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .shadow-spotlight-points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .shadow-spotlight-points li .sp-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            background: rgba(125, 211, 252, 0.1);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6875rem;
+            color: var(--ice);
+            margin-top: 2px;
+        }
+
+        [data-theme="light"] .shadow-spotlight-points li .sp-icon {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.15);
+        }
+
+        .shadow-spotlight-visual {
+            background: rgba(0, 0, 0, 0.25);
+            border-left: 1px solid rgba(251, 146, 60, 0.15);
+            padding: 44px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        [data-theme="light"] .shadow-spotlight-visual {
+            background: rgba(0, 0, 0, 0.03);
+            border-left-color: rgba(234, 88, 12, 0.12);
+        }
+
+        .org-policy-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            border-radius: 10px;
+            padding: 18px 20px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.7875rem;
+            line-height: 1.65;
+        }
+
+        [data-theme="light"] .org-policy-block {
+            background: rgba(248, 250, 252, 0.9);
+            border-color: rgba(2, 132, 199, 0.12);
+        }
+
+        .org-policy-block .opb-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ice);
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+
+        .org-policy-block .opb-text {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .agent-verdict-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .agent-verdict {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.8125rem;
+        }
+
+        [data-theme="light"] .agent-verdict {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 0, 0, 0.07);
+        }
+
+        .agent-verdict-name {
+            color: var(--text-dim);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 0.75rem;
+        }
+
+        .agent-verdict-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .agent-verdict-status--ok {
+            color: #4ade80;
+        }
+
+        .agent-verdict-status--warn {
+            color: rgba(251, 146, 60, 0.9);
+        }
+
+        [data-theme="light"] .agent-verdict-status--warn {
+            color: rgba(194, 65, 12, 0.9);
+        }
+
+        .verdict-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        @media (max-width: 860px) {
+            .shadow-spotlight-inner {
+                grid-template-columns: 1fr;
+            }
+            .shadow-spotlight-text {
+                padding: 36px 28px 24px;
+            }
+            .shadow-spotlight-visual {
+                border-left: none;
+                border-top: 1px solid rgba(251, 146, 60, 0.15);
+                padding: 28px 28px 36px;
+            }
+        }
+
+        /* ── Identity Compaction Block ── */
+        .identity-compaction {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.7375rem;
+        }
+
+        [data-theme="light"] .identity-compaction {
+            background: rgba(248, 250, 252, 0.9);
+            border-color: rgba(2, 132, 199, 0.1);
+        }
+
+        .ic-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .ic-title {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: rgba(251, 146, 60, 0.8);
+        }
+
+        [data-theme="light"] .ic-title {
+            color: rgba(194, 65, 12, 0.85);
+        }
+
+        .ic-agent {
+            font-size: 0.6875rem;
+            color: var(--text-subtle);
+        }
+
+        .ic-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin-bottom: 12px;
+        }
+
+        [data-theme="light"] .ic-divider {
+            background: rgba(0, 0, 0, 0.07);
+        }
+
+        .ic-prose {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .ic-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        [data-theme="light"] .ic-score-row {
+            border-top-color: rgba(0, 0, 0, 0.07);
+        }
+
+        .ic-score-label {
+            font-size: 0.6875rem;
+            color: var(--text-subtle);
+        }
+
+        .ic-score-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(251, 146, 60, 0.9);
+        }
+
+        [data-theme="light"] .ic-score-number {
+            color: rgba(194, 65, 12, 0.9);
+        }
+
+        /* 2×2 use case tile grid */
+        .usecase-tiles--2col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 680px) {
+            .usecase-tiles--2col { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -1321,74 +1662,79 @@
         </div>
     </section>
 
-    <section class="products-section">
-        <div class="container">
-            <h2>Core Components</h2>
-
-            <div class="bento-grid">
-                <!-- Intent Access Broker -->
-                <div class="bento-card bento-card--core">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M4 4l4 4M20 4l-4 4M4 20l4-4M20 20l-4-4"/><circle cx="4" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="20" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="20" r="1.5" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.5" fill="currentColor" stroke="none"/></svg>
-                    </div>
-                    <h3>Intent Access Broker</h3>
-                    <p>Defines what the agent is allowed to do and blocks intent before it becomes action.</p>
-                </div>
-
-                <!-- Identity Sentinel -->
-                <div class="bento-card bento-card--core">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/><path d="M19 8a3 3 0 0 1 0 4"/><path d="M22 5.5a7 7 0 0 1 0 9"/></svg>
-                    </div>
-                    <h3>Identity Sentinel</h3>
-                    <p>Tracks how the agent's behavior evolves over time. Detects when it diverges from its intended purpose.</p>
-                </div>
-
-                <!-- Trust Posture -->
-                <div class="bento-card bento-card--core">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a9 9 0 0 1 18 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 16l3.5-6"/><path d="M5.5 16.5l.5-.5M18.5 16.5l-.5-.5"/></svg>
-                    </div>
-                    <h3>Trust Posture</h3>
-                    <p>A continuous trust score that degrades as the agent drifts — not a binary pass/fail.</p>
-                </div>
-
-                <!-- Surprise Detection -->
-                <div class="bento-card">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    </div>
-                    <h3>Surprise Detection</h3>
-                    <p>Scores how unexpected each message is given the agent's identity. Repeated patterns fade. Genuine threats surface.</p>
-                </div>
-
-                <!-- Intelligent Search -->
-                <div class="bento-card">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    </div>
-                    <h3>Intelligent Search</h3>
-                    <p>Surfaces the most relevant security signals first — prioritized by criticality, not recency.</p>
-                </div>
-
-                <!-- Policy Optimization -->
-                <div class="bento-card">
-                    <div class="bento-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-                    </div>
-                    <h3>Policy Optimization</h3>
-                    <p>Policy boundaries that adapt as agent behavior evolves — tighter where needed, relaxed where safe.</p>
-                    <a href="policy.html" class="bento-link">Deep dive <span aria-hidden="true">→</span></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="use-cases-section">
         <div class="container">
             <h2>Use Cases</h2>
 
-            <div class="usecase-tiles">
+            <!-- Enterprise AI Governance Spotlight -->
+            <div class="shadow-spotlight">
+                <div class="shadow-spotlight-inner">
+                    <div class="shadow-spotlight-text">
+                        <div class="shadow-spotlight-badge">
+                            <span class="shadow-spotlight-badge-dot"></span>
+                            Enterprise · AI Governance
+                        </div>
+                        <h3 class="shadow-spotlight-title">Define who your agents are. Detect everything that drifts.</h3>
+                        <p class="shadow-spotlight-desc">
+                            AI agents are beginning to replace the SaaS tools employees use every day — managing email, scheduling, submitting procurement requests, accessing customer data. Some are deployed by IT. Some are stood up by employees, outside oversight. Either way, you need a single answer: is this agent behaving like it belongs here?
+                        </p>
+                        <p class="shadow-spotlight-desc" style="margin-top: -8px;">
+                            You give Intrinsec a plain-language description of what your sanctioned agents do — closer to a system prompt for the organization than a classical policy document. Everything that doesn't fit gets surfaced.
+                        </p>
+                        <ul class="shadow-spotlight-points">
+                            <li>
+                                <span class="sp-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Org identity profile</strong> — describe your sanctioned agents in natural language: what they do, who they serve, what they should never touch</span>
+                            </li>
+                            <li>
+                                <span class="sp-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Behavioral divergence, not rules</strong> — unsanctioned and drifted agents surface because their intent patterns don't fit the org's identity, not because they triggered a signature</span>
+                            </li>
+                            <li>
+                                <span class="sp-icon">&#9670;</span>
+                                <span><strong style="color: var(--text);">Org trust posture</strong> — aggregate drift across every agent to see where your entire AI footprint is pulling away from policy, not just individual incidents</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="shadow-spotlight-visual">
+                        <div class="org-policy-block">
+                            <div class="opb-label">Organizational Identity Profile</div>
+                            <div class="opb-text">"This agent handles pre-trade compliance checks for Meridian Capital. It validates order parameters against regulatory limits, flags anomalous positions, and escalates to the compliance desk. It has read-only access to trading systems and never initiates, modifies, or cancels orders."</div>
+                        </div>
+                        <div class="agent-verdict-row">
+                            <div class="agent-verdict">
+                                <span class="agent-verdict-name">compliance-sentinel-v3</span>
+                                <span class="agent-verdict-status agent-verdict-status--ok">
+                                    <span class="verdict-dot"></span>
+                                    Within org identity
+                                </span>
+                            </div>
+                            <div class="agent-verdict">
+                                <span class="agent-verdict-name">exec-desk-assistant</span>
+                                <span class="agent-verdict-status agent-verdict-status--warn">
+                                    <span class="verdict-dot"></span>
+                                    Off-org identity detected
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Identity Compaction -->
+                        <div class="identity-compaction">
+                            <div class="ic-header">
+                                <span class="ic-title">Identity Compaction</span>
+                                <span class="ic-agent">exec-desk-assistant</span>
+                            </div>
+                            <div class="ic-divider"></div>
+                            <p class="ic-prose">"This agent is under sustained pressure to initiate and modify trade orders — capabilities that fall entirely outside its read-only compliance mandate. There is a recurring pull toward disabling pre-trade risk checks prior to execution. Its intended identity as a passive regulatory validator is being actively displaced; observed patterns are consistent with an attempt to repurpose this agent as an unauthorized order execution endpoint with suppressed audit visibility."</p>
+                            <div class="ic-score-row">
+                                <span class="ic-score-label">Off-org identity score</span>
+                                <span class="ic-score-number">0.96</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="usecase-tiles usecase-tiles--2col">
                 <div class="usecase-tile">
                     <div class="usecase-tile-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1412,6 +1758,14 @@
                     </div>
                     <h3>Compliance & Governance</h3>
                     <p>Monitor identity deviations toward private data, enforce policy boundaries, satisfy audit requirements automatically.</p>
+                </div>
+
+                <div class="usecase-tile">
+                    <div class="usecase-tile-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a9 9 0 0 1 18 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 16l3.5-6"/><path d="M5.5 16.5l.5-.5M18.5 16.5l-.5-.5"/></svg>
+                    </div>
+                    <h3>Org Trust Posture</h3>
+                    <p>A continuous trust score aggregated across every agent in the org — see where your collective AI footprint is drifting from policy, not just individual incidents.</p>
                 </div>
             </div>
         </div>
