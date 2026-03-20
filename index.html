@@ -7753,7 +7753,7 @@
             <h1>
                 The Identity Plane for <br><span class="gradient">AI Agents</span>
             </h1>
-            <p class="tagline">Detect when agent behavior drifts from policy — across users, tools, context, and other agents.</p>
+            <p class="tagline">An agent becomes what it receives.</p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
                 <a href="products.html" class="hero-secondary">See Products <span style="opacity: 0.9;">→</span></a>
@@ -7763,7 +7763,7 @@
                 <span class="proof-pill"><span class="proof-icon"></span>Persistent identity across agent lifetime</span>
                 <span class="proof-pill"><span class="proof-icon"></span>Catches multi-step attacks</span>
                 <span class="proof-pill"><span class="proof-icon"></span>Grounded in application logic</span>
-                <span class="proof-pill"><span class="proof-icon"></span>Model the agent, not the attack</span>
+                <span class="proof-pill"><span class="proof-icon"></span>Model the inbound, not the attack</span>
             </div>
         </div>
     </section>
@@ -7784,107 +7784,145 @@
                 </div>
             </div>
             <p class="section-subtitle">
-                New attacks will always outpace guardrails — every modality, tool call, and agent handoff opens another way in. The identity plane inverts the problem: track the agent, not the threat.
+                New attacks will always outpace guardrails. The identity plane inverts the problem: model what flows into the agent, not the attack.
             </p>
             
             <div class="intent-net-wrap" id="intentNetWrap" aria-hidden="true">
-                <svg class="intent-net" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+                <svg class="intent-net" viewBox="0 0 840 420" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <radialGradient id="hubAura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.08"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
-                        <radialGradient id="agentAura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.05"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
+                        <linearGradient id="ip-band-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="var(--ice)" stop-opacity="0.03"/>
+                            <stop offset="40%"  stop-color="var(--ice)" stop-opacity="0.10"/>
+                            <stop offset="60%"  stop-color="var(--ice)" stop-opacity="0.10"/>
+                            <stop offset="100%" stop-color="var(--ice)" stop-opacity="0.03"/>
+                        </linearGradient>
+                        <radialGradient id="ip-agent-aura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.05"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
+                        <radialGradient id="ip-src-aura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.08"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
+                        <clipPath id="ip-clip"><rect x="328" y="32" width="148" height="296" rx="12"/></clipPath>
+                        <!-- Particle paths: sources → IP band -->
+                        <path id="ip-sp1" d="M 106 80  L 330 110"/>
+                        <path id="ip-sp2" d="M 106 162 L 330 168"/>
+                        <path id="ip-sp3" d="M 106 244 L 330 226"/>
+                        <path id="ip-sp4" d="M 106 326 L 330 284"/>
+                        <!-- Particle paths: IP band → agents -->
+                        <path id="ip-ap1" d="M 476 110 L 714 80"/>
+                        <path id="ip-ap2" d="M 476 168 L 714 162"/>
+                        <path id="ip-ap3" d="M 476 226 L 714 244"/>
+                        <path id="ip-ap4" d="M 476 284 L 714 326"/>
                     </defs>
 
-                    <!-- Hub connections -->
-                    <path id="pAH" d="M148 100 L380 232" class="net-link" data-link="ah"/>
-                    <path id="pBH" d="M652 100 L420 232" class="net-link" data-link="bh"/>
-                    <path id="pCH" d="M652 380 L420 248" class="net-link" data-link="ch"/>
-                    <path id="pDH" d="M148 380 L380 248" class="net-link" data-link="dh"/>
+                    <!-- Scenario tag -->
+                    <text class="scenario-tag" id="scenarioTag" x="420" y="16">Financial Services</text>
 
-                    <!-- Cross-connections -->
-                    <path id="pAB" d="M160 82 Q400 42 640 82" class="net-link net-link--cross" data-link="ab"/>
-                    <path id="pBC" d="M668 120 Q712 240 668 360" class="net-link net-link--cross" data-link="bc"/>
-                    <path id="pCD" d="M640 398 Q400 438 160 398" class="net-link net-link--cross" data-link="cd"/>
-                    <path id="pDA" d="M132 360 Q88 240 132 120" class="net-link net-link--cross" data-link="da"/>
+                    <!-- INPUT SOURCE NODES (squares = input types) -->
+                    <g>
+                        <circle cx="68" cy="80"  r="24" fill="url(#ip-src-aura)"/>
+                        <rect x="50" y="62"  width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
+                        <circle cx="68" cy="80"  r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
+                        <text x="68" y="115" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">User</text>
+                    </g>
+                    <g>
+                        <circle cx="68" cy="162" r="24" fill="url(#ip-src-aura)"/>
+                        <rect x="50" y="144" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
+                        <circle cx="68" cy="162" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
+                        <text x="68" y="197" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Context</text>
+                    </g>
+                    <g>
+                        <circle cx="68" cy="244" r="24" fill="url(#ip-src-aura)"/>
+                        <rect x="50" y="226" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
+                        <circle cx="68" cy="244" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
+                        <text x="68" y="279" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Tools</text>
+                    </g>
+                    <g>
+                        <circle cx="68" cy="326" r="24" fill="url(#ip-src-aura)"/>
+                        <rect x="50" y="308" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
+                        <circle cx="68" cy="326" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
+                        <text x="68" y="361" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Agents</text>
+                    </g>
 
-                    <!-- Flow particles along hub links -->
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0s"><mpath href="#pAH"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.7s"><mpath href="#pBH"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.5s" repeatCount="indefinite" begin="1.3s"><mpath href="#pCH"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="3s" repeatCount="indefinite" begin="0.3s"><mpath href="#pDH"/></animateMotion></circle>
+                    <!-- FLOW LINES: sources → IP band (data-link drives threat animation) -->
+                    <line x1="106" y1="80"  x2="328" y2="110" class="net-link" data-link="ab"/>
+                    <line x1="106" y1="162" x2="328" y2="168" class="net-link" data-link="bc"/>
+                    <line x1="106" y1="244" x2="328" y2="226" class="net-link" data-link="cd"/>
+                    <line x1="106" y1="326" x2="328" y2="284" class="net-link" data-link="da"/>
 
-                    <!-- Flow particles along cross-connections -->
-                    <circle r="2" class="net-flow net-flow--dim"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.4s"><mpath href="#pAB"/></animateMotion></circle>
-                    <circle r="2" class="net-flow net-flow--dim"><animateMotion dur="3.8s" repeatCount="indefinite" begin="1.1s"><mpath href="#pBC"/></animateMotion></circle>
-                    <circle r="2" class="net-flow net-flow--dim"><animateMotion dur="3.4s" repeatCount="indefinite" begin="1.8s"><mpath href="#pCD"/></animateMotion></circle>
-                    <circle r="2" class="net-flow net-flow--dim"><animateMotion dur="4s" repeatCount="indefinite" begin="2.2s"><mpath href="#pDA"/></animateMotion></circle>
+                    <!-- IDENTITY PLANE BAND -->
+                    <rect x="328" y="32" width="148" height="296" rx="12" fill="url(#ip-band-grad)" stroke="var(--ice)" stroke-opacity="0.42" stroke-width="1.5"/>
+                    <!-- Scan line animation -->
+                    <rect x="328" y="32" width="148" height="2.5" fill="var(--ice)" clip-path="url(#ip-clip)" opacity="0">
+                        <animate attributeName="y"       values="32;326;32"      dur="3.5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0;0.4;0.4;0;0" dur="3.5s" repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Band labels -->
+                    <text x="402" y="168" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="10" font-weight="700" letter-spacing="2">IDENTITY</text>
+                    <text x="402" y="185" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="10" font-weight="700" letter-spacing="2">PLANE</text>
+                    <text x="402" y="205" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="8"  opacity="0.52" letter-spacing="0.5">inbound perimeter</text>
+                    <!-- Hub core (JS: adds enforcing class when threat blocked) -->
+                    <circle cx="402" cy="228" r="5" class="hub-core" id="hubCore"/>
 
-                    <!-- Edge labels -->
-                    <text class="net-label" data-edge="0" x="400" y="38">allocations</text>
-                    <text class="net-label" data-edge="1" x="734" y="244">market feeds</text>
-                    <text class="net-label" data-edge="2" x="400" y="458">audit trail</text>
-                    <text class="net-label" data-edge="3" x="66" y="244">exposures</text>
+                    <!-- FLOW LINES: IP band → agents -->
+                    <line x1="476" y1="110" x2="714" y2="80"  class="net-link"/>
+                    <line x1="476" y1="168" x2="714" y2="162" class="net-link"/>
+                    <line x1="476" y1="226" x2="714" y2="244" class="net-link"/>
+                    <line x1="476" y1="284" x2="714" y2="326" class="net-link"/>
 
-                    <!-- Scenario indicator -->
-                    <text class="scenario-tag" id="scenarioTag" x="400" y="16">Financial Services</text>
+                    <!-- Edge labels on right-side channels (updated per scenario) -->
+                    <text class="net-label" data-edge="0" x="595" y="86" >allocations</text>
+                    <text class="net-label" data-edge="1" x="595" y="154">market feeds</text>
+                    <text class="net-label" data-edge="2" x="595" y="230">audit trail</text>
+                    <text class="net-label" data-edge="3" x="595" y="302">exposures</text>
 
-                    <!-- Scan pulse rings -->
-                    <circle cx="400" cy="240" fill="none" stroke="var(--ice)" stroke-width="1" r="36">
-                        <animate attributeName="r" values="36;240" dur="5s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-opacity" values="0.3;0" dur="5s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-width" values="1.5;0.15" dur="5s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="400" cy="240" fill="none" stroke="var(--ice)" stroke-width="1" r="36">
-                        <animate attributeName="r" values="36;240" dur="5s" begin="2.5s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-opacity" values="0.3;0" dur="5s" begin="2.5s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-width" values="1.5;0.15" dur="5s" begin="2.5s" repeatCount="indefinite"/>
-                    </circle>
-
-                    <!-- Central hub -->
-                    <circle cx="400" cy="240" r="54" fill="url(#hubAura)"/>
-                    <circle cx="400" cy="240" r="30" class="hub-ring"/>
-                    <circle cx="400" cy="240" r="16" class="hub-inner"/>
-                    <circle cx="400" cy="240" r="4.5" class="hub-core" id="hubCore"/>
-                    <text class="hub-label" x="400" y="286">IDENTITY PLANE</text>
-
-                    <!-- Agent nodes -->
+                    <!-- AGENT NODES -->
                     <g class="agent-node" data-agent="a">
-                        <circle cx="130" cy="100" r="26" fill="url(#agentAura)"/>
-                        <circle cx="130" cy="100" r="19" class="agent-ring"/>
-                        <circle cx="130" cy="100" r="8" class="agent-core"/>
-                        <text class="agent-letter" x="130" y="104">α</text>
-                        <text class="agent-sublabel" x="130" y="140">Portfolio Mgr</text>
+                        <circle cx="736" cy="80"  r="26" fill="url(#ip-agent-aura)"/>
+                        <circle cx="736" cy="80"  r="19" class="agent-ring"/>
+                        <circle cx="736" cy="80"  r="8"  class="agent-core"/>
+                        <text class="agent-letter" x="736" y="84">α</text>
+                        <text class="agent-sublabel" x="736" y="117">Portfolio Mgr</text>
                     </g>
                     <g class="agent-node" data-agent="b">
-                        <circle cx="670" cy="100" r="26" fill="url(#agentAura)"/>
-                        <circle cx="670" cy="100" r="19" class="agent-ring"/>
-                        <circle cx="670" cy="100" r="8" class="agent-core"/>
-                        <text class="agent-letter" x="670" y="104">β</text>
-                        <text class="agent-sublabel" x="670" y="140">Trade Exec</text>
+                        <circle cx="736" cy="162" r="26" fill="url(#ip-agent-aura)"/>
+                        <circle cx="736" cy="162" r="19" class="agent-ring"/>
+                        <circle cx="736" cy="162" r="8"  class="agent-core"/>
+                        <text class="agent-letter" x="736" y="166">β</text>
+                        <text class="agent-sublabel" x="736" y="199">Trade Exec</text>
                     </g>
                     <g class="agent-node" data-agent="c">
-                        <circle cx="670" cy="380" r="26" fill="url(#agentAura)"/>
-                        <circle cx="670" cy="380" r="19" class="agent-ring"/>
-                        <circle cx="670" cy="380" r="8" class="agent-core"/>
-                        <text class="agent-letter" x="670" y="384">γ</text>
-                        <text class="agent-sublabel" x="670" y="420">Compliance</text>
+                        <circle cx="736" cy="244" r="26" fill="url(#ip-agent-aura)"/>
+                        <circle cx="736" cy="244" r="19" class="agent-ring"/>
+                        <circle cx="736" cy="244" r="8"  class="agent-core"/>
+                        <text class="agent-letter" x="736" y="248">γ</text>
+                        <text class="agent-sublabel" x="736" y="281">Compliance</text>
                     </g>
                     <g class="agent-node" data-agent="d">
-                        <circle cx="130" cy="380" r="26" fill="url(#agentAura)"/>
-                        <circle cx="130" cy="380" r="19" class="agent-ring"/>
-                        <circle cx="130" cy="380" r="8" class="agent-core"/>
-                        <text class="agent-letter" x="130" y="384">δ</text>
-                        <text class="agent-sublabel" x="130" y="420">Risk Analyst</text>
+                        <circle cx="736" cy="326" r="26" fill="url(#ip-agent-aura)"/>
+                        <circle cx="736" cy="326" r="19" class="agent-ring"/>
+                        <circle cx="736" cy="326" r="8"  class="agent-core"/>
+                        <text class="agent-letter" x="736" y="330">δ</text>
+                        <text class="agent-sublabel" x="736" y="363">Risk Analyst</text>
                     </g>
 
-                    <!-- Phase indicators -->
+                    <!-- ANIMATED PARTICLES -->
+                    <!-- Sources → IP band -->
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0s"  ><mpath href="#ip-sp1"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s"><mpath href="#ip-sp2"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.0s" repeatCount="indefinite" begin="1.5s"><mpath href="#ip-sp3"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.7s" repeatCount="indefinite" begin="0.3s"><mpath href="#ip-sp4"/></animateMotion></circle>
+                    <!-- IP band → agents -->
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.4s"><mpath href="#ip-ap1"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.5s" repeatCount="indefinite" begin="1.2s"><mpath href="#ip-ap2"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.0s" repeatCount="indefinite" begin="1.9s"><mpath href="#ip-ap3"/></animateMotion></circle>
+                    <circle r="2.5" class="net-flow"><animateMotion dur="2.7s" repeatCount="indefinite" begin="0.7s"><mpath href="#ip-ap4"/></animateMotion></circle>
+
+                    <!-- Phase bar -->
                     <g class="phase-bar">
-                        <text class="phase-step" data-phase="intent" x="310" y="475">intent</text>
-                        <text class="phase-dot" x="348" y="475">·</text>
-                        <text class="phase-step" data-phase="identity" x="390" y="475">identity</text>
-                        <text class="phase-dot" x="432" y="475">·</text>
-                        <text class="phase-step" data-phase="threat" x="468" y="475">threat</text>
-                        <text class="phase-arrow" x="505" y="475">→</text>
-                        <text class="phase-step" data-phase="policy" x="542" y="475">policy</text>
+                        <text class="phase-step" data-phase="intent"   x="310" y="408">intent</text>
+                        <text class="phase-dot"                         x="348" y="408">·</text>
+                        <text class="phase-step" data-phase="identity" x="390" y="408">identity</text>
+                        <text class="phase-dot"                         x="432" y="408">·</text>
+                        <text class="phase-step" data-phase="threat"   x="468" y="408">threat</text>
+                        <text class="phase-arrow"                       x="505" y="408">→</text>
+                        <text class="phase-step" data-phase="policy"   x="542" y="408">policy</text>
                     </g>
                 </svg>
             </div>
@@ -8092,7 +8130,7 @@
 
     <section class="cta">
         <div class="container">
-            <h2>Model the Agent. Not the Attack.</h2>
+            <h2>Model the Inbound. Not the Attack.</h2>
             <p class="section-intro" style="margin-bottom: 28px;">
                 One layer that answers: is this agent still doing what it was built to do?
             </p>
