@@ -6172,6 +6172,67 @@
             padding: 100px 0;
             background: linear-gradient(135deg, rgba(125, 211, 252, 0.02) 0%, transparent 50%, rgba(125, 211, 252, 0.02) 100%);
         }
+
+        .scanning-headline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 32px;
+        }
+
+        .scanning-headline .sh-row {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            line-height: 1.2;
+        }
+
+        .scanning-headline .sh-row + .sh-row {
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(125, 211, 252, 0.1);
+        }
+
+        [data-theme="light"] .scanning-headline .sh-row + .sh-row {
+            border-top-color: rgba(14, 165, 233, 0.15);
+        }
+
+        .scanning-headline .sh-label {
+            font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+            font-weight: 500;
+            color: var(--text-dim);
+            letter-spacing: -0.01em;
+        }
+
+        .scanning-headline .sh-arrow {
+            font-size: clamp(1rem, 1.8vw, 1.4rem);
+            color: var(--text-dim);
+            opacity: 0.4;
+        }
+
+        .scanning-headline .sh-value {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .scanning-headline .sh-value--inf {
+            color: rgba(251, 146, 60, 0.8);
+        }
+
+        [data-theme="light"] .scanning-headline .sh-value--inf {
+            color: rgba(234, 88, 12, 0.85);
+        }
+
+        .scanning-headline .sh-value--finite {
+            color: var(--ice);
+        }
+
+        .scanning-section .section-subtitle {
+            max-width: 580px;
+            margin-bottom: 52px;
+        }
         
         [data-theme="light"] .scanning-section {
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(224, 242, 254, 0.5) 50%, rgba(14, 165, 233, 0.08) 100%);
@@ -7710,12 +7771,20 @@
     <!-- Elegant Abstract Ecosystem Scanning Section -->
     <section class="scanning-section">
         <div class="container">
-            <h2>Attack surface → ∞. &nbsp;Agent identity → finite.</h2>
+            <div class="scanning-headline">
+                <div class="sh-row">
+                    <span class="sh-label">Attack surface</span>
+                    <span class="sh-arrow">→</span>
+                    <span class="sh-value sh-value--inf">∞</span>
+                </div>
+                <div class="sh-row">
+                    <span class="sh-label">Agent identity</span>
+                    <span class="sh-arrow">→</span>
+                    <span class="sh-value sh-value--finite">finite.</span>
+                </div>
+            </div>
             <p class="section-subtitle">
-                New attacks will always outpace guardrails. Every new modality—text, image, audio—every tool call, and every agent handoff opens another way in.
-            </p>
-            <p class="section-subtitle" style="margin-top: -0.5em;">
-                The identity plane inverts the problem. It tracks the agent, not the threat.
+                New attacks will always outpace guardrails — every modality, tool call, and agent handoff opens another way in. The identity plane inverts the problem: track the agent, not the threat.
             </p>
             
             <div class="intent-net-wrap" id="intentNetWrap" aria-hidden="true">
