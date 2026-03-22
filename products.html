@@ -1593,6 +1593,346 @@
         @media (max-width: 680px) {
             .usecase-tiles--2col { grid-template-columns: 1fr; }
         }
+
+        /* ── Open Source Reference Section ── */
+        .oss-reference {
+            padding: 100px 0;
+            border-top: 1px solid rgba(125, 211, 252, 0.08);
+        }
+
+        [data-theme="light"] .oss-reference {
+            border-top-color: rgba(2, 132, 199, 0.08);
+        }
+
+        .oss-reference-header {
+            text-align: center;
+            margin-bottom: 52px;
+        }
+
+        .oss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            background: rgba(125, 211, 252, 0.06);
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            border-radius: 20px;
+            padding: 5px 14px;
+            margin-bottom: 20px;
+        }
+
+        [data-theme="light"] .oss-badge {
+            background: rgba(2, 132, 199, 0.05);
+            border-color: rgba(2, 132, 199, 0.15);
+        }
+
+        .oss-badge svg { flex-shrink: 0; }
+
+        .oss-reference-header h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .oss-reference-header .oss-intro {
+            font-size: 1.125rem;
+            color: var(--text-dim);
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .oss-reference-header .oss-intro a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.3);
+            transition: border-color 0.2s ease;
+        }
+
+        .oss-reference-header .oss-intro a:hover {
+            border-bottom-color: var(--ice);
+        }
+
+        .oss-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.97) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.14);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        [data-theme="light"] .oss-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border-color: rgba(2, 132, 199, 0.12);
+        }
+
+        .oss-card-left {
+            padding: 48px 44px;
+            border-right: 1px solid rgba(125, 211, 252, 0.08);
+        }
+
+        [data-theme="light"] .oss-card-left {
+            border-right-color: rgba(2, 132, 199, 0.08);
+        }
+
+        .oss-pkg {
+            display: inline-block;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.8125rem;
+            color: var(--ice);
+            background: rgba(125, 211, 252, 0.07);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            border-radius: 8px;
+            padding: 6px 14px;
+            margin-bottom: 20px;
+            letter-spacing: 0.01em;
+        }
+
+        [data-theme="light"] .oss-pkg {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.2);
+        }
+
+        .oss-card-left h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .oss-card-desc {
+            font-size: 0.9375rem;
+            color: var(--text-dim);
+            line-height: 1.75;
+            margin-bottom: 32px;
+        }
+
+        .oss-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+
+        .oss-col-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .oss-col-label--included { color: rgba(125, 211, 252, 0.75); }
+        .oss-col-label--limits   { color: var(--text-subtle); }
+
+        [data-theme="light"] .oss-col-label--included { color: var(--ice-bright); }
+
+        .oss-cols ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .oss-cols ul li {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            padding-left: 18px;
+            position: relative;
+            color: var(--text-dim);
+        }
+
+        .oss-col-included li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: rgba(125, 211, 252, 0.6);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        [data-theme="light"] .oss-col-included li::before { color: var(--ice-bright); }
+
+        .oss-col-limits li {
+            color: var(--text-subtle);
+        }
+
+        .oss-col-limits li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: rgba(148, 163, 184, 0.4);
+            font-size: 0.75rem;
+        }
+
+        .oss-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .oss-btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            background: var(--text);
+            color: var(--navy);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+
+        [data-theme="light"] .oss-btn-github {
+            background: var(--text);
+            color: #fff;
+        }
+
+        .oss-btn-github:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+        }
+
+        .oss-btn-openclaw {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 11px 4px;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .oss-btn-openclaw:hover {
+            color: var(--ice);
+            border-bottom-color: rgba(125, 211, 252, 0.4);
+        }
+
+        /* Terminal panel (right side of OSS card) */
+        .oss-terminal-panel {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .oss-terminal {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            overflow: hidden;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        [data-theme="light"] .oss-terminal {
+            background: #1e2432;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .oss-terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .oss-terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .oss-terminal-dot:nth-child(1) { background: rgba(255, 95, 86, 0.6); }
+        .oss-terminal-dot:nth-child(2) { background: rgba(255, 189, 46, 0.6); }
+        .oss-terminal-dot:nth-child(3) { background: rgba(39, 201, 63, 0.5); }
+
+        .oss-terminal-title {
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.02em;
+        }
+
+        .oss-terminal-body {
+            padding: 24px;
+            font-size: 0.75rem;
+            line-height: 1.7;
+            color: #8b949e;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .oss-terminal-body .t-cmd    { color: #58a6ff; }
+        .oss-terminal-body .t-ok     { color: #3fb950; }
+        .oss-terminal-body .t-label  { color: #f0883e; font-weight: 600; }
+        .oss-terminal-body .t-anchor { color: #79c0ff; }
+        .oss-terminal-body .t-muted  { color: rgba(139, 148, 158, 0.45); }
+        .oss-terminal-body .t-warn   { color: #d29922; }
+        .oss-terminal-body .t-alert  { color: #f85149; }
+        .oss-terminal-body .t-dim    { color: rgba(139, 148, 158, 0.6); }
+        .oss-terminal-body .t-drift  { color: #bc8cff; }
+
+        .oss-cta-note {
+            margin-top: 24px;
+            font-size: 0.8125rem;
+            color: var(--text-subtle);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .oss-cta-note a {
+            color: var(--ice);
+            text-decoration: none;
+        }
+
+        .oss-cta-note a:hover { text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .oss-card {
+                grid-template-columns: 1fr;
+            }
+            .oss-card-left {
+                border-right: none;
+                border-bottom: 1px solid rgba(125, 211, 252, 0.08);
+                padding: 40px 32px;
+            }
+            .oss-terminal-panel {
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .oss-cols {
+                grid-template-columns: 1fr;
+            }
+            .oss-card-left {
+                padding: 32px 24px;
+            }
+            .oss-terminal-panel {
+                padding: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1768,6 +2108,92 @@
         </div>
     </section>
 
+    <section class="oss-reference" id="oss-reference">
+        <div class="container">
+            <div class="oss-reference-header">
+                <div class="oss-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    Open Source
+                </div>
+                <h2>See the Identity Plane in Action</h2>
+                <p class="oss-intro">A lightweight reference implementation as a plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a> — the popular self-hosted AI agent gateway. Observational by design.</p>
+            </div>
+
+            <div class="oss-card">
+                <div class="oss-card-left">
+                    <span class="oss-pkg">@intrinsec-ai/openclaw-identity-plane</span>
+                    <h3>Identity Watchdog for OpenClaw Agents</h3>
+                    <p class="oss-card-desc">Calibrates against your agent's cognitive files (SOUL.md, AGENTS.md, etc.) to build an identity anchor — a model of what your agent is supposed to do. Every inbound message is scored against that anchor. Drift is visible on a live dashboard — nothing is blocked, nothing is intercepted.</p>
+
+                    <div class="oss-cols">
+                        <div>
+                            <div class="oss-col-label oss-col-label--included">What it does</div>
+                            <ul class="oss-col-included">
+                                <li>Identity calibration from cognitive files</li>
+                                <li>Per-message drift scoring</li>
+                                <li>Live drift dashboard with time-series chart</li>
+                                <li>Identity compaction — LLM audit narratives grounded in named anchors</li>
+                                <li>File-change annotations on the drift timeline</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="oss-col-label oss-col-label--limits">What it isn't</div>
+                            <ul class="oss-col-limits">
+                                <li>Lossless — subtle injection in long context can average out</li>
+                                <li>Multi-tenant or fleet-scale</li>
+                                <li>Persistent across long horizons</li>
+                                <li>Multimodal</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="oss-actions">
+                        <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer" class="oss-btn-github">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                            View on GitHub
+                        </a>
+                        <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer" class="oss-btn-openclaw">OpenClaw docs →</a>
+                    </div>
+                </div>
+
+                <div class="oss-terminal-panel">
+                    <div class="oss-terminal" role="img" aria-label="Terminal output showing identity plane calibration status and drift themes">
+                        <div class="oss-terminal-bar">
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-title">openclaw — /identity</span>
+                        </div>
+                        <div class="oss-terminal-body"><span class="t-cmd">$ /identity</span>
+
+<span class="t-ok">✓</span> <span class="t-dim">[Identity Plane] Calibrated</span>
+
+<span class="t-label">Identity anchors:</span>
+  <span class="t-anchor">[PURPOSE]</span>  <span class="t-dim">Code-focused task execution</span>
+  <span class="t-anchor">[BOUNDARY]</span> <span class="t-dim">No credential or secret access</span>
+  <span class="t-anchor">[VALUE]</span>    <span class="t-dim">Honest about limitations</span>
+  <span class="t-anchor">[PERSONA]</span>  <span class="t-dim">Concise and technical tone</span>
+  <span class="t-anchor">[CONSTRAINT]</span> <span class="t-dim">Scope limited to requested files</span>
+
+<span class="t-label">Identity compaction (latest audit):</span>
+  <span class="t-dim">The agent is under sustained pressure to exceed
+  its file-access scope, with recurring attempts to
+  probe paths outside the declared [CONSTRAINT].</span>
+
+<span class="t-label">Drift themes (47 events observed):</span>
+  <span class="t-alert">◆ ⚠</span> <span class="t-dim">"Credential path probing"</span> <span class="t-muted">— high — 5 events</span>
+  <span class="t-warn">◆ ~</span> <span class="t-dim">"Scope boundary expansion"</span> <span class="t-muted">— moderate — 3 events</span>
+
+<span class="t-label">Active sessions:</span>
+  <span class="t-ok">✓ nominal</span>  <span class="t-dim">agent:work:telegram:dm:123456</span>
+  <span class="t-warn">~ warning</span>  <span class="t-dim">agent:work:whatsapp:dm:789</span></div>
+                    </div>
+                    <p class="oss-cta-note">The enterprise product solves what this doesn't — lossless detection, heterogeneous workloads, long horizons. <a href="mailto:ari.azarafrooz@intrinsec.ai">Talk to us →</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="cta">
         <div class="container">
             <h2>Model the Inbound. Not the Attack.</h2>
@@ -1787,6 +2213,7 @@
                 <div class="footer-links" aria-label="Footer">
                     <a href="index.html">Home</a>
                     <a href="blog/index.html">Research</a>
+                    <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
                 </div>
             </div>
