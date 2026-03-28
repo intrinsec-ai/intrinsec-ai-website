@@ -6453,6 +6453,115 @@
             padding: 4px 8px;
         }
 
+        /* Positioning / disambiguation section */
+        .positioning-section {
+            padding: 0 0 72px;
+        }
+
+        .tool-compare {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(125, 211, 252, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            border-radius: 14px;
+            overflow: hidden;
+            max-width: 960px;
+            margin: 0 auto 52px;
+        }
+
+        .compare-card {
+            background: var(--navy);
+            padding: 28px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .compare-card--us {
+            background: rgba(125, 211, 252, 0.045);
+        }
+
+        .compare-type {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+        }
+
+        .compare-card--us .compare-type {
+            color: var(--ice);
+        }
+
+        .compare-watches {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .compare-fires {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .compare-card--us .compare-fires {
+            color: var(--ice);
+        }
+
+        .drift-statement {
+            text-align: center;
+            font-size: clamp(1.3rem, 3vw, 1.75rem);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+            margin-bottom: 36px;
+        }
+
+        .drift-statement em {
+            font-style: normal;
+            color: var(--ice);
+        }
+
+        .doctor-analogy {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 28px 32px;
+            border-left: 2px solid rgba(125, 211, 252, 0.3);
+            background: rgba(125, 211, 252, 0.04);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .doctor-analogy p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .doctor-analogy cite {
+            font-style: normal;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--ice);
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .tool-compare {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-compare {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Bridge: Guardrails are not enough */
         .guardrails-bridge {
             padding: 70px 0 40px;
@@ -7926,6 +8035,34 @@
                     </g>
                 </svg>
             </div>
+        </div>
+    </section>
+
+    <section class="positioning-section">
+        <div class="container">
+            <div class="tool-compare">
+                <div class="compare-card">
+                    <div class="compare-type">Guardrails</div>
+                    <div class="compare-watches">Individual messages</div>
+                    <div class="compare-fires">At the message — before the model sees it</div>
+                </div>
+                <div class="compare-card">
+                    <div class="compare-type">SIEM / UEBA</div>
+                    <div class="compare-watches">Outputs and behavior</div>
+                    <div class="compare-fires">After the agent has already acted</div>
+                </div>
+                <div class="compare-card">
+                    <div class="compare-type">IAM / Access Control</div>
+                    <div class="compare-watches">Permissions</div>
+                    <div class="compare-fires">At the permission boundary — not at identity</div>
+                </div>
+                <div class="compare-card compare-card--us">
+                    <div class="compare-type">Identity Plane</div>
+                    <div class="compare-watches">Identity over time</div>
+                    <div class="compare-fires">Before harm — while drift is still invisible</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
