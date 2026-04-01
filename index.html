@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrinsec AI — The Identity Plane for AI Agents</title>
-    <meta name="description" content="Detect when agent behavior drifts from policy — across users, tools, context, and other agents. The identity plane for AI agents.">
+    <title>Intrinsec AI — AI agents forget. Attackers don't.</title>
+    <meta name="description" content="AI agents forget every session. Attackers don't. Intrinsec detects threats that build across sessions — without a SIEM or data lake.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
-    <meta property="og:title" content="Intrinsec AI — The Identity Plane for AI Agents">
-    <meta property="og:description" content="Current defenses check one message at a time. The identity plane tracks the full trajectory. Model the agent, not the attack.">
+    <meta property="og:title" content="Intrinsec AI — AI agents forget. Attackers don't.">
+    <meta property="og:description" content="AI agents forget every session. Attackers don't. Intrinsec detects cross-session threats and coordinated attacks — without a SIEM or data lake.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -118,7 +118,7 @@
         }
         
         [data-theme="light"] .gradient {
-            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.15));
+            filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.35));
         }
         
         [data-theme="light"] .gradient::after {
@@ -530,12 +530,12 @@
             position: relative;
         }
         .tagline-second {
-            white-space: nowrap;
-        }
-        @media (max-width: 520px) {
-            .tagline-second {
-                white-space: normal;
-            }
+            font-size: 1.125rem;
+            color: var(--text-dim);
+            max-width: 640px;
+            margin: 16px auto 0;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
         }
 
         .tagline-pipeline {
@@ -6453,6 +6453,738 @@
             padding: 4px 8px;
         }
 
+        /* ---- Amnesia Evidence Section (compact) ---- */
+        .amnesia-evidence {
+            padding: 60px 0 40px;
+        }
+
+        .evidence-section-title {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 36px;
+        }
+
+        .blind-spots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 820px;
+            margin: 0 auto 24px;
+        }
+
+        .blind-spot-card {
+            background: var(--navy-light);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        [data-theme="light"] .blind-spot-card {
+            background: #ffffff;
+            border-color: rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .bs-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ice);
+            margin-bottom: 14px;
+        }
+
+        .bs-flow {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .bs-node {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--navy);
+            border: 1px solid rgba(125, 211, 252, 0.1);
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .bs-node {
+            background: #f8fafc;
+            border-color: rgba(14, 165, 233, 0.12);
+        }
+
+        .bs-check {
+            font-size: 0.6875rem;
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .bs-check {
+            color: #15803d;
+        }
+
+        .bs-arrow {
+            color: var(--text-subtle);
+            font-size: 0.75rem;
+        }
+
+        .bs-wipe {
+            font-size: 0.6rem;
+            color: var(--red);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.7;
+        }
+
+        .bs-verdict {
+            margin-top: auto;
+            padding: 10px 14px;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.14);
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        [data-theme="light"] .bs-verdict {
+            background: rgba(220, 38, 38, 0.04);
+            border-color: rgba(220, 38, 38, 0.18);
+        }
+
+        .evidence-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .evidence-card {
+            background: var(--navy-light);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            border-radius: 14px;
+            padding: 28px 32px;
+        }
+
+        [data-theme="light"] .evidence-card {
+            background: #ffffff;
+            border-color: rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .ev-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ev-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ice);
+            background: rgba(125, 211, 252, 0.1);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            padding: 2px 10px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .ev-num {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.25);
+        }
+
+        .ev-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .ev-body {
+            font-size: 0.9375rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        /* Session timeline */
+        .session-timeline {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .session-block {
+            background: var(--navy);
+            border: 1px solid rgba(125, 211, 252, 0.1);
+            padding: 14px 18px;
+        }
+
+        [data-theme="light"] .session-block {
+            background: #f8fafc;
+            border-color: rgba(14, 165, 233, 0.12);
+        }
+
+        .session-block:first-child { border-radius: 10px 10px 0 0; }
+        .session-block:last-child  { border-radius: 0 0 10px 10px; }
+
+        .session-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .session-tag {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        [data-theme="light"] .session-tag {
+            color: #b45309;
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .session-date {
+            font-size: 0.6875rem;
+            color: var(--text-dim);
+            opacity: 0.7;
+        }
+
+        .session-prompt {
+            font-size: 0.8125rem;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        [data-theme="light"] .session-prompt {
+            color: var(--text-secondary);
+        }
+
+        .session-checks {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .s-check {
+            font-size: 0.6875rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .s-check.cert {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        [data-theme="light"] .s-check.cert {
+            color: #15803d;
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        .s-check.cls {
+            background: rgba(125, 211, 252, 0.08);
+            color: var(--ice);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+        }
+
+        [data-theme="light"] .s-check.cls {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.25);
+        }
+
+        .s-check.guard {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        [data-theme="light"] .s-check.guard {
+            color: #15803d;
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        .session-reset {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 0;
+            background: transparent;
+        }
+
+        .reset-line {
+            flex: 1;
+            height: 1px;
+            background: var(--red);
+            opacity: 0.25;
+        }
+
+        .reset-tag {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 3px 10px;
+            background: rgba(239, 68, 68, 0.07);
+            border: 1px solid rgba(239, 68, 68, 0.18);
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .reset-tag {
+            background: rgba(220, 38, 38, 0.06);
+            border-color: rgba(220, 38, 38, 0.2);
+        }
+
+        .trajectory-result {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.14);
+            border-radius: 8px;
+            font-size: 0.8125rem;
+        }
+
+        [data-theme="light"] .trajectory-result {
+            background: rgba(220, 38, 38, 0.04);
+            border-color: rgba(220, 38, 38, 0.18);
+        }
+
+        .traj-label {
+            font-weight: 700;
+            color: var(--red);
+            text-transform: uppercase;
+            font-size: 0.6875rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .traj-desc {
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        .traj-desc strong {
+            color: var(--text);
+        }
+
+        /* Fleet rows (Evidence B) */
+        .fleet-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(125, 211, 252, 0.1);
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 0.875rem;
+        }
+
+        [data-theme="light"] .fleet-row {
+            background: rgba(14, 165, 233, 0.03);
+            border-color: rgba(14, 165, 233, 0.14);
+        }
+
+        .fleet-entity {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #f59e0b;
+            min-width: 72px;
+        }
+
+        [data-theme="light"] .fleet-entity {
+            color: #b45309;
+        }
+
+        .fleet-cert {
+            font-size: 0.6875rem;
+            padding: 1px 7px;
+            border-radius: 100px;
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            font-weight: 600;
+        }
+
+        [data-theme="light"] .fleet-cert {
+            color: #15803d;
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        .fleet-action {
+            color: var(--text-dim);
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        .fleet-result {
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.14);
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        [data-theme="light"] .fleet-result {
+            background: rgba(220, 38, 38, 0.04);
+            border-color: rgba(220, 38, 38, 0.18);
+        }
+
+        .fleet-result strong {
+            color: var(--red);
+        }
+
+        /* Punch quote */
+        .evidence-punch {
+            max-width: 820px;
+            margin: 24px auto 0;
+            padding: 18px 24px;
+            border-left: 3px solid var(--ice);
+            background: var(--navy-light);
+            border-radius: 0 10px 10px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        [data-theme="light"] .evidence-punch {
+            background: #ffffff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .evidence-punch em {
+            color: var(--ice);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        /* VS visual */
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 24px;
+            align-items: center;
+            max-width: 820px;
+            margin: 24px auto 0;
+        }
+
+        .vs-box {
+            text-align: center;
+            padding: 28px 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(125, 211, 252, 0.12);
+        }
+
+        .vs-box.vs-left {
+            background: rgba(239, 68, 68, 0.04);
+            border-color: rgba(239, 68, 68, 0.14);
+        }
+
+        .vs-box.vs-right {
+            background: rgba(125, 211, 252, 0.04);
+            border-color: rgba(125, 211, 252, 0.18);
+        }
+
+        [data-theme="light"] .vs-box.vs-left {
+            background: rgba(220, 38, 38, 0.04);
+            border-color: rgba(220, 38, 38, 0.18);
+        }
+
+        [data-theme="light"] .vs-box.vs-right {
+            background: rgba(14, 165, 233, 0.05);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+
+        .vs-big {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .vs-box.vs-left .vs-big { color: var(--red); }
+        .vs-box.vs-right .vs-big { color: var(--ice); }
+
+        .vs-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .vs-mid {
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .amnesia-evidence { padding: 40px 0; }
+            .blind-spots { grid-template-columns: 1fr; }
+            .vs-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---- Amnesia explainer strip ---- */
+        .amnesia-strip {
+            padding: 20px 0 0;
+        }
+
+        .strip-cards {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .strip-card {
+            text-align: center;
+            padding: 20px 16px;
+            flex: 1;
+            max-width: 240px;
+        }
+
+        .strip-viz {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 12px;
+            height: 32px;
+            margin-bottom: 14px;
+        }
+
+        .sv-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(125, 211, 252, 0.08);
+            border: 1.5px solid rgba(125, 211, 252, 0.18);
+        }
+
+        .sv-dot:nth-child(1) { animation: guardPulse 3.6s ease-in-out infinite 0s; }
+        .sv-dot:nth-child(2) { animation: guardPulse 3.6s ease-in-out infinite 1.2s; }
+        .sv-dot:nth-child(3) { animation: guardPulse 3.6s ease-in-out infinite 2.4s; }
+
+        @keyframes guardPulse {
+            0%, 28%, 100% {
+                background: rgba(125, 211, 252, 0.08);
+                border-color: rgba(125, 211, 252, 0.18);
+                box-shadow: none;
+            }
+            12%, 18% {
+                background: rgba(34, 197, 94, 0.3);
+                border-color: rgba(34, 197, 94, 0.5);
+                box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+            }
+        }
+
+        [data-theme="light"] .sv-dot {
+            background: rgba(14, 165, 233, 0.06);
+            border-color: rgba(14, 165, 233, 0.15);
+        }
+
+        .strip-viz-siem {
+            gap: 5px;
+        }
+
+        .sv-bar {
+            width: 6px;
+            border-radius: 2px;
+            background: var(--text-subtle);
+            transform-origin: bottom;
+            animation: siemBuild 4.5s ease-in-out infinite;
+        }
+
+        .sv-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+        .sv-bar:nth-child(2) { height: 20px; animation-delay: 0.4s; }
+        .sv-bar:nth-child(3) { height: 15px; animation-delay: 0.8s; }
+        .sv-bar:nth-child(4) { height: 24px; animation-delay: 1.2s; }
+
+        @keyframes siemBuild {
+            0%, 8% { opacity: 0; transform: scaleY(0); }
+            18%, 68% { opacity: 0.45; transform: scaleY(1); }
+            80%, 100% { opacity: 0; transform: scaleY(0); }
+        }
+
+        .sv-alert {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--red);
+            opacity: 0;
+            animation: siemAlert 4.5s ease-in-out infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes siemAlert {
+            0%, 52% { opacity: 0; transform: scale(0.5); }
+            62%, 76% { opacity: 1; transform: scale(1.1); }
+            88%, 100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        .strip-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .strip-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .strip-cards { flex-direction: column; align-items: center; gap: 8px; }
+        }
+
+        /* ---- Memory Cure section ---- */
+        .memory-cure {
+            padding: 40px 0 60px;
+        }
+
+        .memory-cure-title {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .memory-cure-sub {
+            font-size: 1rem;
+            color: var(--text-dim);
+            text-align: center;
+            max-width: 520px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .memory-cure-card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: var(--navy-light);
+            border: 1px solid rgba(125, 211, 252, 0.18);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .memory-cure-card {
+            background: #ffffff;
+            border-color: rgba(14, 165, 233, 0.2);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
+        }
+
+        .memory-cure-visual {
+            padding: 32px 32px 8px;
+        }
+
+        .memory-cure-caption {
+            padding: 16px 32px 28px;
+            text-align: center;
+        }
+
+        .memory-cure-caption .mc-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .memory-cure-caption .mc-text {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        [data-theme="light"] .memory-cure-card {
+            background: #ffffff;
+            border-color: rgba(14, 165, 233, 0.22);
+            box-shadow: 0 4px 24px rgba(14, 165, 233, 0.1);
+        }
+
+        /* Funnel input labels (above the SVG) */
+        .funnel-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 8px;
+        }
+
+        .funnel-input-group {
+            text-align: center;
+        }
+
+        .fi-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .fi-pills {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .fi-pill {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(125, 211, 252, 0.06);
+            border: 1px solid rgba(125, 211, 252, 0.15);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .fi-pill {
+            background: rgba(14, 165, 233, 0.06);
+            border-color: rgba(14, 165, 233, 0.15);
+        }
+
         /* Positioning / disambiguation section */
         .positioning-section {
             padding: 0 0 72px;
@@ -6468,6 +7200,19 @@
             overflow: hidden;
             max-width: 960px;
             margin: 0 auto 52px;
+        }
+
+        [data-theme="light"] .tool-compare {
+            background: rgba(14, 165, 233, 0.12);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+
+        [data-theme="light"] .compare-card {
+            background: #ffffff;
+        }
+
+        [data-theme="light"] .compare-card--us {
+            background: rgba(14, 165, 233, 0.06);
         }
 
         .compare-card {
@@ -6814,16 +7559,14 @@
         /* Diagram: volume → information bottleneck */
         .diagram-volume {
             width: 100%;
-            max-width: 210px;
-            height: 130px;
+            max-width: 360px;
+            margin: 0 auto;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .diagram-volume svg {
             width: 100%;
-            height: 100%;
+            height: auto;
+            display: block;
         }
         .diagram-volume .bn-shape {
             fill: rgba(125, 211, 252, 0.04);
@@ -7860,406 +8603,147 @@
     <section class="hero">
         <div class="container">
             <h1>
-                The Identity Plane for <br><span class="gradient">AI Agents</span>
+                AI Agent security has an <br><span class="gradient">amnesia problem.</span>
             </h1>
-            <p class="tagline">An agent becomes what it receives.</p>
+            <p class="tagline">We cure it.</p>
+            <p class="tagline-second">Persistent memory for each agent. Shared memory for your fleet. Memory is what makes identity real.</p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
                 <a href="products.html" class="hero-secondary">See Products <span style="opacity: 0.9;">→</span></a>
             </div>
+        </div>
+    </section>
 
-            <div class="hero-proof" aria-label="Key capabilities">
-                <span class="proof-pill"><span class="proof-icon"></span>Persistent identity across agent lifetime</span>
-                <span class="proof-pill"><span class="proof-icon"></span>Catches multi-step attacks</span>
-                <span class="proof-pill"><span class="proof-icon"></span>Grounded in application logic</span>
-                <span class="proof-pill"><span class="proof-icon"></span>Model the inbound, not the attack</span>
+    <section class="amnesia-strip">
+        <div class="container">
+            <div class="strip-cards">
+                <div class="strip-card">
+                    <div class="strip-viz">
+                        <span class="sv-dot"></span>
+                        <span class="sv-dot"></span>
+                        <span class="sv-dot"></span>
+                    </div>
+                    <div class="strip-label">Guardrails & classifiers</div>
+                    <div class="strip-desc">Everything resets after each session.</div>
+                </div>
+                <div class="strip-card">
+                    <div class="strip-viz strip-viz-siem">
+                        <span class="sv-bar"></span>
+                        <span class="sv-bar"></span>
+                        <span class="sv-bar"></span>
+                        <span class="sv-bar"></span>
+                        <span class="sv-alert">!</span>
+                    </div>
+                    <div class="strip-label">SIEM</div>
+                    <div class="strip-desc">Alerts after the breach.</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Elegant Abstract Ecosystem Scanning Section -->
-    <section class="scanning-section">
+    <section class="memory-cure">
         <div class="container">
-            <div class="scanning-headline">
-                <div class="sh-row">
-                    <span class="sh-label">Attack surface</span>
-                    <span class="sh-arrow">→</span>
-                    <span class="sh-value sh-value--inf">∞</span>
-                </div>
-                <div class="sh-row">
-                    <span class="sh-label">Agent identity</span>
-                    <span class="sh-arrow">→</span>
-                    <span class="sh-value sh-value--finite">finite.</span>
-                </div>
-            </div>
-            <p class="section-subtitle">
-                New attacks will always outpace guardrails. The identity plane inverts the problem: model what flows into the agent, not the attack.
-            </p>
-            
-            <div class="intent-net-wrap" id="intentNetWrap" aria-hidden="true">
-                <svg class="intent-net" viewBox="0 0 840 420" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="ip-band-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%"   stop-color="var(--ice)" stop-opacity="0.03"/>
-                            <stop offset="40%"  stop-color="var(--ice)" stop-opacity="0.10"/>
-                            <stop offset="60%"  stop-color="var(--ice)" stop-opacity="0.10"/>
-                            <stop offset="100%" stop-color="var(--ice)" stop-opacity="0.03"/>
-                        </linearGradient>
-                        <radialGradient id="ip-agent-aura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.05"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
-                        <radialGradient id="ip-src-aura"><stop offset="0%" stop-color="var(--ice)" stop-opacity="0.08"/><stop offset="100%" stop-color="var(--ice)" stop-opacity="0"/></radialGradient>
-                        <clipPath id="ip-clip"><rect x="328" y="32" width="148" height="296" rx="12"/></clipPath>
-                        <!-- Particle paths: sources → IP band -->
-                        <path id="ip-sp1" d="M 106 80  L 330 110"/>
-                        <path id="ip-sp2" d="M 106 162 L 330 168"/>
-                        <path id="ip-sp3" d="M 106 244 L 330 226"/>
-                        <path id="ip-sp4" d="M 106 326 L 330 284"/>
-                        <!-- Particle paths: IP band → agents -->
-                        <path id="ip-ap1" d="M 476 110 L 714 80"/>
-                        <path id="ip-ap2" d="M 476 168 L 714 162"/>
-                        <path id="ip-ap3" d="M 476 226 L 714 244"/>
-                        <path id="ip-ap4" d="M 476 284 L 714 326"/>
-                    </defs>
-
-                    <!-- Scenario tag -->
-                    <text class="scenario-tag" id="scenarioTag" x="420" y="16">Financial Services</text>
-
-                    <!-- INPUT SOURCE NODES (squares = input types) -->
-                    <g>
-                        <circle cx="68" cy="80"  r="24" fill="url(#ip-src-aura)"/>
-                        <rect x="50" y="62"  width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
-                        <circle cx="68" cy="80"  r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
-                        <text x="68" y="115" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">User</text>
-                    </g>
-                    <g>
-                        <circle cx="68" cy="162" r="24" fill="url(#ip-src-aura)"/>
-                        <rect x="50" y="144" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
-                        <circle cx="68" cy="162" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
-                        <text x="68" y="197" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Context</text>
-                    </g>
-                    <g>
-                        <circle cx="68" cy="244" r="24" fill="url(#ip-src-aura)"/>
-                        <rect x="50" y="226" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
-                        <circle cx="68" cy="244" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
-                        <text x="68" y="279" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Tools</text>
-                    </g>
-                    <g>
-                        <circle cx="68" cy="326" r="24" fill="url(#ip-src-aura)"/>
-                        <rect x="50" y="308" width="36" height="36" rx="7" fill="none" stroke="var(--ice)" stroke-opacity="0.28" stroke-width="1.2"/>
-                        <circle cx="68" cy="326" r="4.5" fill="var(--ice)" fill-opacity="0.4"/>
-                        <text x="68" y="361" text-anchor="middle" fill="var(--text-dim)" font-family="Inter,sans-serif" font-size="9.5" font-weight="500">Agents</text>
-                    </g>
-
-                    <!-- FLOW LINES: sources → IP band (data-link drives threat animation) -->
-                    <line x1="106" y1="80"  x2="328" y2="110" class="net-link" data-link="ab"/>
-                    <line x1="106" y1="162" x2="328" y2="168" class="net-link" data-link="bc"/>
-                    <line x1="106" y1="244" x2="328" y2="226" class="net-link" data-link="cd"/>
-                    <line x1="106" y1="326" x2="328" y2="284" class="net-link" data-link="da"/>
-
-                    <!-- IDENTITY PLANE BAND -->
-                    <rect x="328" y="32" width="148" height="296" rx="12" fill="url(#ip-band-grad)" stroke="var(--ice)" stroke-opacity="0.42" stroke-width="1.5"/>
-                    <!-- Scan line animation -->
-                    <rect x="328" y="32" width="148" height="2.5" fill="var(--ice)" clip-path="url(#ip-clip)" opacity="0">
-                        <animate attributeName="y"       values="32;326;32"      dur="3.5s" repeatCount="indefinite"/>
-                        <animate attributeName="opacity" values="0;0.4;0.4;0;0" dur="3.5s" repeatCount="indefinite"/>
-                    </rect>
-                    <!-- Band labels -->
-                    <text x="402" y="168" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="10" font-weight="700" letter-spacing="2">IDENTITY</text>
-                    <text x="402" y="185" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="10" font-weight="700" letter-spacing="2">PLANE</text>
-                    <text x="402" y="205" text-anchor="middle" fill="var(--ice)" font-family="Inter,sans-serif" font-size="8"  opacity="0.52" letter-spacing="0.5">inbound perimeter</text>
-                    <!-- Hub core (JS: adds enforcing class when threat blocked) -->
-                    <circle cx="402" cy="228" r="5" class="hub-core" id="hubCore"/>
-
-                    <!-- FLOW LINES: IP band → agents -->
-                    <line x1="476" y1="110" x2="714" y2="80"  class="net-link"/>
-                    <line x1="476" y1="168" x2="714" y2="162" class="net-link"/>
-                    <line x1="476" y1="226" x2="714" y2="244" class="net-link"/>
-                    <line x1="476" y1="284" x2="714" y2="326" class="net-link"/>
-
-                    <!-- Edge labels on right-side channels (updated per scenario) -->
-                    <text class="net-label" data-edge="0" x="595" y="86" >allocations</text>
-                    <text class="net-label" data-edge="1" x="595" y="154">market feeds</text>
-                    <text class="net-label" data-edge="2" x="595" y="230">audit trail</text>
-                    <text class="net-label" data-edge="3" x="595" y="302">exposures</text>
-
-                    <!-- AGENT NODES -->
-                    <g class="agent-node" data-agent="a">
-                        <circle cx="736" cy="80"  r="26" fill="url(#ip-agent-aura)"/>
-                        <circle cx="736" cy="80"  r="19" class="agent-ring"/>
-                        <circle cx="736" cy="80"  r="8"  class="agent-core"/>
-                        <text class="agent-letter" x="736" y="84">α</text>
-                        <text class="agent-sublabel" x="736" y="117">Portfolio Mgr</text>
-                    </g>
-                    <g class="agent-node" data-agent="b">
-                        <circle cx="736" cy="162" r="26" fill="url(#ip-agent-aura)"/>
-                        <circle cx="736" cy="162" r="19" class="agent-ring"/>
-                        <circle cx="736" cy="162" r="8"  class="agent-core"/>
-                        <text class="agent-letter" x="736" y="166">β</text>
-                        <text class="agent-sublabel" x="736" y="199">Trade Exec</text>
-                    </g>
-                    <g class="agent-node" data-agent="c">
-                        <circle cx="736" cy="244" r="26" fill="url(#ip-agent-aura)"/>
-                        <circle cx="736" cy="244" r="19" class="agent-ring"/>
-                        <circle cx="736" cy="244" r="8"  class="agent-core"/>
-                        <text class="agent-letter" x="736" y="248">γ</text>
-                        <text class="agent-sublabel" x="736" y="281">Compliance</text>
-                    </g>
-                    <g class="agent-node" data-agent="d">
-                        <circle cx="736" cy="326" r="26" fill="url(#ip-agent-aura)"/>
-                        <circle cx="736" cy="326" r="19" class="agent-ring"/>
-                        <circle cx="736" cy="326" r="8"  class="agent-core"/>
-                        <text class="agent-letter" x="736" y="330">δ</text>
-                        <text class="agent-sublabel" x="736" y="363">Risk Analyst</text>
-                    </g>
-
-                    <!-- ANIMATED PARTICLES -->
-                    <!-- Sources → IP band -->
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0s"  ><mpath href="#ip-sp1"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s"><mpath href="#ip-sp2"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.0s" repeatCount="indefinite" begin="1.5s"><mpath href="#ip-sp3"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.7s" repeatCount="indefinite" begin="0.3s"><mpath href="#ip-sp4"/></animateMotion></circle>
-                    <!-- IP band → agents -->
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.4s"><mpath href="#ip-ap1"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.5s" repeatCount="indefinite" begin="1.2s"><mpath href="#ip-ap2"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.0s" repeatCount="indefinite" begin="1.9s"><mpath href="#ip-ap3"/></animateMotion></circle>
-                    <circle r="2.5" class="net-flow"><animateMotion dur="2.7s" repeatCount="indefinite" begin="0.7s"><mpath href="#ip-ap4"/></animateMotion></circle>
-
-                    <!-- Phase bar -->
-                    <g class="phase-bar">
-                        <text class="phase-step" data-phase="intent"   x="310" y="408">intent</text>
-                        <text class="phase-dot"                         x="348" y="408">·</text>
-                        <text class="phase-step" data-phase="identity" x="390" y="408">identity</text>
-                        <text class="phase-dot"                         x="432" y="408">·</text>
-                        <text class="phase-step" data-phase="threat"   x="468" y="408">threat</text>
-                        <text class="phase-arrow"                       x="505" y="408">→</text>
-                        <text class="phase-step" data-phase="policy"   x="542" y="408">policy</text>
-                    </g>
-                </svg>
-            </div>
-        </div>
-    </section>
-
-    <section class="positioning-section">
-        <div class="container">
-            <div class="tool-compare">
-                <div class="compare-card">
-                    <div class="compare-type">Guardrails</div>
-                    <div class="compare-watches">Individual messages</div>
-                    <div class="compare-fires">At the message — before the model sees it</div>
-                </div>
-                <div class="compare-card">
-                    <div class="compare-type">SIEM / UEBA</div>
-                    <div class="compare-watches">Outputs and behavior</div>
-                    <div class="compare-fires">After the agent has already acted</div>
-                </div>
-                <div class="compare-card">
-                    <div class="compare-type">IAM / Access Control</div>
-                    <div class="compare-watches">Permissions</div>
-                    <div class="compare-fires">At the permission boundary — not at identity</div>
-                </div>
-                <div class="compare-card compare-card--us">
-                    <div class="compare-type">Identity Plane</div>
-                    <div class="compare-watches">Identity over time</div>
-                    <div class="compare-fires">Before harm — while drift is still invisible</div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="guardrails-bridge">
-        <div class="container">
-            <div class="guardrails-bridge-content">
-                <h2>The Identity Plane Advantage</h2>
-                <div class="advantage-visual-grid">
-                    <div class="advantage-card">
-                        <div class="advantage-visual advantage-visual--identity">
-                            <div class="diagram-trajectory" aria-hidden="true">
-                                <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="trajGradHome" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.3"/>
-                                            <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.9"/>
-                                        </linearGradient>
-                                        <radialGradient id="nodeGlowHome" cx="50%" cy="50%" r="50%">
-                                            <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.2"/>
-                                            <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
-                                        </radialGradient>
-                                        <radialGradient id="threatGlowHome" cx="50%" cy="50%" r="50%">
-                                            <stop offset="0%" stop-color="#f87171" stop-opacity="0.15"/>
-                                            <stop offset="100%" stop-color="#f87171" stop-opacity="0"/>
-                                        </radialGradient>
-                                    </defs>
-                                    <!-- Start node -->
-                                    <circle cx="20" cy="70" r="10" fill="url(#nodeGlowHome)"/>
-                                    <circle cx="20" cy="70" r="4" fill="#7dd3fc" opacity="0.5"/>
-                                    <text x="20" y="95" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="7" font-weight="500">who it is</text>
-                                    <!-- Intended trajectory -->
-                                    <path d="M 28 68 Q 70 55 110 52 Q 150 49 185 44" stroke="url(#trajGradHome)" stroke-width="2" fill="none"/>
-                                    <!-- Waypoint nodes -->
-                                    <circle cx="70" cy="57" r="3.5" fill="rgba(125,211,252,0.1)" stroke="#7dd3fc" stroke-width="1"/>
-                                    <circle cx="110" cy="52" r="3.5" fill="rgba(125,211,252,0.1)" stroke="#7dd3fc" stroke-width="1"/>
-                                    <circle cx="150" cy="48" r="3.5" fill="rgba(125,211,252,0.15)" stroke="#7dd3fc" stroke-width="1"/>
-                                    <!-- End node (intended) -->
-                                    <circle cx="190" cy="44" r="10" fill="url(#nodeGlowHome)"/>
-                                    <circle cx="190" cy="44" r="4" fill="#7dd3fc" opacity="0.8"/>
-                                    <text x="190" y="32" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="7" font-weight="600">intended</text>
-                                    <!-- Threat deviation -->
-                                    <path d="M 110 52 Q 135 72 160 95 Q 172 108 180 115" stroke="#f87171" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6"/>
-                                    <circle cx="180" cy="115" r="8" fill="url(#threatGlowHome)"/>
-                                    <circle cx="180" cy="115" r="3" fill="#f87171" opacity="0.5"/>
-                                    <text x="180" y="132" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="7" font-weight="500">deviation</text>
-                                    <!-- Token labels -->
-                                    <text x="70" y="73" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="6" opacity="0.5">t₁</text>
-                                    <text x="110" y="43" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="6" opacity="0.5">t₂</text>
-                                    <text x="150" y="40" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="6" opacity="0.5">t₃</text>
-                                </svg>
+            <h2 class="memory-cure-title">Persistent memory. No data lake.</h2>
+            <div class="memory-cure-card">
+                <div class="memory-cure-visual">
+                    <div class="funnel-inputs">
+                        <div class="funnel-input-group">
+                            <div class="fi-label">Cross-session exploits</div>
+                            <div class="fi-pills">
+                                <span class="fi-pill">Session 1</span>
+                                <span class="fi-pill">Session 2</span>
+                                <span class="fi-pill">Session 3</span>
                             </div>
                         </div>
-                        <div class="advantage-card-caption">
-                            <div class="title">Identity</div>
-                            <p class="text">Identity isn't locked at authentication. Every inbound token rewrites it — we detect when the rewrite drifts.</p>
-                        </div>
-                    </div>
-                    <div class="advantage-card">
-                        <div class="advantage-visual advantage-visual--volume">
-                            <div class="diagram-volume" aria-hidden="true">
-                                <svg viewBox="0 0 200 138" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <path id="vp1" d="M 25,15 Q 40,50 100,85 L 100,112"/>
-                                        <path id="vp2" d="M 50,15 Q 58,48 100,85 L 100,112"/>
-                                        <path id="vp3" d="M 75,15 Q 80,46 100,85 L 100,112"/>
-                                        <path id="vp4" d="M 100,15 Q 100,46 100,85 L 100,112"/>
-                                        <path id="vp5" d="M 125,15 Q 120,46 100,85 L 100,112"/>
-                                        <path id="vp6" d="M 150,15 Q 142,48 100,85 L 100,112"/>
-                                        <path id="vp7" d="M 175,15 Q 160,50 100,85 L 100,112"/>
-                                    </defs>
-
-                                    <!-- Bottleneck shape -->
-                                    <path class="bn-shape" d="M 15,15 L 185,15 C 185,42 142,58 115,78 L 115,108 C 115,117 85,117 85,108 L 85,78 C 58,58 15,42 15,15 Z"/>
-
-                                    <!-- Converging flow guide lines -->
-                                    <path class="bn-flow-line" d="M 35,18 Q 50,48 100,85"/>
-                                    <path class="bn-flow-line" d="M 65,18 Q 74,46 100,85"/>
-                                    <path class="bn-flow-line" d="M 100,18 Q 100,46 100,85"/>
-                                    <path class="bn-flow-line" d="M 135,18 Q 126,46 100,85"/>
-                                    <path class="bn-flow-line" d="M 165,18 Q 150,48 100,85"/>
-
-                                    <!-- Scattered input dots (millions of tokens) -->
-                                    <g>
-                                        <circle class="bn-scatter-dot" cx="22" cy="18" r="1.3"/>
-                                        <circle class="bn-scatter-dot" cx="36" cy="20" r="0.9"/>
-                                        <circle class="bn-scatter-dot" cx="48" cy="17" r="1.1"/>
-                                        <circle class="bn-scatter-dot" cx="62" cy="19" r="0.8"/>
-                                        <circle class="bn-scatter-dot" cx="76" cy="17" r="1.2"/>
-                                        <circle class="bn-scatter-dot" cx="88" cy="18" r="0.7"/>
-                                        <circle class="bn-scatter-dot" cx="100" cy="16" r="1"/>
-                                        <circle class="bn-scatter-dot" cx="112" cy="18" r="0.8"/>
-                                        <circle class="bn-scatter-dot" cx="124" cy="17" r="1.2"/>
-                                        <circle class="bn-scatter-dot" cx="138" cy="19" r="0.9"/>
-                                        <circle class="bn-scatter-dot" cx="152" cy="17" r="1.1"/>
-                                        <circle class="bn-scatter-dot" cx="164" cy="20" r="0.8"/>
-                                        <circle class="bn-scatter-dot" cx="178" cy="18" r="1.3"/>
-                                        <circle class="bn-scatter-dot" cx="30" cy="24" r="0.7"/>
-                                        <circle class="bn-scatter-dot" cx="44" cy="26" r="1"/>
-                                        <circle class="bn-scatter-dot" cx="58" cy="23" r="0.6"/>
-                                        <circle class="bn-scatter-dot" cx="72" cy="25" r="0.9"/>
-                                        <circle class="bn-scatter-dot" cx="86" cy="23" r="0.8"/>
-                                        <circle class="bn-scatter-dot" cx="100" cy="24" r="0.7"/>
-                                        <circle class="bn-scatter-dot" cx="114" cy="23" r="0.9"/>
-                                        <circle class="bn-scatter-dot" cx="128" cy="25" r="0.6"/>
-                                        <circle class="bn-scatter-dot" cx="142" cy="23" r="1"/>
-                                        <circle class="bn-scatter-dot" cx="156" cy="26" r="0.7"/>
-                                        <circle class="bn-scatter-dot" cx="170" cy="24" r="0.9"/>
-                                    </g>
-
-                                    <!-- Neck glow -->
-                                    <ellipse class="bn-neck-glow" cx="100" cy="90" rx="16" ry="22"/>
-
-                                    <!-- Animated particles converging through bottleneck -->
-                                    <circle class="bn-particle" r="1.8" opacity="0">
-                                        <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath href="#vp1"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="1.5" opacity="0">
-                                        <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.5s"><mpath href="#vp2"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="1.6" opacity="0">
-                                        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1s"><mpath href="#vp3"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="2" opacity="0">
-                                        <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.3s"><mpath href="#vp4"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;1;1;0.4;0" dur="2.5s" repeatCount="indefinite" begin="0.3s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="1.6" opacity="0">
-                                        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.3s"><mpath href="#vp5"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="1.5" opacity="0">
-                                        <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.7s"><mpath href="#vp6"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.7s"/>
-                                    </circle>
-                                    <circle class="bn-particle" r="1.8" opacity="0">
-                                        <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#vp7"/></animateMotion>
-                                        <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
-                                    </circle>
-
-                                    <!-- Output glow + compressed memory -->
-                                    <ellipse class="bn-output-glow" cx="100" cy="112" rx="12" ry="5"/>
-                                    <circle class="bn-output-core" cx="100" cy="112" r="3.5"/>
-
-                                    <!-- Labels -->
-                                    <text class="bn-label bn-label-top" x="100" y="9">MILLIONS OF TOKENS ACROSS SESSIONS</text>
-                                    <text class="bn-label bn-label-bottom" x="100" y="132">COMPRESSED MEMORY</text>
-                                </svg>
+                        <div class="funnel-input-group">
+                            <div class="fi-label">Coordinated exploits</div>
+                            <div class="fi-pills">
+                                <span class="fi-pill">Agent A</span>
+                                <span class="fi-pill">User B</span>
+                                <span class="fi-pill">Agent C</span>
                             </div>
                         </div>
-                        <div class="advantage-card-caption">
-                            <div class="title">Persistent Memory</div>
-                            <p class="text">A continuous, compressed memory of the agent's identity across sessions — retaining only what's novel, important, and application-relevant.</p>
-                        </div>
                     </div>
-                    <div class="advantage-card">
-                        <div class="advantage-visual advantage-visual--data-plane">
-                            <div class="diagram-data-plane" aria-hidden="true">
-                                <div class="flow">
-                                    <div class="data-plane-zone">
-                                        <span class="zone-label">Memoryless guardrails</span>
-                                        <div class="barrier"><span class="crack" aria-hidden="true"></span></div>
-                                    </div>
-                                    <div class="slip-group">
-                                        <div class="slip-arrow" title="Slip through">
-                                        <svg viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <line x1="6" y1="0" x2="6" y2="16" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path class="arrow-fill" d="M6 22 L2 16 L10 16 Z" fill="var(--red)"/>
-                                        </svg>
-                                    </div>
-                                        <span class="slip-label">Slip through</span>
-                                    </div>
-                                    <div class="control-plane-zone">
-                                        <span class="zone-label">Identity plane</span>
-                                        <span class="rearch-label">Persistent</span>
-                                    </div>
-                                </div>
-                                <div class="feedback-loop" title="Adaptive policy feedback">
-                                    <svg class="feedback-curve" viewBox="0 0 60 140" preserveAspectRatio="xMinYMid meet" overflow="visible" aria-hidden="true">
-                                        <defs>
-                                            <marker id="feedback-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
-                                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--ice)" />
-                                            </marker>
-                                        </defs>
-                                        <path class="feedback-path" d="M 50 118 C 6 118 8 28 50 18" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" marker-end="url(#feedback-arrow)" />
-                                    </svg>
-                                    <span class="feedback-label">Adaptive policy</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="advantage-card-caption">
-                            <div class="title">Continuous Enforcement</div>
-                            <p class="text">Identity tracking and persistent memory feed a closed loop — each detected drift or attack feeds back to redraw the expected boundary.</p>
-                        </div>
+                    <div class="diagram-volume" aria-hidden="true">
+                        <svg viewBox="0 0 200 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <path id="vp1" d="M 25,15 Q 40,50 100,85 L 100,112"/>
+                                <path id="vp2" d="M 50,15 Q 58,48 100,85 L 100,112"/>
+                                <path id="vp3" d="M 75,15 Q 80,46 100,85 L 100,112"/>
+                                <path id="vp4" d="M 100,15 Q 100,46 100,85 L 100,112"/>
+                                <path id="vp5" d="M 125,15 Q 120,46 100,85 L 100,112"/>
+                                <path id="vp6" d="M 150,15 Q 142,48 100,85 L 100,112"/>
+                                <path id="vp7" d="M 175,15 Q 160,50 100,85 L 100,112"/>
+                            </defs>
+                            <path class="bn-shape" d="M 15,15 L 185,15 C 185,42 142,58 115,78 L 115,108 C 115,117 85,117 85,108 L 85,78 C 58,58 15,42 15,15 Z"/>
+                            <path class="bn-flow-line" d="M 35,18 Q 50,48 100,85"/>
+                            <path class="bn-flow-line" d="M 65,18 Q 74,46 100,85"/>
+                            <path class="bn-flow-line" d="M 100,18 Q 100,46 100,85"/>
+                            <path class="bn-flow-line" d="M 135,18 Q 126,46 100,85"/>
+                            <path class="bn-flow-line" d="M 165,18 Q 150,48 100,85"/>
+                            <g>
+                                <circle class="bn-scatter-dot" cx="22" cy="18" r="1.3"/>
+                                <circle class="bn-scatter-dot" cx="36" cy="20" r="0.9"/>
+                                <circle class="bn-scatter-dot" cx="48" cy="17" r="1.1"/>
+                                <circle class="bn-scatter-dot" cx="62" cy="19" r="0.8"/>
+                                <circle class="bn-scatter-dot" cx="76" cy="17" r="1.2"/>
+                                <circle class="bn-scatter-dot" cx="88" cy="18" r="0.7"/>
+                                <circle class="bn-scatter-dot" cx="100" cy="16" r="1"/>
+                                <circle class="bn-scatter-dot" cx="112" cy="18" r="0.8"/>
+                                <circle class="bn-scatter-dot" cx="124" cy="17" r="1.2"/>
+                                <circle class="bn-scatter-dot" cx="138" cy="19" r="0.9"/>
+                                <circle class="bn-scatter-dot" cx="152" cy="17" r="1.1"/>
+                                <circle class="bn-scatter-dot" cx="164" cy="20" r="0.8"/>
+                                <circle class="bn-scatter-dot" cx="178" cy="18" r="1.3"/>
+                                <circle class="bn-scatter-dot" cx="30" cy="24" r="0.7"/>
+                                <circle class="bn-scatter-dot" cx="44" cy="26" r="1"/>
+                                <circle class="bn-scatter-dot" cx="58" cy="23" r="0.6"/>
+                                <circle class="bn-scatter-dot" cx="72" cy="25" r="0.9"/>
+                                <circle class="bn-scatter-dot" cx="86" cy="23" r="0.8"/>
+                                <circle class="bn-scatter-dot" cx="100" cy="24" r="0.7"/>
+                                <circle class="bn-scatter-dot" cx="114" cy="23" r="0.9"/>
+                                <circle class="bn-scatter-dot" cx="128" cy="25" r="0.6"/>
+                                <circle class="bn-scatter-dot" cx="142" cy="23" r="1"/>
+                                <circle class="bn-scatter-dot" cx="156" cy="26" r="0.7"/>
+                                <circle class="bn-scatter-dot" cx="170" cy="24" r="0.9"/>
+                            </g>
+                            <ellipse class="bn-neck-glow" cx="100" cy="90" rx="16" ry="22"/>
+                            <circle class="bn-particle" r="1.8" opacity="0">
+                                <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath href="#vp1"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+                            <circle class="bn-particle" r="1.5" opacity="0">
+                                <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.5s"><mpath href="#vp2"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
+                            </circle>
+                            <circle class="bn-particle" r="1.6" opacity="0">
+                                <animateMotion dur="2.2s" repeatCount="indefinite" begin="1s"><mpath href="#vp3"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                            <circle class="bn-particle" r="2" opacity="0">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.3s"><mpath href="#vp4"/></animateMotion>
+                                <animate attributeName="opacity" values="0;1;1;0.4;0" dur="2.5s" repeatCount="indefinite" begin="0.3s"/>
+                            </circle>
+                            <circle class="bn-particle" r="1.6" opacity="0">
+                                <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.3s"><mpath href="#vp5"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
+                            </circle>
+                            <circle class="bn-particle" r="1.5" opacity="0">
+                                <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.7s"><mpath href="#vp6"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.7s"/>
+                            </circle>
+                            <circle class="bn-particle" r="1.8" opacity="0">
+                                <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#vp7"/></animateMotion>
+                                <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+                            </circle>
+                            <ellipse class="bn-output-glow" cx="100" cy="112" rx="12" ry="5"/>
+                            <circle class="bn-output-core" cx="100" cy="112" r="3.5"/>
+                            <text class="bn-label bn-label-bottom" x="100" y="132">LOSSLESS THREAT MEMORY</text>
+                        </svg>
                     </div>
+                </div>
+                <div class="memory-cure-caption">
+                    <div class="mc-title">The attack hides between sessions. Memory exposes it.</div>
                 </div>
             </div>
         </div>
@@ -8267,11 +8751,8 @@
 
     <section class="cta">
         <div class="container">
-            <h2>Model the Inbound. Not the Attack.</h2>
-            <p class="section-intro" style="margin-bottom: 28px;">
-                One layer that answers: is this agent still doing what it was built to do?
-            </p>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Get Early Access</a>
+            <h2>Cure your security's amnesia.<br>Before someone exploits it.</h2>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button" style="margin-bottom: 28px; display: inline-block;">Get Early Access</a>
             <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-subtle); line-height: 1.6;">
                 Exploring the concept first?
                 <a href="products.html#oss-reference" style="color: var(--text-dim); text-decoration: none; border-bottom: 1px solid rgba(148,163,184,0.3); transition: color 0.2s, border-color 0.2s;">See the open-source OpenClaw plugin →</a>
