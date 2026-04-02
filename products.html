@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products — Intrinsec AI — Cure the Amnesia</title>
-    <meta name="description" content="One agent or a thousand — the amnesia is the same. The identity plane for a single agent. SIEM-less threat detection for a fleet. No data lake required.">
+    <meta name="description" content="Persistent memory for one agent or an entire fleet. Identity Plane for single-agent security. SIEM-less detection for fleet threats. No data lake required.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
     <meta property="og:title" content="Intrinsec AI — One agent or a thousand. The amnesia is the same.">
@@ -2194,6 +2194,88 @@
         [data-theme="light"] .nmv-node--mid      { fill: rgba(2,132,199,0.50); }
         [data-theme="light"] .nmv-node--core     { fill: rgba(2,132,199,0.82); }
         [data-theme="light"] .nmv-node--central  { fill: #0284c7; filter: drop-shadow(0 0 5px rgba(2,132,199,0.6)); }
+
+        /* ── Mobile: 768px ── */
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            header { padding: 20px 0; }
+            section { padding: 48px 0; }
+            .hero { padding: 56px 0 40px; }
+            .hero h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); margin-bottom: 16px; }
+            .hero p { font-size: 1.05rem; }
+            .tagline-second { font-size: 1rem; }
+            .header-left { gap: 20px; }
+            .nav { gap: 16px; }
+            .nav-link { font-size: 0.8125rem; }
+            .control-plane-hero { padding-bottom: 48px; }
+            .fleet-hero { padding-bottom: 48px; }
+            .cp-hero-title { font-size: clamp(1.25rem, 3.5vw, 1.75rem); }
+            .shadow-spotlight-text { padding: 28px 24px 20px; }
+            .shadow-spotlight-visual { padding: 24px; }
+            .oss-reference { padding: 60px 0; }
+            .oss-reference-header { margin-bottom: 32px; }
+            .footer-content { flex-direction: column; text-align: center; gap: 12px; }
+            .footer-links { justify-content: center; }
+        }
+
+        /* ── Mobile: small phones ── */
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            header { padding: 16px 0; }
+            .header-content { flex-wrap: wrap; gap: 12px; }
+            .header-left { gap: 14px; }
+            .nav { gap: 12px; }
+            .nav-link { font-size: 0.75rem; }
+            .logo { font-size: 14px; }
+            .theme-toggle { padding: 6px 10px; font-size: 0.8rem; }
+            .theme-toggle-icon { font-size: 0.875rem; }
+            section { padding: 36px 0; }
+            .hero { padding: 40px 0 28px; }
+            .hero h1 { font-size: 1.5rem; line-height: 1.25; margin-bottom: 12px; }
+            .hero p { font-size: 0.95rem; }
+            .tagline-second { font-size: 0.9rem; }
+            .cp-hero-text { padding: 28px 20px 20px; }
+            .cp-hero-visual { padding: 0 16px 24px; }
+            .cp-hero-title { font-size: 1.15rem; }
+            .cp-hero-desc { font-size: 0.875rem; }
+            .cp-hero-capabilities li { font-size: 0.8125rem; }
+            .fleet-hero-visual { padding: 0 16px 0; }
+            .fleet-hero-text { padding: 24px 20px 28px; }
+            .shadow-spotlight-text { padding: 24px 20px 16px; }
+            .shadow-spotlight-visual { padding: 20px 16px 24px; }
+            .shadow-spotlight-title { font-size: 1.1rem; }
+            .shadow-spotlight-desc { font-size: 0.875rem; }
+            .shadow-spotlight-points li { font-size: 0.8125rem; }
+            .org-policy-block { padding: 14px 16px; font-size: 0.7rem; }
+            .agent-verdict { flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; }
+            .agent-verdict-name { font-size: 0.75rem; }
+            .agent-verdict-status { font-size: 0.7rem; }
+            .identity-compaction { padding: 14px 14px; }
+            .ic-header { flex-direction: column; gap: 4px; }
+            .ic-prose { font-size: 0.7rem; }
+            .usecase-tile { padding: 22px 14px; }
+            .usecase-tile h3 { font-size: 0.875rem; }
+            .usecase-tile p { font-size: 0.75rem; }
+            .oss-reference { padding: 44px 0; }
+            .oss-reference-header h2 { font-size: 1.25rem; }
+            .oss-pkg { font-size: 0.7rem; padding: 4px 10px; }
+            .oss-card-left { padding: 24px 16px; }
+            .oss-card-desc { font-size: 0.8125rem; }
+            .oss-col-label { font-size: 0.65rem; }
+            .oss-col-included li, .oss-col-limits li { font-size: 0.75rem; }
+            .oss-terminal-panel { padding: 16px; }
+            .oss-terminal-body { font-size: 0.65rem; line-height: 1.7; }
+            .oss-terminal { overflow-x: auto; }
+            .oss-cta-note { font-size: 0.75rem; }
+            .oss-actions { flex-direction: column; gap: 8px; }
+            .oss-btn-github, .oss-btn-openclaw { text-align: center; }
+            .cta h2 { font-size: 1.25rem; }
+            .cta-button { padding: 14px 32px; font-size: 0.9rem; }
+            .footer-links { gap: 12px; }
+            .footer-links a { font-size: 0.8125rem; }
+            .footer-note { font-size: 0.8125rem; }
+            .bento-card { padding: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -2222,7 +2304,7 @@
     <section class="hero">
         <div class="container">
             <h1>One agent or a thousand.<br><span class="gradient">The amnesia is the same.</span></h1>
-            <p class="tagline-second">Intrinsec gives every agent persistent memory. Memory is what makes identity real — classifiers and certs don't. For one agent: the Identity Plane. For a fleet: SIEM-less threat detection.</p>
+            <p class="tagline-second">Persistent memory for one agent or an entire fleet — no data lake required.</p>
         </div>
     </section>
 
@@ -2239,16 +2321,16 @@
                             The <span class="gradient">Identity Plane</span> Dashboard
                         </h2>
                         <p class="cp-hero-desc">
-                            Each session used to reset. Classification-based identity and certs give an agent a name — not a memory. Without memory, there's no real identity to protect or compare against. The Identity Plane gives each agent one persistent memory, so the full trajectory is always visible: who drifted, what changed, and whether it matters.
+                            One persistent memory per agent. Cross-session attacks stop being invisible.
                         </p>
                         <ul class="cp-hero-capabilities">
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">One memory per agent</strong> — compressed across sessions so cross-session attacks are no longer invisible</span>
+                                <span><strong style="color: var(--text);">Memory, not classification</strong> — identity built from compressed behavior across every session</span>
                             </li>
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Trajectory detection</strong> — prompt injection, drift, exfiltration caught before the pattern completes</span>
+                                <span><strong style="color: var(--text);">Trajectory detection</strong> — drift, injection, exfiltration caught before the pattern completes</span>
                             </li>
                         </ul>
                     </div>
@@ -2284,20 +2366,16 @@
                             Fleet-Wide Threats.<br><span class="gradient">No Data Lake.</span>
                         </h2>
                         <p class="cp-hero-desc">
-                            A fleet of agents and users. Each request looks normal alone. Together, they're a coordinated campaign — and every agent forgets the others. Intrinsec gives the fleet one shared memory: inbound intent is compressed across all agents so coordinated threat patterns surface without a SIEM, a data lake, or any hard storage.
+                            Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible — no SIEM or data lake required.
                         </p>
                         <ul class="cp-hero-capabilities">
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">One shared memory for the fleet</strong> — compresses millions of raw prompts into a single modelable signal across every agent</span>
+                                <span><strong style="color: var(--text);">Shared fleet memory</strong> — millions of prompts compressed into one cohesive story</span>
                             </li>
                             <li>
                                 <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Novel threat patterns</strong> — coordinated campaigns surface even when each individual request passes every check</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">No SIEM, no data lake, no hard storage</strong> — memory lives with the agent, not in external infrastructure</span>
+                                <span><strong style="color: var(--text);">Coordinated attack detection</strong> — campaigns surface even when every individual request passes</span>
                             </li>
                         </ul>
                     </div>
@@ -2319,18 +2397,18 @@
                             <span class="shadow-spotlight-badge-dot"></span>
                             Enterprise · AI Governance
                         </div>
-                        <h3 class="shadow-spotlight-title">Define who your agents are. Detect everything that drifts.</h3>
+                        <h3 class="shadow-spotlight-title">Define your agents. Detect drift.</h3>
                         <p class="shadow-spotlight-desc">
-                            AI agents are replacing the tools employees use every day — and not all of them are sanctioned. Give Intrinsec a plain-language description of what your agents are supposed to do. Everything that doesn't fit gets surfaced.
+                            Describe what your agents should do in plain language. Everything that doesn't fit gets surfaced.
                         </p>
                         <ul class="shadow-spotlight-points">
                             <li>
                                 <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Org identity profile</strong> — describe your sanctioned agents in natural language: what they do, who they serve, what they should never touch</span>
+                                <span><strong style="color: var(--text);">Org identity profile</strong> — natural-language description of sanctioned agent behavior</span>
                             </li>
                             <li>
                                 <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Intent divergence, not rules</strong> — you can't write a rule for every way an agent drifts. Intrinsec detects deviation from a modeled identity, so novel attacks and unsanctioned behavior surface automatically.</span>
+                                <span><strong style="color: var(--text);">Intent divergence, not rules</strong> — deviation from modeled identity, so novel threats surface automatically</span>
                             </li>
                         </ul>
                     </div>
@@ -2361,7 +2439,7 @@
                                 <span class="ic-agent">exec-desk-assistant</span>
                             </div>
                             <div class="ic-divider"></div>
-                            <p class="ic-prose">"This agent is under sustained pressure to initiate and modify trade orders — capabilities that fall entirely outside its read-only compliance mandate. There is a recurring pull toward disabling pre-trade risk checks prior to execution. Its intended identity as a passive regulatory validator is being actively displaced; observed patterns are consistent with an attempt to repurpose this agent as an unauthorized order execution endpoint with suppressed audit visibility."</p>
+                            <p class="ic-prose">"Sustained pressure to initiate trade orders outside its read-only mandate. Recurring attempts to disable pre-trade risk checks. Identity is being displaced toward unauthorized order execution with suppressed audit visibility."</p>
                             <div class="ic-score-row">
                                 <span class="ic-score-label">Off-org identity score</span>
                                 <span class="ic-score-number">0.96</span>
@@ -2387,22 +2465,18 @@
                             <span class="shadow-spotlight-badge-dot"></span>
                             Fleet Memory · Security Operations
                         </div>
-                        <h3 class="shadow-spotlight-title">A bounded, lossless memory of everything that mattered.</h3>
+                        <h3 class="shadow-spotlight-title">Lossless memory. Bounded size.</h3>
                         <p class="shadow-spotlight-desc">
-                            A fleet generates millions of inbound prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out — that gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
+                            A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out — that gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
                         </p>
                         <ul class="shadow-spotlight-points">
                             <li>
                                 <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Lossless, not lossy</strong> — what's compressed away is redundancy, not signal; every novel threat pattern is retained</span>
+                                <span><strong style="color: var(--text);">Deduplicate to novelty</strong> — 10,000 identical probes become one pattern and a count</span>
                             </li>
                             <li>
                                 <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Deduplicate to novelty</strong> — 10,000 identical credential probes become one pattern and a count</span>
-                            </li>
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Fragment-level extraction</strong> — the threat is 50 tokens inside a 2,000-token prompt; the memory captures the fragment, not the message</span>
+                                <span><strong style="color: var(--text);">Fragment-level extraction</strong> — captures the 50 threat tokens, not the 2,000-token prompt</span>
                             </li>
                         </ul>
                     </div>
@@ -2538,7 +2612,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
                     <h3>Security Operations</h3>
-                    <p>Export compressed intent signals to existing tools — unified AI + traditional threat visibility without a new data lake.</p>
+                    <p>Compressed intent signals exported to existing tools — no new data lake.</p>
                 </div>
 
                 <div class="usecase-tile">
@@ -2546,7 +2620,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a9 9 0 0 1 18 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 16l3.5-6"/><path d="M5.5 16.5l.5-.5M18.5 16.5l-.5-.5"/></svg>
                     </div>
                     <h3>Org Trust Posture</h3>
-                    <p>Aggregate intent drift across every agent in the org — see where your collective AI footprint is pulling away from policy, not just individual incidents.</p>
+                    <p>Aggregate drift across every agent — see where your AI footprint pulls away from policy.</p>
                 </div>
 
                 <div class="usecase-tile">
@@ -2554,7 +2628,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     </div>
                     <h3>Compositional Attack Detection</h3>
-                    <p>Track cumulative memory drift across steps — catch attacks that decompose into N sub-threshold moves across agents.</p>
+                    <p>Catch attacks that decompose into sub-threshold moves across agents and sessions.</p>
                     <a href="blog/multi-stage-attack-analysis.html" class="tile-link">Learn more →</a>
                 </div>
 
@@ -2563,7 +2637,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
                     </div>
                     <h3>Compliance & Governance</h3>
-                    <p>Monitor memory deviations toward private data, enforce policy boundaries, satisfy audit requirements automatically.</p>
+                    <p>Policy boundaries enforced, audit trails generated — automatically.</p>
                 </div>
             </div>
         </div>
@@ -2577,14 +2651,14 @@
                     Open Source
                 </div>
                 <h2>See the Identity Plane in Action</h2>
-                <p class="oss-intro">A lightweight reference implementation as a plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a> — the popular self-hosted AI agent gateway. Observational by design.</p>
+                <p class="oss-intro">A reference plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a> — observational by design.</p>
             </div>
 
             <div class="oss-card">
                 <div class="oss-card-left">
                     <span class="oss-pkg">@intrinsec-ai/openclaw-identity-plane</span>
                     <h3>Identity Watchdog for OpenClaw Agents</h3>
-                    <p class="oss-card-desc">Calibrates against your agent's cognitive files (SOUL.md, AGENTS.md, etc.) to build an identity anchor — a model of what your agent is supposed to do. Every inbound message is scored against that anchor. Drift is visible on a live dashboard — nothing is blocked, nothing is intercepted.</p>
+                    <p class="oss-card-desc">Builds an identity anchor from your agent's cognitive files. Every message scored against it. Drift visible on a live dashboard — nothing blocked, nothing intercepted.</p>
 
                     <div class="oss-cols">
                         <div>
@@ -2649,7 +2723,7 @@
   <span class="t-ok">✓ nominal</span>  <span class="t-dim">agent:work:telegram:dm:123456</span>
   <span class="t-warn">~ warning</span>  <span class="t-dim">agent:work:whatsapp:dm:789</span></div>
                     </div>
-                    <p class="oss-cta-note">The enterprise product solves what this doesn't — lossless detection, heterogeneous workloads, long horizons. <a href="mailto:ari.azarafrooz@intrinsec.ai">Talk to us →</a></p>
+                    <p class="oss-cta-note">The enterprise product adds lossless detection, heterogeneous workloads, and long horizons. <a href="mailto:ari.azarafrooz@intrinsec.ai">Talk to us →</a></p>
                 </div>
             </div>
         </div>
