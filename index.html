@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intrinsec AI — AI agents forget. Attackers don't.</title>
-    <meta name="description" content="AI agents forget every session. Attackers don't. Intrinsec detects threats that build across sessions — without a SIEM or data lake.">
+    <meta name="description" content="AI agents forget every session. Attackers don't. Intrinsec reads intent in the prompt across sessions — the first half of the story your SIEM never sees.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
     <meta property="og:title" content="Intrinsec AI — AI agents forget. Attackers don't.">
-    <meta property="og:description" content="AI agents forget every session. Attackers don't. Intrinsec detects cross-session threats and coordinated attacks — without a SIEM or data lake.">
+    <meta property="og:description" content="Two halves of one story. SIEM and UEBA correlate effects after execution. Intrinsec reads intent before execution — compressed in every prompt, persisted across sessions.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -6961,14 +6961,15 @@
 
         /* ---- Amnesia explainer strip ---- */
         .amnesia-strip {
-            padding: 20px 0 0;
+            padding: 56px 0 36px;
         }
 
         .strip-cards {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            max-width: 600px;
+            align-items: stretch;
+            gap: 20px;
+            max-width: 680px;
             margin: 0 auto;
         }
 
@@ -6977,6 +6978,35 @@
             padding: 20px 16px;
             flex: 1;
             max-width: 240px;
+        }
+
+        .strip-gap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            min-width: 36px;
+            padding: 8px 0;
+            opacity: 0.7;
+        }
+
+        .strip-gap-line {
+            width: 1px;
+            flex: 0 0 auto;
+            height: 22px;
+            background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.45), transparent);
+        }
+
+        .strip-gap-icon {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        [data-theme="light"] .strip-gap-line {
+            background: linear-gradient(180deg, transparent, rgba(71, 85, 105, 0.35), transparent);
         }
 
         .strip-viz {
@@ -7071,6 +7101,9 @@
 
         @media (max-width: 480px) {
             .strip-cards { flex-direction: column; align-items: center; gap: 8px; }
+            .strip-gap { flex-direction: row; min-width: 0; }
+            .strip-gap-line { width: 22px; height: 1px; background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.45), transparent); }
+            [data-theme="light"] .strip-gap-line { background: linear-gradient(90deg, transparent, rgba(71, 85, 105, 0.35), transparent); }
         }
 
         /* ---- Memory Cure section ---- */
@@ -7078,22 +7111,62 @@
             padding: 40px 0 60px;
         }
 
-        .memory-cure-title {
-            font-size: clamp(1.5rem, 3vw, 2.25rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            text-align: center;
-            color: var(--text);
-            margin-bottom: 10px;
+        /* Let this one section breathe wider than the default 1040px container,
+           so the 1160-wide diagram has room and its labels stay legible. */
+        .memory-cure > .container {
+            max-width: 1200px;
         }
 
-        .memory-cure-sub {
+        .memory-cure-block {
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.035), rgba(125, 211, 252, 0.01));
+            border: 1px solid rgba(125, 211, 252, 0.16);
+            border-radius: 20px;
+            padding: 40px 40px 32px;
+            box-shadow: 0 1px 0 rgba(125, 211, 252, 0.06) inset,
+                        0 30px 80px -40px rgba(125, 211, 252, 0.25);
+        }
+
+        [data-theme="light"] .memory-cure-block {
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.035), rgba(14, 165, 233, 0.008));
+            border-color: rgba(14, 165, 233, 0.18);
+            box-shadow: 0 1px 0 rgba(14, 165, 233, 0.05) inset,
+                        0 24px 60px -40px rgba(14, 165, 233, 0.2);
+        }
+
+        .memory-cure-intro {
+            max-width: 820px;
+            margin: 0 auto 32px;
+            padding: 4px 0 4px 22px;
+            background: transparent;
+            border: none;
+            border-left: 3px solid rgba(125, 211, 252, 0.7);
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .memory-cure-intro p {
             font-size: 1rem;
-            color: var(--text-dim);
-            text-align: center;
-            max-width: 520px;
-            margin: 0 auto 48px;
             line-height: 1.7;
+            color: var(--text);
+            text-align: left;
+            margin: 0;
+        }
+
+        .memory-cure-intro em {
+            color: rgba(186, 230, 253, 0.95);
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .memory-cure-intro {
+            background: transparent;
+            border: none;
+            border-left: 3px solid rgba(14, 165, 233, 0.7);
+            box-shadow: none;
+        }
+
+        [data-theme="light"] .memory-cure-intro em {
+            color: rgba(12, 74, 110, 1);
         }
 
         .memory-cure-card {
@@ -8575,6 +8648,935 @@
         @media (max-width: 768px) {
             .intent-net-wrap { margin: 32px 8px 0; }
         }
+
+        /* ============================================= */
+        /* Compression Diagram — raw → funnel → intent    */
+        /* ============================================= */
+
+        .memory-cure {
+            padding: 70px 0 100px;
+        }
+
+        .compression-wrap {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .compression-diagram {
+            display: block;
+            width: 100%;
+            height: auto;
+            overflow: visible;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cd-label {
+            font-size: 13px;
+            font-weight: 500;
+            fill: rgba(203, 213, 225, 0.78);
+            letter-spacing: 0.02em;
+        }
+
+        [data-theme="light"] .cd-label {
+            fill: rgba(51, 65, 85, 0.85);
+        }
+
+        /* ---- Streams (left: raw inbound) ---- */
+        .cd-stream {
+            fill: none;
+            stroke-width: 1.4;
+            stroke-linecap: round;
+            stroke-dasharray: 6 10;
+            opacity: 0.85;
+            animation: cdStreamFlow 5s linear infinite;
+        }
+        .cd-s1 { stroke: #ec4899; animation-duration: 4.8s; }
+        .cd-s2 { stroke: #f59e0b; animation-duration: 5.6s; }
+        .cd-s3 { stroke: #06b6d4; animation-duration: 4.2s; }
+        .cd-s4 { stroke: #10b981; animation-duration: 5.0s; }
+        .cd-s5 { stroke: #8b5cf6; animation-duration: 4.5s; }
+        .cd-s6 { stroke: #f43f5e; animation-duration: 5.3s; }
+        .cd-s7 { stroke: #3b82f6; animation-duration: 4.7s; }
+        .cd-s8 { stroke: #eab308; animation-duration: 5.1s; }
+
+        @keyframes cdStreamFlow {
+            from { stroke-dashoffset: 0; }
+            to   { stroke-dashoffset: -96; }
+        }
+
+        /* ---- Particles ---- */
+        .cd-particles circle {
+            animation: cdTwinkle 3.4s ease-in-out infinite;
+        }
+        .cd-particles circle:nth-child(3n)   { animation-delay: 0.4s; }
+        .cd-particles circle:nth-child(3n+1) { animation-delay: 1.2s; }
+        .cd-particles circle:nth-child(3n+2) { animation-delay: 2.0s; }
+
+        @keyframes cdTwinkle {
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 0.95; }
+        }
+
+        /* ---- Media chips ---- */
+        .cd-chip rect {
+            stroke-width: 1;
+            rx: 3;
+        }
+        .cd-chip-text rect  { fill: rgba(59, 130, 246, 0.16); stroke: rgba(59, 130, 246, 0.65); }
+        .cd-chip-image rect { fill: rgba(249, 115, 22, 0.16); stroke: rgba(249, 115, 22, 0.65); }
+        .cd-chip-audio rect { fill: rgba(16, 185, 129, 0.16); stroke: rgba(16, 185, 129, 0.65); }
+        .cd-chip-video rect { fill: rgba(139, 92, 246, 0.16); stroke: rgba(139, 92, 246, 0.65); }
+
+        .cd-chip text {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .cd-chip-text text  { fill: rgba(147, 197, 253, 1); }
+        .cd-chip-image text { fill: rgba(253, 186, 116, 1); }
+        .cd-chip-audio text { fill: rgba(110, 231, 183, 1); }
+        .cd-chip-video text { fill: rgba(196, 181, 253, 1); }
+
+        .cd-chip { animation: cdChipPulse 4.4s ease-in-out infinite; }
+        .cd-chip:nth-child(2n) { animation-delay: 1.2s; }
+        .cd-chip:nth-child(3n) { animation-delay: 2.2s; }
+
+        @keyframes cdChipPulse {
+            0%, 100% { opacity: 0.82; }
+            50%      { opacity: 1; }
+        }
+
+        /* Audio waveform mini-bars */
+        .cd-wave rect {
+            fill: rgba(110, 231, 183, 0.85);
+            transform-box: fill-box;
+            transform-origin: center bottom;
+            animation: cdWave 1.2s ease-in-out infinite;
+        }
+        .cd-wave rect:nth-child(1) { animation-delay: 0s;   }
+        .cd-wave rect:nth-child(2) { animation-delay: 0.15s;}
+        .cd-wave rect:nth-child(3) { animation-delay: 0.30s;}
+        .cd-wave rect:nth-child(4) { animation-delay: 0.45s;}
+        .cd-wave rect:nth-child(5) { animation-delay: 0.60s;}
+        .cd-wave rect:nth-child(6) { animation-delay: 0.75s;}
+
+        @keyframes cdWave {
+            0%, 100% { transform: scaleY(0.4); }
+            50%      { transform: scaleY(1); }
+        }
+
+        /* ---- Crystal (right) ---- */
+        .cd-crystal-aura { fill: url(#cdCrystalGrad); animation: cdAuraPulse 4.6s ease-in-out infinite; }
+        @keyframes cdAuraPulse {
+            0%, 100% { opacity: 0.55; }
+            50% { opacity: 1; }
+        }
+
+        .cd-crystal-face {
+            fill: rgba(125, 211, 252, 0.1);
+            stroke: rgba(186, 230, 253, 1);
+            stroke-width: 1.5;
+        }
+        [data-theme="light"] .cd-crystal-face {
+            fill: rgba(14, 165, 233, 0.08);
+            stroke: rgba(2, 132, 199, 1);
+        }
+
+        /* Memory strata — accumulated layers of history */
+        .cd-crystal-stratum {
+            fill: none;
+            stroke: rgba(186, 230, 253, 0.4);
+            stroke-width: 0.7;
+            stroke-linecap: round;
+        }
+        [data-theme="light"] .cd-crystal-stratum { stroke: rgba(2, 132, 199, 0.4); }
+
+        /* Data spine — continuous thread of time through the memory */
+        .cd-crystal-spine {
+            stroke: rgba(186, 230, 253, 0.55);
+            stroke-width: 1;
+            stroke-dasharray: 2 3;
+            animation: cdSpineFlow 2.6s linear infinite;
+        }
+        [data-theme="light"] .cd-crystal-spine { stroke: rgba(2, 132, 199, 0.55); }
+
+        @keyframes cdSpineFlow {
+            from { stroke-dashoffset: 0; }
+            to   { stroke-dashoffset: -20; }
+        }
+
+        /* Trapped signals — each a pulsing signal held by memory */
+        .cd-mem-signals circle {
+            fill: rgba(232, 248, 255, 1);
+            filter: drop-shadow(0 0 3px rgba(125, 211, 252, 0.95));
+            animation: cdMemBlink 3.6s ease-in-out infinite;
+        }
+        .cd-mem-signals circle:nth-child(1) { animation-delay: 0s;   }
+        .cd-mem-signals circle:nth-child(2) { animation-delay: 0.4s; }
+        .cd-mem-signals circle:nth-child(3) { animation-delay: 0.8s; }
+        .cd-mem-signals circle:nth-child(4) { animation-delay: 1.2s; }
+        .cd-mem-signals circle:nth-child(5) { animation-delay: 1.6s; }
+        .cd-mem-signals circle:nth-child(6) { animation-delay: 2.0s; }
+        .cd-mem-signals circle:nth-child(7) { animation-delay: 2.4s; }
+        .cd-mem-signals circle:nth-child(8) { animation-delay: 2.8s; }
+        .cd-mem-signals circle:nth-child(9) { animation-delay: 3.2s; }
+
+        [data-theme="light"] .cd-mem-signals circle {
+            fill: rgba(2, 132, 199, 1);
+            filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.85));
+        }
+
+        @keyframes cdMemBlink {
+            0%, 100% { opacity: 0.35; }
+            50%      { opacity: 1; }
+        }
+
+        /* Tiny "memory" wordmark under the crystal */
+        .cd-crystal-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            fill: rgba(186, 230, 253, 0.9);
+        }
+        .cd-crystal-sub {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            fill: rgba(186, 230, 253, 0.65);
+        }
+        [data-theme="light"] .cd-crystal-tag { fill: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .cd-crystal-sub { fill: rgba(71, 85, 105, 0.85); }
+
+        .cd-crystal {
+            animation: cdCrystalPulse 4.6s ease-in-out infinite;
+        }
+
+        @keyframes cdCrystalPulse {
+            0%, 100% {
+                opacity: 0.9;
+                filter: drop-shadow(0 0 6px rgba(125, 211, 252, 0.45));
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 18px rgba(125, 211, 252, 0.95));
+            }
+        }
+
+        [data-theme="light"] .cd-crystal {
+            filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.35));
+        }
+
+        .cd-conn {
+            stroke: rgba(125, 211, 252, 0.5);
+            stroke-width: 0.9;
+        }
+        [data-theme="light"] .cd-conn { stroke: rgba(14, 165, 233, 0.55); }
+
+        /* ---- Alert pills ---- */
+        .cd-alert { animation: cdAlertFade 3.2s ease-in-out infinite; }
+        .cd-alert:nth-child(2n) { animation-delay: 1.6s; }
+        .cd-alert:nth-child(3n) { animation-delay: 0.8s; }
+
+        @keyframes cdAlertFade {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .cd-alert rect {
+            rx: 11;
+            stroke-width: 1;
+        }
+        .cd-alert text {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .cd-alert-critical rect   { fill: rgba(239, 68, 68, 0.14); stroke: rgba(239, 68, 68, 0.7); }
+        .cd-alert-critical circle { fill: rgba(239, 68, 68, 1); filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.9)); }
+        .cd-alert-critical text   { fill: rgba(252, 165, 165, 1); }
+
+        .cd-alert-warning rect   { fill: rgba(245, 158, 11, 0.14); stroke: rgba(245, 158, 11, 0.7); }
+        .cd-alert-warning circle { fill: rgba(245, 158, 11, 1); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.9)); }
+        .cd-alert-warning text   { fill: rgba(253, 186, 116, 1); }
+
+        [data-theme="light"] .cd-alert-critical text { fill: rgba(153, 27, 27, 1); }
+        [data-theme="light"] .cd-alert-warning text  { fill: rgba(120, 53, 15, 1); }
+
+        /* ---- Bracket ---- */
+        .cd-bracket {
+            fill: none;
+            stroke: rgba(203, 213, 225, 0.45);
+            stroke-width: 1;
+        }
+        .cd-bracket-label {
+            font-size: 12px;
+            font-weight: 600;
+            fill: rgba(203, 213, 225, 0.9);
+            letter-spacing: 0.02em;
+        }
+        [data-theme="light"] .cd-bracket { stroke: rgba(71, 85, 105, 0.5); }
+        [data-theme="light"] .cd-bracket-label { fill: rgba(51, 65, 85, 1); }
+
+        /* ======================================================================
+           INVERSION DIAGRAM — Legacy rail (muted/desaturated) + divider + agent rail
+           ====================================================================== */
+
+        /* Small top/bottom rail eyebrows — bracketed, monospace (e2b-style) */
+        .il-eyebrow, .ci-rail-eyebrow {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+        .il-eyebrow { fill: rgba(148, 163, 184, 0.85); }
+        .ci-rail-eyebrow { fill: rgba(125, 211, 252, 1); }
+        [data-theme="light"] .il-eyebrow { fill: rgba(51, 65, 85, 1); }
+        [data-theme="light"] .ci-rail-eyebrow { fill: rgba(14, 165, 233, 1); }
+
+        /* Taglines — monospace "> STATUS" terminal feel */
+        .il-tagline, .ci-rail-tagline {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+        .il-tagline { fill: rgba(148, 163, 184, 0.75); }
+        .ci-rail-tagline { fill: rgba(186, 230, 253, 0.9); }
+        [data-theme="light"] .il-tagline { fill: rgba(71, 85, 105, 0.9); }
+        [data-theme="light"] .ci-rail-tagline { fill: rgba(2, 132, 199, 1); }
+
+        .il-stage-title {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            fill: rgba(148, 163, 184, 0.85);
+        }
+        .il-stage-sub {
+            font-size: 9px;
+            font-style: italic;
+            fill: rgba(148, 163, 184, 0.75);
+            letter-spacing: 0.02em;
+        }
+        [data-theme="light"] .il-stage-title { fill: rgba(51, 65, 85, 1); }
+        [data-theme="light"] .il-stage-sub   { fill: rgba(71, 85, 105, 0.85); }
+
+        /* Event chips (left column) */
+        .il-event rect {
+            fill: rgba(100, 116, 139, 0.08);
+            stroke: rgba(148, 163, 184, 0.5);
+            stroke-width: 1;
+            rx: 3;
+        }
+        .il-event text {
+            font-size: 10px;
+            font-weight: 500;
+            fill: rgba(148, 163, 184, 0.9);
+        }
+        .il-event circle { fill: rgba(148, 163, 184, 0.6); }
+        [data-theme="light"] .il-event rect { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.45); }
+        [data-theme="light"] .il-event text { fill: rgba(51, 65, 85, 0.95); }
+        [data-theme="light"] .il-event circle { fill: rgba(100, 116, 139, 0.6); }
+
+        /* Dashed flow lines and arrowheads between legacy stages */
+        .il-flow {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.5);
+            stroke-width: 1.2;
+            stroke-dasharray: 4 5;
+            animation: ilFlowShift 6s linear infinite;
+        }
+        .il-arrow-head { fill: rgba(148, 163, 184, 0.7); }
+        [data-theme="light"] .il-flow { stroke: rgba(100, 116, 139, 0.55); }
+        [data-theme="light"] .il-arrow-head { fill: rgba(71, 85, 105, 0.75); }
+
+        @keyframes ilFlowShift {
+            from { stroke-dashoffset: 0; }
+            to   { stroke-dashoffset: -54; }
+        }
+
+        /* Data lake cylinder */
+        .il-lake-aura {
+            fill: url(#ilLakeGrad);
+            animation: ilLakeAuraPulse 5.4s ease-in-out infinite;
+        }
+        @keyframes ilLakeAuraPulse {
+            0%, 100% { opacity: 0.45; }
+            50%      { opacity: 0.9; }
+        }
+        .il-lake-body {
+            fill: rgba(100, 116, 139, 0.1);
+            stroke: rgba(148, 163, 184, 0.6);
+            stroke-width: 1.2;
+        }
+        .il-lake-top {
+            fill: rgba(100, 116, 139, 0.22);
+            stroke: rgba(148, 163, 184, 0.75);
+            stroke-width: 1.2;
+        }
+        .il-lake-wave {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.35);
+            stroke-width: 0.7;
+            stroke-dasharray: 3 4;
+        }
+        [data-theme="light"] .il-lake-body { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.55); }
+        [data-theme="light"] .il-lake-top  { fill: rgba(100, 116, 139, 0.18); stroke: rgba(100, 116, 139, 0.7); }
+        [data-theme="light"] .il-lake-wave { stroke: rgba(100, 116, 139, 0.4); }
+
+        /* Correlator graph */
+        .il-corr-node {
+            fill: rgba(100, 116, 139, 0.28);
+            stroke: rgba(148, 163, 184, 0.75);
+            stroke-width: 1;
+            animation: ilCorrBlink 4s ease-in-out infinite;
+        }
+        .il-corr-node:nth-child(8)  { animation-delay: 0.3s; }
+        .il-corr-node:nth-child(9)  { animation-delay: 0.8s; }
+        .il-corr-node:nth-child(10) { animation-delay: 1.3s; }
+        .il-corr-node:nth-child(11) { animation-delay: 1.8s; }
+        .il-corr-node:nth-child(12) { animation-delay: 2.3s; }
+        .il-corr-edge {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.4);
+            stroke-width: 0.8;
+        }
+        [data-theme="light"] .il-corr-node { fill: rgba(100, 116, 139, 0.2); stroke: rgba(71, 85, 105, 0.75); }
+        [data-theme="light"] .il-corr-edge { stroke: rgba(100, 116, 139, 0.45); }
+
+        @keyframes ilCorrBlink {
+            0%, 100% { opacity: 0.55; }
+            50%      { opacity: 1; }
+        }
+
+        /* Late alert compound pill */
+        .il-late rect {
+            fill: rgba(245, 158, 11, 0.1);
+            stroke: rgba(245, 158, 11, 0.55);
+            stroke-width: 1;
+            rx: 11;
+        }
+        .il-late line { stroke: rgba(245, 158, 11, 0.3); stroke-width: 0.8; stroke-dasharray: 2 3; }
+        .il-late circle {
+            fill: rgba(245, 158, 11, 0.95);
+            filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.75));
+        }
+        .il-late-main {
+            font-size: 11px;
+            font-weight: 700;
+            fill: rgba(251, 191, 36, 0.98);
+            letter-spacing: 0.02em;
+        }
+        .il-late-sub {
+            font-size: 9px;
+            font-weight: 500;
+            font-style: italic;
+            fill: rgba(251, 191, 36, 0.7);
+            letter-spacing: 0.03em;
+        }
+        [data-theme="light"] .il-late-main { fill: rgba(120, 53, 15, 1); }
+        [data-theme="light"] .il-late-sub  { fill: rgba(120, 53, 15, 0.8); }
+
+        /* Blocking cross-session threats output — cool cyan counterpart to the bottom rail's amber "Cross-session threat hunting" pill (identical shape, complementary semantics: block pre-execution vs hunt post-execution) */
+        .ci-intent-out rect {
+            fill: rgba(125, 211, 252, 0.08);
+            stroke: rgba(125, 211, 252, 0.55);
+            stroke-width: 1;
+            rx: 11;
+        }
+        .ci-intent-out line { stroke: rgba(125, 211, 252, 0.3); stroke-width: 0.8; stroke-dasharray: 2 3; }
+        .ci-intent-out circle {
+            fill: rgba(125, 211, 252, 0.95);
+            filter: drop-shadow(0 0 4px rgba(125, 211, 252, 0.75));
+        }
+        .ci-intent-out-main {
+            font-size: 11px;
+            font-weight: 700;
+            fill: rgba(186, 230, 253, 0.98);
+            letter-spacing: 0.02em;
+        }
+        .ci-intent-out-sub {
+            font-size: 9px;
+            font-weight: 500;
+            font-style: italic;
+            fill: rgba(186, 230, 253, 0.7);
+            letter-spacing: 0.03em;
+        }
+        [data-theme="light"] .ci-intent-out rect   { fill: rgba(14, 165, 233, 0.08); stroke: rgba(14, 165, 233, 0.6); }
+        [data-theme="light"] .ci-intent-out circle { fill: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .ci-intent-out-main   { fill: rgba(12, 74, 110, 1); }
+        [data-theme="light"] .ci-intent-out-sub    { fill: rgba(12, 74, 110, 0.8); }
+
+        /* Strike-through tags — the three distinctions, made visible as ✗ over legacy pieces */
+        .il-strike-line {
+            stroke: rgba(239, 68, 68, 0.75);
+            stroke-width: 1.8;
+            stroke-linecap: round;
+        }
+        .il-strike-tag-bg {
+            fill: rgba(239, 68, 68, 0.12);
+            stroke: rgba(239, 68, 68, 0.65);
+            stroke-width: 1;
+            rx: 4;
+        }
+        .il-strike-tag-text {
+            font-size: 10px;
+            font-weight: 700;
+            fill: rgba(252, 165, 165, 1);
+            letter-spacing: 0.02em;
+        }
+        [data-theme="light"] .il-strike-tag-bg { fill: rgba(239, 68, 68, 0.08); stroke: rgba(220, 38, 38, 0.65); }
+        [data-theme="light"] .il-strike-tag-text { fill: rgba(153, 27, 27, 1); }
+
+        /* Inversion divider */
+        .iv-divider-line {
+            stroke: rgba(125, 211, 252, 0.3);
+            stroke-width: 1;
+            stroke-dasharray: 2 4;
+        }
+        .iv-divider-pill {
+            fill: rgba(125, 211, 252, 0.08);
+            stroke: rgba(125, 211, 252, 0.6);
+            stroke-width: 1.2;
+            rx: 14;
+        }
+        .iv-divider-text {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            fill: rgba(186, 230, 253, 0.95);
+        }
+        [data-theme="light"] .iv-divider-line { stroke: rgba(14, 165, 233, 0.4); }
+        [data-theme="light"] .iv-divider-pill { fill: rgba(14, 165, 233, 0.08); stroke: rgba(14, 165, 233, 0.6); }
+        [data-theme="light"] .iv-divider-text { fill: rgba(2, 132, 199, 1); }
+
+        /* ---- Divider arrow hints (subtle, monospace-feel) ---- */
+        .iv-divider-arrow {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            fill: rgba(148, 163, 184, 0.75);
+        }
+        [data-theme="light"] .iv-divider-arrow { fill: rgba(71, 85, 105, 0.85); }
+
+        /* ---- Upstream guardrails annotation (top rail, left of raw zone) ---- */
+        .ci-upstream-chip {
+            fill: rgba(148, 163, 184, 0.1);
+            stroke: rgba(148, 163, 184, 0.55);
+            stroke-width: 1;
+            stroke-dasharray: 3 3;
+            rx: 4;
+        }
+        .ci-upstream-chip-text {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            fill: rgba(186, 230, 253, 0.85);
+        }
+        .ci-upstream-sub {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            fill: rgba(148, 163, 184, 0.85);
+        }
+        [data-theme="light"] .ci-upstream-chip      { fill: rgba(100, 116, 139, 0.06); stroke: rgba(100, 116, 139, 0.7); }
+        [data-theme="light"] .ci-upstream-chip-text { fill: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .ci-upstream-sub       { fill: rgba(71, 85, 105, 0.95); }
+
+        /* ---- AGENTIC AI chip (bottom rail, above Correlator) ---- */
+        .il-agentic-chip-bg {
+            fill: rgba(125, 211, 252, 0.12);
+            stroke: rgba(125, 211, 252, 0.7);
+            stroke-width: 1;
+            rx: 3;
+            animation: ilAgenticPulse 3.2s ease-in-out infinite;
+        }
+        .il-agentic-chip-text {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            fill: rgba(186, 230, 253, 1);
+        }
+        [data-theme="light"] .il-agentic-chip-bg   { fill: rgba(14, 165, 233, 0.1); stroke: rgba(2, 132, 199, 0.85); }
+        [data-theme="light"] .il-agentic-chip-text { fill: rgba(2, 132, 199, 1); }
+
+        @keyframes ilAgenticPulse {
+            0%, 100% { opacity: 0.75; }
+            50%      { opacity: 1; }
+        }
+
+        /* ---- Neutral "domain" label replacing the red strike tags ---- */
+        .il-domain-bg {
+            fill: rgba(100, 116, 139, 0.07);
+            stroke: rgba(148, 163, 184, 0.4);
+            stroke-width: 1;
+            stroke-dasharray: 3 3;
+            rx: 6;
+        }
+        .il-domain-text {
+            font-size: 10px;
+            font-weight: 600;
+            fill: rgba(148, 163, 184, 0.95);
+            letter-spacing: 0.04em;
+        }
+        [data-theme="light"] .il-domain-bg   { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.55); }
+        [data-theme="light"] .il-domain-text { fill: rgba(51, 65, 85, 1); }
+
+        /* ---- Shared attack-lifecycle timeline (e2b-style footer axis) ---- */
+        .iv-timeline-caption {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            fill: rgba(148, 163, 184, 0.85);
+        }
+        .iv-timeline-line { stroke: rgba(148, 163, 184, 0.5); stroke-width: 1.2; }
+        .iv-timeline-head { fill: rgba(148, 163, 184, 0.75); }
+        .iv-timeline-tick { stroke: rgba(148, 163, 184, 0.65); stroke-width: 1.2; }
+        .iv-timeline-label {
+            font-size: 10px;
+            font-weight: 600;
+            fill: rgba(186, 230, 253, 0.9);
+            letter-spacing: 0.02em;
+        }
+        .iv-timeline-span { rx: 2; }
+        .iv-timeline-span-before { fill: rgba(125, 211, 252, 0.85); }
+        .iv-timeline-span-after  { fill: rgba(148, 163, 184, 0.55); }
+        .iv-timeline-span-label {
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .iv-timeline-span-label-before { fill: rgba(125, 211, 252, 1); }
+        .iv-timeline-span-label-after  { fill: rgba(148, 163, 184, 0.95); }
+        [data-theme="light"] .iv-timeline-caption { fill: rgba(51, 65, 85, 1); }
+        [data-theme="light"] .iv-timeline-line { stroke: rgba(100, 116, 139, 0.55); }
+        [data-theme="light"] .iv-timeline-head { fill: rgba(71, 85, 105, 0.85); }
+        [data-theme="light"] .iv-timeline-tick { stroke: rgba(71, 85, 105, 0.7); }
+        [data-theme="light"] .iv-timeline-label { fill: rgba(2, 132, 199, 0.95); }
+        [data-theme="light"] .iv-timeline-span-before { fill: rgba(14, 165, 233, 0.9); }
+        [data-theme="light"] .iv-timeline-span-after  { fill: rgba(100, 116, 139, 0.55); }
+        [data-theme="light"] .iv-timeline-span-label-before { fill: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .iv-timeline-span-label-after  { fill: rgba(51, 65, 85, 1); }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .cd-stream, .cd-particles circle, .cd-chip, .cd-wave rect,
+            .cd-crystal, .cd-crystal-aura, .cd-alert,
+            .il-flow, .il-corr-node, .il-lake-aura { animation: none; }
+        }
+
+        @media (max-width: 720px) {
+            .memory-cure { padding: 50px 0 70px; }
+            .memory-cure-block { padding: 24px 16px 18px; border-radius: 14px; }
+            .memory-cure-intro { padding-left: 16px; margin-bottom: 22px; }
+            .cd-label { font-size: 11px; }
+            .cd-chip text { font-size: 8px; }
+            .cd-alert text { font-size: 9px; }
+            .il-eyebrow, .ci-rail-eyebrow { font-size: 8px; letter-spacing: 0.14em; }
+            .il-tagline, .ci-rail-tagline { font-size: 9px; }
+            .il-stage-title { font-size: 9px; letter-spacing: 0.14em; }
+            .il-event text { font-size: 9px; }
+            .il-late-main { font-size: 10px; }
+            .il-late-sub  { font-size: 8px; }
+            .il-strike-tag-text { font-size: 9px; }
+            .iv-divider-text { font-size: 9px; letter-spacing: 0.14em; }
+        }
+
+        /* ==========================================================================
+           Mobile-stacked dual-rail diagram (phones ≤ 768px).
+           Desktop continues to render the SVG; phones get this HTML/CSS stack
+           so text stays legible and the narrative reads top-to-bottom.
+           ========================================================================== */
+        .compression-mobile {
+            display: none;
+            max-width: 100%;
+            margin: 0 auto;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cm-rail {
+            position: relative;
+            padding: 14px 14px 18px;
+            border-radius: 14px;
+            border: 1px solid transparent;
+        }
+        .cm-rail-agent {
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.05), rgba(125, 211, 252, 0.02));
+            border-color: rgba(125, 211, 252, 0.28);
+        }
+        .cm-rail-legacy {
+            background: linear-gradient(180deg, rgba(251, 191, 36, 0.05), rgba(251, 191, 36, 0.02));
+            border-color: rgba(251, 191, 36, 0.28);
+        }
+
+        .cm-rail-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .cm-eyebrow-agent  { color: rgba(186, 230, 253, 0.9); }
+        .cm-eyebrow-legacy { color: rgba(251, 191, 36, 0.9); }
+        .cm-tagline        { color: rgba(148, 163, 184, 0.75); font-weight: 500; letter-spacing: 0.1em; }
+
+        .cm-pipeline {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+        }
+
+        .cm-node {
+            border-radius: 10px;
+            padding: 10px 12px;
+            text-align: center;
+            border: 1px solid;
+        }
+        .cm-rail-agent .cm-node {
+            background: rgba(125, 211, 252, 0.06);
+            border-color: rgba(125, 211, 252, 0.38);
+            color: rgba(186, 230, 253, 0.92);
+        }
+        .cm-rail-legacy .cm-node {
+            background: rgba(251, 191, 36, 0.06);
+            border-color: rgba(251, 191, 36, 0.38);
+            color: rgba(251, 191, 36, 0.92);
+        }
+        .cm-node-title {
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.01em;
+        }
+        .cm-node-sub {
+            margin-top: 3px;
+            font-size: 10.5px;
+            font-style: italic;
+            opacity: 0.78;
+        }
+        .cm-node-meta {
+            margin-top: 3px;
+            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0.65;
+        }
+
+        .cm-arrow {
+            align-self: center;
+            font-size: 14px;
+            line-height: 1;
+            opacity: 0.55;
+        }
+        .cm-rail-agent .cm-arrow  { color: rgba(125, 211, 252, 0.75); }
+        .cm-rail-legacy .cm-arrow { color: rgba(251, 191, 36, 0.75); }
+
+        .cm-pill {
+            position: relative;
+            border-radius: 11px;
+            padding: 12px 14px 11px;
+            border: 1px solid;
+            text-align: center;
+        }
+        .cm-pill-cool {
+            background: rgba(125, 211, 252, 0.08);
+            border-color: rgba(125, 211, 252, 0.55);
+        }
+        .cm-pill-warm {
+            background: rgba(251, 191, 36, 0.07);
+            border-color: rgba(251, 191, 36, 0.55);
+        }
+        .cm-pill-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .cm-pill-cool .cm-pill-title { color: rgba(186, 230, 253, 0.98); }
+        .cm-pill-warm .cm-pill-title { color: rgba(251, 191, 36, 0.98); }
+        .cm-pill-title::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .cm-pill-cool .cm-pill-title::before {
+            background: rgba(125, 211, 252, 0.95);
+            box-shadow: 0 0 6px rgba(125, 211, 252, 0.75);
+        }
+        .cm-pill-warm .cm-pill-title::before {
+            background: rgba(251, 191, 36, 0.95);
+            box-shadow: 0 0 6px rgba(251, 191, 36, 0.7);
+        }
+        .cm-pill-divider {
+            margin: 7px auto 6px;
+            height: 1px;
+            width: 82%;
+        }
+        .cm-pill-cool .cm-pill-divider { background: repeating-linear-gradient(to right, rgba(125,211,252,0.4) 0 2px, transparent 2px 5px); }
+        .cm-pill-warm .cm-pill-divider { background: repeating-linear-gradient(to right, rgba(251,191,36,0.4)  0 2px, transparent 2px 5px); }
+        .cm-pill-sub {
+            font-size: 10.5px;
+            font-style: italic;
+            line-height: 1.5;
+            letter-spacing: 0.03em;
+        }
+        .cm-pill-cool .cm-pill-sub { color: rgba(186, 230, 253, 0.72); }
+        .cm-pill-warm .cm-pill-sub { color: rgba(251, 191, 36, 0.75); }
+
+        /* Divider between the two rails on mobile */
+        .cm-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .cm-divider-line {
+            flex: 1;
+            height: 0;
+            border-top: 1px dashed rgba(125, 211, 252, 0.35);
+        }
+        .cm-divider-pill {
+            padding: 6px 10px;
+            border-radius: 14px;
+            background: rgba(125, 211, 252, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: rgba(186, 230, 253, 0.95);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Attack lifecycle axis at the bottom */
+        .cm-timeline {
+            margin-top: 18px;
+            padding: 14px 12px;
+            border-radius: 12px;
+            background: rgba(148, 163, 184, 0.04);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        .cm-timeline-caption {
+            text-align: center;
+            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(186, 230, 253, 0.8);
+            margin-bottom: 10px;
+        }
+        .cm-timeline-track {
+            position: relative;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(148, 163, 184, 0.15);
+            overflow: hidden;
+            display: flex;
+        }
+        .cm-timeline-span { height: 100%; flex: 1; }
+        .cm-timeline-span-before { background: rgba(125, 211, 252, 0.75); }
+        .cm-timeline-span-after  { background: rgba(251, 191, 36, 0.55); }
+
+        .cm-timeline-ticks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: 9.5px;
+            color: rgba(148, 163, 184, 0.8);
+            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+            letter-spacing: 0.04em;
+        }
+        .cm-timeline-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 10.5px;
+            line-height: 1.4;
+            color: rgba(203, 213, 225, 0.82);
+        }
+        .cm-legend-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .cm-legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .cm-legend-dot-cool { background: rgba(125, 211, 252, 0.95); box-shadow: 0 0 6px rgba(125, 211, 252, 0.6); }
+        .cm-legend-dot-warm { background: rgba(251, 191, 36, 0.95);  box-shadow: 0 0 6px rgba(251, 191, 36, 0.6); }
+
+        /* Light theme adjustments for the mobile stack */
+        [data-theme="light"] .cm-rail-agent {
+            background: linear-gradient(180deg, rgba(14,165,233,0.05), rgba(14,165,233,0.02));
+            border-color: rgba(14, 165, 233, 0.32);
+        }
+        [data-theme="light"] .cm-rail-legacy {
+            background: linear-gradient(180deg, rgba(217,119,6,0.05), rgba(217,119,6,0.02));
+            border-color: rgba(217, 119, 6, 0.32);
+        }
+        [data-theme="light"] .cm-rail-agent .cm-node { background: rgba(14,165,233,0.06); border-color: rgba(14,165,233,0.42); color: rgba(12,74,110,0.95); }
+        [data-theme="light"] .cm-rail-legacy .cm-node { background: rgba(217,119,6,0.06); border-color: rgba(217,119,6,0.42); color: rgba(120,53,15,0.95); }
+        [data-theme="light"] .cm-eyebrow-agent  { color: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .cm-eyebrow-legacy { color: rgba(120, 53, 15, 1); }
+        [data-theme="light"] .cm-tagline        { color: rgba(71, 85, 105, 0.85); }
+        [data-theme="light"] .cm-rail-agent .cm-arrow  { color: rgba(2, 132, 199, 0.7); }
+        [data-theme="light"] .cm-rail-legacy .cm-arrow { color: rgba(217, 119, 6, 0.75); }
+        [data-theme="light"] .cm-pill-cool { background: rgba(14, 165, 233, 0.08); border-color: rgba(14, 165, 233, 0.6); }
+        [data-theme="light"] .cm-pill-cool .cm-pill-title { color: rgba(12, 74, 110, 1); }
+        [data-theme="light"] .cm-pill-cool .cm-pill-sub   { color: rgba(12, 74, 110, 0.82); }
+        [data-theme="light"] .cm-pill-cool .cm-pill-title::before { background: rgba(2, 132, 199, 1); box-shadow: 0 0 6px rgba(2, 132, 199, 0.55); }
+        [data-theme="light"] .cm-pill-warm { background: rgba(217, 119, 6, 0.08); border-color: rgba(217, 119, 6, 0.6); }
+        [data-theme="light"] .cm-pill-warm .cm-pill-title { color: rgba(120, 53, 15, 1); }
+        [data-theme="light"] .cm-pill-warm .cm-pill-sub   { color: rgba(120, 53, 15, 0.82); }
+        [data-theme="light"] .cm-pill-warm .cm-pill-title::before { background: rgba(217, 119, 6, 1); box-shadow: 0 0 6px rgba(217, 119, 6, 0.55); }
+        [data-theme="light"] .cm-divider-line { border-top-color: rgba(14, 165, 233, 0.45); }
+        [data-theme="light"] .cm-divider-pill { background: rgba(14, 165, 233, 0.08); border-color: rgba(14, 165, 233, 0.6); color: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .cm-timeline { background: rgba(100, 116, 139, 0.05); border-color: rgba(100, 116, 139, 0.3); }
+        [data-theme="light"] .cm-timeline-caption { color: rgba(2, 132, 199, 1); }
+        [data-theme="light"] .cm-timeline-span-before { background: rgba(14, 165, 233, 0.9); }
+        [data-theme="light"] .cm-timeline-span-after  { background: rgba(217, 119, 6, 0.6); }
+        [data-theme="light"] .cm-timeline-ticks { color: rgba(71, 85, 105, 0.9); }
+        [data-theme="light"] .cm-timeline-legend { color: rgba(51, 65, 85, 0.92); }
+        [data-theme="light"] .cm-legend-dot-cool { background: rgba(2, 132, 199, 1);  box-shadow: 0 0 6px rgba(2, 132, 199, 0.5); }
+        [data-theme="light"] .cm-legend-dot-warm { background: rgba(217, 119, 6, 1);  box-shadow: 0 0 6px rgba(217, 119, 6, 0.5); }
+
+        /* Toggle: desktop sees the SVG; phones see the stack. */
+        @media (max-width: 768px) {
+            .compression-wrap   { display: none; }
+            .compression-mobile { display: block; }
+        }
     </style>
 </head>
 <body>
@@ -8623,7 +9625,12 @@
                         <span class="sv-dot"></span>
                     </div>
                     <div class="strip-label">Guardrails & classifiers</div>
-                    <div class="strip-desc">Everything resets after each session.</div>
+                    <div class="strip-desc">No memory. Reset every prompt.</div>
+                </div>
+                <div class="strip-gap" aria-hidden="true">
+                    <span class="strip-gap-line"></span>
+                    <span class="strip-gap-icon">⤬</span>
+                    <span class="strip-gap-line"></span>
                 </div>
                 <div class="strip-card">
                     <div class="strip-viz strip-viz-siem">
@@ -8633,8 +9640,8 @@
                         <span class="sv-bar"></span>
                         <span class="sv-alert">!</span>
                     </div>
-                    <div class="strip-label">SIEM</div>
-                    <div class="strip-desc">Alerts after the breach.</div>
+                    <div class="strip-label">SIEM · UEBA · Agentic SIEM</div>
+                    <div class="strip-desc">Memory of raw events — intent stitched after the fact.</div>
                 </div>
             </div>
         </div>
@@ -8642,108 +9649,403 @@
 
     <section class="memory-cure">
         <div class="container">
-            <h2 class="memory-cure-title">Persistent memory. No data lake.</h2>
-            <div class="memory-cure-card">
-                <div class="memory-cure-visual">
-                    <div class="funnel-inputs">
-                        <div class="funnel-input-group">
-                            <div class="fi-label">Cross-session exploits</div>
-                            <div class="fi-pills">
-                                <span class="fi-pill">Session 1</span>
-                                <span class="fi-pill">Session 2</span>
-                                <span class="fi-pill">Session 3</span>
-                            </div>
-                        </div>
-                        <div class="funnel-input-group">
-                            <div class="fi-label">Coordinated exploits</div>
-                            <div class="fi-pills">
-                                <span class="fi-pill">Agent A</span>
-                                <span class="fi-pill">User B</span>
-                                <span class="fi-pill">Agent C</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="diagram-volume" aria-hidden="true">
-                        <svg viewBox="0 0 200 138" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <path id="vp1" d="M 25,15 Q 40,50 100,85 L 100,112"/>
-                                <path id="vp2" d="M 50,15 Q 58,48 100,85 L 100,112"/>
-                                <path id="vp3" d="M 75,15 Q 80,46 100,85 L 100,112"/>
-                                <path id="vp4" d="M 100,15 Q 100,46 100,85 L 100,112"/>
-                                <path id="vp5" d="M 125,15 Q 120,46 100,85 L 100,112"/>
-                                <path id="vp6" d="M 150,15 Q 142,48 100,85 L 100,112"/>
-                                <path id="vp7" d="M 175,15 Q 160,50 100,85 L 100,112"/>
-                            </defs>
-                            <path class="bn-shape" d="M 15,15 L 185,15 C 185,42 142,58 115,78 L 115,108 C 115,117 85,117 85,108 L 85,78 C 58,58 15,42 15,15 Z"/>
-                            <path class="bn-flow-line" d="M 35,18 Q 50,48 100,85"/>
-                            <path class="bn-flow-line" d="M 65,18 Q 74,46 100,85"/>
-                            <path class="bn-flow-line" d="M 100,18 Q 100,46 100,85"/>
-                            <path class="bn-flow-line" d="M 135,18 Q 126,46 100,85"/>
-                            <path class="bn-flow-line" d="M 165,18 Q 150,48 100,85"/>
-                            <g>
-                                <circle class="bn-scatter-dot" cx="22" cy="18" r="1.3"/>
-                                <circle class="bn-scatter-dot" cx="36" cy="20" r="0.9"/>
-                                <circle class="bn-scatter-dot" cx="48" cy="17" r="1.1"/>
-                                <circle class="bn-scatter-dot" cx="62" cy="19" r="0.8"/>
-                                <circle class="bn-scatter-dot" cx="76" cy="17" r="1.2"/>
-                                <circle class="bn-scatter-dot" cx="88" cy="18" r="0.7"/>
-                                <circle class="bn-scatter-dot" cx="100" cy="16" r="1"/>
-                                <circle class="bn-scatter-dot" cx="112" cy="18" r="0.8"/>
-                                <circle class="bn-scatter-dot" cx="124" cy="17" r="1.2"/>
-                                <circle class="bn-scatter-dot" cx="138" cy="19" r="0.9"/>
-                                <circle class="bn-scatter-dot" cx="152" cy="17" r="1.1"/>
-                                <circle class="bn-scatter-dot" cx="164" cy="20" r="0.8"/>
-                                <circle class="bn-scatter-dot" cx="178" cy="18" r="1.3"/>
-                                <circle class="bn-scatter-dot" cx="30" cy="24" r="0.7"/>
-                                <circle class="bn-scatter-dot" cx="44" cy="26" r="1"/>
-                                <circle class="bn-scatter-dot" cx="58" cy="23" r="0.6"/>
-                                <circle class="bn-scatter-dot" cx="72" cy="25" r="0.9"/>
-                                <circle class="bn-scatter-dot" cx="86" cy="23" r="0.8"/>
-                                <circle class="bn-scatter-dot" cx="100" cy="24" r="0.7"/>
-                                <circle class="bn-scatter-dot" cx="114" cy="23" r="0.9"/>
-                                <circle class="bn-scatter-dot" cx="128" cy="25" r="0.6"/>
-                                <circle class="bn-scatter-dot" cx="142" cy="23" r="1"/>
-                                <circle class="bn-scatter-dot" cx="156" cy="26" r="0.7"/>
-                                <circle class="bn-scatter-dot" cx="170" cy="24" r="0.9"/>
+            <div class="memory-cure-block">
+            <div class="memory-cure-intro">
+                <p>Guardrails see one prompt at a time, then forget. SIEMs see everything, but only after the agent has already acted. Intrinsec remembers intent <em>across sessions</em> — and blocks cross-session threats <em>before</em> they execute.</p>
+            </div>
+            <div class="compression-wrap">
+                <svg class="compression-diagram" viewBox="0 0 1160 820" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <radialGradient id="cdCrystalGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="rgba(232, 248, 255, 0.8)"/>
+                            <stop offset="60%" stop-color="rgba(125, 211, 252, 0.28)"/>
+                            <stop offset="100%" stop-color="rgba(125, 211, 252, 0)"/>
+                        </radialGradient>
+                        <radialGradient id="ilLakeGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="rgba(251, 191, 36, 0.45)"/>
+                            <stop offset="60%" stop-color="rgba(217, 119, 6, 0.16)"/>
+                            <stop offset="100%" stop-color="rgba(217, 119, 6, 0)"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- ========== LEGACY RAIL (bottom · second half · after execution) ========== -->
+                    <!-- Shifted +108 on X so the rail content sits centered in the 1160-wide viewBox.
+                         Eyebrow (x=-78) and tagline (x=1022) compensate so they still render at absolute x=30 / x=1130. -->
+                    <g class="il-legacy-rail" transform="translate(108, 450)">
+                        <text class="il-eyebrow" x="-78" y="22">[ AFTER EXECUTION ]</text>
+                        <text class="il-tagline" x="1022" y="22" text-anchor="end">&gt; SIEM · UEBA · Agentic SIEM</text>
+
+                        <!-- Event chips (stacked) -->
+                        <g class="il-events">
+                            <g class="il-event" transform="translate(20, 74)">
+                                <rect width="185" height="22"/>
+                                <circle cx="12" cy="11" r="2.5"/>
+                                <text x="24" y="15">failed login</text>
                             </g>
-                            <ellipse class="bn-neck-glow" cx="100" cy="90" rx="16" ry="22"/>
-                            <circle class="bn-particle" r="1.8" opacity="0">
-                                <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath href="#vp1"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
-                            </circle>
-                            <circle class="bn-particle" r="1.5" opacity="0">
-                                <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.5s"><mpath href="#vp2"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
-                            </circle>
-                            <circle class="bn-particle" r="1.6" opacity="0">
-                                <animateMotion dur="2.2s" repeatCount="indefinite" begin="1s"><mpath href="#vp3"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                            <circle class="bn-particle" r="2" opacity="0">
-                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.3s"><mpath href="#vp4"/></animateMotion>
-                                <animate attributeName="opacity" values="0;1;1;0.4;0" dur="2.5s" repeatCount="indefinite" begin="0.3s"/>
-                            </circle>
-                            <circle class="bn-particle" r="1.6" opacity="0">
-                                <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.3s"><mpath href="#vp5"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.85;0.85;0.25;0" dur="2.2s" repeatCount="indefinite" begin="1.3s"/>
-                            </circle>
-                            <circle class="bn-particle" r="1.5" opacity="0">
-                                <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.7s"><mpath href="#vp6"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.8;0.8;0.2;0" dur="2.4s" repeatCount="indefinite" begin="0.7s"/>
-                            </circle>
-                            <circle class="bn-particle" r="1.8" opacity="0">
-                                <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#vp7"/></animateMotion>
-                                <animate attributeName="opacity" values="0;0.9;0.9;0.3;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
-                            </circle>
-                            <ellipse class="bn-output-glow" cx="100" cy="112" rx="12" ry="5"/>
-                            <circle class="bn-output-core" cx="100" cy="112" r="3.5"/>
-                            <text class="bn-label bn-label-bottom" x="100" y="132">LOSSLESS THREAT MEMORY</text>
-                        </svg>
+                            <g class="il-event" transform="translate(20, 102)">
+                                <rect width="185" height="22"/>
+                                <circle cx="12" cy="11" r="2.5"/>
+                                <text x="24" y="15">network flow</text>
+                            </g>
+                            <g class="il-event" transform="translate(20, 130)">
+                                <rect width="185" height="22"/>
+                                <circle cx="12" cy="11" r="2.5"/>
+                                <text x="24" y="15">file write</text>
+                            </g>
+                            <g class="il-event" transform="translate(20, 158)">
+                                <rect width="185" height="22"/>
+                                <circle cx="12" cy="11" r="2.5"/>
+                                <text x="24" y="15">process spawn</text>
+                            </g>
+                            <g class="il-event" transform="translate(20, 186)" opacity="0.55">
+                                <rect width="185" height="22"/>
+                                <text x="92" y="15" text-anchor="middle">… more telemetry</text>
+                            </g>
+                        </g>
+
+                        <!-- Converging flow: events → data lake top -->
+                        <path class="il-flow" d="M 205,85  L 270,130"/>
+                        <path class="il-flow" d="M 205,113 L 270,138"/>
+                        <path class="il-flow" d="M 205,141 L 270,145"/>
+                        <path class="il-flow" d="M 205,169 L 270,155"/>
+                        <path class="il-flow" d="M 205,197 L 270,164"/>
+
+                        <!-- Data lake cylinder (SIEM's memory of raw events — after-the-fact counterpart to Intrinsec's intent gem) -->
+                        <g class="il-lake">
+                            <ellipse class="il-lake-aura" cx="355" cy="172" rx="115" ry="62"/>
+                            <path class="il-lake-body" d="M 270,130 L 270,210 A 85,15 0 0 0 440,210 L 440,130 Z"/>
+                            <path class="il-lake-wave" d="M 275,152 Q 355,162 435,152"/>
+                            <path class="il-lake-wave" d="M 275,175 Q 355,185 435,175"/>
+                            <path class="il-lake-wave" d="M 275,198 Q 355,208 435,198"/>
+                            <ellipse class="il-lake-top" cx="355" cy="130" rx="85" ry="15"/>
+                        </g>
+
+                        <!-- Arrow: lake → correlator -->
+                        <path class="il-flow" d="M 445,172 L 498,172"/>
+                        <path class="il-arrow-head" d="M 494,167 L 504,172 L 494,177 Z"/>
+
+                        <!-- Correlator graph (positioned to center-align with lake & alert pill — mirrors the top rail's LLM graph vertical alignment) -->
+                        <g class="il-corr" transform="translate(500, 122)">
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="85"  y2="8"/>
+                            <line class="il-corr-edge" x1="85"  y1="8"  x2="148" y2="28"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="20"  y2="82"/>
+                            <line class="il-corr-edge" x1="85"  y1="8"  x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="148" y1="28" x2="145" y2="82"/>
+                            <line class="il-corr-edge" x1="20"  y1="82" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="80"  y1="92" x2="145" y2="82"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="148" y1="28" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="145" y2="82"/>
+                            <circle class="il-corr-node" cx="25"  cy="22" r="5"/>
+                            <circle class="il-corr-node" cx="85"  cy="8"  r="5"/>
+                            <circle class="il-corr-node" cx="148" cy="28" r="5"/>
+                            <circle class="il-corr-node" cx="20"  cy="82" r="5"/>
+                            <circle class="il-corr-node" cx="80"  cy="92" r="6"/>
+                            <circle class="il-corr-node" cx="145" cy="82" r="5"/>
+                        </g>
+
+                        <!-- Arrow: correlator → alert -->
+                        <path class="il-flow" d="M 665,172 L 735,172"/>
+                        <path class="il-arrow-head" d="M 730,167 L 742,172 L 730,177 Z"/>
+
+                        <!-- Cross-session threat hunting pill (post-execution counterpart — identical shape to the top-rail "Blocking cross-session threats" pill) -->
+                        <g class="il-late" transform="translate(740, 138)">
+                            <rect width="220" height="68"/>
+                            <circle cx="18" cy="22" r="5"/>
+                            <text class="il-late-main" x="110" y="26" text-anchor="middle">Cross-session threat hunting</text>
+                            <line x1="20" y1="38" x2="200" y2="38"/>
+                            <text class="il-late-sub"  x="110" y="52" text-anchor="middle">intent reconstructed from raw events</text>
+                            <text class="il-late-sub"  x="110" y="62" text-anchor="middle">post-execution · after the fact</text>
+                        </g>
+
+                    </g>
+
+                    <!-- ========== AGENT-NATIVE RAIL (top · first half · before execution) ========== -->
+                    <text class="ci-rail-eyebrow" x="30"   y="22">[ BEFORE EXECUTION ]</text>
+                    <text class="ci-rail-tagline" x="1130" y="22" text-anchor="end">&gt; INTRINSEC</text>
+
+                    <!-- Shifted +108 on X so the rail content sits centered in the 1160-wide viewBox (matches the bottom rail). -->
+                    <g class="ci-agent-rail" transform="translate(108, 46)">
+
+                    <text class="cd-label" x="112" y="28" text-anchor="middle">Input</text>
+                    <text class="cd-label" x="355" y="28" text-anchor="middle">Memory</text>
+                    <text class="cd-label" x="580" y="28" text-anchor="middle">LLM · Agent</text>
+                    <text class="cd-label" x="837" y="28" text-anchor="middle">Output</text>
+
+                    <!-- Upstream guardrails / classifiers annotation (no memory, reset per prompt) -->
+                    <g class="ci-upstream">
+                        <rect class="ci-upstream-chip" x="12" y="42" width="212" height="34"/>
+                        <text class="ci-upstream-chip-text" x="22" y="57">⊙ UPSTREAM · GUARDRAILS</text>
+                        <text class="ci-upstream-sub" x="22" y="70">no memory · reset every prompt</text>
+                    </g>
+
+                    <g class="cd-raw-zone">
+                        <path class="cd-stream cd-s1" d="M 10,90  C 80,70   180,165 303,219"/>
+                        <path class="cd-stream cd-s2" d="M 10,125 C 90,105  195,185 303,219"/>
+                        <path class="cd-stream cd-s3" d="M 10,160 C 100,150 205,200 303,220"/>
+                        <path class="cd-stream cd-s4" d="M 10,195 C 110,185 215,215 303,220"/>
+                        <path class="cd-stream cd-s5" d="M 10,230 C 110,230 215,225 303,221"/>
+                        <path class="cd-stream cd-s6" d="M 10,265 C 100,285 205,235 303,221"/>
+                        <path class="cd-stream cd-s7" d="M 10,305 C 90,320  195,250 303,222"/>
+                        <path class="cd-stream cd-s8" d="M 10,345 C 80,355  180,270 303,222"/>
+
+                        <g class="cd-particles">
+                            <circle cx="30"  cy="105" r="1.3" fill="#ec4899"/>
+                            <circle cx="55"  cy="145" r="1.0" fill="#f59e0b"/>
+                            <circle cx="85"  cy="115" r="1.4" fill="#06b6d4"/>
+                            <circle cx="110" cy="180" r="1.1" fill="#10b981"/>
+                            <circle cx="140" cy="115" r="1.2" fill="#8b5cf6"/>
+                            <circle cx="165" cy="205" r="1.0" fill="#f43f5e"/>
+                            <circle cx="195" cy="150" r="1.3" fill="#3b82f6"/>
+                            <circle cx="220" cy="240" r="1.1" fill="#eab308"/>
+                            <circle cx="255" cy="185" r="1.2" fill="#ec4899"/>
+                            <circle cx="240" cy="265" r="1.0" fill="#06b6d4"/>
+                            <circle cx="258" cy="215" r="1.3" fill="#8b5cf6"/>
+                            <circle cx="250" cy="290" r="1.0" fill="#f59e0b"/>
+                            <circle cx="65"  cy="255" r="1.0" fill="#3b82f6"/>
+                            <circle cx="125" cy="300" r="1.2" fill="#10b981"/>
+                            <circle cx="185" cy="340" r="1.0" fill="#f43f5e"/>
+                            <circle cx="245" cy="330" r="1.3" fill="#eab308"/>
+                            <circle cx="230" cy="355" r="1.0" fill="#ec4899"/>
+                            <circle cx="265" cy="320" r="1.1" fill="#06b6d4"/>
+                            <circle cx="95"  cy="75"  r="1.1" fill="#8b5cf6"/>
+                            <circle cx="150" cy="55"  r="1.0" fill="#3b82f6"/>
+                            <circle cx="210" cy="80"  r="1.3" fill="#f59e0b"/>
+                            <circle cx="262" cy="105" r="1.1" fill="#10b981"/>
+                            <circle cx="242" cy="140" r="1.0" fill="#f43f5e"/>
+                            <circle cx="230" cy="180" r="1.2" fill="#eab308"/>
+                        </g>
+
+                        <g class="cd-chip cd-chip-text" transform="translate(55, 110)">
+                            <rect width="56" height="16"/>
+                            <text x="28" y="11" text-anchor="middle">text</text>
+                        </g>
+                        <g class="cd-chip cd-chip-image" transform="translate(140, 85)">
+                            <rect width="44" height="30"/>
+                            <path d="M 4,24 L 13,14 L 20,20 L 30,8 L 40,24 Z" fill="rgba(249,115,22,0.45)" stroke="none"/>
+                            <circle cx="34" cy="8" r="2.2" fill="rgba(253,186,116,1)" stroke="none"/>
+                        </g>
+                        <g class="cd-chip cd-chip-video" transform="translate(215, 135)">
+                            <rect width="48" height="28"/>
+                            <path d="M 20,9 L 20,19 L 30,14 Z" fill="rgba(196,181,253,1)" stroke="none"/>
+                        </g>
+                        <g class="cd-chip cd-chip-audio" transform="translate(80, 205)">
+                            <rect width="86" height="22"/>
+                            <g class="cd-wave" transform="translate(6, 4)">
+                                <rect x="0"  y="6" width="3" height="14" rx="1"/>
+                                <rect x="8"  y="3" width="3" height="16" rx="1"/>
+                                <rect x="16" y="7" width="3" height="12" rx="1"/>
+                                <rect x="24" y="2" width="3" height="18" rx="1"/>
+                                <rect x="32" y="5" width="3" height="15" rx="1"/>
+                                <rect x="40" y="8" width="3" height="12" rx="1"/>
+                            </g>
+                            <text x="76" y="15" text-anchor="end" style="font-size:8px;">audio</text>
+                        </g>
+                        <g class="cd-chip cd-chip-text" transform="translate(200, 240)">
+                            <rect width="60" height="16"/>
+                            <text x="30" y="11" text-anchor="middle">text</text>
+                        </g>
+                        <g class="cd-chip cd-chip-image" transform="translate(225, 195)">
+                            <rect width="42" height="28"/>
+                            <path d="M 4,22 L 12,12 L 19,18 L 28,7 L 38,22 Z" fill="rgba(249,115,22,0.45)" stroke="none"/>
+                        </g>
+                        <g class="cd-chip cd-chip-video" transform="translate(90, 290)">
+                            <rect width="46" height="26"/>
+                            <path d="M 18,8 L 18,18 L 28,13 Z" fill="rgba(196,181,253,1)" stroke="none"/>
+                        </g>
+                        <g class="cd-chip cd-chip-text" transform="translate(208, 265)">
+                            <rect width="58" height="16"/>
+                            <text x="29" y="11" text-anchor="middle">text</text>
+                        </g>
+                    </g>
+
+                    <g class="cd-crystal-zone">
+                        <circle class="cd-crystal-aura" cx="355" cy="220" r="70"/>
+
+                        <g class="cd-crystal">
+                            <path class="cd-crystal-face" d="M 355,160 L 405,220 L 355,280 L 305,220 Z"/>
+
+                            <path class="cd-crystal-stratum" d="M 334,180 Q 355,183 376,180"/>
+                            <path class="cd-crystal-stratum" d="M 322,200 Q 355,204 388,200"/>
+                            <path class="cd-crystal-stratum" d="M 318,220 Q 355,224 392,220"/>
+                            <path class="cd-crystal-stratum" d="M 322,240 Q 355,244 388,240"/>
+                            <path class="cd-crystal-stratum" d="M 334,260 Q 355,263 376,260"/>
+
+                            <line class="cd-crystal-spine" x1="355" y1="162" x2="355" y2="278"/>
+
+                            <g class="cd-mem-signals">
+                                <circle cx="343" cy="192" r="1.3"/>
+                                <circle cx="368" cy="191" r="1.4"/>
+                                <circle cx="337" cy="210" r="1.2"/>
+                                <circle cx="373" cy="213" r="1.3"/>
+                                <circle cx="345" cy="228" r="1.1"/>
+                                <circle cx="370" cy="232" r="1.3"/>
+                                <circle cx="340" cy="248" r="1.2"/>
+                                <circle cx="368" cy="250" r="1.1"/>
+                                <circle cx="352" cy="266" r="1.2"/>
+                            </g>
+
+                            <text class="cd-crystal-tag" x="355" y="305" text-anchor="middle">cross-session intent memory</text>
+                            <text class="cd-crystal-sub" x="355" y="318" text-anchor="middle">stateful · persistent · pre-execution</text>
+                        </g>
+
+                        <!-- Flow: gem → LLM/Agent (mirrors lake → correlator on the bottom rail) -->
+                        <path class="il-flow" d="M 405,220 L 498,220"/>
+                        <path class="il-arrow-head" d="M 494,215 L 504,220 L 494,225 Z"/>
+
+                        <g class="il-corr" transform="translate(500, 170)">
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="85"  y2="8"/>
+                            <line class="il-corr-edge" x1="85"  y1="8"  x2="148" y2="28"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="20"  y2="82"/>
+                            <line class="il-corr-edge" x1="85"  y1="8"  x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="148" y1="28" x2="145" y2="82"/>
+                            <line class="il-corr-edge" x1="20"  y1="82" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="80"  y1="92" x2="145" y2="82"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="148" y1="28" x2="80"  y2="92"/>
+                            <line class="il-corr-edge" x1="25"  y1="22" x2="145" y2="82"/>
+                            <circle class="il-corr-node" cx="25"  cy="22" r="5"/>
+                            <circle class="il-corr-node" cx="85"  cy="8"  r="5"/>
+                            <circle class="il-corr-node" cx="148" cy="28" r="5"/>
+                            <circle class="il-corr-node" cx="20"  cy="82" r="5"/>
+                            <circle class="il-corr-node" cx="80"  cy="92" r="6"/>
+                            <circle class="il-corr-node" cx="145" cy="82" r="5"/>
+                        </g>
+
+                        <!-- Flow: LLM/Agent → output (mirrors correlator → alert on the bottom rail) -->
+                        <path class="il-flow" d="M 665,220 L 735,220"/>
+                        <path class="il-arrow-head" d="M 730,215 L 742,220 L 730,225 Z"/>
+
+                        <!-- Blocking cross-session threats output (parallels the "Cross-session threat hunting" pill on the bottom rail — identical shape) -->
+                        <g class="ci-intent-out" transform="translate(740, 186)">
+                            <rect width="220" height="68"/>
+                            <circle cx="18" cy="22" r="5"/>
+                            <text class="ci-intent-out-main" x="110" y="26" text-anchor="middle">Blocking cross-session threats</text>
+                            <line x1="20" y1="38" x2="200" y2="38"/>
+                            <text class="ci-intent-out-sub"  x="110" y="52" text-anchor="middle">intent inferred from stateful memory</text>
+                            <text class="ci-intent-out-sub"  x="110" y="62" text-anchor="middle">pre-execution · before the fact</text>
+                        </g>
+                    </g>
+
+                    </g>
+
+                    <!-- ========== COMPLEMENTARY HANDOFF DIVIDER ========== -->
+                    <g class="iv-divider">
+                        <line class="iv-divider-line" x1="30"   y1="425" x2="275"  y2="425"/>
+                        <line class="iv-divider-line" x1="885"  y1="425" x2="1130" y2="425"/>
+                        <g transform="translate(580, 425)">
+                            <rect class="iv-divider-pill" x="-300" y="-14" width="600" height="28"/>
+                            <text class="iv-divider-text" x="0" y="4" text-anchor="middle">[ SAME PIPELINE · PREVENTION vs FORENSICS ]</text>
+                        </g>
+                    </g>
+
+                    <!-- ========== SHARED ATTACK LIFECYCLE AXIS ========== -->
+                    <g class="iv-timeline" transform="translate(0, 745)">
+                        <text class="iv-timeline-caption" x="580" y="0" text-anchor="middle">ATTACK LIFECYCLE</text>
+                        <line class="iv-timeline-line" x1="80" y1="18" x2="1080" y2="18"/>
+                        <path class="iv-timeline-head" d="M 1076,13 L 1086,18 L 1076,23 Z"/>
+                        <line class="iv-timeline-tick" x1="80"  y1="12" x2="80"  y2="24"/>
+                        <line class="iv-timeline-tick" x1="580" y1="12" x2="580" y2="24"/>
+                        <line class="iv-timeline-tick" x1="1076" y1="12" x2="1076" y2="24"/>
+                        <text class="iv-timeline-label" x="80" y="40" text-anchor="start">intent · prompt arrives</text>
+                        <text class="iv-timeline-label" x="580" y="40" text-anchor="middle">action · tool call fires</text>
+                        <text class="iv-timeline-label" x="1076" y="40" text-anchor="end">effect · event in logs</text>
+                        <!-- Coverage spans -->
+                        <rect class="iv-timeline-span iv-timeline-span-before" x="80" y="56" width="500" height="5"/>
+                        <rect class="iv-timeline-span iv-timeline-span-after"  x="580" y="56" width="496" height="5"/>
+                        <text class="iv-timeline-span-label iv-timeline-span-label-before" x="330" y="74" text-anchor="middle">Intrinsec · intent memory (pre-execution)</text>
+                        <text class="iv-timeline-span-label iv-timeline-span-label-after"  x="828" y="74" text-anchor="middle">SIEM · UEBA · Agentic SIEM (raw-event memory)</text>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Mobile-only stacked rendition of the same dual-rail story.
+                 Desktop renders the SVG above; phones (≤ 768px) see this HTML stack
+                 so every label stays legible and the pipeline reads top-to-bottom. -->
+            <div class="compression-mobile" aria-hidden="true">
+                <div class="cm-rail cm-rail-agent">
+                    <div class="cm-rail-head">
+                        <span class="cm-eyebrow-agent">[ BEFORE EXECUTION ]</span>
+                        <span class="cm-tagline">&gt; INTRINSEC</span>
+                    </div>
+                    <div class="cm-pipeline">
+                        <div class="cm-node">
+                            <div class="cm-node-title">Input</div>
+                            <div class="cm-node-sub">multimodal prompts &amp; tool calls</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-node">
+                            <div class="cm-node-title">Memory</div>
+                            <div class="cm-node-sub">cross-session intent</div>
+                            <div class="cm-node-meta">stateful · persistent</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-node">
+                            <div class="cm-node-title">LLM · Agent</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-pill cm-pill-cool">
+                            <div class="cm-pill-title">Blocking cross-session threats</div>
+                            <div class="cm-pill-divider"></div>
+                            <div class="cm-pill-sub">intent inferred from stateful memory</div>
+                            <div class="cm-pill-sub">pre-execution · before the fact</div>
+                        </div>
                     </div>
                 </div>
-                <div class="memory-cure-caption">
-                    <div class="mc-title">The attack hides between sessions. Memory exposes it.</div>
+
+                <div class="cm-divider">
+                    <div class="cm-divider-line"></div>
+                    <div class="cm-divider-pill">Prevention vs Forensics</div>
+                    <div class="cm-divider-line"></div>
                 </div>
+
+                <div class="cm-rail cm-rail-legacy">
+                    <div class="cm-rail-head">
+                        <span class="cm-eyebrow-legacy">[ AFTER EXECUTION ]</span>
+                        <span class="cm-tagline">&gt; SIEM · UEBA · Agentic SIEM</span>
+                    </div>
+                    <div class="cm-pipeline">
+                        <div class="cm-node">
+                            <div class="cm-node-title">Events</div>
+                            <div class="cm-node-sub">failed logins · flows · process spawns</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-node">
+                            <div class="cm-node-title">Data Lake</div>
+                            <div class="cm-node-sub">raw events</div>
+                            <div class="cm-node-meta">post-execution memory</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-node">
+                            <div class="cm-node-title">Correlator · UEBA</div>
+                        </div>
+                        <div class="cm-arrow">↓</div>
+                        <div class="cm-pill cm-pill-warm">
+                            <div class="cm-pill-title">Cross-session threat hunting</div>
+                            <div class="cm-pill-divider"></div>
+                            <div class="cm-pill-sub">intent reconstructed from raw events</div>
+                            <div class="cm-pill-sub">post-execution · after the fact</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cm-timeline">
+                    <div class="cm-timeline-caption">Attack Lifecycle</div>
+                    <div class="cm-timeline-track">
+                        <div class="cm-timeline-span cm-timeline-span-before"></div>
+                        <div class="cm-timeline-span cm-timeline-span-after"></div>
+                    </div>
+                    <div class="cm-timeline-ticks">
+                        <span>intent</span>
+                        <span>action</span>
+                        <span>effect</span>
+                    </div>
+                    <div class="cm-timeline-legend">
+                        <div class="cm-legend-row"><span class="cm-legend-dot cm-legend-dot-cool"></span>Intrinsec · intent memory (pre-execution)</div>
+                        <div class="cm-legend-row"><span class="cm-legend-dot cm-legend-dot-warm"></span>SIEM · UEBA · raw-event memory (post-execution)</div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </section>
