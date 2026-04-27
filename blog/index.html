@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research & Blog | Intrinsec AI</title>
+    <title>Research · Intrinsec AI · Cure the Amnesia</title>
+    <meta name="description" content="Research and writing from Intrinsec AI on cross-session threat detection, dynamic agent identity, trajectory-based security, and the geometry of agentic AI.">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0a0f1a">
+    <meta property="og:title" content="Intrinsec AI · Research">
+    <meta property="og:description" content="Cross-session threats, agent identity, trajectory-based detection. Patent-pending I2TP from Intrinsec AI.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const theme = savedTheme || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -11,7 +28,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
             --navy: #0a0f1a;
             --navy-light: #151b2b;
@@ -24,32 +41,36 @@
             --text-secondary: #cbd5e1;
             --text-dim: #94a3b8;
             --text-subtle: #64748b;
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.15);
         }
-        
-        /* Light theme variables - vibrant and clean */
+
         [data-theme="light"] {
             --navy: #ffffff;
             --navy-light: #f8fafc;
-            --navy-lighter: #f0f9ff;
-            --ice: #0ea5e9;
-            --ice-bright: #0284c7;
-            --ice-glow: rgba(14, 165, 233, 0.15);
-            --ice-glow-strong: rgba(14, 165, 233, 0.25);
-            --text: #0c4a6e;
-            --text-secondary: #0369a1;
-            --text-dim: #0284c7;
-            --text-subtle: #38bdf8;
+            --navy-lighter: #f1f5f9;
+            --ice: #0284c7;
+            --ice-bright: #0369a1;
+            --ice-glow: rgba(2, 132, 199, 0.1);
+            --ice-glow-strong: rgba(2, 132, 199, 0.15);
+            --text: #0f172a;
+            --text-secondary: #1e293b;
+            --text-dim: #475569;
+            --text-subtle: #64748b;
+            --red: #dc2626;
+            --red-glow: rgba(220, 38, 38, 0.1);
         }
-        
+
         [data-theme="light"] body {
-            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
-            background-attachment: fixed;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
         }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--navy);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
             color: var(--text);
@@ -58,19 +79,36 @@
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
-        
-        html {
-            scroll-behavior: smooth;
+
+        html { scroll-behavior: smooth; }
+
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--navy-lighter);
+            color: var(--text);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transform: translateY(-200%);
+            transition: transform 0.2s ease;
+            z-index: 200;
         }
-        
+        .skip-link:focus { transform: translateY(0); outline: none; }
+
         .container {
-            max-width: 1040px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 32px;
             width: 100%;
             box-sizing: border-box;
         }
-        
+
         /* Header */
         header {
             padding: 32px 0;
@@ -83,86 +121,30 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             transition: all 0.3s ease;
         }
-        
+
         [data-theme="light"] header {
-            background: rgba(255, 255, 255, 0.98);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
-            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        nav a {
-            position: relative;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            transition: color 0.3s ease;
-            font-weight: 500;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--ice);
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--ice);
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        .theme-toggle {
-            background: var(--navy-lighter);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 8px 12px;
-            cursor: pointer;
+
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
+            gap: 32px;
         }
-        
-        [data-theme="light"] .theme-toggle {
-            background: #f0f9ff;
-            border: 1px solid rgba(14, 165, 233, 0.2);
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        [data-theme="light"] .theme-toggle:hover {
-            border-color: rgba(14, 165, 233, 0.4);
-        }
-        
-        .theme-toggle:hover {
-            background: var(--navy-light);
-            border-color: var(--ice);
-            color: var(--ice);
-        }
-        
-        .theme-toggle-icon {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .theme-toggle:active .theme-toggle-icon {
-            transform: rotate(180deg);
-        }
-        
+
         .logo {
             font-size: 16px;
             font-weight: 600;
@@ -173,7 +155,7 @@
             display: inline-block;
             text-decoration: none;
         }
-        
+
         .logo::after {
             content: '';
             position: absolute;
@@ -184,59 +166,196 @@
             background: linear-gradient(90deg, var(--ice), var(--ice-bright));
             transition: width 0.3s ease;
         }
-        
-        .logo:hover::after {
+
+        .logo:hover::after { width: 100%; }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ice);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--ice);
+        }
+
+        .nav-link:hover::after { width: 100%; }
+
+        .nav-link[aria-current="page"] {
+            color: var(--ice);
+        }
+
+        .nav-link[aria-current="page"]::after {
             width: 100%;
         }
-        
-        /* Hero Section */
+
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            line-height: 1;
+            min-height: 36px;
+            white-space: nowrap;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 4px 14px rgba(125, 211, 252, 0.18);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .header-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 22px rgba(125, 211, 252, 0.28);
+        }
+
+        [data-theme="light"] .header-cta {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.2);
+        }
+
+        [data-theme="light"] .header-cta:hover {
+            box-shadow: 0 8px 22px rgba(14, 165, 233, 0.28);
+        }
+
+        @media (max-width: 600px) {
+            .header-cta { display: none; }
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: #ffffff;
+            border: 1px solid rgba(2, 132, 199, 0.18);
+            color: var(--text-dim);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(125, 211, 252, 0.08);
+            border-color: rgba(125, 211, 252, 0.35);
+            color: var(--ice);
+        }
+
+        [data-theme="light"] .theme-toggle:hover {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.4);
+            color: var(--ice-bright);
+        }
+
+        .theme-toggle-svg {
+            display: block;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle-svg--sun { display: none; }
+        [data-theme="light"] .theme-toggle-svg--moon { display: none; }
+        [data-theme="light"] .theme-toggle-svg--sun { display: block; }
+
+        .theme-toggle:active .theme-toggle-svg {
+            transform: rotate(20deg);
+        }
+
+        /* Hero */
         .blog-hero {
-            padding: 120px 0 80px;
+            padding: 100px 0 60px;
             text-align: center;
             position: relative;
         }
-        
+
         .blog-hero h1 {
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
             margin-bottom: 24px;
-            line-height: 1.1;
+            line-height: 1.15;
             letter-spacing: -0.03em;
             color: var(--text);
         }
-        
+
+        .blog-hero .gradient {
+            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 50%, var(--ice) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .blog-hero p {
-            font-size: 1.25rem;
+            font-size: 1.1875rem;
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 660px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         .hero-patent {
-            margin-top: 20px;
+            margin-top: 18px;
             font-size: 0.8125rem !important;
             color: var(--text-dim) !important;
             font-weight: 500;
             letter-spacing: 0.02em;
         }
-        
-        /* Blog List */
+
+        /* Blog grid */
         .blog-list {
-            padding: 80px 0 120px;
+            padding: 40px 0 100px;
         }
-        
+
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
+            gap: 28px;
+            margin-top: 40px;
+            max-width: 1040px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
+
         .blog-card {
             background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
-            border: 2px solid rgba(125, 211, 252, 0.2);
+            border: 1px solid rgba(125, 211, 252, 0.18);
             border-radius: 16px;
-            padding: 32px;
+            padding: 30px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -244,13 +363,13 @@
             display: block;
             color: inherit;
         }
-        
+
         [data-theme="light"] .blog-card {
             background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border: 2px solid rgba(14, 165, 233, 0.25);
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(2, 132, 199, 0.18);
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
         }
-        
+
         .blog-card::before {
             content: '';
             position: absolute;
@@ -258,116 +377,182 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--ice), 
-                var(--ice-bright), 
-                var(--ice), 
+            background: linear-gradient(90deg,
+                transparent,
+                var(--ice),
+                var(--ice-bright),
+                var(--ice),
                 transparent);
             background-size: 200% 100%;
             animation: topBorderFlow 3s ease-in-out infinite;
+            opacity: 0.6;
         }
-        
+
         @keyframes topBorderFlow {
             0%, 100% { background-position: -200% 0; }
             50% { background-position: 200% 0; }
         }
-        
+
         .blog-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--ice);
-            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06),
                         0 0 60px var(--ice-glow);
         }
-        
+
         [data-theme="light"] .blog-card:hover {
-            border-color: rgba(14, 165, 233, 0.5);
-            box-shadow: 0 12px 48px rgba(14, 165, 233, 0.2),
-                        inset 0 1px 0 rgba(14, 165, 233, 0.1),
-                        0 0 60px rgba(14, 165, 233, 0.15);
+            border-color: rgba(2, 132, 199, 0.5);
+            box-shadow: 0 12px 48px rgba(2, 132, 199, 0.18),
+                        inset 0 1px 0 rgba(2, 132, 199, 0.08),
+                        0 0 60px rgba(2, 132, 199, 0.12);
         }
-        
-        .blog-card::after {
+
+        .blog-card-featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: 32px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.06) 0%, var(--navy-light) 50%, rgba(56, 189, 248, 0.04) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            align-items: center;
+        }
+
+        [data-theme="light"] .blog-card-featured {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, #ffffff 50%, rgba(2, 132, 199, 0.03) 100%);
+            border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        .featured-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ice);
+            margin-bottom: 16px;
+        }
+
+        .featured-eyebrow::before {
             content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                from 0deg at 50% 50%,
-                transparent 0deg,
-                rgba(125, 211, 252, 0.05) 90deg,
-                transparent 180deg,
-                rgba(125, 211, 252, 0.05) 270deg,
-                transparent 360deg
-            );
-            animation: rotate 20s linear infinite;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--ice);
+            box-shadow: 0 0 10px var(--ice);
         }
-        
-        [data-theme="light"] .blog-card::after {
-            background: conic-gradient(
-                from 0deg at 50% 50%,
-                transparent 0deg,
-                rgba(14, 165, 233, 0.08) 90deg,
-                transparent 180deg,
-                rgba(14, 165, 233, 0.08) 270deg,
-                transparent 360deg
-            );
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .blog-card:hover::after {
-            opacity: 1;
-        }
-        
-        .blog-card > * {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .blog-card-title {
-            font-size: 1.5rem;
+
+        .featured-title {
+            font-size: clamp(1.5rem, 3vw, 1.875rem);
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+        }
+
+        .blog-card-featured:hover .featured-title { color: var(--ice); }
+
+        .featured-excerpt {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .featured-paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .featured-paper-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            background: rgba(125, 211, 252, 0.06);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .featured-paper-tag {
+            border-color: rgba(2, 132, 199, 0.3);
+            background: rgba(2, 132, 199, 0.05);
+        }
+
+        .featured-visual {
+            position: relative;
+            min-height: 240px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(10, 15, 26, 0.6) 0%, rgba(21, 27, 43, 0.4) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .featured-visual {
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            border-color: rgba(2, 132, 199, 0.12);
+        }
+
+        .featured-visual svg {
+            width: 100%;
+            height: auto;
+            max-width: 380px;
+        }
+
+        @media (max-width: 760px) {
+            .blog-card-featured {
+                grid-template-columns: 1fr;
+                padding: 28px;
+                gap: 24px;
+            }
+            .featured-visual { min-height: 180px; }
+        }
+
+        .blog-card-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
             letter-spacing: -0.02em;
             line-height: 1.3;
         }
-        
-        .blog-card:hover .blog-card-title {
-            color: var(--ice);
-        }
-        
+
+        .blog-card:hover .blog-card-title { color: var(--ice); }
+
         .blog-card-excerpt {
             font-size: 0.9375rem;
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: 20px;
         }
-        
+
         .blog-card-meta {
             display: flex;
             align-items: center;
             gap: 16px;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-dim);
         }
-        
+
         .blog-card-date {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        
+
         .blog-card-tag {
             display: inline-block;
             padding: 4px 12px;
@@ -378,15 +563,15 @@
             font-size: 0.75rem;
             font-weight: 500;
         }
-        
+
         [data-theme="light"] .blog-card-tag {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(224, 242, 254, 0.8) 100%);
-            border: 1px solid rgba(14, 165, 233, 0.4);
-            color: #0284c7;
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.1) 0%, rgba(224, 242, 254, 0.6) 100%);
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            color: var(--ice);
         }
-        
+
         .read-more {
-            margin-top: 20px;
+            margin-top: 18px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -395,83 +580,223 @@
             font-weight: 600;
             transition: gap 0.3s ease;
         }
-        
-        .blog-card:hover .read-more {
-            gap: 12px;
-        }
-        
+
+        .blog-card:hover .read-more { gap: 12px; }
+
         .read-more::after {
             content: '→';
             transition: transform 0.3s ease;
         }
-        
-        .blog-card:hover .read-more::after {
-            transform: translateX(4px);
+
+        .blog-card:hover .read-more::after { transform: translateX(4px); }
+
+        /* Footer */
+        footer {
+            padding: 64px 0 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.08);
         }
-        
+        [data-theme="light"] footer {
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+            gap: 56px;
+            margin-bottom: 40px;
+        }
+        .footer-brand { max-width: 380px; }
+        .footer-logo {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .footer-tag {
+            margin-top: 14px;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            line-height: 1.65;
+        }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .footer-col-title {
+            color: var(--text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .footer-col a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .footer-col a:hover { color: var(--ice); }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            font-size: 0.8125rem;
+            flex-wrap: wrap;
+        }
+        [data-theme="light"] .footer-bottom {
+            border-top-color: rgba(0, 0, 0, 0.08);
+        }
+        .footer-patent { color: var(--text-subtle); }
+
+        @media (max-width: 720px) {
+            footer { padding: 48px 0 24px; }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+                margin-bottom: 32px;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+                max-width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-            
-            .blog-hero {
-                padding: 80px 0 60px;
-            }
-            
-            .blog-hero h1 {
-                font-size: clamp(2rem, 6vw, 2.5rem);
-            }
-            
-            .blog-hero p {
-                font-size: 1.125rem;
-            }
-            
+            .container { padding: 0 20px; }
+            .blog-hero { padding: 70px 0 50px; }
+            .blog-hero h1 { font-size: clamp(2rem, 6vw, 2.5rem); }
+            .blog-hero p { font-size: 1.0625rem; }
             .blog-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
-                margin-top: 40px;
+                gap: 20px;
+                margin-top: 32px;
             }
-            
-            .blog-card {
-                padding: 24px;
-            }
-            
-            .blog-card-title {
-                font-size: 1.25rem;
-            }
+            .blog-card { padding: 24px; }
+            .blog-card-title { font-size: 1.1875rem; }
+            .header-left { gap: 20px; }
+            .nav { gap: 16px; }
+            .nav-link { font-size: 0.8125rem; }
         }
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header>
         <div class="container">
             <div class="header-content">
-                <div style="display: flex; align-items: center; gap: 32px;">
+                <div class="header-left">
                     <a href="../index.html" class="logo">Intrinsec AI</a>
-                    <nav style="display: flex; gap: 24px; align-items: center;">
-                        <a href="../products.html">Products</a>
-                        <a href="index.html" style="color: var(--ice);">Research</a>
+                    <nav class="nav" aria-label="Primary">
+                        <a class="nav-link" href="../index.html">Home</a>
+                        <a class="nav-link" href="../products.html">Products</a>
+                        <a class="nav-link" href="index.html" aria-current="page">Research</a>
                     </nav>
                 </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-                    <span id="themeText">Dark</span>
-                </button>
+                <div class="header-right">
+                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+                        <svg class="theme-toggle-svg theme-toggle-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                        <svg class="theme-toggle-svg theme-toggle-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
+    <main id="main">
+
     <section class="blog-hero">
         <div class="container">
-            <h1>Research & Blog</h1>
-            <p>Exploring dynamic identity, trajectory-based threat detection, and the geometry of agent security</p>
-            <p class="hero-patent">I2TP: Information-Theoretic Identity & Threat Protocol — Patent pending</p>
+            <h1>Research &amp; <span class="gradient">Notes</span></h1>
+            <p>Cross-session threats, dynamic agent identity, trajectory-based detection, and the geometry of agent security.</p>
+            <p class="hero-patent">I2TP: Information-Theoretic Identity &amp; Threat Protocol — Patent pending</p>
         </div>
     </section>
 
     <section class="blog-list">
         <div class="container">
             <div class="blog-grid">
+                <a href="cross-session-threats-cstm-bench.html" class="blog-card blog-card-featured">
+                    <div>
+                        <div class="featured-eyebrow">Latest paper · April 2026</div>
+                        <div class="featured-title">Cross-Session Threats: When the Attack Lives in the Aggregate</div>
+                        <div class="featured-excerpt">
+                            AI agent guardrails are memoryless. An adversary spreads a single attack across dozens of sessions and slips past every session-bound detector. We frame cross-session threat detection as an information bottleneck, release a benchmark (CSTM-Bench), and show that bounded coreset memory is the only architecture whose recall survives adversarial rewriting.
+                        </div>
+                        <div class="featured-paper-meta">
+                            <span class="featured-paper-tag">📄 arXiv:2604.21131</span>
+                            <span class="featured-paper-tag">🤗 intrinsec-ai/cstm-bench</span>
+                            <span class="featured-paper-tag">26 attack taxonomies</span>
+                        </div>
+                        <div class="read-more">Read the gist</div>
+                    </div>
+                    <div class="featured-visual" aria-hidden="true">
+                        <svg viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="featStream" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.05"/>
+                                    <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.45"/>
+                                </linearGradient>
+                                <marker id="featArr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+                                    <path d="M0,0 L6,3 L0,6" fill="#7dd3fc"/>
+                                </marker>
+                            </defs>
+                            <!-- session messages stream -->
+                            <g opacity="0.85">
+                                <rect x="20" y="56" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                                <rect x="20" y="70" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                                <rect x="20" y="84" width="22" height="9" rx="2" fill="rgba(248,113,113,0.18)" stroke="#f87171" stroke-width="0.7"/>
+                                <rect x="20" y="98" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                                <rect x="20" y="112" width="22" height="9" rx="2" fill="rgba(248,113,113,0.18)" stroke="#f87171" stroke-width="0.7"/>
+                                <rect x="20" y="126" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                                <rect x="20" y="140" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                                <rect x="20" y="154" width="22" height="9" rx="2" fill="rgba(248,113,113,0.18)" stroke="#f87171" stroke-width="0.7"/>
+                                <rect x="20" y="168" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
+                            </g>
+                            <text x="31" y="46" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" font-weight="600">stream</text>
+                            <text x="31" y="190" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.6">…</text>
+
+                            <!-- Bottleneck (ranker) -->
+                            <line x1="46" y1="115" x2="100" y2="115" stroke="#94a3b8" stroke-width="1" marker-end="url(#featArr)" opacity="0.9"/>
+                            <rect x="102" y="92" width="64" height="46" rx="10" fill="rgba(74,222,128,0.06)" stroke="#4ade80" stroke-width="1.2"/>
+                            <text x="134" y="111" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" font-weight="600">ranker</text>
+                            <text x="134" y="124" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="9" opacity="0.85">bottleneck</text>
+
+                            <!-- Coreset buffer K=50 -->
+                            <line x1="166" y1="115" x2="200" y2="115" stroke="#7dd3fc" stroke-width="1.4" marker-end="url(#featArr)"/>
+                            <rect x="202" y="80" width="86" height="70" rx="6" fill="rgba(125,211,252,0.06)" stroke="#7dd3fc" stroke-width="1.2"/>
+                            <text x="245" y="98" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">K = 50</text>
+                            <rect x="212" y="106" width="66" height="6" rx="1" fill="rgba(248,113,113,0.55)"/>
+                            <rect x="212" y="116" width="66" height="6" rx="1" fill="rgba(125,211,252,0.4)"/>
+                            <rect x="212" y="126" width="66" height="6" rx="1" fill="rgba(248,113,113,0.45)"/>
+                            <rect x="212" y="136" width="66" height="6" rx="1" fill="rgba(125,211,252,0.28)"/>
+
+                            <!-- Correlator -->
+                            <line x1="288" y1="115" x2="318" y2="115" stroke="#7dd3fc" stroke-width="1.6" marker-end="url(#featArr)"/>
+                            <rect x="320" y="88" width="46" height="54" rx="10" fill="rgba(192,132,252,0.08)" stroke="#c084fc" stroke-width="1.4"/>
+                            <text x="343" y="112" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">LLM</text>
+                            <text x="343" y="125" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="9">verdict</text>
+
+                            <!-- Captions -->
+                            <text x="190" y="216" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="500" opacity="0.85">bounded memory · top-K by surprise · real-time scan</text>
+                        </svg>
+                    </div>
+                </a>
+
                 <a href="the-missing-lens-on-agent-identity.html" class="blog-card">
                     <div class="blog-card-title">The Missing Lens on AI Agent Identity</div>
                     <div class="blog-card-excerpt">
@@ -535,38 +860,60 @@
         </div>
     </section>
 
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-logo">Intrinsec AI</a>
+                    <p class="footer-tag">Persistent intent memory for AI agents. Cross-session threats caught at intention time.</p>
+                </div>
+                <div class="footer-col" aria-label="Product">
+                    <div class="footer-col-title">Product</div>
+                    <a href="../products.html">Products</a>
+                    <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+                <div class="footer-col" aria-label="Company">
+                    <div class="footer-col-title">Company</div>
+                    <a href="../index.html">Home</a>
+                    <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
+                <div class="footer-patent">Patent pending</div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-    // Theme Toggle Functionality
     (function() {
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        
-        // Get saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeUI(savedTheme);
-        
-        function updateThemeUI(theme) {
-            if (theme === 'light') {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Dark';
-            }
+        if (!themeToggle) return;
+
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateAria(initialTheme);
+
+        function updateAria(theme) {
+            const isLight = theme === 'light';
+            themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+            themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
         }
-        
+
         themeToggle.addEventListener('click', function() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeUI(newTheme);
+            try { localStorage.setItem('theme', newTheme); } catch (e) {}
+            updateAria(newTheme);
         });
+    })();
+
+    (function () {
+        const el = document.getElementById('footerYear');
+        if (el) el.textContent = String(new Date().getFullYear());
     })();
     </script>
 </body>
 </html>
-

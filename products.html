@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products — Intrinsec AI — Cure the Amnesia</title>
+    <title>Products · Intrinsec AI · Cure the Amnesia</title>
     <meta name="description" content="Persistent memory for one agent or an entire fleet. Identity Plane for single-agent security. SIEM-less detection for fleet threats. No data lake required.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
-    <meta property="og:title" content="Intrinsec AI — One agent or a thousand. The amnesia is the same.">
+    <meta property="og:title" content="Intrinsec AI · One agent or a thousand. The amnesia is the same.">
     <meta property="og:description" content="Persistent identity for a single agent. SIEM-less threat detection for a fleet. No data lake. No hard storage. Just memory that works.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
@@ -211,9 +211,55 @@
             gap: 32px;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            line-height: 1;
+            min-height: 36px;
+            white-space: nowrap;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 4px 14px rgba(125, 211, 252, 0.18);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .header-cta::after { content: none; }
+
+        .header-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 22px rgba(125, 211, 252, 0.28);
+        }
+
+        [data-theme="light"] .header-cta {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.2);
+        }
+
+        [data-theme="light"] .header-cta:hover {
+            box-shadow: 0 8px 22px rgba(14, 165, 233, 0.28);
+        }
+
+        @media (max-width: 600px) {
+            .header-cta { display: none; }
+        }
+
         /* Footer */
         footer {
-            padding: 44px 0;
+            padding: 64px 0 28px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             background: rgba(0, 0, 0, 0.08);
         }
@@ -221,38 +267,81 @@
             background: rgba(0, 0, 0, 0.02);
             border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
-        .footer-content {
+        .footer-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+            gap: 56px;
+            margin-bottom: 40px;
+        }
+        .footer-brand {
+            max-width: 380px;
+        }
+        .footer-logo {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .footer-tag {
+            margin-top: 14px;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            line-height: 1.65;
+        }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .footer-col-title {
+            color: var(--text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .footer-col a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .footer-col a:hover {
+            color: var(--ice);
+        }
+        .footer-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 16px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            font-size: 0.8125rem;
             flex-wrap: wrap;
         }
-        .footer-links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: color 0.2s ease, border-color 0.2s ease;
-            font-size: 0.9375rem;
-            font-weight: 500;
-        }
-        .footer-links a:hover {
-            color: var(--ice);
-            border-color: rgba(125, 211, 252, 0.4);
-        }
-        .footer-note {
-            color: var(--text-dim);
-            font-size: 0.9375rem;
+        [data-theme="light"] .footer-bottom {
+            border-top-color: rgba(0, 0, 0, 0.08);
         }
         .footer-patent {
-            font-size: 0.8125rem;
-            margin-top: 6px;
-            color: var(--text-dim);
+            color: var(--text-subtle);
+        }
+        @media (max-width: 720px) {
+            footer {
+                padding: 48px 0 24px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+                margin-bottom: 32px;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+                max-width: 100%;
+            }
         }
         
         .logo {
@@ -282,38 +371,52 @@
         }
         
         .theme-toggle {
-            background: var(--navy-lighter);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 8px;
+            width: 36px;
+            height: 36px;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
             font-family: 'Inter', sans-serif;
         }
         
         [data-theme="light"] .theme-toggle {
-            background: var(--navy-lighter);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border: 1px solid rgba(2, 132, 199, 0.18);
+            color: var(--text-dim);
         }
         
         .theme-toggle:hover {
-            background: var(--navy-light);
-            border-color: var(--ice);
+            background: rgba(125, 211, 252, 0.08);
+            border-color: rgba(125, 211, 252, 0.35);
             color: var(--ice);
         }
-        
-        .theme-toggle-icon {
-            font-size: 1rem;
+
+        [data-theme="light"] .theme-toggle:hover {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.4);
+            color: var(--ice-bright);
+        }
+
+        .theme-toggle-svg {
+            display: block;
+            width: 16px;
+            height: 16px;
             transition: transform 0.3s ease;
         }
-        
-        .theme-toggle:active .theme-toggle-icon {
-            transform: rotate(180deg);
+
+        .theme-toggle-svg--sun { display: none; }
+        [data-theme="light"] .theme-toggle-svg--moon { display: none; }
+        [data-theme="light"] .theme-toggle-svg--sun { display: block; }
+
+        .theme-toggle:active .theme-toggle-svg {
+            transform: rotate(20deg);
         }
         
         /* Hero */
@@ -353,7 +456,52 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
+        .hero-proof {
+            margin: 28px auto 0;
+            max-width: 720px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .proof-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(125, 211, 252, 0.16);
+            color: var(--text-dim);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: 0.005em;
+        }
+
+        [data-theme="light"] .proof-pill {
+            background: #ffffff;
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            color: #0369a1;
+            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.05);
+        }
+
+        .proof-icon {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--ice);
+            box-shadow: 0 0 6px rgba(125, 211, 252, 0.45);
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .proof-icon {
+            background: var(--ice-bright);
+            box-shadow: 0 0 6px rgba(2, 132, 199, 0.3);
+        }
+
         /* Products Grid */
         .products-section {
             padding: 80px 0;
@@ -1869,11 +2017,12 @@
         }
 
         .oss-col-limits li::before {
-            content: '—';
+            content: '×';
             position: absolute;
             left: 0;
-            color: rgba(148, 163, 184, 0.4);
-            font-size: 0.75rem;
+            color: rgba(148, 163, 184, 0.55);
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
         .oss-actions {
@@ -2214,8 +2363,6 @@
             .shadow-spotlight-visual { padding: 24px; }
             .oss-reference { padding: 60px 0; }
             .oss-reference-header { margin-bottom: 32px; }
-            .footer-content { flex-direction: column; text-align: center; gap: 12px; }
-            .footer-links { justify-content: center; }
         }
 
         /* ── Mobile: small phones ── */
@@ -2227,8 +2374,8 @@
             .nav { gap: 12px; }
             .nav-link { font-size: 0.75rem; }
             .logo { font-size: 14px; }
-            .theme-toggle { padding: 6px 10px; font-size: 0.8rem; }
-            .theme-toggle-icon { font-size: 0.875rem; }
+            .theme-toggle { width: 32px; height: 32px; padding: 6px; }
+            .theme-toggle-svg { width: 14px; height: 14px; }
             section { padding: 36px 0; }
             .hero { padding: 40px 0 28px; }
             .hero h1 { font-size: 1.5rem; line-height: 1.25; margin-bottom: 12px; }
@@ -2271,9 +2418,9 @@
             .oss-btn-github, .oss-btn-openclaw { text-align: center; }
             .cta h2 { font-size: 1.25rem; }
             .cta-button { padding: 14px 32px; font-size: 0.9rem; }
-            .footer-links { gap: 12px; }
-            .footer-links a { font-size: 0.8125rem; }
-            .footer-note { font-size: 0.8125rem; }
+            .footer-grid { gap: 24px; }
+            .footer-col a, .footer-bottom { font-size: 0.8125rem; }
+            .footer-tag { font-size: 0.8125rem; }
             .bento-card { padding: 24px; }
         }
     </style>
@@ -2291,10 +2438,18 @@
                         <a class="nav-link" href="blog/index.html">Research</a>
                     </nav>
                 </div>
-                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false">
-                    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-                    <span id="themeText">Dark</span>
-                </button>
+                <div class="header-right">
+                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+                        <svg class="theme-toggle-svg theme-toggle-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                        <svg class="theme-toggle-svg theme-toggle-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -2304,7 +2459,12 @@
     <section class="hero">
         <div class="container">
             <h1>One agent or a thousand.<br><span class="gradient">The amnesia is the same.</span></h1>
-            <p class="tagline-second">Persistent memory for one agent or an entire fleet — no data lake required.</p>
+            <p class="tagline-second">Persistent memory for one agent or an entire fleet. No data lake required.</p>
+            <div class="hero-proof" aria-label="Status">
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Agent or fleet</span>
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Memoryful guardrail</span>
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Intention-time detection</span>
+            </div>
         </div>
     </section>
 
@@ -2366,7 +2526,7 @@
                             Fleet-Wide Threats.<br><span class="gradient">No Data Lake.</span>
                         </h2>
                         <p class="cp-hero-desc">
-                            Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible — no SIEM or data lake required.
+                            Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible. No SIEM or data lake required.
                         </p>
                         <ul class="cp-hero-capabilities">
                             <li>
@@ -2387,7 +2547,7 @@
     <!-- Identity Plane Use Cases -->
     <section class="use-cases-section" id="identity-plane-usecases">
         <div class="container">
-            <div class="product-section-label">Identity Plane — Use Cases</div>
+            <div class="product-section-label">Identity Plane · Use Cases</div>
 
             <!-- Enterprise AI Governance Spotlight -->
             <div class="shadow-spotlight">
@@ -2455,7 +2615,7 @@
     <!-- SIEM-less Use Cases -->
     <section class="use-cases-section use-cases-section--fleet" id="siem-less-usecases">
         <div class="container">
-            <div class="product-section-label">SIEM-less Detection — Use Cases</div>
+            <div class="product-section-label">SIEM-less Detection · Use Cases</div>
 
             <!-- Agentic SIEM Spotlight -->
             <div class="shadow-spotlight" style="margin-bottom: 24px;">
@@ -2467,7 +2627,7 @@
                         </div>
                         <h3 class="shadow-spotlight-title">Lossless memory. Bounded size.</h3>
                         <p class="shadow-spotlight-desc">
-                            A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out — that gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
+                            A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out. That gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
                         </p>
                         <ul class="shadow-spotlight-points">
                             <li>
@@ -2481,7 +2641,7 @@
                         </ul>
                     </div>
                     <div class="shadow-spotlight-visual">
-                        <div class="neural-memory-vis" role="img" aria-label="Neural memory consolidation — lossless threat memory visualization">
+                        <div class="neural-memory-vis" role="img" aria-label="Neural memory consolidation: lossless threat memory visualization">
                             <svg class="nmv-svg" viewBox="0 0 280 228" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <radialGradient id="nmvGrad" cx="50%" cy="50%" r="50%">
@@ -2612,7 +2772,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
                     <h3>Security Operations</h3>
-                    <p>Compressed intent signals exported to existing tools — no new data lake.</p>
+                    <p>Compressed intent signals exported to existing tools. No new data lake.</p>
                 </div>
 
                 <div class="usecase-tile">
@@ -2620,7 +2780,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a9 9 0 0 1 18 0"/><circle cx="12" cy="16" r="1.5"/><path d="M12 16l3.5-6"/><path d="M5.5 16.5l.5-.5M18.5 16.5l-.5-.5"/></svg>
                     </div>
                     <h3>Org Trust Posture</h3>
-                    <p>Aggregate drift across every agent — see where your AI footprint pulls away from policy.</p>
+                    <p>Aggregate drift across every agent. See where your AI footprint pulls away from policy.</p>
                 </div>
 
                 <div class="usecase-tile">
@@ -2637,7 +2797,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
                     </div>
                     <h3>Compliance & Governance</h3>
-                    <p>Policy boundaries enforced, audit trails generated — automatically.</p>
+                    <p>Policy boundaries enforced, audit trails generated, automatically.</p>
                 </div>
             </div>
         </div>
@@ -2651,14 +2811,14 @@
                     Open Source
                 </div>
                 <h2>See the Identity Plane in Action</h2>
-                <p class="oss-intro">A reference plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a> — observational by design.</p>
+                <p class="oss-intro">A reference plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a>. Observational by design.</p>
             </div>
 
             <div class="oss-card">
                 <div class="oss-card-left">
                     <span class="oss-pkg">@intrinsec-ai/openclaw-identity-plane</span>
                     <h3>Identity Watchdog for OpenClaw Agents</h3>
-                    <p class="oss-card-desc">Builds an identity anchor from your agent's cognitive files. Every message scored against it. Drift visible on a live dashboard — nothing blocked, nothing intercepted.</p>
+                    <p class="oss-card-desc">Builds an identity anchor from your agent's cognitive files. Every message scored against it. Drift visible on a live dashboard. Nothing blocked, nothing intercepted.</p>
 
                     <div class="oss-cols">
                         <div>
@@ -2667,14 +2827,14 @@
                                 <li>Identity calibration from cognitive files</li>
                                 <li>Per-message drift scoring</li>
                                 <li>Live drift dashboard with time-series chart</li>
-                                <li>Identity compaction — LLM audit narratives grounded in named anchors</li>
+                                <li>Identity compaction: LLM audit narratives grounded in named anchors</li>
                                 <li>File-change annotations on the drift timeline</li>
                             </ul>
                         </div>
                         <div>
                             <div class="oss-col-label oss-col-label--limits">What it isn't</div>
                             <ul class="oss-col-limits">
-                                <li>Lossless — subtle injection in long context can average out</li>
+                                <li>Lossless: subtle injection in long context can average out</li>
                                 <li>Multi-tenant or fleet-scale</li>
                                 <li>Persistent across long horizons</li>
                                 <li>Multimodal</li>
@@ -2697,7 +2857,7 @@
                             <span class="oss-terminal-dot"></span>
                             <span class="oss-terminal-dot"></span>
                             <span class="oss-terminal-dot"></span>
-                            <span class="oss-terminal-title">openclaw — /identity</span>
+                            <span class="oss-terminal-title">openclaw · /identity</span>
                         </div>
                         <div class="oss-terminal-body"><span class="t-cmd">$ /identity</span>
 
@@ -2716,8 +2876,8 @@
   probe paths outside the declared [CONSTRAINT].</span>
 
 <span class="t-label">Drift themes (47 events observed):</span>
-  <span class="t-alert">◆ ⚠</span> <span class="t-dim">"Credential path probing"</span> <span class="t-muted">— high — 5 events</span>
-  <span class="t-warn">◆ ~</span> <span class="t-dim">"Scope boundary expansion"</span> <span class="t-muted">— moderate — 3 events</span>
+  <span class="t-alert">◆ ⚠</span> <span class="t-dim">"Credential path probing"</span> <span class="t-muted">· high · 5 events</span>
+  <span class="t-warn">◆ ~</span> <span class="t-dim">"Scope boundary expansion"</span> <span class="t-muted">· moderate · 3 events</span>
 
 <span class="t-label">Active sessions:</span>
   <span class="t-ok">✓ nominal</span>  <span class="t-dim">agent:work:telegram:dm:123456</span>
@@ -2740,17 +2900,25 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-note">
-                <div>© <span id="footerYear">2025</span> Intrinsec AI</div>
-                <div class="footer-patent">Patent pending</div>
-            </div>
-                <div class="footer-links" aria-label="Footer">
-                    <a href="index.html">Home</a>
-                    <a href="blog/index.html">Research</a>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">Intrinsec AI</a>
+                    <p class="footer-tag">Persistent intent memory for AI agents. Cross-session threats caught at intention time.</p>
+                </div>
+                <div class="footer-col" aria-label="Product">
+                    <div class="footer-col-title">Product</div>
+                    <a href="products.html">Products</a>
                     <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+                <div class="footer-col" aria-label="Company">
+                    <div class="footer-col-title">Company</div>
+                    <a href="index.html">Home</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
                 </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© <span id="footerYear">2025</span> Intrinsec AI</div>
+                <div class="footer-patent">Patent pending</div>
             </div>
         </div>
     </footer>
@@ -2759,32 +2927,23 @@
     // Theme Toggle Functionality
     (function() {
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        
-        // Theme is set early in <head>; keep UI in sync (and allow toggling).
+        if (!themeToggle) return;
+
         const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        updateThemeUI(initialTheme);
-        themeToggle.setAttribute('aria-pressed', initialTheme === 'light' ? 'true' : 'false');
-        
-        function updateThemeUI(theme) {
-            if (theme === 'light') {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Dark';
-            }
+        updateAria(initialTheme);
+
+        function updateAria(theme) {
+            const isLight = theme === 'light';
+            themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+            themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
         }
-        
+
         themeToggle.addEventListener('click', function() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeUI(newTheme);
-            themeToggle.setAttribute('aria-pressed', newTheme === 'light' ? 'true' : 'false');
+            try { localStorage.setItem('theme', newTheme); } catch (e) {}
+            updateAria(newTheme);
         });
     })();
 
