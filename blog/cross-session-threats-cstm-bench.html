@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Session Threats: When the Attack Lives in the Aggregate | Intrinsec AI</title>
+    <meta name="description" content="AI agent guardrails are memoryless. Attackers spread a single attack across dozens of sessions and slip past every detector. CSTM-Bench frames cross-session threat detection as an information bottleneck and shows that bounded coreset memory is the only architecture that survives adversarial rewriting.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const theme = savedTheme || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0a0f1a;
+            --navy-light: #151b2b;
+            --navy-lighter: #1f2937;
+            --ice: #7dd3fc;
+            --ice-bright: #38bdf8;
+            --ice-glow: rgba(125, 211, 252, 0.12);
+            --ice-glow-strong: rgba(125, 211, 252, 0.2);
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-dim: #94a3b8;
+            --text-subtle: #64748b;
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.15);
+            --purple: #c084fc;
+            --green: #4ade80;
+            --amber: #fbbf24;
+        }
+
+        [data-theme="light"] {
+            --navy: #ffffff;
+            --navy-light: #f8fafc;
+            --navy-lighter: #f0f9ff;
+            --ice: #0ea5e9;
+            --ice-bright: #0284c7;
+            --ice-glow: rgba(14, 165, 233, 0.15);
+            --ice-glow-strong: rgba(14, 165, 233, 0.25);
+            --text: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-dim: #0284c7;
+            --text-subtle: #38bdf8;
+            --red: #dc2626;
+            --red-glow: rgba(220, 38, 38, 0.15);
+            --purple: #7c3aed;
+            --green: #16a34a;
+            --amber: #d97706;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            background-attachment: fixed;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 300;
+            background: rgba(125, 211, 252, 0.08);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
+            transition: width 0.15s ease-out;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            top: 3px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s ease;
+        }
+        [data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
+        }
+        header.scrolled { padding: 12px 0; }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .logo:hover { color: var(--ice); }
+        nav { display: flex; gap: 20px; align-items: center; }
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ice);
+            transition: width 0.3s ease;
+        }
+        nav a:hover { color: var(--ice); }
+        nav a:hover::after { width: 100%; }
+        nav a.active-link { color: var(--ice); }
+        nav a.active-link::after { width: 100%; }
+        .theme-toggle {
+            background: var(--navy-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        [data-theme="light"] .theme-toggle {
+            background: #f0f9ff;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        .theme-toggle:hover {
+            border-color: var(--ice);
+            color: var(--ice);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 32px 80px;
+            position: relative;
+        }
+        .hero-inner {
+            max-width: 820px;
+            width: 100%;
+        }
+        .hero-label {
+            display: inline-block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ice);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s ease forwards;
+        }
+        .hero h1 {
+            font-size: clamp(2.25rem, 5.2vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.12;
+            color: var(--text);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease forwards;
+        }
+        .hero-sub {
+            font-size: clamp(1.0625rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s ease forwards;
+        }
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.8s ease forwards;
+        }
+        .paper-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            background: rgba(125, 211, 252, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .paper-pill:hover {
+            border-color: var(--ice);
+            color: var(--ice);
+            background: rgba(125, 211, 252, 0.1);
+        }
+        [data-theme="light"] .paper-pill {
+            border-color: rgba(14, 165, 233, 0.3);
+            background: rgba(14, 165, 233, 0.05);
+        }
+        .paper-pill-icon { font-size: 0.875rem; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Content */
+        .content-section {
+            padding: 60px 32px;
+            position: relative;
+        }
+        .content-inner {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .content-inner p {
+            font-size: 1.0625rem;
+            line-height: 1.85;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .content-inner strong { color: var(--text); font-weight: 600; }
+        .content-inner em { color: var(--text-secondary); font-style: italic; }
+        .content-inner h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            margin: 56px 0 20px;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+        .content-inner h3 {
+            font-size: 1.1875rem;
+            font-weight: 600;
+            margin: 40px 0 14px;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .content-inner a {
+            color: var(--ice);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        .content-inner a:hover { border-bottom-color: var(--ice); }
+        .content-inner ul {
+            margin: 0 0 24px 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 1.85;
+        }
+        .content-inner ul li { margin-bottom: 10px; }
+
+        /* Key statement */
+        .key-statement {
+            font-size: clamp(1.25rem, 2.8vw, 1.625rem) !important;
+            font-weight: 600;
+            color: var(--ice) !important;
+            text-align: center;
+            max-width: 720px;
+            margin: 48px auto !important;
+            line-height: 1.5 !important;
+            position: relative;
+            padding: 36px 0;
+        }
+        .key-statement::before,
+        .key-statement::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ice), transparent);
+        }
+        .key-statement::before { top: 0; }
+        .key-statement::after { bottom: 0; }
+
+        /* Diagrams */
+        .diagram-wrapper {
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .diagram-wrapper svg { max-width: 100%; height: auto; }
+
+        /* Markov chain inequality block */
+        .formula-block {
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.04) 0%, rgba(125, 211, 252, 0.02) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.18);
+            border-radius: 14px;
+            padding: 32px 28px;
+            margin: 32px 0;
+            text-align: center;
+        }
+        [data-theme="light"] .formula-block {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(14, 165, 233, 0.02) 100%);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+        .formula-eq {
+            font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+            font-size: clamp(0.9375rem, 2vw, 1.125rem);
+            color: var(--text);
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+        }
+        .formula-caption {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* Results table */
+        .results-table-wrap {
+            margin: 32px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(125, 211, 252, 0.18);
+            border-radius: 12px;
+        }
+        [data-theme="light"] .results-table-wrap {
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+            min-width: 560px;
+        }
+        .results-table th, .results-table td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(125, 211, 252, 0.08);
+        }
+        [data-theme="light"] .results-table th,
+        [data-theme="light"] .results-table td {
+            border-bottom-color: rgba(14, 165, 233, 0.1);
+        }
+        .results-table th {
+            font-weight: 600;
+            color: var(--text);
+            background: rgba(125, 211, 252, 0.04);
+            font-size: 0.8125rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        [data-theme="light"] .results-table th {
+            background: rgba(14, 165, 233, 0.06);
+        }
+        .results-table td { color: var(--text-secondary); }
+        .results-table tr:last-child td { border-bottom: none; }
+        .results-table .reader-name { font-weight: 600; color: var(--text); }
+        .results-table .num { font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace; }
+        .results-table .num-good { color: var(--green); font-weight: 600; }
+        .results-table .num-mid { color: var(--amber); font-weight: 600; }
+        .results-table .num-bad { color: var(--red); font-weight: 600; }
+        .results-table tr.shard-divider td {
+            border-top: 2px solid rgba(125, 211, 252, 0.18);
+        }
+
+        /* Three-card layout */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+        .finding-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.6) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.18);
+            border-radius: 12px;
+            padding: 22px 20px;
+            transition: all 0.3s ease;
+        }
+        [data-theme="light"] .finding-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-color: rgba(14, 165, 233, 0.2);
+        }
+        .finding-card:hover {
+            border-color: rgba(125, 211, 252, 0.4);
+            transform: translateY(-2px);
+        }
+        .finding-num {
+            font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+            font-size: 1.625rem;
+            font-weight: 700;
+            color: var(--ice);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .finding-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .finding-desc {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        /* References */
+        .references {
+            margin: 32px 0 0;
+            padding: 28px 0 0;
+            border-top: 1px solid rgba(125, 211, 252, 0.12);
+        }
+        .references h3 {
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim) !important;
+            margin: 0 0 16px !important;
+        }
+        .references ol {
+            margin: 0 0 0 1.25rem;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+        .references ol li { margin-bottom: 8px; }
+
+        /* Closing */
+        .closing {
+            text-align: center;
+            padding: 60px 32px 100px;
+        }
+        .closing-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .closing-question {
+            font-size: clamp(1.0625rem, 2.2vw, 1.375rem);
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .closing-answer {
+            font-size: clamp(1.1875rem, 2.6vw, 1.5rem);
+            font-weight: 600;
+            color: var(--ice);
+            line-height: 1.5;
+        }
+
+        /* Section break */
+        .section-break {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(125, 211, 252, 0.15) 50%, transparent 100%);
+            margin: 0 auto;
+            border: none;
+            max-width: 800px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+            position: absolute;
+            top: 100px;
+            left: 32px;
+            z-index: 50;
+        }
+        .back-link:hover { color: var(--ice); }
+
+        /* Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Footer */
+        footer {
+            padding: 48px 0 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.08);
+        }
+        [data-theme="light"] footer {
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-inner a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+        .footer-inner a:hover { color: var(--ice); }
+        .footer-patent { color: var(--text-subtle); font-size: 0.8125rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 110px 20px 60px; min-height: 60vh; }
+            .content-section { padding: 48px 20px; }
+            .back-link { left: 20px; top: 88px; }
+            .closing { padding: 48px 20px 70px; }
+            .header-inner { padding: 0 20px; }
+            .footer-inner { padding: 0 20px; }
+            .formula-block { padding: 24px 18px; }
+            .findings-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .hero-label, .hero h1, .hero-sub, .paper-meta {
+                opacity: 1;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Header -->
+<header id="mainHeader">
+    <div class="header-inner">
+        <div style="display: flex; align-items: center; gap: 24px;">
+            <a href="../index.html" class="logo">Intrinsec AI</a>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="../products.html">Products</a>
+                <a href="index.html" class="active-link">Research</a>
+            </nav>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark</span>
+        </button>
+    </div>
+</header>
+
+<a href="index.html" class="back-link">← Back to Research</a>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-label">Paper · April 2026</div>
+        <h1>Cross-Session Threats: When the Attack Lives in the Aggregate</h1>
+        <p class="hero-sub">
+            AI agent guardrails are memoryless. An adversary who spreads a single attack across dozens of sessions slips past every session-bound detector — because no individual message carries the payload, only the aggregate does. We released a benchmark, a feasibility result, and an architectural answer.
+        </p>
+        <div class="paper-meta">
+            <a class="paper-pill" href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener noreferrer">
+                <span class="paper-pill-icon">📄</span>
+                arXiv:2604.21131
+            </a>
+            <a class="paper-pill" href="https://huggingface.co/datasets/intrinsec-ai/cstm-bench" target="_blank" rel="noopener noreferrer">
+                <span class="paper-pill-icon">🤗</span>
+                intrinsec-ai/cstm-bench
+            </a>
+            <span class="paper-pill" style="cursor: default;">
+                <span class="paper-pill-icon">⚙️</span>
+                Intrinsec AI
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- THE PROBLEM -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">Stateless guardrails meet stateful attackers</h2>
+
+        <p class="reveal">
+            AI agent context windows grow every quarter. AI agent <em>security</em> still resets to zero every session. Guardrails and DLP classifiers are stateless — each message is judged in isolation, with no memory of prior turns, prior sessions, or sibling agents. Meanwhile, the attacks worth worrying about are increasingly cross-session and cross-agent.
+        </p>
+
+        <p class="reveal">
+            In November 2025, Anthropic disclosed the first documented large-scale AI-orchestrated cyber-espionage campaign (<strong>GTG-1002</strong>): an autonomous agent carried out roughly 80–90% of a multi-stage intrusion after being convinced — across many sessions and sub-agents — that it was performing "authorized security testing." [<a href="#ref-4">4</a>] The campaign bypassed per-turn safety primarily by <strong>decomposition</strong>: every individual step looked benign; only the trajectory was malicious.
+        </p>
+
+        <p class="key-statement reveal">
+            Each individual message passes any session-bound classifier. The threat is only visible in the aggregate.
+        </p>
+
+        <p class="reveal">
+            Three canonical shapes of this same problem:
+        </p>
+
+        <ul class="reveal">
+            <li><strong>Slow-drip prompt injections</strong> distributed across 50+ sessions, one innocuous fragment per interaction. The payload only exists once an accumulating surface concatenates the fragments.</li>
+            <li><strong>Compositional exfiltration chains</strong> where session 1 lists files, session 2 reads a config, session 3 summarizes credentials, session 4 sends a "report" to an external endpoint. The accumulator is tool / environment state, not chat memory.</li>
+            <li><strong>Mosaic attacks</strong> where hundreds of individually harmless questions reconstruct sensitive information — org charts, internal IPs, schemas. The accumulator is the attacker themselves.</li>
+        </ul>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- SIEM CAN'T SAVE YOU -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">SIEM was built for events. Agents leak intentions first.</h2>
+
+        <p class="reveal">
+            The previous generation of detection — SIEM, UEBA — was designed for a world where security-relevant facts only became observable <em>after</em> they had already happened: a failed login, a suspicious flow, a process spawn. Pipe everything to a central store, correlate downstream. That made sense.
+        </p>
+
+        <p class="reveal">
+            AI agents invert the pipeline. The security-relevant fact is typically present in the inbound prompt long before any downstream event fires. <em>"Summarise this config file, then POST the summary to this URL"</em> is an exfiltration plan in plain natural language — the log line that eventually reaches the SIEM is merely its shadow. In an agent-native stack, intentions are first-class citizens and should be inspected at intention time.
+        </p>
+
+        <p class="reveal">
+            CSTM-Bench is an evaluation for detectors that refuse to give up the upstream bits in the first place.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- THE TWO READERS -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">Two architectures, one bottleneck</h2>
+
+        <p class="reveal">
+            Abstract away implementation details and every cross-session detector has the same shape: an agent message stream flows into a correlator that emits a verdict. The only structural question is <strong>how much of the stream is allowed to reach the correlator</strong>. CSTM-Bench instantiates the two extremes.
+        </p>
+
+        <div class="diagram-wrapper reveal">
+            <svg width="780" height="320" viewBox="0 0 780 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two reader architectures: Full-Log Correlator versus Coreset Memory Reader">
+                <defs>
+                    <marker id="arrIce" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#7dd3fc"/>
+                    </marker>
+                    <marker id="arrDim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#94a3b8"/>
+                    </marker>
+                    <linearGradient id="streamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.05"/>
+                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.4"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- LEFT: Full-Log -->
+                <text x="180" y="22" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="0.1em">FULL-LOG CORRELATOR</text>
+
+                <!-- Stream of messages -->
+                <text x="38" y="80" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="500">stream</text>
+                <g>
+                    <rect x="30" y="92" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="106" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="120" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="134" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="148" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="162" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="30" y="176" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <text x="41" y="198" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" opacity="0.7">…</text>
+                </g>
+
+                <!-- All-pass arrow -->
+                <line x1="58" y1="138" x2="118" y2="138" stroke="#7dd3fc" stroke-width="2" marker-end="url(#arrIce)"/>
+                <text x="88" y="128" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="9" opacity="0.7">all of it</text>
+
+                <!-- Concatenation buffer -->
+                <rect x="120" y="78" width="120" height="120" rx="8" fill="rgba(125,211,252,0.04)" stroke="#7dd3fc" stroke-width="1.2" stroke-dasharray="4,3"/>
+                <text x="180" y="98" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="600">concatenated</text>
+                <text x="180" y="112" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="600">log</text>
+                <g>
+                    <rect x="132" y="124" width="96" height="6" rx="1" fill="rgba(125,211,252,0.15)"/>
+                    <rect x="132" y="134" width="96" height="6" rx="1" fill="rgba(125,211,252,0.15)"/>
+                    <rect x="132" y="144" width="96" height="6" rx="1" fill="rgba(125,211,252,0.15)"/>
+                    <rect x="132" y="154" width="96" height="6" rx="1" fill="rgba(125,211,252,0.15)"/>
+                    <rect x="132" y="164" width="96" height="6" rx="1" fill="rgba(125,211,252,0.15)"/>
+                    <text x="180" y="186" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.7">unbounded</text>
+                </g>
+
+                <!-- Arrow to correlator -->
+                <line x1="244" y1="138" x2="282" y2="138" stroke="#7dd3fc" stroke-width="2" marker-end="url(#arrIce)"/>
+
+                <!-- Correlator -->
+                <rect x="284" y="108" width="80" height="60" rx="10" fill="rgba(192,132,252,0.08)" stroke="#c084fc" stroke-width="1.4"/>
+                <text x="324" y="132" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">LLM</text>
+                <text x="324" y="148" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="10">correlator</text>
+                <text x="324" y="160" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="9" opacity="0.7">single batch call</text>
+
+                <!-- Properties below -->
+                <text x="180" y="232" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="600">After all messages ingested</text>
+                <text x="180" y="248" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Memory: unbounded</text>
+                <text x="180" y="264" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Cost: O(N) total</text>
+                <text x="180" y="284" text-anchor="middle" fill="#f87171" font-family="Inter,sans-serif" font-size="10" font-weight="600">Vulnerable to inject_on_reader</text>
+
+                <!-- DIVIDER -->
+                <line x1="400" y1="40" x2="400" y2="300" stroke="#94a3b8" stroke-width="0.6" opacity="0.18" stroke-dasharray="5,4"/>
+
+                <!-- RIGHT: Coreset -->
+                <text x="600" y="22" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="0.1em">CORESET MEMORY READER</text>
+
+                <!-- Stream -->
+                <text x="438" y="80" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="500">stream</text>
+                <g>
+                    <rect x="430" y="92" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="106" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="120" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="134" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="148" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="162" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <rect x="430" y="176" width="22" height="10" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.8"/>
+                    <text x="441" y="198" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" opacity="0.7">…</text>
+                </g>
+
+                <!-- Bottleneck -->
+                <line x1="458" y1="138" x2="496" y2="138" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrDim)"/>
+
+                <!-- Ranker -->
+                <rect x="498" y="118" width="64" height="40" rx="8" fill="rgba(74,222,128,0.06)" stroke="#4ade80" stroke-width="1.2"/>
+                <text x="530" y="135" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" font-weight="600">ranker</text>
+                <text x="530" y="148" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="9" opacity="0.8">admit / evict</text>
+
+                <line x1="564" y1="138" x2="588" y2="138" stroke="#7dd3fc" stroke-width="1.6" marker-end="url(#arrIce)"/>
+
+                <!-- Bounded buffer -->
+                <rect x="590" y="98" width="78" height="80" rx="6" fill="rgba(125,211,252,0.05)" stroke="#7dd3fc" stroke-width="1.2"/>
+                <text x="629" y="113" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">K = 50</text>
+                <g>
+                    <rect x="600" y="122" width="58" height="6" rx="1" fill="rgba(125,211,252,0.4)"/>
+                    <rect x="600" y="132" width="58" height="6" rx="1" fill="rgba(125,211,252,0.32)"/>
+                    <rect x="600" y="142" width="58" height="6" rx="1" fill="rgba(125,211,252,0.24)"/>
+                    <rect x="600" y="152" width="58" height="6" rx="1" fill="rgba(125,211,252,0.18)"/>
+                    <rect x="600" y="162" width="58" height="6" rx="1" fill="rgba(125,211,252,0.12)"/>
+                </g>
+                <text x="629" y="195" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" opacity="0.7">top-K by surprise</text>
+
+                <line x1="668" y1="138" x2="698" y2="138" stroke="#7dd3fc" stroke-width="2" marker-end="url(#arrIce)"/>
+
+                <!-- Correlator -->
+                <rect x="700" y="108" width="68" height="60" rx="10" fill="rgba(192,132,252,0.08)" stroke="#c084fc" stroke-width="1.4"/>
+                <text x="734" y="132" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">LLM</text>
+                <text x="734" y="148" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="10">correlator</text>
+                <text x="734" y="160" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="9" opacity="0.7">per scan</text>
+
+                <!-- Properties below -->
+                <text x="600" y="232" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10" font-weight="600">Real-time (per message)</text>
+                <text x="600" y="248" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Memory: bounded (K)</text>
+                <text x="600" y="264" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">Cost: O(K) per message</text>
+                <text x="600" y="284" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="10" font-weight="600">Excludes benign mass before correlation</text>
+            </svg>
+        </div>
+
+        <p class="reveal">
+            The interesting variable is not any particular ranking algorithm but <strong>the bottleneck itself</strong>. A well-chosen bottleneck can make a small Reader strictly better than a full-log Reader, because the full-log Reader must actually process all that context — and real-world LLM attention at length is finite.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- THE BENCHMARK -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">CSTM-Bench: a measurable target</h2>
+
+        <p class="reveal">
+            Before taxonomies, a prior question: <em>what counts as a violation at all?</em> Cross-session attack detection is meaningless without a reference policy. CSTM-Bench makes this explicit by binding every scenario to one of seven <strong>identity anchors</strong> — short, hand-authored production-archetype system prompts (e.g. <code>customer_support</code>, <code>devops_agent</code>, <code>code_review</code>, <code>crypto_agent</code>) that name the agent's allowed scope and hard prohibitions.
+        </p>
+
+        <p class="reveal">
+            On top of that policy boundary, the benchmark stacks <strong>26 attack taxonomies</strong> classified along two orthogonal axes:
+        </p>
+
+        <ul class="reveal">
+            <li><strong>Kill-chain stages</strong> from the Promptware taxonomy [<a href="#ref-1">1</a>] — recon, initial access, privilege escalation, persistence, lateral movement, action-on-objective.</li>
+            <li><strong>Cross-session Operations</strong> ontology — <code>accumulate</code> (stage N builds on N–1), <code>compose</code> (disjoint fragments only form the attack in aggregate), <code>launder</code> (transformation through a benign-looking intermediate), and <code>inject_on_reader</code> (concatenation of benign turns compiles into a prompt injection of the correlator itself).</li>
+        </ul>
+
+        <p class="reveal">
+            Three disjoint scenario classes each isolate one thing: <strong>Attack</strong> (recall before action-on-objective lands), <strong>Benign-pristine</strong> (baseline FPR), and <strong>Benign-hard</strong> — confounder patterns from DeepMind's "AI Agent Traps" taxonomy [<a href="#ref-2">2</a>] that imitate the cross-session shape of an attack while staying on-policy. The benchmark ships as the Hugging Face dataset <code>intrinsec-ai/cstm-bench</code> with two splits: <strong>dilution</strong> (signal-dilution at fixed context) and <strong>cross_session</strong> (12 isolation-invisible scenarios produced by a closed-loop adversarial rewriter).
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- HEADLINE RESULTS -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">Both LLM-only paradigms collapse. One architecture survives.</h2>
+
+        <p class="reveal">
+            We evaluate three readers, holding the correlator model and response cache fixed (Claude Sonnet 4.6):
+        </p>
+
+        <ul class="reveal">
+            <li><strong>Per-session judge</strong> — the same correlator run once per session in isolation. The minimal stateless lower-envelope.</li>
+            <li><strong>Full-Log Correlator</strong> — every inbound message across sessions concatenated chronologically, handed to a single long-context correlation call.</li>
+            <li><strong>Coreset Memory Reader</strong> — the identical correlator, but fed a <code>K=50</code> bounded buffer admitted by a reference one-class Gaussian admitter in embedding space.</li>
+        </ul>
+
+        <div class="results-table-wrap reveal">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Reader</th>
+                        <th>Shard</th>
+                        <th>Attack recall</th>
+                        <th>F1</th>
+                        <th>FPR<sub>hard</sub></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="reader-name">Per-session judge</td>
+                        <td>dilution</td>
+                        <td class="num num-good">26 / 26</td>
+                        <td class="num">0.727</td>
+                        <td class="num num-bad">0.643</td>
+                    </tr>
+                    <tr>
+                        <td class="reader-name">Per-session judge</td>
+                        <td>cross-session</td>
+                        <td class="num num-bad">14 / 26</td>
+                        <td class="num">0.554</td>
+                        <td class="num num-bad">0.643</td>
+                    </tr>
+                    <tr class="shard-divider">
+                        <td class="reader-name">Full-Log Correlator</td>
+                        <td>dilution</td>
+                        <td class="num num-mid">23 / 26</td>
+                        <td class="num">0.812</td>
+                        <td class="num num-mid">0.500</td>
+                    </tr>
+                    <tr>
+                        <td class="reader-name">Full-Log Correlator</td>
+                        <td>cross-session</td>
+                        <td class="num num-bad">13 / 26</td>
+                        <td class="num">0.600</td>
+                        <td class="num num-mid">0.500</td>
+                    </tr>
+                    <tr class="shard-divider">
+                        <td class="reader-name" style="color: var(--ice);">Coreset Memory Reader</td>
+                        <td>dilution</td>
+                        <td class="num num-good">25 / 26</td>
+                        <td class="num num-good">0.926</td>
+                        <td class="num num-good">0.214</td>
+                    </tr>
+                    <tr>
+                        <td class="reader-name" style="color: var(--ice);">Coreset Memory Reader</td>
+                        <td>cross-session</td>
+                        <td class="num num-good">19 / 26</td>
+                        <td class="num num-good">0.804</td>
+                        <td class="num num-good">0.214</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="reveal">
+            Three findings the table makes hard to argue with:
+        </p>
+
+        <div class="findings-grid reveal">
+            <div class="finding-card">
+                <div class="finding-num">−46 pp</div>
+                <div class="finding-title">Per-session judge collapses</div>
+                <div class="finding-desc">
+                    Recall drops from 26/26 to 14/26 on the cross-session shard. A rewriter optimising against the same model, under the same forced-tool-use contract, defeats every session in isolation while preserving cross-session artefacts verbatim.
+                </div>
+            </div>
+            <div class="finding-card">
+                <div class="finding-num">−35 pp</div>
+                <div class="finding-title">Full-Log isn't safe either</div>
+                <div class="finding-desc">
+                    Recall drops from 23/26 to 13/26. At ~97K tokens at p95 against a 1M-token window, the correlator is not running out of context — it's running out of attack signal relative to benign mass.
+                </div>
+            </div>
+            <div class="finding-card">
+                <div class="finding-num">19 / 26</div>
+                <div class="finding-title">Bottleneck survives</div>
+                <div class="finding-desc">
+                    The Coreset Memory Reader is the only LLM-backed reader whose recall survives adversarial rewriting at usable levels — beating Full-Log (13/26) and per-session (14/26) on the same shard, with a 3× lower hard-confounder FPR.
+                </div>
+            </div>
+        </div>
+
+        <p class="key-statement reveal">
+            Cross-session detection requires more than a bigger context window. It requires an architectural bottleneck that excludes the benign mass before the correlator reads.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- THE COST METRIC -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">A serving-cost metric, promoted to first-class</h2>
+
+        <p class="reveal">
+            Coreset-gated correlation is only useful at real-time cost to the extent its ranker is <em>stable</em>. Ranker-induced reshuffles break KV-cache prefix reuse, which dominates incremental cost per scan in production. We promote ordered prefix stability of the coreset buffer — <strong>CSR<sub>prefix</sub></strong> — to a first-class metric: LLM-free, label-free, and measurable continuously in production.
+        </p>
+
+        <div class="formula-block reveal">
+            <div class="formula-eq">CSTM &nbsp;=&nbsp; 0.7 · F1(CSDA@action, precision) &nbsp;+&nbsp; 0.3 · CSR<sub>prefix</sub></div>
+            <div class="formula-caption">
+                A non-compensatory composite. Future rankers can be benchmarked on a single Pareto surface of detection recall versus serving stability — a prerequisite for real-time cross-session threat detection at production cost.
+            </div>
+        </div>
+
+        <p class="reveal">
+            The benchmark is algorithm-agnostic on purpose. The buffer admits any plug-in admission policy: reservoir sampling, sketches, neural ranking, surprise-gated updates, LLM-as-ranker, or learned eviction. Any rank-stable admitter that minimises detection regret on this composite is, by construction, a real-time cross-session threat detector.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- WHAT THIS IS / ISN'T -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">What this release is, and isn't</h2>
+
+        <p class="reveal">
+            We want to be direct. With 26 Attack scenarios, 28 benign scenarios, a single Anthropic-Claude correlator family, and first-draft prompts, this is a <strong>first-order characterisation of an architectural feasibility surface</strong> — not a precision measurement of any individual reader or ranker. Most of the per-cell deltas reported here carry confidence intervals wider than the observed effects. The framework is built to distinguish architectures (per-session vs. full-log vs. bounded coreset) under controlled factors, not to rank specific models or prompts.
+        </p>
+
+        <p class="reveal">
+            The scientifically interesting questions the paper does <em>not</em> answer are exactly the ones we hope a community investment in this benchmark shape will close:
+        </p>
+
+        <ul class="reveal">
+            <li>What principled family of rankers achieves low asymptotic regret against an adaptive adversary under a capacity-constrained observation budget? (Mirror descent on the simplex is sketched in the paper's Appendix B.)</li>
+            <li>Do the cross_session rewrites transfer verbatim to GPT- and Gemini-class correlators, or is the collapse provider-specific?</li>
+            <li>How much of the Coreset Memory Reader's efficacy advantage is the information bottleneck versus the coreset-aware prompt?</li>
+            <li>At what shard size do the per-reader deltas reported here become statistically separable?</li>
+        </ul>
+
+        <p class="reveal">
+            We release the datasets, the composite, and the protocol as a shared target against which these questions can be answered.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- CLOSING -->
+<section class="closing">
+    <div class="closing-inner">
+        <p class="closing-question reveal">
+            Frontier context windows are growing 30× per year. Frontier <em>security</em> still resets to zero every session.
+        </p>
+        <p class="closing-question reveal reveal-delay-1" style="margin-top: 24px;">
+            Stateless guardrails were never going to survive the next decomposition attack. The question isn't <em>can we correlate downstream?</em>
+        </p>
+        <p class="closing-answer reveal reveal-delay-2">
+            The question is: what is the smallest bounded memory of intent — kept in the loop, at intention time — that catches what the channel hasn't yet erased?
+        </p>
+    </div>
+</section>
+
+<!-- REFERENCES -->
+<div class="content-section" style="padding-top: 0; padding-bottom: 80px;">
+    <div class="content-inner">
+        <div class="references">
+            <h3>References</h3>
+            <ol>
+                <li id="ref-paper">Azarafrooz, A. (2026). <em>Cross-Session Threats in AI Agents: Benchmark, Evaluation, and Algorithms.</em> <a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener noreferrer">arXiv:2604.21131</a>. Dataset: <a href="https://huggingface.co/datasets/intrinsec-ai/cstm-bench" target="_blank" rel="noopener noreferrer">intrinsec-ai/cstm-bench</a>.</li>
+                <li id="ref-1">Brodt, A., Feldman, I., Schneier, B., &amp; Nassi, B. (2026). <em>Promptware Kill Chain: A Taxonomy of Prompt Injection Attacks Against AI Agents.</em> arXiv:2601.09625.</li>
+                <li id="ref-2">Kadavath, S., Hubinger, E., et al. <em>AI Agent Traps: A Taxonomy of Cross-Session and Multi-Agent Failure Modes.</em> SSRN:6372438.</li>
+                <li id="ref-3">Tavakoli, A., et al. (2026). <em>BEAM: Benchmarking Extended Agent Memory.</em> arXiv:2510.27246.</li>
+                <li id="ref-4">Anthropic (2025). <em>Disrupting the First Reported AI-Orchestrated Cyber Espionage Campaign (GTG-1002).</em> <a href="https://www.anthropic.com/news/disrupting-AI-espionage" target="_blank" rel="noopener noreferrer">anthropic.com/news/disrupting-AI-espionage</a>.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-inner">
+        <a href="../index.html" style="font-weight: 600; color: var(--text);">Intrinsec AI</a>
+        <p class="footer-patent">I2TP: Information-Theoretic Identity &amp; Threat Protocol — Patent pending</p>
+        <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
+    </div>
+</footer>
+
+<script>
+(function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeUI(savedTheme);
+
+    function updateThemeUI(theme) {
+        themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+        themeText.textContent = theme === 'light' ? 'Light' : 'Dark';
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeUI(next);
+    });
+
+    const progressFill = document.getElementById('progressFill');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressFill.style.width = pct + '%';
+    }
+
+    const mainHeader = document.getElementById('mainHeader');
+    function updateHeader() {
+        mainHeader.classList.toggle('scrolled', window.scrollY > 80);
+    }
+
+    window.addEventListener('scroll', function() {
+        updateProgress();
+        updateHeader();
+    }, { passive: true });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+        revealObserver.observe(el);
+    });
+
+    updateProgress();
+    updateHeader();
+})();
+</script>
+</body>
+</html>
