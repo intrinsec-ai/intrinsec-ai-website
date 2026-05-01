@@ -798,7 +798,7 @@
 
                 <!-- Bounded buffer -->
                 <rect x="590" y="98" width="78" height="80" rx="6" fill="rgba(125,211,252,0.05)" stroke="#7dd3fc" stroke-width="1.2"/>
-                <text x="629" y="113" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">K = 50</text>
+                <text x="629" y="113" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">K</text>
                 <g>
                     <rect x="600" y="122" width="58" height="6" rx="1" fill="rgba(125,211,252,0.4)"/>
                     <rect x="600" y="132" width="58" height="6" rx="1" fill="rgba(125,211,252,0.32)"/>
@@ -858,74 +858,98 @@
 
 <hr class="section-break">
 
+<!-- THE COST METRIC -->
+<div class="content-section">
+    <div class="content-inner">
+        <h2 class="reveal">A serving-cost metric, promoted to first-class</h2>
+
+        <p class="reveal">
+            Before we evaluate any reader, we need to fix what we are evaluating <em>against</em>. Detection accuracy alone is not enough: a coreset-gated correlator is only useful at real-time cost to the extent its ranker is <em>stable</em>. Ranker-induced reshuffles break KV-cache prefix reuse, which dominates incremental cost per scan in production.
+        </p>
+
+        <p class="reveal">
+            Why it matters: production LLM serving stacks now lean heavily on prefix-cache reuse, and modern systems have been shown to cut input-token inference cost by <strong>up to ~95%</strong> when the prompt prefix is stable across calls. [<a href="#ref-5">5</a>] If a ranker reshuffles the coreset between scans, the cache is invalidated and the entire correlator prompt is re-paid in full. A reader that detects well but reorders its buffer every scan is uneconomic to operate per message. We therefore promote ordered prefix stability of the coreset buffer — <strong>CSR<sub>prefix</sub></strong> — to a first-class metric: LLM-free, label-free, and measurable continuously in production.
+        </p>
+
+        <div class="formula-block reveal">
+            <div class="formula-eq">CSTM &nbsp;=&nbsp; 0.7 · F1(CSDA@action, precision) &nbsp;+&nbsp; 0.3 · CSR<sub>prefix</sub></div>
+            <div class="formula-caption">
+                A non-compensatory composite of detection quality and serving stability. The 0.3 weight on <code>CSR<sub>prefix</sub></code> reflects that prefix stability directly governs realised inference cost via KV-cache reuse — a high-detection / low-stability ranker simply cannot be served in real time. Readers without a bounded buffer (per-session, full-log) have no <code>CSR<sub>prefix</sub></code> defined and therefore no CSTM.
+            </div>
+        </div>
+
+        <p class="reveal">
+            The benchmark is algorithm-agnostic on purpose. The buffer admits any plug-in admission policy: reservoir sampling, sketches, neural ranking, surprise-gated updates, LLM-as-ranker, or learned eviction. Any rank-stable admitter that minimises detection regret on this composite is, by construction, a real-time cross-session threat detector.
+        </p>
+    </div>
+</div>
+
+<hr class="section-break">
+
 <!-- HEADLINE RESULTS -->
 <div class="content-section">
     <div class="content-inner">
         <h2 class="reveal">Both LLM-only paradigms collapse. One architecture survives.</h2>
 
         <p class="reveal">
-            We evaluate three readers, holding the correlator model and response cache fixed (Claude Sonnet 4.6):
+            We evaluate four readers on the adversarial <strong>cross-session</strong> shard, holding the correlator model and response cache fixed (Claude Sonnet 4.6):
         </p>
 
         <ul class="reveal">
             <li><strong>Per-session judge</strong> — the same correlator run once per session in isolation. The minimal stateless lower-envelope.</li>
             <li><strong>Full-Log Correlator</strong> — every inbound message across sessions concatenated chronologically, handed to a single long-context correlation call.</li>
-            <li><strong>Coreset Memory Reader</strong> — the identical correlator, but fed a <code>K=50</code> bounded buffer admitted by a reference one-class Gaussian admitter in embedding space.</li>
+            <li><strong>Coreset Memory Reader</strong> — the identical correlator, but fed a bounded buffer of capacity <code>K</code> admitted by a <em>reference</em> one-class Gaussian admitter in embedding space.</li>
+            <li><strong>Production Coreset Memory Reader</strong> — same bottleneck architecture, but with a production-grade ranker tuned for higher precision on hard confounders <em>and</em> ordered prefix stability across scans.</li>
         </ul>
+
+        <p class="reveal" style="font-size: 0.9375rem; color: var(--text-dim); margin-top: 8px;">
+            All numbers below are on the <strong>cross-session</strong> shard (the adversarial-rewriter split), against 26 attack scenarios and 14 benign-hard confounders. <code>CSR<sub>prefix</sub></code> and <code>CSTM</code> are undefined for readers without a bounded buffer.
+        </p>
 
         <div class="results-table-wrap reveal">
             <table class="results-table">
                 <thead>
                     <tr>
                         <th>Reader</th>
-                        <th>Shard</th>
                         <th>Attack recall</th>
                         <th>F1</th>
                         <th>FPR<sub>hard</sub></th>
+                        <th>CSR<sub>prefix</sub></th>
+                        <th>CSTM</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="reader-name">Per-session judge</td>
-                        <td>dilution</td>
-                        <td class="num num-good">26 / 26</td>
-                        <td class="num">0.727</td>
-                        <td class="num num-bad">0.643</td>
-                    </tr>
-                    <tr>
-                        <td class="reader-name">Per-session judge</td>
-                        <td>cross-session</td>
                         <td class="num num-bad">14 / 26</td>
                         <td class="num">0.554</td>
                         <td class="num num-bad">0.643</td>
-                    </tr>
-                    <tr class="shard-divider">
-                        <td class="reader-name">Full-Log Correlator</td>
-                        <td>dilution</td>
-                        <td class="num num-mid">23 / 26</td>
-                        <td class="num">0.812</td>
-                        <td class="num num-mid">0.500</td>
+                        <td class="num" style="color: var(--text-subtle);">N/A</td>
+                        <td class="num" style="color: var(--text-subtle);">N/A</td>
                     </tr>
                     <tr>
                         <td class="reader-name">Full-Log Correlator</td>
-                        <td>cross-session</td>
                         <td class="num num-bad">13 / 26</td>
                         <td class="num">0.600</td>
                         <td class="num num-mid">0.500</td>
-                    </tr>
-                    <tr class="shard-divider">
-                        <td class="reader-name" style="color: var(--ice);">Coreset Memory Reader</td>
-                        <td>dilution</td>
-                        <td class="num num-good">25 / 26</td>
-                        <td class="num num-good">0.926</td>
-                        <td class="num num-good">0.214</td>
+                        <td class="num" style="color: var(--text-subtle);">N/A</td>
+                        <td class="num" style="color: var(--text-subtle);">N/A</td>
                     </tr>
                     <tr>
                         <td class="reader-name" style="color: var(--ice);">Coreset Memory Reader</td>
-                        <td>cross-session</td>
                         <td class="num num-good">19 / 26</td>
                         <td class="num num-good">0.804</td>
                         <td class="num num-good">0.214</td>
+                        <td class="num num-mid">0.4441</td>
+                        <td class="num num-mid">0.696</td>
+                    </tr>
+                    <tr>
+                        <td class="reader-name" style="color: var(--ice);">Production Coreset Memory Reader</td>
+                        <td class="num num-good">20 / 26</td>
+                        <td class="num num-good">0.856</td>
+                        <td class="num num-good">0.071</td>
+                        <td class="num num-good">0.6976</td>
+                        <td class="num num-good">0.808</td>
                     </tr>
                 </tbody>
             </table>
@@ -937,54 +961,30 @@
 
         <div class="findings-grid reveal">
             <div class="finding-card">
-                <div class="finding-num">−46 pp</div>
+                <div class="finding-num">14 / 26</div>
                 <div class="finding-title">Per-session judge collapses</div>
                 <div class="finding-desc">
-                    Recall drops from 26/26 to 14/26 on the cross-session shard. A rewriter optimising against the same model, under the same forced-tool-use contract, defeats every session in isolation while preserving cross-session artefacts verbatim.
+                    A rewriter optimising against the same model, under the same forced-tool-use contract, defeats every session in isolation while preserving cross-session artefacts verbatim. Hard-confounder FPR sits at 0.643.
                 </div>
             </div>
             <div class="finding-card">
-                <div class="finding-num">−35 pp</div>
+                <div class="finding-num">13 / 26</div>
                 <div class="finding-title">Full-Log isn't safe either</div>
                 <div class="finding-desc">
-                    Recall drops from 23/26 to 13/26. At ~97K tokens at p95 against a 1M-token window, the correlator is not running out of context — it's running out of attack signal relative to benign mass.
+                    At ~97K tokens at p95 against a 1M-token window, the correlator is not running out of context — it's running out of attack signal relative to benign mass. Bigger windows do not buy cross-session detection.
                 </div>
             </div>
             <div class="finding-card">
-                <div class="finding-num">19 / 26</div>
-                <div class="finding-title">Bottleneck survives</div>
+                <div class="finding-num">CSTM 0.808</div>
+                <div class="finding-title">Production coreset wins both axes</div>
                 <div class="finding-desc">
-                    The Coreset Memory Reader is the only LLM-backed reader whose recall survives adversarial rewriting at usable levels — beating Full-Log (13/26) and per-session (14/26) on the same shard, with a 3× lower hard-confounder FPR.
+                    The Production Coreset Memory Reader posts the best recall (20/26), the lowest FPR (0.071), and the highest prefix stability (CSR<sub>prefix</sub>=0.6976) — translating to the top CSTM (0.808 vs 0.696 for the reference admitter, N/A for the LLM-only baselines).
                 </div>
             </div>
         </div>
 
         <p class="key-statement reveal">
             Cross-session detection requires more than a bigger context window. It requires an architectural bottleneck that excludes the benign mass before the correlator reads.
-        </p>
-    </div>
-</div>
-
-<hr class="section-break">
-
-<!-- THE COST METRIC -->
-<div class="content-section">
-    <div class="content-inner">
-        <h2 class="reveal">A serving-cost metric, promoted to first-class</h2>
-
-        <p class="reveal">
-            Coreset-gated correlation is only useful at real-time cost to the extent its ranker is <em>stable</em>. Ranker-induced reshuffles break KV-cache prefix reuse, which dominates incremental cost per scan in production. We promote ordered prefix stability of the coreset buffer — <strong>CSR<sub>prefix</sub></strong> — to a first-class metric: LLM-free, label-free, and measurable continuously in production.
-        </p>
-
-        <div class="formula-block reveal">
-            <div class="formula-eq">CSTM &nbsp;=&nbsp; 0.7 · F1(CSDA@action, precision) &nbsp;+&nbsp; 0.3 · CSR<sub>prefix</sub></div>
-            <div class="formula-caption">
-                A non-compensatory composite. Future rankers can be benchmarked on a single Pareto surface of detection recall versus serving stability — a prerequisite for real-time cross-session threat detection at production cost.
-            </div>
-        </div>
-
-        <p class="reveal">
-            The benchmark is algorithm-agnostic on purpose. The buffer admits any plug-in admission policy: reservoir sampling, sketches, neural ranking, surprise-gated updates, LLM-as-ranker, or learned eviction. Any rank-stable admitter that minimises detection regret on this composite is, by construction, a real-time cross-session threat detector.
         </p>
     </div>
 </div>
@@ -1045,6 +1045,7 @@
                 <li id="ref-2">Kadavath, S., Hubinger, E., et al. <em>AI Agent Traps: A Taxonomy of Cross-Session and Multi-Agent Failure Modes.</em> SSRN:6372438.</li>
                 <li id="ref-3">Tavakoli, A., et al. (2026). <em>BEAM: Benchmarking Extended Agent Memory.</em> arXiv:2510.27246.</li>
                 <li id="ref-4">Anthropic (2025). <em>Disrupting the First Reported AI-Orchestrated Cyber Espionage Campaign (GTG-1002).</em> <a href="https://www.anthropic.com/news/disrupting-AI-espionage" target="_blank" rel="noopener noreferrer">anthropic.com/news/disrupting-AI-espionage</a>.</li>
+                <li id="ref-5">KV-cache / prefix-cache reuse savings are reported across major LLM serving stacks. Anthropic's prompt caching reports up to ~90% input-token cost reduction and ~85% latency reduction on long prompts when the prefix is reused across calls (<a href="https://www.anthropic.com/news/prompt-caching" target="_blank" rel="noopener noreferrer">anthropic.com/news/prompt-caching</a>); OpenAI's prompt caching reports comparable input-cost discounts on cached tokens; open-source serving systems with prefix-tree KV reuse (vLLM PagedAttention, SGLang RadixAttention) report up to ~95% prefill-cost reduction on long shared prefixes.</li>
             </ol>
         </div>
     </div>
