@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products · Intrinsec AI · Cure the Amnesia</title>
-    <meta name="description" content="Adaptive memory for one agent or an entire fleet. Identity Plane for single-agent security. SIEM-less detection for fleet threats. No data lake required.">
+    <title>OpenClaw Identity Plane · Open-source reference · Intrinsec AI</title>
+    <meta name="description" content="An observational, open-source reference plugin for OpenClaw. Identity calibration, per-message drift scoring, and a live dashboard — no blocking, no interception.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
-    <meta property="og:title" content="Intrinsec AI · One agent or a thousand. The amnesia is the same.">
-    <meta property="og:description" content="Adaptive identity for a single agent. SIEM-less threat detection for a fleet. No data lake. No hard storage. Just memory that works.">
+    <meta property="og:title" content="OpenClaw Identity Plane · Open-source reference">
+    <meta property="og:description" content="See the Identity Plane in action on your own agent. An observational reference plugin for OpenClaw.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="demo-page-screenshot.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -1031,114 +1031,6 @@
             }
         }
 
-        /* ── Compute Plane hero ── */
-        .compute-plane-hero {
-            padding: 0 0 100px;
-        }
-
-        .compute-plane-hero .cp-hero-card {
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-            animation: none;
-            border-width: 2px;
-        }
-
-        /* Custom attribution-graph visualization */
-        .compute-vis {
-            background: rgba(125, 211, 252, 0.03);
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            border-radius: 14px;
-            padding: 22px 22px 18px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25),
-                        0 0 60px rgba(125, 211, 252, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        [data-theme="light"] .compute-vis {
-            background: rgba(2, 132, 199, 0.025);
-            border-color: rgba(2, 132, 199, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-        }
-
-        .cp-hero-card:hover .compute-vis {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.18),
-                        0 0 80px rgba(125, 211, 252, 0.12);
-        }
-
-        .compute-vis-svg {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .cv-band {
-            fill: rgba(125, 211, 252, 0.07);
-            stroke: rgba(125, 211, 252, 0.18);
-            stroke-width: 1;
-            stroke-dasharray: 3 3;
-        }
-
-        .cv-baseline-dash {
-            stroke: rgba(125, 211, 252, 0.22);
-            stroke-width: 1;
-            stroke-dasharray: 2 3;
-        }
-
-        .cv-trace {
-            fill: none;
-            stroke: rgba(125, 211, 252, 0.42);
-            stroke-width: 1;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .cv-trace--alert {
-            fill: none;
-            stroke: rgba(248, 113, 113, 0.9);
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 100;
-        }
-
-        .cv-callout-label {
-            fill: rgba(248, 113, 113, 0.95);
-            font-size: 9px;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .cv-meta-label {
-            fill: rgba(148, 163, 184, 0.6);
-            font-size: 9.5px;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .cv-meta-score {
-            fill: rgba(248, 113, 113, 0.95);
-            font-weight: 600;
-        }
-
-        [data-theme="light"] .cv-band {
-            fill: rgba(2, 132, 199, 0.06);
-            stroke: rgba(2, 132, 199, 0.18);
-        }
-
-        [data-theme="light"] .cv-baseline-dash {
-            stroke: rgba(2, 132, 199, 0.22);
-        }
-
-        [data-theme="light"] .cv-trace {
-            stroke: rgba(2, 132, 199, 0.45);
-        }
-
-        [data-theme="light"] .cv-meta-label {
-            fill: rgba(71, 85, 105, 0.7);
-        }
-
         /* Product section label */
         .product-section-label {
             font-size: 0.75rem;
@@ -1652,8 +1544,6 @@
 
         .shadow-spotlight-text {
             padding: 44px 48px;
-            display: flex;
-            flex-direction: column;
         }
 
         .shadow-spotlight-badge {
@@ -1950,141 +1840,6 @@
 
         @media (max-width: 680px) {
             .usecase-tiles--2col { grid-template-columns: 1fr; }
-        }
-
-        /* ── Open Source click-through strip (Identity Plane lane) ── */
-        .oss-strip {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 18px 22px;
-            margin-top: 28px;
-            background: linear-gradient(135deg, rgba(125, 211, 252, 0.04) 0%, rgba(21, 27, 43, 0.6) 100%);
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            border-radius: 14px;
-            text-decoration: none;
-            color: inherit;
-            transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
-        }
-
-        [data-theme="light"] .oss-strip {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.04) 0%, rgba(248, 250, 252, 0.9) 100%);
-            border-color: rgba(2, 132, 199, 0.16);
-        }
-
-        .oss-strip:hover {
-            border-color: rgba(125, 211, 252, 0.4);
-            transform: translateY(-1px);
-        }
-
-        [data-theme="light"] .oss-strip:hover {
-            border-color: rgba(2, 132, 199, 0.4);
-        }
-
-        .oss-strip-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--ice);
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.22);
-            border-radius: 20px;
-            padding: 5px 12px;
-        }
-
-        [data-theme="light"] .oss-strip-badge {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.22);
-        }
-
-        .oss-strip-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            line-height: 1.45;
-        }
-
-        .oss-strip-text strong {
-            color: var(--text);
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .oss-strip-text > span {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-
-        .oss-strip-cta {
-            flex-shrink: 0;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--ice);
-            white-space: nowrap;
-        }
-
-        .oss-strip:hover .oss-strip-cta {
-            color: var(--ice-bright);
-        }
-
-        @media (max-width: 680px) {
-            .oss-strip {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 16px 18px;
-            }
-            .oss-strip-cta { align-self: flex-end; }
-        }
-
-        /* Inset variant: docked to bottom of shadow-spotlight-text column */
-        .oss-strip--inset {
-            margin-top: auto;
-            margin-bottom: 0;
-            padding: 14px 16px;
-            gap: 14px;
-        }
-
-        .oss-strip--inset .oss-strip-badge {
-            font-size: 0.65rem;
-            padding: 4px 10px;
-        }
-
-        .oss-strip--inset .oss-strip-text strong {
-            font-size: 0.875rem;
-        }
-
-        .oss-strip--inset .oss-strip-text > span {
-            font-size: 0.78rem;
-        }
-
-        .oss-strip--inset .oss-strip-cta {
-            font-size: 0.8125rem;
-        }
-
-        @media (max-width: 900px) {
-            .oss-strip--inset {
-                flex-direction: row;
-                align-items: center;
-                gap: 14px;
-            }
-            .oss-strip--inset .oss-strip-cta { align-self: center; }
-        }
-
-        @media (max-width: 520px) {
-            .oss-strip--inset {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .oss-strip--inset .oss-strip-cta { align-self: flex-end; }
         }
 
         /* ── Open Source Reference Section ── */
@@ -2633,8 +2388,6 @@
             .cp-hero-capabilities li { font-size: 0.8125rem; }
             .fleet-hero-visual { padding: 0 16px 0; }
             .fleet-hero-text { padding: 24px 20px 28px; }
-            .compute-plane-hero { padding-bottom: 48px; }
-            .compute-vis { padding: 14px 14px 12px; }
             .shadow-spotlight-text { padding: 24px 20px 16px; }
             .shadow-spotlight-visual { padding: 20px 16px 24px; }
             .shadow-spotlight-title { font-size: 1.1rem; }
@@ -2681,7 +2434,7 @@
                     <a href="index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
                     <nav class="nav" aria-label="Primary">
                         <a class="nav-link" href="index.html">Home</a>
-                        <a class="nav-link" href="products.html" aria-current="page">Products</a>
+                        <a class="nav-link" href="products.html">Products</a>
                         <a class="nav-link" href="blog/index.html">Research</a>
                     </nav>
                 </div>
@@ -2705,387 +2458,102 @@
 
     <section class="hero">
         <div class="container">
-            <h1>One agent or a thousand.<br><span class="gradient">The amnesia is the same.</span></h1>
-            <p class="tagline-second">Adaptive memory for one agent or an entire fleet.</p>
+            <h1>See the Identity Plane<br><span class="gradient">in action.</span></h1>
+            <p class="tagline-second">An open-source reference plugin for OpenClaw. Observational by design.</p>
             <div class="hero-proof" aria-label="Status">
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Agent or fleet</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Memoryful guardrail</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Intention-time detection</span>
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Open source</span>
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Observational</span>
+                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Single-agent</span>
             </div>
+            <p style="margin-top: 24px;">
+                <a href="products.html" style="color: var(--text-dim); font-size: 0.875rem; text-decoration: none; border-bottom: 1px solid rgba(125, 211, 252, 0.25);">&larr; Back to Products</a>
+            </p>
         </div>
     </section>
 
-    <section class="control-plane-hero">
+    <section class="oss-reference" id="oss-reference">
         <div class="container">
-            <div class="cp-hero-card">
-                <div class="cp-hero-inner">
-                    <div class="cp-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            Identity Plane
-                        </div>
-                        <h2 class="cp-hero-title">
-                            The <span class="gradient">Identity Plane</span> Dashboard
-                        </h2>
-                        <p class="cp-hero-desc">
-                            One adaptive memory per agent. Cross-session attacks stop being invisible.
-                        </p>
-                        <ul class="cp-hero-capabilities">
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Memory, not classification</strong> — identity built from compressed behavior across every session</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Trajectory detection</strong> — drift, injection, exfiltration caught before the pattern completes</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="cp-hero-visual">
-                        <img 
-                            src="control-plane-dashboard.png" 
-                            alt="Identity Plane Dashboard showing identity monitoring, threat analytics, and intent envelope tracking" 
-                            loading="lazy"
-                        >
-                    </div>
+            <div class="oss-reference-header">
+                <div class="oss-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    Open Source
                 </div>
+                <h2>See the Identity Plane in Action</h2>
+                <p class="oss-intro">A reference plugin for <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer">OpenClaw</a>. Observational by design.</p>
             </div>
-        </div>
-    </section>
 
-    <section class="fleet-hero">
-        <div class="container">
-            <div class="fleet-hero-card">
-                <div class="fleet-hero-inner">
-                    <div class="fleet-hero-visual">
-                        <img
-                            src="siem-compression.png"
-                            alt="Raw inbound prompts compressed into a unified intent view across all agents, surfacing novel threat patterns without a SIEM or data lake"
-                            loading="lazy"
-                        >
-                    </div>
-                    <div class="cp-hero-text fleet-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            SIEM-less Detection
+            <div class="oss-card">
+                <div class="oss-card-left">
+                    <span class="oss-pkg">@intrinsec-ai/openclaw-identity-plane</span>
+                    <h3>Identity Watchdog for OpenClaw Agents</h3>
+                    <p class="oss-card-desc">Builds an identity anchor from your agent's cognitive files. Every message scored against it. Drift visible on a live dashboard. Nothing blocked, nothing intercepted.</p>
+
+                    <div class="oss-cols">
+                        <div>
+                            <div class="oss-col-label oss-col-label--included">What it does</div>
+                            <ul class="oss-col-included">
+                                <li>Identity calibration from cognitive files</li>
+                                <li>Per-message drift scoring</li>
+                                <li>Live drift dashboard with time-series chart</li>
+                                <li>Identity compaction: LLM audit narratives grounded in named anchors</li>
+                                <li>File-change annotations on the drift timeline</li>
+                            </ul>
                         </div>
-                        <h2 class="cp-hero-title">
-                            Fleet-Wide Threats.<br><span class="gradient">No Data Lake.</span>
-                        </h2>
-                        <p class="cp-hero-desc">
-                            Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible. No SIEM or data lake required.
-                        </p>
-                        <ul class="cp-hero-capabilities">
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Shared fleet memory</strong> — millions of prompts compressed into one cohesive story</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Coordinated attack detection</strong> — campaigns surface even when every individual request passes</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="compute-plane-hero">
-        <div class="container">
-            <div class="cp-hero-card">
-                <div class="cp-hero-inner">
-                    <div class="cp-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            Compute Plane
-                        </div>
-                        <h2 class="cp-hero-title">
-                            Prompt injection is <span class="gradient">inevitable.</span>
-                        </h2>
-                        <p class="cp-hero-desc">
-                            Every inbound prompt induces a computational signature. We cluster those signatures into a baseline across every agent and session to surface unusual prompts.
-                        </p>
-                    </div>
-                    <div class="cp-hero-visual">
-                        <div class="compute-vis" role="img" aria-label="Computational signatures from inbound prompts clustering tightly along a baseline, with one unusual prompt surfacing above the cluster">
-                            <svg viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="compute-vis-svg">
-                                <!-- Header labels -->
-                                <text x="0"   y="14" class="cv-meta-label">Baseline cluster</text>
-                                <text x="320" y="14" class="cv-meta-label" text-anchor="end">4,217 signatures</text>
-
-                                <!-- Confidence band around the cluster -->
-                                <rect x="10" y="108" width="300" height="32" rx="14" class="cv-band"/>
-
-                                <!-- Center reference line (dashed) -->
-                                <line x1="10" y1="124" x2="310" y2="124" class="cv-baseline-dash"/>
-
-                                <!-- Baseline traces (signatures clustering together) -->
-                                <polyline points="10,120 40,114 70,124 100,116 130,128 160,116 190,124 220,118 250,128 280,118 310,122" class="cv-trace"/>
-                                <polyline points="10,122 40,118 70,118 100,124 130,118 160,124 190,116 220,124 250,118 280,124 310,118" class="cv-trace"/>
-                                <polyline points="10,118 40,124 70,116 100,128 130,118 160,126 190,116 220,128 250,118 280,124 310,118" class="cv-trace"/>
-                                <polyline points="10,124 40,118 70,126 100,116 130,124 160,118 190,128 220,116 250,122 280,116 310,124" class="cv-trace"/>
-                                <polyline points="10,118 40,122 70,118 100,122 130,116 160,122 190,118 220,122 250,116 280,122 310,118" class="cv-trace"/>
-                                <polyline points="10,120 40,116 70,120 100,118 130,124 160,120 190,118 220,124 250,118 280,124 310,120" class="cv-trace"/>
-                                <polyline points="10,126 40,120 70,122 100,120 130,128 160,120 190,122 220,118 250,124 280,120 310,124" class="cv-trace"/>
-
-                                <!-- Anomalous trace: same fine-grain wiggle character as baselines, -->
-                                <!-- but riding a different overall envelope (one slow modulation, not flat) -->
-                                <polyline class="cv-trace--alert" pathLength="100"
-                                          points="10,120 32,117 58,110 80,103 105,94 128,85 150,84 170,88 192,84 215,96 238,104 262,112 286,116 310,120">
-                                    <animate attributeName="stroke-dashoffset"
-                                             values="100;0;0;100;100"
-                                             keyTimes="0;0.45;0.7;0.95;1"
-                                             dur="4s" repeatCount="indefinite"/>
-                                </polyline>
-
-                                <!-- "Unusual" label floating above the trace's high region, no connecting line/dot -->
-                                <text x="155" y="62" class="cv-callout-label" text-anchor="middle">Unusual</text>
-
-                                <!-- Footer meta -->
-                                <text x="0"   y="270" class="cv-meta-label">Computational signature</text>
-                            </svg>
+                        <div>
+                            <div class="oss-col-label oss-col-label--limits">What it isn't</div>
+                            <ul class="oss-col-limits">
+                                <li>Lossless: subtle injection in long context can average out</li>
+                                <li>Multi-tenant or fleet-scale</li>
+                                <li>Adaptive across long horizons</li>
+                                <li>Multimodal</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Identity Plane Use Cases -->
-    <section class="use-cases-section" id="identity-plane-usecases">
-        <div class="container">
-            <div class="product-section-label">Identity Plane · Use Cases</div>
-
-            <!-- Enterprise AI Governance Spotlight -->
-            <div class="shadow-spotlight">
-                <div class="shadow-spotlight-inner">
-                    <div class="shadow-spotlight-text">
-                        <div class="shadow-spotlight-badge">
-                            <span class="shadow-spotlight-badge-dot"></span>
-                            Enterprise · AI Governance
-                        </div>
-                        <h3 class="shadow-spotlight-title">Define your agents. Detect drift.</h3>
-                        <p class="shadow-spotlight-desc">
-                            Describe what your agents should do in plain language. Everything that doesn't fit gets surfaced.
-                        </p>
-                        <ul class="shadow-spotlight-points">
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Org identity profile</strong> — natural-language description of sanctioned agent behavior</span>
-                            </li>
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Intent divergence, not rules</strong> — deviation from modeled identity, so novel threats surface automatically</span>
-                            </li>
-                        </ul>
-
-                        <a class="oss-strip oss-strip--inset" href="openclaw.html" aria-label="Open the OpenClaw Identity Plane open-source reference page">
-                            <span class="oss-strip-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                                Open Source
-                            </span>
-                            <span class="oss-strip-text">
-                                <strong>Try it on your own agent.</strong>
-                                <span>Observational OpenClaw plugin. Watch drift live.</span>
-                            </span>
-                            <span class="oss-strip-cta">See it in action <span aria-hidden="true">→</span></span>
+                    <div class="oss-actions">
+                        <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer" class="oss-btn-github">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                            View on GitHub
                         </a>
-                    </div>
-                    <div class="shadow-spotlight-visual">
-                        <div class="org-policy-block">
-                            <div class="opb-label">Organizational Identity Profile</div>
-                            <div class="opb-text">"This agent handles pre-trade compliance checks for Meridian Capital. It validates order parameters against regulatory limits, flags anomalous positions, and escalates to the compliance desk. It has read-only access to trading systems and never initiates, modifies, or cancels orders."</div>
-                        </div>
-                        <div class="agent-verdict-row">
-                            <div class="agent-verdict">
-                                <span class="agent-verdict-name">compliance-sentinel-v3</span>
-                                <span class="agent-verdict-status agent-verdict-status--ok">
-                                    <span class="verdict-dot"></span>
-                                    Within org identity
-                                </span>
-                            </div>
-                            <div class="agent-verdict">
-                                <span class="agent-verdict-name">exec-desk-assistant</span>
-                                <span class="agent-verdict-status agent-verdict-status--warn">
-                                    <span class="verdict-dot"></span>
-                                    Off-org identity detected
-                                </span>
-                            </div>
-                        </div>
-                        <div class="identity-compaction">
-                            <div class="ic-header">
-                                <span class="ic-title">Identity Compaction</span>
-                                <span class="ic-agent">exec-desk-assistant</span>
-                            </div>
-                            <div class="ic-divider"></div>
-                            <p class="ic-prose">"Sustained pressure to initiate trade orders outside its read-only mandate. Recurring attempts to disable pre-trade risk checks. Identity is being displaced toward unauthorized order execution with suppressed audit visibility."</p>
-                            <div class="ic-score-row">
-                                <span class="ic-score-label">Off-org identity score</span>
-                                <span class="ic-score-number">0.96</span>
-                            </div>
-                        </div>
+                        <a href="https://docs.openclaw.ai/" target="_blank" rel="noopener noreferrer" class="oss-btn-openclaw">OpenClaw docs →</a>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </section>
-
-    <!-- SIEM-less Use Cases -->
-    <section class="use-cases-section use-cases-section--fleet" id="siem-less-usecases">
-        <div class="container">
-            <div class="product-section-label">SIEM-less Detection · Use Cases</div>
-
-            <!-- Agentic SIEM Spotlight -->
-            <div class="shadow-spotlight" style="margin-bottom: 24px;">
-                <div class="shadow-spotlight-inner">
-                    <div class="shadow-spotlight-text">
-                        <div class="shadow-spotlight-badge">
-                            <span class="shadow-spotlight-badge-dot"></span>
-                            Fleet Memory · Security Operations
+                <div class="oss-terminal-panel">
+                    <div class="oss-terminal" role="img" aria-label="Terminal output showing identity plane calibration status and drift themes">
+                        <div class="oss-terminal-bar">
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-dot"></span>
+                            <span class="oss-terminal-title">openclaw · /identity</span>
                         </div>
-                        <h3 class="shadow-spotlight-title">Lossless memory. Bounded size.</h3>
-                        <p class="shadow-spotlight-desc">
-                            A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out. That gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
-                        </p>
-                        <ul class="shadow-spotlight-points">
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Deduplicate to novelty</strong> — 10,000 identical probes become one pattern and a count</span>
-                            </li>
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Fragment-level extraction</strong> — captures the 50 threat tokens, not the 2,000-token prompt</span>
-                            </li>
-                        </ul>
+                        <div class="oss-terminal-body"><span class="t-cmd">$ /identity</span>
+
+<span class="t-ok">✓</span> <span class="t-dim">[Identity Plane] Calibrated</span>
+
+<span class="t-label">Identity anchors:</span>
+  <span class="t-anchor">[PURPOSE]</span>  <span class="t-dim">Code-focused task execution</span>
+  <span class="t-anchor">[BOUNDARY]</span> <span class="t-dim">No credential or secret access</span>
+  <span class="t-anchor">[VALUE]</span>    <span class="t-dim">Honest about limitations</span>
+  <span class="t-anchor">[PERSONA]</span>  <span class="t-dim">Concise and technical tone</span>
+  <span class="t-anchor">[CONSTRAINT]</span> <span class="t-dim">Scope limited to requested files</span>
+
+<span class="t-label">Identity compaction (latest audit):</span>
+  <span class="t-dim">The agent is under sustained pressure to exceed
+  its file-access scope, with recurring attempts to
+  probe paths outside the declared [CONSTRAINT].</span>
+
+<span class="t-label">Drift themes (47 events observed):</span>
+  <span class="t-alert">◆ ⚠</span> <span class="t-dim">"Credential path probing"</span> <span class="t-muted">· high · 5 events</span>
+  <span class="t-warn">◆ ~</span> <span class="t-dim">"Scope boundary expansion"</span> <span class="t-muted">· moderate · 3 events</span>
+
+<span class="t-label">Active sessions:</span>
+  <span class="t-ok">✓ nominal</span>  <span class="t-dim">agent:work:telegram:dm:123456</span>
+  <span class="t-warn">~ warning</span>  <span class="t-dim">agent:work:whatsapp:dm:789</span></div>
                     </div>
-                    <div class="shadow-spotlight-visual">
-                        <div class="neural-memory-vis" role="img" aria-label="Neural memory consolidation: lossless threat memory visualization">
-                            <svg class="nmv-svg" viewBox="0 0 280 228" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <radialGradient id="nmvGrad" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%"   stop-color="#7dd3fc" stop-opacity="0.18"/>
-                                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
-                                    </radialGradient>
-                                </defs>
-
-                                <!-- Outer core halo -->
-                                <ellipse cx="140" cy="112" rx="55" ry="50" fill="url(#nmvGrad)">
-                                    <animate attributeName="rx" values="55;64;55" dur="4s" repeatCount="indefinite"/>
-                                    <animate attributeName="ry" values="50;58;50" dur="4s" repeatCount="indefinite"/>
-                                    <animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
-                                </ellipse>
-                                <!-- Inner engram glow -->
-                                <ellipse cx="140" cy="112" rx="24" ry="22" fill="#7dd3fc" fill-opacity="0.07">
-                                    <animate attributeName="fill-opacity" values="0.07;0.14;0.07" dur="4s" repeatCount="indefinite"/>
-                                </ellipse>
-
-                                <!-- Outer → mid connections -->
-                                <line x1="140" y1="5"   x2="140" y2="44"  class="nmv-line--outer"/>
-                                <line x1="185" y1="15"  x2="198" y2="68"  class="nmv-line--outer"/>
-                                <line x1="225" y1="38"  x2="198" y2="68"  class="nmv-line--outer"/>
-                                <line x1="258" y1="72"  x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="268" y1="112" x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="255" y1="155" x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="225" y1="188" x2="178" y2="178" class="nmv-line--outer"/>
-                                <line x1="185" y1="210" x2="178" y2="178" class="nmv-line--outer"/>
-                                <line x1="140" y1="222" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="95"  y1="212" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="55"  y1="190" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="20"  y1="158" x2="72"  y2="130" class="nmv-line--outer"/>
-                                <line x1="10"  y1="112" x2="72"  y2="130" class="nmv-line--outer"/>
-                                <line x1="18"  y1="68"  x2="80"  y2="68"  class="nmv-line--outer"/>
-                                <line x1="50"  y1="32"  x2="80"  y2="68"  class="nmv-line--outer"/>
-                                <line x1="95"  y1="10"  x2="140" y2="44"  class="nmv-line--outer"/>
-
-                                <!-- Mid → core connections -->
-                                <line x1="140" y1="44"  x2="140" y2="112" class="nmv-line--mid"/>
-                                <line x1="198" y1="68"  x2="162" y2="98"  class="nmv-line--mid"/>
-                                <line x1="208" y1="130" x2="155" y2="126" class="nmv-line--mid"/>
-                                <line x1="178" y1="178" x2="155" y2="126" class="nmv-line--mid"/>
-                                <line x1="100" y1="178" x2="128" y2="128" class="nmv-line--mid"/>
-                                <line x1="72"  y1="130" x2="120" y2="99"  class="nmv-line--mid"/>
-                                <line x1="80"  y1="68"  x2="120" y2="99"  class="nmv-line--mid"/>
-
-                                <!-- Core internal connections -->
-                                <line x1="120" y1="99"  x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="162" y1="98"  x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="128" y1="128" x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="155" y1="126" x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="120" y1="99"  x2="162" y2="98"  class="nmv-line--core-int"/>
-                                <line x1="128" y1="128" x2="155" y2="126" class="nmv-line--core-int"/>
-
-                                <!-- Animated synapse fires (4 paths, staggered) -->
-                                <line x1="140" y1="5"   x2="140" y2="44"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.75;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="0s"/>
-                                </line>
-                                <line x1="140" y1="44"  x2="140" y2="112" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.75;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="0s"/>
-                                </line>
-                                <line x1="258" y1="72"  x2="208" y2="130" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.65;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="1.8s"/>
-                                </line>
-                                <line x1="208" y1="130" x2="155" y2="126" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.65;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="1.8s"/>
-                                </line>
-                                <line x1="55"  y1="190" x2="100" y2="178" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="3.4s"/>
-                                </line>
-                                <line x1="100" y1="178" x2="128" y2="128" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="3.4s"/>
-                                </line>
-                                <line x1="18"  y1="68"  x2="80"  y2="68"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="5.1s"/>
-                                </line>
-                                <line x1="80"  y1="68"  x2="120" y2="99"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="5.1s"/>
-                                </line>
-
-                                <!-- Outer nodes -->
-                                <circle cx="140" cy="5"   r="2" class="nmv-node--outer"/>
-                                <circle cx="185" cy="15"  r="2" class="nmv-node--outer"/>
-                                <circle cx="225" cy="38"  r="2" class="nmv-node--outer"/>
-                                <circle cx="258" cy="72"  r="2" class="nmv-node--outer"/>
-                                <circle cx="268" cy="112" r="2" class="nmv-node--outer"/>
-                                <circle cx="255" cy="155" r="2" class="nmv-node--outer"/>
-                                <circle cx="225" cy="188" r="2" class="nmv-node--outer"/>
-                                <circle cx="185" cy="210" r="2" class="nmv-node--outer"/>
-                                <circle cx="140" cy="222" r="2" class="nmv-node--outer"/>
-                                <circle cx="95"  cy="212" r="2" class="nmv-node--outer"/>
-                                <circle cx="55"  cy="190" r="2" class="nmv-node--outer"/>
-                                <circle cx="20"  cy="158" r="2" class="nmv-node--outer"/>
-                                <circle cx="10"  cy="112" r="2" class="nmv-node--outer"/>
-                                <circle cx="18"  cy="68"  r="2" class="nmv-node--outer"/>
-                                <circle cx="50"  cy="32"  r="2" class="nmv-node--outer"/>
-                                <circle cx="95"  cy="10"  r="2" class="nmv-node--outer"/>
-
-                                <!-- Mid ring nodes -->
-                                <circle cx="140" cy="44"  r="3" class="nmv-node--mid"/>
-                                <circle cx="198" cy="68"  r="3" class="nmv-node--mid"/>
-                                <circle cx="208" cy="130" r="3" class="nmv-node--mid"/>
-                                <circle cx="178" cy="178" r="3" class="nmv-node--mid"/>
-                                <circle cx="100" cy="178" r="3" class="nmv-node--mid"/>
-                                <circle cx="72"  cy="130" r="3" class="nmv-node--mid"/>
-                                <circle cx="80"  cy="68"  r="3" class="nmv-node--mid"/>
-
-                                <!-- Core satellite nodes -->
-                                <circle cx="120" cy="99"  r="4"   class="nmv-node--core"/>
-                                <circle cx="162" cy="98"  r="4"   class="nmv-node--core"/>
-                                <circle cx="128" cy="128" r="3.5" class="nmv-node--core"/>
-                                <circle cx="155" cy="126" r="3.5" class="nmv-node--core"/>
-
-                                <!-- Central engram node -->
-                                <circle cx="140" cy="112" r="6.5" class="nmv-node--central">
-                                    <animate attributeName="r" values="6.5;7.8;6.5" dur="4s" repeatCount="indefinite"/>
-                                </circle>
-                            </svg>
-                            <div class="nmv-caption">LOSSLESS THREAT MEMORY</div>
-                        </div>
-                    </div>
+                    <p class="oss-cta-note">The enterprise product adds lossless detection, heterogeneous workloads, and long horizons. <a href="mailto:ari.azarafrooz@intrinsec.ai">Talk to us →</a></p>
                 </div>
             </div>
-
         </div>
     </section>
 
