@@ -1031,7 +1031,7 @@
             }
         }
 
-        /* ── Compute Plane hero ── */
+        /* ── Computation Behavior Analytics hero ── */
         .compute-plane-hero {
             padding: 0 0 100px;
         }
@@ -2722,10 +2722,10 @@
                     <div class="cp-hero-text">
                         <div class="cp-hero-badge">
                             <span class="cp-hero-badge-dot"></span>
-                            Identity Plane
+                            Per-agent &middot; Memory
                         </div>
                         <h2 class="cp-hero-title">
-                            The <span class="gradient">Identity Plane</span> Dashboard
+                            <span class="gradient">Identity Plane</span>
                         </h2>
                         <p class="cp-hero-desc">
                             One adaptive memory per agent. Cross-session attacks stop being invisible.
@@ -2767,13 +2767,13 @@
                     <div class="cp-hero-text fleet-hero-text">
                         <div class="cp-hero-badge">
                             <span class="cp-hero-badge-dot"></span>
-                            SIEM-less Detection
+                            Fleet-wide &middot; Memory
                         </div>
                         <h2 class="cp-hero-title">
-                            Fleet-Wide Threats.<br><span class="gradient">No Data Lake.</span>
+                            <span class="gradient">SIEM-less Detection</span>
                         </h2>
                         <p class="cp-hero-desc">
-                            Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible. No SIEM or data lake required.
+                            Fleet-wide threats, no data lake. Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible.
                         </p>
                         <ul class="cp-hero-capabilities">
                             <li>
@@ -2798,21 +2798,21 @@
                     <div class="cp-hero-text">
                         <div class="cp-hero-badge">
                             <span class="cp-hero-badge-dot"></span>
-                            Compute Plane
+                            Computation signature &middot; Memory
                         </div>
                         <h2 class="cp-hero-title">
-                            Prompt injection is <span class="gradient">inevitable.</span>
+                            <span class="gradient">Computation Behavior Analytics</span>
                         </h2>
                         <p class="cp-hero-desc">
-                            Every inbound prompt induces a computational signature. We cluster those signatures into a baseline across every agent and session to surface unusual prompts.
+                            Prompt injection is inevitable. Every inbound prompt induces a computation signature. We remember them across every agent and prompt. Unusual prompts surface against the baseline.
                         </p>
                     </div>
                     <div class="cp-hero-visual">
-                        <div class="compute-vis" role="img" aria-label="Computational signatures from inbound prompts clustering tightly along a baseline, with one unusual prompt surfacing above the cluster">
+                        <div class="compute-vis" role="img" aria-label="Computation behavior analytics: baseline memory of signatures across agents and prompts, with unusual prompts surfacing against the baseline">
                             <svg viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="compute-vis-svg">
                                 <!-- Header labels -->
-                                <text x="0"   y="14" class="cv-meta-label">Baseline cluster</text>
-                                <text x="320" y="14" class="cv-meta-label" text-anchor="end">4,217 signatures</text>
+                                <text x="0"   y="14" class="cv-meta-label">Baseline memory</text>
+                                <text x="320" y="14" class="cv-meta-label" text-anchor="end">Multi-agent &middot; Cross-prompt</text>
 
                                 <!-- Confidence band around the cluster -->
                                 <rect x="10" y="108" width="300" height="32" rx="14" class="cv-band"/>
@@ -2839,11 +2839,11 @@
                                              dur="4s" repeatCount="indefinite"/>
                                 </polyline>
 
-                                <!-- "Unusual" label floating above the trace's high region, no connecting line/dot -->
-                                <text x="155" y="62" class="cv-callout-label" text-anchor="middle">Unusual</text>
+                                <!-- Callout on the off-baseline trace -->
+                                <text x="168" y="62" class="cv-callout-label" text-anchor="middle">Unusual prompt</text>
 
                                 <!-- Footer meta -->
-                                <text x="0"   y="270" class="cv-meta-label">Computational signature</text>
+                                <text x="0"   y="270" class="cv-meta-label">Computation signature</text>
                             </svg>
                         </div>
                     </div>
