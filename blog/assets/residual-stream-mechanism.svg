@@ -1,0 +1,96 @@
+<svg width="100%" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" font-family="-apple-system, 'Segoe UI', sans-serif">
+  <title>The residual stream — attention and MLP layers acting on multiple token positions</title>
+
+  <defs>
+    <linearGradient id="stream-grad-v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26215C" stop-opacity="0.5"/>
+      <stop offset="30%" stop-color="#534AB7" stop-opacity="0.7"/>
+      <stop offset="65%" stop-color="#7F77DD" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#AFA9EC" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="attn-pulse" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5DCAA5" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5DCAA5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mlp-pulse" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F0997B" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#F0997B" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="ar-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 5 3 L 0 6 Z" fill="#5DCAA5"/>
+    </marker>
+    <marker id="ar-orange" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 5 3 L 0 6 Z" fill="#F0997B"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#0B0A20"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="10" fill="#AFA9EC" opacity="0.7" font-style="italic">unembed</text>
+  <path d="M 320 38 L 320 50" stroke="#AFA9EC" stroke-width="0.6" opacity="0.4"/>
+
+  <g>
+    <rect x="172" y="56" width="16" height="248" fill="url(#stream-grad-v)" rx="8"/>
+    <rect x="177" y="56" width="6" height="248" fill="#EEEDFE" opacity="0.6" rx="3"/>
+
+    <rect x="312" y="56" width="16" height="248" fill="url(#stream-grad-v)" rx="8"/>
+    <rect x="317" y="56" width="6" height="248" fill="#EEEDFE" opacity="0.6" rx="3"/>
+
+    <rect x="452" y="56" width="16" height="248" fill="url(#stream-grad-v)" rx="8"/>
+    <rect x="457" y="56" width="6" height="248" fill="#EEEDFE" opacity="0.6" rx="3"/>
+  </g>
+
+  <text x="180" y="324" text-anchor="middle" font-size="10" fill="#AFA9EC" opacity="0.85" font-style="italic">t₁</text>
+  <text x="320" y="324" text-anchor="middle" font-size="10" fill="#AFA9EC" opacity="0.85" font-style="italic">t₂</text>
+  <text x="460" y="324" text-anchor="middle" font-size="10" fill="#AFA9EC" opacity="0.85" font-style="italic">t₃</text>
+  <text x="320" y="346" text-anchor="middle" font-size="9" fill="#7F77DD" opacity="0.65" font-style="italic">token positions</text>
+
+  <text x="60" y="120" font-size="11" fill="#5DCAA5" font-weight="600">Attention</text>
+  <text x="60" y="134" font-size="9" fill="#AFA9EC" opacity="0.65" font-style="italic">read many,</text>
+  <text x="60" y="146" font-size="9" fill="#AFA9EC" opacity="0.65" font-style="italic">write one</text>
+
+  <ellipse cx="320" cy="128" rx="38" ry="20" fill="url(#attn-pulse)"/>
+  <ellipse cx="320" cy="128" rx="22" ry="11" fill="#5DCAA5" opacity="0.55" stroke="#5DCAA5" stroke-width="1"/>
+  <text x="320" y="131" text-anchor="middle" font-size="9" fill="#0B0A20" font-weight="700">attn</text>
+
+  <circle cx="180" cy="128" r="2.6" fill="#5DCAA5"/>
+  <circle cx="460" cy="128" r="2.6" fill="#5DCAA5"/>
+
+  <path d="M 188 128 Q 240 104, 282 122" fill="none" stroke="#5DCAA5" stroke-width="1.3" opacity="0.85" marker-end="url(#ar-green)"/>
+  <path d="M 452 128 Q 400 104, 358 122" fill="none" stroke="#5DCAA5" stroke-width="1.3" opacity="0.85" marker-end="url(#ar-green)"/>
+
+  <path d="M 320 148 L 320 158" stroke="#5DCAA5" stroke-width="1.6" marker-end="url(#ar-green)"/>
+
+  <line x1="160" y1="180" x2="480" y2="180" stroke="#26215C" stroke-width="0.5" stroke-dasharray="3 4" opacity="0.5"/>
+
+  <text x="60" y="228" font-size="11" fill="#F0997B" font-weight="600">MLP</text>
+  <text x="60" y="242" font-size="9" fill="#AFA9EC" opacity="0.65" font-style="italic">read self,</text>
+  <text x="60" y="254" font-size="9" fill="#AFA9EC" opacity="0.65" font-style="italic">write self</text>
+
+  <g>
+    <ellipse cx="180" cy="232" rx="20" ry="11" fill="url(#mlp-pulse)"/>
+    <ellipse cx="180" cy="232" rx="12" ry="6.5" fill="#F0997B" opacity="0.55" stroke="#F0997B" stroke-width="0.9"/>
+    <text x="180" y="235" text-anchor="middle" font-size="8" fill="#0B0A20" font-weight="700">mlp</text>
+    <path d="M 194 229 C 212 222, 212 242, 194 235" fill="none" stroke="#F0997B" stroke-width="1.2" opacity="0.85" marker-end="url(#ar-orange)"/>
+  </g>
+
+  <g>
+    <ellipse cx="320" cy="232" rx="20" ry="11" fill="url(#mlp-pulse)"/>
+    <ellipse cx="320" cy="232" rx="12" ry="6.5" fill="#F0997B" opacity="0.55" stroke="#F0997B" stroke-width="0.9"/>
+    <text x="320" y="235" text-anchor="middle" font-size="8" fill="#0B0A20" font-weight="700">mlp</text>
+    <path d="M 334 229 C 352 222, 352 242, 334 235" fill="none" stroke="#F0997B" stroke-width="1.2" opacity="0.85" marker-end="url(#ar-orange)"/>
+  </g>
+
+  <g>
+    <ellipse cx="460" cy="232" rx="20" ry="11" fill="url(#mlp-pulse)"/>
+    <ellipse cx="460" cy="232" rx="12" ry="6.5" fill="#F0997B" opacity="0.55" stroke="#F0997B" stroke-width="0.9"/>
+    <text x="460" y="235" text-anchor="middle" font-size="8" fill="#0B0A20" font-weight="700">mlp</text>
+    <path d="M 474 229 C 492 222, 492 242, 474 235" fill="none" stroke="#F0997B" stroke-width="1.2" opacity="0.85" marker-end="url(#ar-orange)"/>
+  </g>
+
+  <text x="540" y="180" font-size="9" fill="#7F77DD" opacity="0.55" font-style="italic">one block</text>
+
+  <text x="540" y="285" font-size="10" fill="#AFA9EC" opacity="0.7" font-style="italic">residual</text>
+  <text x="540" y="297" font-size="10" fill="#AFA9EC" opacity="0.7" font-style="italic">stream</text>
+  <path d="M 538 282 Q 510 282, 488 270" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.4"/>
+</svg>

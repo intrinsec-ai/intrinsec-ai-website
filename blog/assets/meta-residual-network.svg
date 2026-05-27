@@ -1,0 +1,429 @@
+<svg width="100%" viewBox="0 0 1240 1240" xmlns="http://www.w3.org/2000/svg" role="img" font-family="-apple-system, 'Segoe UI', sans-serif">
+  <title>Meta-network of residual streams over a shared-memory bus</title>
+  <desc>Four transformer residual streams (vertical rivers of light), labeled agent N through agent N+3, interact across a horizontal shared-memory bus that abstractly represents the outside world. The picture is a window into a longer chain (ellipses on either side suggest more agents). Every cross-agent influence requires decoding; what differs is what the decoded output does next. The direct lane (amber) carries a decoded response that is fed verbatim as the next agent's input. The indirect lane (violet) carries a decoded tool-call that mutates a shared state pocket on the bus, which a later agent then reads as input.</desc>
+
+  <defs>
+    <linearGradient id="river" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26215C"/>
+      <stop offset="30%" stop-color="#534AB7"/>
+      <stop offset="55%" stop-color="#7F77DD"/>
+      <stop offset="75%" stop-color="#AFA9EC"/>
+      <stop offset="100%" stop-color="#EEEDFE"/>
+    </linearGradient>
+    <linearGradient id="attn-glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1D9E75" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#5DCAA5" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="mlp-glow" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#D85A30" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#F0997B" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#D85A30" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFC97A" stop-opacity="0"/>
+      <stop offset="15%" stop-color="#FFC97A" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#FFC97A" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#FFC97A" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="belief-cloud" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#EEEDFE" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7F77DD" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bus-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1A2840" stop-opacity="0.4"/>
+      <stop offset="50%"  stop-color="#243857" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#1A2840" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="cell-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#3A567F" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#1F324F" stop-opacity="0.85"/>
+    </linearGradient>
+    <pattern id="cell-grid" patternUnits="userSpaceOnUse" width="6" height="6">
+      <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#7AA6D8" stroke-width="0.35" opacity="0.5"/>
+    </pattern>
+
+    <!-- AGENT TEMPLATE: one full transformer residual stream.
+         Native coords: river center at x=120, y spans 30..360. -->
+    <g id="agent">
+
+      <rect x="75"  y="30" width="90" height="320" fill="url(#river)" opacity="0.20" rx="45"/>
+      <rect x="98"  y="30" width="44" height="320" fill="#7F77DD"     opacity="0.28" rx="22"/>
+      <rect x="112" y="30" width="16" height="320" fill="#AFA9EC"     opacity="0.42" rx="8"/>
+      <path d="M110 40 C106 110, 114 200, 110 280 C106 320, 114 340, 110 350" fill="none" stroke="#CECBF6" stroke-width="0.6" opacity="0.35"/>
+      <path d="M130 40 C134 110, 126 200, 130 280 C134 320, 126 340, 130 350" fill="none" stroke="#CECBF6" stroke-width="0.6" opacity="0.35"/>
+
+      <path d="M70 32 Q95 20, 120 18 Q145 20, 170 32 L158 55 Q138 49, 120 47 Q102 49, 82 55 Z" fill="#26215C" opacity="0.75"/>
+      <path d="M92 32 Q108 26, 120 25 Q132 26, 148 32 L142 45 Q132 41, 120 40 Q108 41, 98 45 Z" fill="#534AB7" opacity="0.55"/>
+
+      <!-- ============ LAYER 1 ============ -->
+      <path d="M98 80  C75 77, 45 73, 18 70" fill="none" stroke="#5DCAA5" stroke-width="0.6" opacity="0.5"/>
+      <path d="M96 86  C70 84, 38 81, 12 82" fill="none" stroke="#5DCAA5" stroke-width="0.4" opacity="0.35"/>
+      <ellipse cx="14" cy="74" rx="34" ry="20" fill="#1D9E75" opacity="0.13"/>
+      <ellipse cx="10" cy="74" rx="22" ry="13" fill="#1D9E75" opacity="0.22"/>
+      <ellipse cx="7"  cy="74" rx="11" ry="7"  fill="#5DCAA5" opacity="0.5"/>
+      <path d="M18 82 C46 86, 75 90, 98 95"  fill="none" stroke="#1D9E75" stroke-width="1.2" opacity="0.6"/>
+      <path d="M12 88 C40 92, 70 96, 96 100" fill="none" stroke="#0F6E56" stroke-width="0.6" opacity="0.4"/>
+      <rect x="62" y="92" width="80" height="3" rx="1.5" fill="url(#attn-glow)" opacity="0.6"/>
+      <circle cx="120" cy="100" r="4.5" fill="none" stroke="#EEEDFE" stroke-width="0.7" opacity="0.65"/>
+      <line x1="116.5" y1="100" x2="123.5" y2="100" stroke="#EEEDFE" stroke-width="0.7" opacity="0.75"/>
+      <line x1="120" y1="96.5" x2="120" y2="103.5" stroke="#EEEDFE" stroke-width="0.7" opacity="0.75"/>
+      <g fill="#5DCAA5">
+        <circle cx="104" cy="98"  r="1.4" opacity="0.55"/>
+        <circle cx="136" cy="101" r="1.0" opacity="0.45"/>
+        <circle cx="98"  cy="103" r="0.9" opacity="0.4"/>
+        <circle cx="141" cy="96"  r="1.2" opacity="0.5"/>
+        <circle cx="111" cy="93"  r="0.7" opacity="0.35"/>
+      </g>
+
+      <path d="M142 118 C168 115, 200 111, 226 108" fill="none" stroke="#F0997B" stroke-width="0.6" opacity="0.5"/>
+      <path d="M144 124 C172 121, 202 118, 228 119" fill="none" stroke="#F0997B" stroke-width="0.4" opacity="0.35"/>
+      <ellipse cx="226" cy="113" rx="34" ry="20" fill="#993C1D" opacity="0.13"/>
+      <ellipse cx="230" cy="113" rx="22" ry="13" fill="#D85A30" opacity="0.20"/>
+      <ellipse cx="233" cy="113" rx="11" ry="7"  fill="#F0997B" opacity="0.5"/>
+      <path d="M226 121 C198 125, 170 129, 142 133" fill="none" stroke="#D85A30" stroke-width="1.2" opacity="0.6"/>
+      <path d="M228 127 C202 131, 172 135, 144 138" fill="none" stroke="#993C1D" stroke-width="0.6" opacity="0.4"/>
+      <rect x="98" y="130" width="80" height="3" rx="1.5" fill="url(#mlp-glow)" opacity="0.55"/>
+      <circle cx="120" cy="138" r="4.5" fill="none" stroke="#EEEDFE" stroke-width="0.7" opacity="0.65"/>
+      <line x1="116.5" y1="138" x2="123.5" y2="138" stroke="#EEEDFE" stroke-width="0.7" opacity="0.75"/>
+      <line x1="120" y1="134.5" x2="120" y2="141.5" stroke="#EEEDFE" stroke-width="0.7" opacity="0.75"/>
+      <g fill="#F0997B">
+        <circle cx="103" cy="135" r="1.0" opacity="0.5"/>
+        <circle cx="137" cy="139" r="1.4" opacity="0.6"/>
+        <circle cx="141" cy="135" r="0.9" opacity="0.4"/>
+        <circle cx="98"  cy="142" r="1.1" opacity="0.45"/>
+      </g>
+
+      <!-- ============ LAYER 2 ============ -->
+      <path d="M98 175 C72 172, 40 168, 16 165" fill="none" stroke="#5DCAA5" stroke-width="0.6" opacity="0.45"/>
+      <path d="M96 181 C68 179, 36 176, 10 177" fill="none" stroke="#5DCAA5" stroke-width="0.4" opacity="0.3"/>
+      <ellipse cx="12" cy="169" rx="32" ry="18" fill="#1D9E75" opacity="0.11"/>
+      <ellipse cx="8"  cy="169" rx="20" ry="12" fill="#1D9E75" opacity="0.20"/>
+      <ellipse cx="5"  cy="169" rx="10" ry="7"  fill="#5DCAA5" opacity="0.48"/>
+      <path d="M16 177 C44 181, 72 185, 98 190" fill="none" stroke="#1D9E75" stroke-width="1.1" opacity="0.55"/>
+      <rect x="62" y="187" width="80" height="3" rx="1.5" fill="url(#attn-glow)" opacity="0.55"/>
+      <circle cx="120" cy="195" r="4.5" fill="none" stroke="#EEEDFE" stroke-width="0.7" opacity="0.6"/>
+      <line x1="116.5" y1="195" x2="123.5" y2="195" stroke="#EEEDFE" stroke-width="0.7" opacity="0.7"/>
+      <line x1="120" y1="191.5" x2="120" y2="198.5" stroke="#EEEDFE" stroke-width="0.7" opacity="0.7"/>
+      <g fill="#5DCAA5">
+        <circle cx="105" cy="193" r="1.2" opacity="0.5"/>
+        <circle cx="135" cy="196" r="0.9" opacity="0.4"/>
+        <circle cx="142" cy="191" r="1.1" opacity="0.45"/>
+      </g>
+
+      <path d="M142 213 C170 210, 200 206, 224 203" fill="none" stroke="#F0997B" stroke-width="0.6" opacity="0.45"/>
+      <ellipse cx="224" cy="208" rx="32" ry="18" fill="#993C1D" opacity="0.11"/>
+      <ellipse cx="228" cy="208" rx="20" ry="12" fill="#D85A30" opacity="0.20"/>
+      <ellipse cx="231" cy="208" rx="10" ry="7"  fill="#F0997B" opacity="0.48"/>
+      <path d="M224 215 C198 219, 170 222, 142 226" fill="none" stroke="#D85A30" stroke-width="1.1" opacity="0.55"/>
+      <rect x="98" y="223" width="80" height="3" rx="1.5" fill="url(#mlp-glow)" opacity="0.5"/>
+      <circle cx="120" cy="231" r="4.5" fill="none" stroke="#EEEDFE" stroke-width="0.7" opacity="0.6"/>
+      <line x1="116.5" y1="231" x2="123.5" y2="231" stroke="#EEEDFE" stroke-width="0.7" opacity="0.7"/>
+      <line x1="120" y1="227.5" x2="120" y2="234.5" stroke="#EEEDFE" stroke-width="0.7" opacity="0.7"/>
+      <g fill="#F0997B">
+        <circle cx="104" cy="229" r="1.1" opacity="0.5"/>
+        <circle cx="135" cy="232" r="1.3" opacity="0.55"/>
+        <circle cx="98"  cy="234" r="0.8" opacity="0.4"/>
+      </g>
+
+      <!-- ============ LAYER 3 (subtler) ============ -->
+      <path d="M98 268 C72 265, 42 261, 20 258" fill="none" stroke="#5DCAA5" stroke-width="0.5" opacity="0.38"/>
+      <ellipse cx="16" cy="262" rx="28" ry="16" fill="#1D9E75" opacity="0.09"/>
+      <ellipse cx="12" cy="262" rx="17" ry="11" fill="#1D9E75" opacity="0.20"/>
+      <ellipse cx="9"  cy="262" rx="9"  ry="6"  fill="#5DCAA5" opacity="0.45"/>
+      <path d="M20 270 C46 274, 72 278, 98 282" fill="none" stroke="#1D9E75" stroke-width="1.0" opacity="0.45"/>
+      <rect x="64" y="278" width="76" height="2.5" rx="1.25" fill="url(#attn-glow)" opacity="0.45"/>
+      <circle cx="120" cy="285" r="4" fill="none" stroke="#EEEDFE" stroke-width="0.6" opacity="0.55"/>
+      <line x1="117" y1="285" x2="123" y2="285" stroke="#EEEDFE" stroke-width="0.6" opacity="0.65"/>
+      <line x1="120" y1="282" x2="120" y2="288" stroke="#EEEDFE" stroke-width="0.6" opacity="0.65"/>
+      <g fill="#5DCAA5">
+        <circle cx="108" cy="283" r="1.0" opacity="0.45"/>
+        <circle cx="132" cy="287" r="0.8" opacity="0.4"/>
+      </g>
+
+      <path d="M142 303 C170 300, 200 296, 220 293" fill="none" stroke="#F0997B" stroke-width="0.5" opacity="0.38"/>
+      <ellipse cx="224" cy="298" rx="28" ry="16" fill="#993C1D" opacity="0.09"/>
+      <ellipse cx="228" cy="298" rx="17" ry="11" fill="#D85A30" opacity="0.18"/>
+      <ellipse cx="231" cy="298" rx="9"  ry="6"  fill="#F0997B" opacity="0.45"/>
+      <path d="M220 305 C196 309, 170 312, 142 316" fill="none" stroke="#D85A30" stroke-width="1.0" opacity="0.45"/>
+      <rect x="100" y="313" width="76" height="2.5" rx="1.25" fill="url(#mlp-glow)" opacity="0.42"/>
+      <circle cx="120" cy="320" r="4" fill="none" stroke="#EEEDFE" stroke-width="0.6" opacity="0.55"/>
+      <line x1="117" y1="320" x2="123" y2="320" stroke="#EEEDFE" stroke-width="0.6" opacity="0.65"/>
+      <line x1="120" y1="317" x2="120" y2="323" stroke="#EEEDFE" stroke-width="0.6" opacity="0.65"/>
+      <g fill="#F0997B">
+        <circle cx="108" cy="318" r="1.1" opacity="0.5"/>
+        <circle cx="132" cy="322" r="0.9" opacity="0.4"/>
+      </g>
+
+      <!-- unembed cap (last token state -> logits) -->
+      <path d="M70 348 Q95 358, 120 360 Q145 358, 170 348 L158 332 Q138 339, 120 340 Q102 339, 82 332 Z" fill="#26215C" opacity="0.75"/>
+      <path d="M92 348 Q108 354, 120 355 Q132 354, 148 348 L142 338 Q132 343, 120 344 Q108 343, 98 338 Z" fill="#534AB7" opacity="0.5"/>
+
+      <!-- decoding fan: softmax distribution over vocabulary -->
+      <g>
+        <path d="M120 364 Q60  395, 26  430" fill="none" stroke="#AFA9EC" stroke-width="0.6" opacity="0.40"/>
+        <path d="M120 364 Q85  395, 62  432" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.32"/>
+        <path d="M120 364 Q104 395, 92  434" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.28"/>
+        <path d="M120 364 Q116 395, 110 436" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.25"/>
+        <path d="M120 364 Q126 395, 130 436" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.25"/>
+        <path d="M120 364 Q138 395, 148 434" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.28"/>
+        <path d="M120 364 Q156 395, 178 432" fill="none" stroke="#AFA9EC" stroke-width="0.5" opacity="0.32"/>
+        <path d="M120 364 Q182 395, 214 430" fill="none" stroke="#AFA9EC" stroke-width="0.6" opacity="0.40"/>
+        <path d="M120 364 Q146 395, 162 435" fill="none" stroke="#FFC97A" stroke-width="1.8" opacity="0.92"/>
+        <circle cx="162" cy="435" r="2.4" fill="#FFC97A" opacity="0.95"/>
+      </g>
+    </g>
+
+    <g id="tok">
+      <circle r="3.6" fill="#FFC97A" opacity="0.18"/>
+      <circle r="2.1" fill="#FFC97A" opacity="0.95"/>
+    </g>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect x="0" y="0" width="1240" height="1240" fill="#0B0A20"/>
+  <g fill="#7F77DD" opacity="0.10">
+    <circle cx="60"   cy="80"  r="1.1"/> <circle cx="200"  cy="60"  r="1.3"/> <circle cx="380"  cy="80"  r="1.2"/>
+    <circle cx="540"  cy="60"  r="1.0"/> <circle cx="700"  cy="100" r="0.7"/> <circle cx="860"  cy="80"  r="0.9"/>
+    <circle cx="1020" cy="60"  r="1.0"/> <circle cx="1180" cy="240" r="1.2"/>
+    <circle cx="40"   cy="380" r="1.1"/> <circle cx="280"  cy="380" r="1.2"/> <circle cx="400"  cy="500" r="0.9"/>
+    <circle cx="760"  cy="380" r="0.8"/> <circle cx="1000" cy="420" r="0.9"/>
+    <circle cx="80"   cy="820" r="1.1"/> <circle cx="320"  cy="850" r="1.3"/> <circle cx="440"  cy="920" r="0.8"/>
+    <circle cx="800"  cy="900" r="0.9"/> <circle cx="1040" cy="880" r="0.8"/>
+    <circle cx="200"  cy="1180" r="0.9"/> <circle cx="660"  cy="1180" r="1.1"/> <circle cx="940" cy="1160" r="1.3"/>
+    <circle cx="100"  cy="1240" r="1.1"/>
+  </g>
+
+  <!-- ============================================================
+       SHARED-MEMORY BUS: the "outside world" / distributed-memory
+       highway through which all inter-agent communication flows.
+       y = 640 (top rail) .. 740 (bottom rail).
+       ============================================================ -->
+  <g id="bus">
+
+    <!-- soft fill between rails -->
+    <rect x="20" y="640" width="1200" height="100" fill="url(#bus-fill)" rx="6"/>
+
+    <!-- top rail -->
+    <line x1="20" y1="644" x2="1220" y2="644" stroke="#7AA6D8" stroke-width="1.4" opacity="0.65"/>
+    <line x1="20" y1="648" x2="1220" y2="648" stroke="#7AA6D8" stroke-width="0.5" opacity="0.35"/>
+
+    <!-- bottom rail -->
+    <line x1="20" y1="736" x2="1220" y2="736" stroke="#7AA6D8" stroke-width="1.4" opacity="0.65"/>
+    <line x1="20" y1="732" x2="1220" y2="732" stroke="#7AA6D8" stroke-width="0.5" opacity="0.35"/>
+
+    <!-- internal sub-lanes (very faint) -->
+    <line x1="20" y1="676" x2="1220" y2="676" stroke="#7AA6D8" stroke-width="0.4" opacity="0.18" stroke-dasharray="2 4"/>
+    <line x1="20" y1="704" x2="1220" y2="704" stroke="#7AA6D8" stroke-width="0.4" opacity="0.18" stroke-dasharray="2 4"/>
+
+    <!-- The bus IS the substrate.  No need to enumerate examples.
+         What matters is the two ways it gets touched:
+           - decode lane (amber, top): intended decoded response from one agent's
+             unembed flowing through to another agent's embed
+           - side-effect lane (violet, bottom): unintended propagation that
+             never passes through unembed/embed (a write to any shared state
+             read by some other agent: queue, DB, file, env, scheduler, ...) -->
+
+    <!-- subtle activity glow on the decode lane -->
+    <rect x="20" y="670" width="1200" height="12" fill="#FFC97A" opacity="0.06" rx="3"/>
+    <!-- subtle activity glow on the side-effect lane -->
+    <rect x="20" y="698" width="1200" height="12" fill="#C390EE" opacity="0.06" rx="3"/>
+
+    <!-- packet hints: live traffic on the two lanes -->
+    <g fill="#FFC97A" opacity="0.9">
+      <circle cx="80"  cy="676" r="1.2"/>
+      <circle cx="140" cy="676" r="1.6"/>
+      <circle cx="190" cy="676" r="1.3"/>
+      <circle cx="320" cy="676" r="1.5"/>
+      <circle cx="380" cy="676" r="1.2"/>
+      <circle cx="430" cy="676" r="1.6"/>
+      <circle cx="560" cy="676" r="1.4"/>
+      <circle cx="720" cy="676" r="1.3"/>
+      <circle cx="790" cy="676" r="1.6"/>
+      <circle cx="860" cy="676" r="1.2"/>
+      <circle cx="970" cy="676" r="1.5"/>
+      <circle cx="1180" cy="676" r="1.3"/>
+    </g>
+    <g fill="#C390EE" opacity="0.85">
+      <circle cx="110" cy="704" r="1.3"/>
+      <circle cx="270" cy="704" r="1.4"/>
+      <circle cx="340" cy="704" r="1.2"/>
+      <circle cx="480" cy="704" r="1.5"/>
+      <circle cx="620" cy="704" r="1.3"/>
+      <circle cx="820" cy="704" r="1.4"/>
+      <circle cx="1000" cy="704" r="1.2"/>
+      <circle cx="1130" cy="704" r="1.5"/>
+      <circle cx="1190" cy="704" r="1.3"/>
+    </g>
+
+    <!-- abstract state pocket on the indirect lane: anonymous shared state
+         (any kind: DB row, file, env var, queue entry) that one agent's
+         tool-call writes and a later agent reads.  No label on purpose. -->
+    <g transform="translate(380, 692)">
+      <rect x="0" y="0" width="90" height="20" fill="url(#cell-fill)" rx="3"/>
+      <rect x="0" y="0" width="90" height="20" fill="url(#cell-grid)" opacity="0.6" rx="3"/>
+      <rect x="0" y="0" width="90" height="20" fill="none" stroke="#C390EE" stroke-width="0.7" opacity="0.8" rx="3"/>
+      <text x="45" y="14" font-size="8.5" fill="#E0CDFF" text-anchor="middle" opacity="0.85" font-style="italic">state</text>
+    </g>
+
+    <!-- bus title -->
+    <text x="620" y="635" font-size="12" fill="#7AA6D8" text-anchor="middle" opacity="0.85" font-style="italic">
+      shared-memory bus  (the outside world)
+    </text>
+    <text x="33" y="678" font-size="9" fill="#FFC97A" opacity="0.85" font-style="italic">direct</text>
+    <text x="33" y="706" font-size="9" fill="#C390EE" opacity="0.8"  font-style="italic">indirect</text>
+  </g>
+
+  <!-- ============================================================
+       AGENT INSTANCES (4 transformer residual streams).
+       Repositioned so unembed fans land near top of bus
+       and embed caps live just outside.
+       ============================================================ -->
+  <use href="#agent" x="80"  y="130"/>
+  <use href="#agent" x="490" y="170"/>
+  <use href="#agent" x="490" y="790"/>
+  <use href="#agent" x="900" y="170"/>
+
+  <g font-size="12" fill="#AFA9EC" opacity="0.7" font-style="italic">
+    <text x="200"  y="112" text-anchor="middle">agent N</text>
+    <text x="610"  y="152" text-anchor="middle">agent N+1</text>
+    <text x="610"  y="772" text-anchor="middle">agent N+2</text>
+    <text x="1020" y="152" text-anchor="middle">agent N+3</text>
+  </g>
+
+  <!-- ellipses suggesting many more agents off-screen on either side.
+       Placed close to the agent cluster so the chain reads as a slice. -->
+  <g fill="#7F77DD" opacity="0.6" font-size="24" font-style="italic">
+    <text x="40"   y="300" text-anchor="middle">...</text>
+    <text x="1200" y="300" text-anchor="middle">...</text>
+    <text x="610"  y="1230" text-anchor="middle">...</text>
+  </g>
+
+  <!-- ============================================================
+       BUS-ENGAGED RIBBONS (decoded responses)
+       Path pattern: source-fan-end -> drop into bus top -> slide along
+       decode lane (y=676) -> rise up from bus top -> destination embed.
+       ============================================================ -->
+
+  <!-- ===== A1 -> A2 via bus (slides past shared-DB / shared-bucket; rises AROUND A2's left side) ===== -->
+  <!-- drop: A1 fan ends at world (242, 565); drop into bus at (242, 644) -->
+  <path d="M242 565 C 242 600, 242 620, 242 644"
+        fill="none" stroke="url(#ribbon)" stroke-width="2.6" opacity="0.85"/>
+  <!-- slide along decode lane past shared DB (left of A2's body at x=565..655) -->
+  <path d="M242 676 L 478 676"
+        fill="none" stroke="#FFC97A" stroke-width="2.0" opacity="0.7"/>
+  <!-- rise OUTSIDE A2's body (x=478, left of A2), arc over A2's top, drop into embed at (612, 195) -->
+  <path d="M478 644 Q 478 105, 540 95 Q 612 95, 612 195"
+        fill="none" stroke="url(#ribbon)" stroke-width="2.6" opacity="0.85"/>
+  <!-- token glyphs along the path -->
+  <g>
+    <use href="#tok" x="242" y="588"/>
+    <use href="#tok" x="242" y="624"/>
+    <use href="#tok" x="290" y="676"/>
+    <use href="#tok" x="370" y="676"/>
+    <use href="#tok" x="450" y="676"/>
+    <use href="#tok" x="478" y="610"/>
+    <use href="#tok" x="478" y="430"/>
+    <use href="#tok" x="478" y="240"/>
+    <use href="#tok" x="498" y="120"/>
+    <use href="#tok" x="556" y="95"/>
+    <use href="#tok" x="608" y="135"/>
+    <use href="#tok" x="612" y="178"/>
+  </g>
+
+  <!-- ===== A2 -> A3 via bus (drops straight down, passes the bucket cell) ===== -->
+  <!-- A2 fan ends at world (652, 605); drop into bus at (652, 644) -->
+  <path d="M652 605 C 652 620, 652 632, 652 644"
+        fill="none" stroke="url(#ribbon)" stroke-width="2.6" opacity="0.85"/>
+  <!-- short slide along bus -->
+  <path d="M652 676 L 608 676"
+        fill="none" stroke="#FFC97A" stroke-width="2.0" opacity="0.6"/>
+  <!-- drop down to A3 embed at (610, 815) -->
+  <path d="M608 740 C 608 770, 610 800, 610 815"
+        fill="none" stroke="url(#ribbon)" stroke-width="2.6" opacity="0.85"/>
+  <g>
+    <use href="#tok" x="652" y="624"/>
+    <use href="#tok" x="630" y="676"/>
+    <use href="#tok" x="610" y="765"/>
+    <use href="#tok" x="610" y="805"/>
+  </g>
+
+  <!-- ===== A2 -> A4 via bus (branch: a second decoded sample) =====
+       A2's decoding fan emits TWO sampled paths; the second arcs out to feed A4.
+       The bus segment slides past the tool side-effect cell, then rises AROUND A4's right side. -->
+  <!-- second sampled path inside A2 -->
+  <path d="M610 525 Q 660 590, 700 605" fill="none" stroke="#FFC97A" stroke-width="1.4" opacity="0.7"/>
+  <circle cx="700" cy="605" r="2.2" fill="#FFC97A" opacity="0.9"/>
+  <!-- drop from (700, 605) into bus -->
+  <path d="M700 605 C 700 620, 700 632, 700 644" fill="none" stroke="url(#ribbon)" stroke-width="2.2" opacity="0.8"/>
+  <!-- slide right along bus past the tool side-effect cell to a point RIGHT of A4 -->
+  <path d="M700 676 L 1108 676" fill="none" stroke="#FFC97A" stroke-width="1.8" opacity="0.65"/>
+  <!-- rise OUTSIDE A4's body (x=1108, right of A4 at x=965..1075), arc left over A4's top into embed at (1020, 195) -->
+  <path d="M1108 644 Q 1108 105, 1060 95 Q 1020 95, 1020 195" fill="none" stroke="url(#ribbon)" stroke-width="2.4" opacity="0.85"/>
+  <g>
+    <use href="#tok" x="700" y="624"/>
+    <use href="#tok" x="760" y="676"/>
+    <use href="#tok" x="850" y="676"/>
+    <use href="#tok" x="950" y="676"/>
+    <use href="#tok" x="1040" y="676"/>
+    <use href="#tok" x="1108" y="610"/>
+    <use href="#tok" x="1108" y="430"/>
+    <use href="#tok" x="1108" y="240"/>
+    <use href="#tok" x="1088" y="120"/>
+    <use href="#tok" x="1040" y="95"/>
+    <use href="#tok" x="1020" y="140"/>
+    <use href="#tok" x="1020" y="178"/>
+  </g>
+
+  <!-- ============================================================
+       INDIRECT CHANNEL (violet, dashed).
+       Still originates at decode: the agent decodes a tool-call or
+       action.  The decoded output forks at the bus: part travels
+       the direct lane to another agent's embed (text response),
+       part travels the indirect lane and writes the abstract state
+       pocket.  A later agent reads that state pocket as its input.
+       ============================================================ -->
+
+  <!-- A1's decoded output forks INTO the indirect lane at its bus entry point. -->
+  <!-- fork-down from amber lane to indirect lane at the A1 entry column -->
+  <path d="M242 676 C 242 686, 242 696, 242 704"
+        fill="none" stroke="#C390EE" stroke-width="0.9" stroke-dasharray="3 5" opacity="0.7"/>
+  <!-- slide right along indirect lane, INTO the state pocket -->
+  <path d="M242 704 L 380 702"
+        fill="none" stroke="#C390EE" stroke-width="0.9" stroke-dasharray="3 5" opacity="0.7"/>
+  <!-- after state mutation: a later agent reads the pocket; emerge from pocket and continue -->
+  <path d="M470 702 L 610 704"
+        fill="none" stroke="#C390EE" stroke-width="0.9" stroke-dasharray="3 5" opacity="0.7"/>
+  <!-- drop from indirect lane down into A3.embed at (610, 815) -->
+  <path d="M610 704 C 610 730, 610 770, 610 800"
+        fill="none" stroke="#C390EE" stroke-width="0.9" stroke-dasharray="3 5" opacity="0.7"/>
+
+  <!-- small endpoint markers -->
+  <circle cx="242" cy="704" r="2.0" fill="#C390EE" opacity="0.75"/>
+  <circle cx="610" cy="704" r="2.0" fill="#C390EE" opacity="0.75"/>
+
+  <!-- LEGEND -->
+  <g font-size="11" opacity="0.78">
+    <rect x="40" y="38" width="14" height="4" fill="#7F77DD" opacity="0.7" rx="2"/>
+    <text x="60" y="42" fill="#EEEDFE">residual stream</text>
+    <ellipse cx="170" cy="40" rx="9" ry="4" fill="#5DCAA5" opacity="0.7"/>
+    <text x="184" y="42" fill="#EEEDFE">attn (r/w)</text>
+    <ellipse cx="280" cy="40" rx="9" ry="4" fill="#F0997B" opacity="0.7"/>
+    <text x="294" y="42" fill="#EEEDFE">MLP (r/w)</text>
+    <g transform="translate(390,40)">
+      <circle r="3.5" fill="none" stroke="#EEEDFE" stroke-width="0.7"/>
+      <line x1="-2.5" y1="0" x2="2.5" y2="0" stroke="#EEEDFE" stroke-width="0.7"/>
+      <line x1="0" y1="-2.5" x2="0" y2="2.5" stroke="#EEEDFE" stroke-width="0.7"/>
+    </g>
+    <text x="402" y="42" fill="#EEEDFE">residual add</text>
+    <use href="#tok" x="500" y="40"/>
+    <use href="#tok" x="513" y="40"/>
+    <use href="#tok" x="526" y="40"/>
+    <text x="538" y="42" fill="#EEEDFE">direct: response is next agent's input</text>
+    <line x1="800" y1="40" x2="835" y2="40" stroke="#C390EE" stroke-width="1.2" stroke-dasharray="3 4"/>
+    <text x="840" y="42" fill="#EEEDFE">indirect: tool mutates shared state</text>
+    <rect x="1110" y="36" width="22" height="8" fill="url(#bus-fill)" stroke="#7AA6D8" stroke-width="0.5" opacity="0.9" rx="1"/>
+    <text x="1138" y="42" fill="#EEEDFE">bus</text>
+  </g>
+
+</svg>
