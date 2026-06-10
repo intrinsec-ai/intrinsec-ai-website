@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codes, Not Explanations | Intrinsec AI</title>
+    <meta name="description" content="Detect anomalies inside the model's residual stream using platonic codes: shared layer-by-layer routes, with a simple first test of how to extract them.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                document.documentElement.setAttribute('data-theme', savedTheme || 'dark');
+            } catch (e) {}
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0a0f1a;
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-dim: #94a3b8;
+            --violet-bright: #7F77DD;
+            --violet-soft: #AFA9EC;
+            --amber: #FFC97A;
+            --amber-dim: rgba(255, 201, 122, 0.15);
+            --purple-accent: #C390EE;
+            --green: #1D9E75;
+        }
+
+        [data-theme="light"] {
+            --navy: #ffffff;
+            --text: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-dim: #475569;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 45%, #f0f9ff 100%);
+            background-attachment: fixed;
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(127, 119, 221, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 85% 75%, rgba(255, 201, 122, 0.04) 0%, transparent 40%);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        .progress-bar { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 300; background: rgba(127, 119, 221, 0.1); }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--violet-bright), var(--amber), var(--purple-accent)); transition: width 0.15s ease-out; }
+
+        header {
+            padding: 20px 0; position: fixed; top: 3px; left: 0; right: 0;
+            background: rgba(10, 15, 26, 0.85); backdrop-filter: blur(16px); z-index: 200;
+            border-bottom: 1px solid rgba(127, 119, 221, 0.12); transition: padding 0.4s ease;
+        }
+        [data-theme="light"] header { background: rgba(255, 255, 255, 0.92); border-bottom: 1px solid rgba(127, 119, 221, 0.15); }
+        header.scrolled { padding: 12px 0; }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s ease; }
+        .logo:hover { color: var(--violet-bright); }
+        nav { display: flex; gap: 20px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; position: relative; transition: color 0.3s ease; }
+        nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--violet-bright); transition: width 0.3s ease; }
+        nav a:hover { color: var(--violet-bright); }
+        nav a:hover::after { width: 100%; }
+        nav a.active-link { color: var(--violet-bright); }
+        nav a.active-link::after { width: 100%; }
+        .theme-toggle { background: rgba(127, 119, 221, 0.08); border: 1px solid rgba(127, 119, 221, 0.2); border-radius: 8px; padding: 6px 10px; cursor: pointer; color: var(--text-secondary); font-size: 0.8125rem; font-family: 'Inter', sans-serif; transition: all 0.3s ease; }
+        .theme-toggle:hover { border-color: var(--violet-bright); color: var(--violet-bright); }
+
+        .back-link { position: absolute; top: 100px; left: 32px; z-index: 50; display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 0.875rem; transition: color 0.3s ease; }
+        .back-link:hover { color: var(--violet-bright); }
+
+        .hero { min-height: auto; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 32px 48px; position: relative; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 50% 30%, rgba(127, 119, 221, 0.14) 0%, transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 820px; position: relative; z-index: 1; }
+        .hero-label { display: inline-block; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.15s ease forwards; }
+        .hero h1 { font-size: clamp(2.25rem, 5.5vw, 3.75rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 0; opacity: 0; animation: fadeUp 0.8s 0.35s ease forwards; }
+        .hero h1 .gradient-line { display: block; background: linear-gradient(135deg, var(--violet-soft) 0%, var(--amber) 50%, var(--purple-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-sub { font-size: clamp(1.0625rem, 2vw, 1.25rem); color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.75; opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+        .content-section { padding: 72px 32px; }
+        .content-inner { max-width: 800px; margin: 0 auto; width: 100%; min-width: 0; }
+        .content-inner p { font-size: 1.0625rem; line-height: 1.85; color: var(--text-secondary); margin-bottom: 24px; }
+        .content-inner p:last-child { margin-bottom: 0; }
+        .content-inner strong { color: var(--text); font-weight: 600; }
+        .content-inner h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin: 0 0 20px; letter-spacing: -0.02em; }
+        .intro-lead { padding-top: 32px; padding-bottom: 16px; }
+        .intro-lead .surface-block { margin-top: 0; border-bottom: none; padding-bottom: 0; }
+        .intro-lead .surface-copy ul { margin: 12px 0 16px; padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.975rem; line-height: 1.65; }
+        .intro-lead .surface-copy li { margin-bottom: 6px; }
+        .intro-lead .surface-method a { border-bottom: none; }
+        .intro-lead .surface-method a:hover { color: var(--violet-bright); }
+        .intro-lead .surface-copy > p a { color: var(--violet-bright); }
+        .intro-lead .surface-visual img { max-height: 520px; object-fit: contain; object-position: top center; }
+        .content-inner a { color: var(--violet-bright); text-decoration: none; border-bottom: 1px solid rgba(127, 119, 221, 0.35); transition: border-color 0.3s ease; }
+        .content-inner a:hover { border-bottom-color: var(--violet-bright); }
+
+        .section-num { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--violet-bright); margin-bottom: 10px; opacity: 0.8; }
+        .section-break { height: 1px; max-width: 800px; margin: 0 auto; border: none; background: linear-gradient(90deg, transparent, rgba(127, 119, 221, 0.2), rgba(255, 201, 122, 0.15), transparent); }
+
+        .key-statement {
+            font-size: clamp(1.25rem, 2.8vw, 1.625rem) !important; font-weight: 600; color: var(--amber) !important;
+            text-align: center; max-width: 680px; margin: 44px auto !important; line-height: 1.5 !important;
+            position: relative; padding: 36px 0;
+        }
+        .key-statement::before, .key-statement::after {
+            content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 72px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+        }
+        .key-statement::before { top: 0; }
+        .key-statement::after { bottom: 0; }
+
+        .surface-block {
+            display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+            gap: 36px; align-items: center; margin: 48px 0; padding-bottom: 48px;
+            border-bottom: 1px solid rgba(127, 119, 221, 0.1); min-width: 0;
+        }
+        .surface-block:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .surface-block--flip { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+        .surface-block--wide { grid-template-columns: 1fr; gap: 24px; }
+        @media (max-width: 720px) {
+            .surface-block, .surface-block--flip { grid-template-columns: 1fr; gap: 24px; }
+        }
+        .surface-visual {
+            background: #0B0A20; border-radius: 12px;
+            border: 1px solid rgba(127, 119, 221, 0.15); overflow: hidden; min-width: 0;
+        }
+        .surface-visual img { width: 100%; height: auto; display: block; }
+        .surface-copy { min-width: 0; }
+        .surface-copy h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+        .surface-copy .surface-method { font-size: 0.875rem; font-style: italic; color: var(--text-dim); margin-bottom: 14px; }
+        .surface-copy p { font-size: 1rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 14px; }
+        .surface-copy p:last-child { margin-bottom: 0; }
+        .surface-copy ul { margin: 0; padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.975rem; line-height: 1.7; }
+        .surface-copy li { margin-bottom: 8px; }
+
+        .surface-block--purple .surface-copy h3 { color: var(--purple-accent); }
+        .surface-block--amber .surface-copy h3 { color: var(--amber); }
+        .surface-block--violet .surface-copy h3 { color: var(--violet-soft); }
+        .surface-block--green .surface-copy h3 { color: var(--green); }
+
+        .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0 20px; }
+        .stat-card { padding: 20px 16px; border-radius: 12px; border: 1px solid rgba(127, 119, 221, 0.2); background: rgba(127, 119, 221, 0.06); text-align: center; }
+        .stat-value { font-size: 1.625rem; font-weight: 700; color: var(--green); line-height: 1.1; margin-bottom: 6px; }
+        .stat-label { font-size: 0.8125rem; color: var(--text-dim); line-height: 1.4; }
+        @media (max-width: 640px) { .stat-row { grid-template-columns: 1fr; } }
+
+        .results-table-wrap { margin: 20px 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(127, 119, 221, 0.18); }
+        .results-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+        .results-table th, .results-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(127, 119, 221, 0.12); }
+        .results-table th { background: rgba(127, 119, 221, 0.1); color: var(--text); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
+        .results-table td { color: var(--text-secondary); }
+        .results-table tr:last-child td { border-bottom: none; }
+        .results-table .num-good { color: var(--green); font-weight: 700; }
+        .results-table .num-baseline { color: var(--text-dim); font-style: italic; }
+
+        .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 8px; }
+        .pill { padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(127, 119, 221, 0.25); background: rgba(127, 119, 221, 0.06); font-size: 0.8125rem; font-weight: 500; color: var(--text-secondary); }
+        .pill--amber { border-color: rgba(255, 201, 122, 0.35); color: var(--amber); background: var(--amber-dim); }
+
+        .references { margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(127, 119, 221, 0.12); }
+        .references h3 { font-size: 0.8125rem !important; font-weight: 700 !important; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim) !important; margin: 0 0 16px !important; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+
+        .closing { text-align: center; padding: 72px 32px 100px; }
+        .closing-inner { max-width: 700px; margin: 0 auto; }
+        .closing-line { font-size: clamp(1.0625rem, 2.2vw, 1.3125rem); color: var(--text-secondary); margin-bottom: 20px; line-height: 1.65; }
+        .closing-punch { font-size: clamp(1.25rem, 3vw, 1.625rem); font-weight: 700; line-height: 1.45; background: linear-gradient(135deg, var(--violet-soft), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 96px 20px 48px; }
+            .content-section { padding: 48px 20px; }
+            .content-inner p { font-size: 1rem; }
+            .surface-block { margin: 36px 0; padding-bottom: 36px; }
+            .back-link { position: relative; top: auto; left: auto; display: inline-flex; margin: 88px 20px 0; }
+            .header-inner { padding: 0 16px; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .hero-label, .hero h1, .hero-sub { opacity: 1; animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<header id="mainHeader">
+    <div class="header-inner">
+        <div style="display:flex;align-items:center;gap:24px;">
+            <a href="../index.html" class="logo">Intrinsec AI</a>
+            <nav>
+                <a href="../products.html">Products</a>
+                <a href="index.html" class="active-link">Research</a>
+            </nav>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark</span>
+        </button>
+    </div>
+</header>
+
+<a href="index.html" class="back-link">← Back to Research</a>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-label">Position · June 2026</div>
+        <h1>
+            Codes, Not Explanations
+            <span class="gradient-line">anomaly detection with platonic codes</span>
+        </h1>
+    </div>
+</section>
+
+<div class="content-section intro-lead">
+    <div class="content-inner">
+        <div class="surface-block surface-block--violet reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-residual-river.svg" alt="The residual stream as a high-dimensional river flowing through layers">
+            </div>
+            <div class="surface-copy">
+                <div class="surface-method">residual stream · the internal surface</div>
+                <p>
+                    Our <a href="agent-behavior-analytics.html" style="border-bottom:1px solid rgba(127,119,221,0.35);">previous post</a> described three places to watch for anomalies: external events, stated intent, and the <strong>residual stream</strong>, the layer-by-layer activations inside the model during a forward pass. <strong>This post focuses on the third.</strong> They are richer than any prompt or response you can read at the boundary, yet they have been mainly overlooked for two reasons:
+                </p>
+                <ul>
+                    <li><strong>Massive, model-specific mathematical objects:</strong> every layer produces a full activation vector in a private coordinate system; raw vectors are expensive to move and cannot be directly compared across models</li>
+                    <li><strong>Built for mechanistic interpretability:</strong> the research program asks what activations mean and whether a human can read them, not whether a run has diverged from typical behavior</li>
+                </ul>
+                <p style="margin-bottom:0;">
+                    Those barriers kept security at the perimeter. We lay out <strong>platonic codes</strong>, a shared coordinate system that compresses activations into comparable routes, so anomaly detection can sit next to inference. This is not an internal guardrail that blocks known bad strings. It is <strong>behavioral anomaly detection</strong>: learn what typical routes look like, then flag runs that fork, including zero-day patterns no rulebook ever named. What follows is the concept, and a simple first test of how to extract such codes from the stream.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 01 -->
+<div class="content-section">
+    <div class="content-inner">
+        <span class="section-num reveal">01</span>
+        <h2 class="reveal">Legibility vs detection</h2>
+
+        <p class="reveal">
+            Detecting anomalies in the residual stream requires a way to compare runs, not a dictionary of what each activation means. <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener noreferrer">Mechanistic interpretability</a> asks: <em>what is the model doing, and can a human read it?</em> Anomaly detection asks a different question: <em>does this run follow a known path, or has it diverged?</em>
+        </p>
+
+        <div class="surface-block surface-block--purple reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-code-split.svg" alt="Mechanistic interpretability vs anomaly detection on platonic codes">
+            </div>
+            <div class="surface-copy">
+                <h3>Two jobs, two tools</h3>
+                <div class="surface-method">interpretability names features · detection tracks routes</div>
+                <p>
+                    Interpretability builds <strong>human-readable features</strong>: sparse autoencoders, crosscoders, circuit diagrams. That work matters when a person needs to understand what the model is doing.
+                </p>
+                <p>
+                    Anomaly detection takes a different approach, and a different job than blocking. It assigns each behavior a <strong>platonic code</strong>: the same code for the same behavior, across models, without being thrown off by each architecture's idiosyncrasies. Then it asks whether the route is typical, not whether it matched a rule.
+                </p>
+            </div>
+        </div>
+
+        <p class="key-statement reveal">You don't need to explain the representation. You need to detect when it diverges.</p>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- 02 -->
+<div class="content-section">
+    <div class="content-inner">
+        <span class="section-num reveal">02</span>
+        <h2 class="reveal">Routes, not snapshots</h2>
+
+        <p class="reveal">
+            An anomaly in the residual stream is not a toxic token or a suspicious log event, and it is not a guardrail match against a blocklist. It is a <strong>fork in the route</strong>: the computation took a path through the layers that typical behavior does not take. To catch that, you compare trajectories layer by layer: Does this run match its baseline? Does it cluster with known benign behavior, or fork away as something new? Has the distribution of routes shifted over time? A single embedding or boundary snapshot cannot answer any of these. You need a <strong>sequence of codes through the full stack</strong>, decoded where inference already runs, not shipped out after the fact.
+        </p>
+
+        <div class="surface-block surface-block--amber reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-aba-needs.svg" alt="Baseline match, clustering outlier, and session drift converging on a platonic trajectory">
+            </div>
+            <div class="surface-copy">
+                <h3>Three ways a route can go wrong</h3>
+                <div class="surface-method">baseline match · clustering · drift</div>
+                <p>
+                    <strong>Baseline match:</strong> does this run follow the same code route as previous runs of the same task? <strong>Clustering:</strong> does it group with known benign behavior, or sit as an outlier, a route you have never seen? <strong>Drift:</strong> over time, has the overall distribution of routes shifted?
+                </p>
+                <p style="margin-bottom:0;">
+                    All three checks require a <strong>platonic trajectory</strong>, a layer-by-layer code sequence, not a semantic label or event signature. Novel forks surface even when the attack pattern is new. The next section shows how to build one.
+                </p>
+            </div>
+        </div>
+
+        <div class="surface-block surface-block--green surface-block--flip reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-ai-gateway.svg" alt="Instrumented AI gateway wrapping agent inference and the shared-memory bus">
+            </div>
+            <div class="surface-copy">
+                <h3>Where to read the stream</h3>
+                <div class="surface-method">instrumented AI gateway · inference in the path</div>
+                <p>
+                    That requires <strong>instrumentation inside the inference path</strong>, not a filter at the perimeter. Residual streams are giant mathematical objects (a full activation vector at every layer) and they are expensive to move. You cannot cheaply ship them to a separate analytics pipeline after the fact.
+                </p>
+                <p>
+                    <strong>Compute once, use it for security.</strong> The model already materializes these activations on every forward pass. Read them where inference runs, decode them into platonic codes, and reuse that same work for baseline matching and fork detection, instead of paying the cost twice.
+                </p>
+                <p style="margin-bottom:0;">
+                    An <strong>instrumented AI gateway</strong> sits where model calls actually flow: layer-by-layer activations decoded into platonic codes at inference time, and cross-agent traffic on the shared-memory bus tracked before the next hop. A classic app gateway sees only boundary inputs and outputs and misses both surfaces. In-path instrumentation does not.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- 03 -->
+<div class="content-section">
+    <div class="content-inner">
+        <span class="section-num reveal">03</span>
+        <h2 class="reveal">Platonic codes</h2>
+
+        <p class="reveal">
+            Capable models appear to share underlying geometry, per the <a href="https://arxiv.org/pdf/2405.07987" target="_blank" rel="noopener noreferrer">Platonic Representation Hypothesis</a>. If that holds, you can assign behaviors to <strong>platonic codes</strong> that capture shared structure across models, rather than each model's private, incompatible activations.
+        </p>
+
+        <div class="surface-block surface-block--violet reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-manifold.svg" alt="Two private bases projecting to one shared platonic point">
+            </div>
+            <div class="surface-copy">
+                <h3>Shared shape, private noise</h3>
+                <div class="surface-method">platonic · not per-model</div>
+                <p>
+                    Raw activations live in each model's private coordinate system, incomparable across architectures. Platonic codes project into a shared frame that is the same everywhere. Baseline match, clustering, and drift then measure real behavioral differences, not architectural noise.
+                </p>
+            </div>
+        </div>
+
+        <div class="surface-block surface-block--amber surface-block--flip reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-city-paths.svg" alt="San Francisco map: route past Golden Gate Bridge as code #4113, not a landmark name">
+            </div>
+            <div class="surface-copy">
+                <h3>Codes, not landmark names</h3>
+                <div class="surface-method">same geometry · numbered turns</div>
+                <p>
+                    Mechanistic interpretability names what it finds: a sparse feature becomes <em>"Golden Gate Bridge."</em> Platonic codes use the same underlying geometry, but track <strong>routes by code number</strong>, not by landmark name. You never need to know what a turn represents on the map. You only need where it falls in the path.
+                </p>
+                <p>
+                    What matters is the full <strong>path</strong>, the ordered sequence of code turns a behavior takes through the stack. Same task, same route, same codes. When a run matches baseline and then forks onto a new path, that fork is the anomaly.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="section-break">
+
+<!-- 04 -->
+<div class="content-section">
+    <div class="content-inner">
+        <span class="section-num reveal">04</span>
+        <h2 class="reveal">Evaluation</h2>
+
+        <p class="reveal">
+            If platonic codes can support anomaly detection, the geometry should be measurable. We test that idea with a <strong>deliberately simple assignment rule</strong>, not because it is optimal, but because it is enough to ask whether the shared structure exists at all. Assign codes from a fixed set of reference prompts, read the resulting trajectories, and run <strong>three checks</strong> to see whether the signal holds.
+        </p>
+
+        <div class="surface-block surface-block--amber reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-codebook.svg" alt="Fixed reference-prompt set; nearest prompt at each layer becomes the code">
+            </div>
+            <div class="surface-copy">
+                <h3>How codes are assigned</h3>
+                <div class="surface-method">nearest reference prompt · each layer</div>
+                <p>
+                    Start with a small, fixed set of reference prompts: canonical behaviors that every model can run. At each layer, find the reference prompt whose activation is <strong>most similar</strong> to the current state. That reference prompt's index becomes the platonic code at that depth.
+                </p>
+                <p style="margin-bottom:0;">
+                    Stack those per-layer codes into a sequence, a route through the stack. The heatmaps below visualize exactly that. The rule is minimal on purpose: if platonic geometry is real, even this should leave a signal.
+                </p>
+            </div>
+        </div>
+
+        <div class="surface-block surface-block--violet reveal">
+            <div class="surface-visual">
+                <img src="assets/code_evolution.png" alt="Code evolution heatmap across layers">
+            </div>
+            <div class="surface-copy">
+                <h3>One model</h3>
+                <div class="surface-method">nearest reference prompt per layer · one behavior per row</div>
+                <ul>
+                    <li>Each cell: the platonic code is the closest reference prompt at that layer</li>
+                    <li>Middle layers form a shared computation highway: similar codes across behaviors</li>
+                    <li>Sequence order matters: ~1.00 agreement when order is preserved, ~0.50 when scrambled (chance level)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="surface-block surface-block--amber surface-block--flip reveal">
+            <div class="surface-visual">
+                <img src="assets/code_evolution_pair.png" alt="Same behaviors in DeepSeek and Gemma">
+            </div>
+            <div class="surface-copy">
+                <h3>Two models</h3>
+                <div class="surface-method">DeepSeek · Gemma · same platonic codebook</div>
+                <p>
+                    Same behaviors, different models, same assignment rule. The colored band in the middle layers appears in both panels: ~0.75–0.86 per-depth agreement, versus ~0.06 expected by chance.
+                </p>
+                <p>
+                    The platonic route survives the model swap. Early and late layers stay model-specific; the shared computation in the middle is what the code captures and what makes cross-model comparison possible.
+                </p>
+            </div>
+        </div>
+
+        <div class="surface-block surface-block--green reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-three-checks.svg" alt="Three checks: shared geometry, held-out transfer, order signal">
+            </div>
+            <div class="surface-copy">
+                <h3>Three checks</h3>
+                <div class="surface-method">Qwen · DeepSeek · Gemma · Phi</div>
+                <p>Four models. Three questions. Does the platonic route generalize?</p>
+                <p>
+                    <strong>Shared shape.</strong> Do capable models agree on the underlying directions? Yes: 0.98 best-pair alignment, 0.94 mean top-10, 28 shared dimensions across models.
+                </p>
+                <p>
+                    <strong>Held-out transfer.</strong> Does a model never used to build the codebook still align? Yes: 0.90 alignment (0.84 on the hardest pair), well above the ~0.50 chance baseline.
+                </p>
+                <p style="margin-bottom:0;">
+                    <strong>Order signal.</strong> Does the sequence of layers matter, or just the set of codes? Scramble the layer order and agreement drops to ~0.50. The path matters, not just the bag of codes.
+                </p>
+            </div>
+        </div>
+
+        <p class="reveal">
+            Agreement well above chance, especially across models at the same layer, is the signal we were looking for. But it raises a prior question: <strong>why should cross-model comparison on the residual stream work at all?</strong> The intro flagged activations as private, model-specific coordinates. The heatmaps say those coordinates can still agree if what you compare is geometry, not the raw numbers.
+        </p>
+
+        <div class="surface-block surface-block--violet reveal">
+            <div class="surface-visual">
+                <img src="assets/platonic-no-privileged-basis.svg" alt="Linear invariance on the residual stream, Procrustes rotation between models, and where alignment is cleanest">
+            </div>
+            <div class="surface-copy">
+                <h3>No privileged basis</h3>
+                <div class="surface-method">Elhage et al. · Procrustes · linear invariance</div>
+                <p>
+                    <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener noreferrer">Elhage et al.</a> show the residual stream has <strong>no privileged basis</strong>: rotate the coordinate system consistently and behavior is unchanged. Angles, distances, and subspaces are what carry, not the labels on the axes. Two models encoding the same concept in differently rotated coordinates is symmetry, not disagreement.
+                </p>
+                <p style="margin-bottom:0;">
+                    <strong>Procrustes alignment</strong> exploits that: find the rotation that best maps one point cloud onto another. Platonic codes bet the same way, but upfront: a codebook every model projects into, instead of pairwise rotation after the fact.
+                </p>
+            </div>
+        </div>
+
+        <p class="reveal">
+            What we show is a <strong>proof of concept</strong>, not a final codebook design. Open questions remain: how to optimally derive platonic codes, how large the set should be, and how to maximize separability across behaviors. One direction is a carefully engineered reference prompt set: prompts tuned to span distinct computational directions, pushed to the literary extreme in something like Joyce-style instructions from <em>Finnegans Wake</em>, text so densely layered that critics describe it in quantum-theoretic terms. Another is to <strong>curate the set through reinforcement learning</strong>, optimizing coverage and alignment directly. Nearest-reference assignment is intentionally simple: transparent, reproducible, and enough to ask whether the platonic geometry is real.
+        </p>
+
+        <div class="references reveal">
+            <h3>References</h3>
+            <ul>
+                <li>Elhage et al. <em>A Mathematical Framework for Transformer Circuits.</em> <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener noreferrer">transformer-circuits.pub/2021/framework</a></li>
+                <li>Elhage et al. <em>Towards Monosemanticity.</em> <a href="https://transformer-circuits.pub/2023/monosemantic-features" target="_blank" rel="noopener noreferrer">Transformer Circuits · 2023</a></li>
+                <li>Cunningham et al. <em>Sparse Autoencoders Find Highly Interpretable Features in Language Models.</em> <a href="https://arxiv.org/abs/2309.08600" target="_blank" rel="noopener noreferrer">arXiv:2309.08600</a></li>
+                <li>Lindsey et al. <em>Sparse Crosscoders for Cross-Layer Features and Model Diffing.</em> <a href="https://transformer-circuits.pub/2024/crosscoders/" target="_blank" rel="noopener noreferrer">Transformer Circuits · 2024</a></li>
+                <li>Huh et al. <em>The Platonic Representation Hypothesis.</em> <a href="https://arxiv.org/pdf/2405.07987" target="_blank" rel="noopener noreferrer">arXiv:2405.07987</a></li>
+                <li>Related: <a href="agent-behavior-analytics.html">Agent Behavior Analytics through the Residual Stream</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="closing">
+    <div class="closing-inner">
+        <p class="closing-line reveal">You don't need to name what the model is doing. You need to know whether the route has changed.</p>
+        <p class="closing-punch reveal reveal-delay-1">Detect the path. Compare to baseline. Flag the fork.</p>
+    </div>
+</section>
+
+<script>
+(function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeUI(savedTheme);
+
+    function updateThemeUI(theme) {
+        themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+        themeText.textContent = theme === 'light' ? 'Light' : 'Dark';
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeUI(next);
+    });
+
+    const progressFill = document.getElementById('progressFill');
+    const mainHeader = document.getElementById('mainHeader');
+
+    window.addEventListener('scroll', function() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        progressFill.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+        mainHeader.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px 5% 0px' });
+
+    function revealInViewport() {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('visible');
+        });
+    }
+
+    document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+    revealInViewport();
+    window.addEventListener('load', revealInViewport, { passive: true });
+    window.addEventListener('resize', revealInViewport, { passive: true });
+})();
+</script>
+</body>
+</html>
