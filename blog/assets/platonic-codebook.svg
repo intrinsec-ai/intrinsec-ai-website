@@ -1,0 +1,57 @@
+<svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cbTitle cbDesc" font-family="Inter, -apple-system, sans-serif">
+  <title id="cbTitle">Nearest reference prompt at each layer is the platonic code</title>
+  <desc id="cbDesc">A fixed reference-prompt set. At each depth, assign the most similar prompt. Stack those indices into a platonic trajectory.</desc>
+  <defs>
+    <marker id="cbArr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="#AFA9EC"/>
+    </marker>
+  </defs>
+  <rect width="920" height="340" fill="#0B0A20"/>
+  <text x="460" y="34" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.06em">NEAREST REFERENCE PROMPT PER LAYER &#8594; PLATONIC CODE</text>
+  <rect x="40" y="56" width="200" height="220" rx="12" fill="rgba(255,201,122,0.06)" stroke="#FFC97A" stroke-width="1"/>
+  <text x="140" y="84" text-anchor="middle" fill="#FFC97A" font-size="11" font-weight="700">REFERENCE PROMPTS</text>
+  <text x="140" y="104" text-anchor="middle" fill="#AFA9EC" font-size="10" font-style="italic">shared canonical set</text>
+  <g>
+    <circle cx="90" cy="138" r="5" fill="#FFC97A" opacity="0.9"/>
+    <circle cx="130" cy="122" r="4" fill="#AFA9EC" opacity="0.8"/>
+    <circle cx="170" cy="140" r="5" fill="#FFC97A" opacity="0.9"/>
+    <circle cx="110" cy="168" r="4" fill="#7F77DD" opacity="0.8"/>
+    <circle cx="150" cy="182" r="5" fill="#FFC97A" opacity="0.9"/>
+    <circle cx="95" cy="200" r="4" fill="#AFA9EC" opacity="0.8"/>
+    <circle cx="165" cy="210" r="4" fill="#7F77DD" opacity="0.8"/>
+    <circle cx="125" cy="228" r="5" fill="#FFC97A" opacity="0.9"/>
+    <path d="M90 138 L130 122 L170 140 L150 182 L125 228 L95 200 L110 168 Z" fill="none" stroke="#FFC97A" stroke-width="0.6" opacity="0.25"/>
+    <g font-size="9" fill="#94a3b8">
+      <text x="78" y="134">a&#8321;</text>
+      <text x="122" y="118">a&#8322;</text>
+      <text x="178" y="136">a&#8323;</text>
+      <text x="178" y="214">a&#8345;</text>
+    </g>
+    <text x="140" y="252" text-anchor="middle" fill="#94a3b8" font-size="9" font-style="italic">fixed across models</text>
+  </g>
+  <line x1="240" y1="166" x2="300" y2="166" stroke="#AFA9EC" stroke-width="1.4" marker-end="url(#cbArr)"/>
+  <rect x="300" y="118" width="120" height="96" rx="12" fill="rgba(127,119,221,0.08)" stroke="#7F77DD" stroke-width="1.2"/>
+  <text x="360" y="152" text-anchor="middle" fill="#EEEDFE" font-size="13" font-weight="700">Model</text>
+  <text x="360" y="172" text-anchor="middle" fill="#AFA9EC" font-size="10">any architecture</text>
+  <text x="360" y="192" text-anchor="middle" fill="#AFA9EC" font-size="10">forward pass</text>
+  <line x1="420" y1="166" x2="480" y2="166" stroke="#AFA9EC" stroke-width="1.4" marker-end="url(#cbArr)"/>
+  <rect x="480" y="88" width="180" height="156" rx="12" fill="rgba(93,202,165,0.06)" stroke="#5DCAA5" stroke-width="1.2"/>
+  <text x="570" y="118" text-anchor="middle" fill="#5DCAA5" font-size="11" font-weight="700">LAYER CODE</text>
+  <text x="570" y="138" text-anchor="middle" fill="#AFA9EC" font-size="10">argmax similarity</text>
+  <g fill="#5DCAA5" opacity="0.85">
+    <rect x="500" y="152" width="140" height="8" rx="2"/>
+    <rect x="500" y="168" width="98" height="8" rx="2" opacity="0.7"/>
+    <rect x="500" y="184" width="120" height="8" rx="2" opacity="0.55"/>
+    <rect x="500" y="200" width="72" height="8" rx="2" opacity="0.4"/>
+    <rect x="500" y="216" width="110" height="8" rx="2" opacity="0.65"/>
+  </g>
+  <line x1="660" y1="166" x2="720" y2="166" stroke="#AFA9EC" stroke-width="1.4" marker-end="url(#cbArr)"/>
+  <rect x="720" y="108" width="160" height="116" rx="12" fill="rgba(255,201,122,0.08)" stroke="#FFC97A" stroke-width="1.2"/>
+  <text x="800" y="142" text-anchor="middle" fill="#FFC97A" font-size="11" font-weight="700">PLATONIC CODE</text>
+  <text x="800" y="164" text-anchor="middle" fill="#AFA9EC" font-size="10">globally shared</text>
+  <text x="800" y="184" text-anchor="middle" fill="#AFA9EC" font-size="10">same behavior &#8594;</text>
+  <text x="800" y="200" text-anchor="middle" fill="#AFA9EC" font-size="10">same code</text>
+  <rect x="300" y="248" width="320" height="56" rx="10" fill="rgba(127,119,221,0.05)" stroke="#7F77DD" stroke-width="0.8" stroke-dasharray="3 3"/>
+  <text x="460" y="272" text-anchor="middle" fill="#AFA9EC" font-size="10.5">Same codebook &#183; any model &#183; drops model-specific noise</text>
+  <text x="460" y="290" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">Stack layer codes &#8594; platonic trajectory</text>
+</svg>

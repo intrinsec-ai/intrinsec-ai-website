@@ -1,0 +1,83 @@
+<svg viewBox="0 0 920 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="splitTitle splitDesc" font-family="Inter, -apple-system, sans-serif">
+  <title id="splitTitle">Mechanistic interpretability vs anomaly detection</title>
+  <desc id="splitDesc">Left: name the feature for a human reader. Right: platonic codes for detecting divergence across runs and models.</desc>
+  <defs>
+    <linearGradient id="splitPurple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C390EE" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#26215C" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="splitAmber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFC97A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#26215C" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="splitGlowP" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="splitGlowA" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <style>
+    .split-pulse-p { animation: splitPulse 3.2s ease-in-out infinite; }
+    .split-pulse-a { animation: splitPulse 3.2s ease-in-out infinite 0.4s; }
+    @keyframes splitPulse { 0%,100% { opacity: 0.65; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .split-pulse-p, .split-pulse-a { animation: none; } }
+  </style>
+  <rect width="920" height="380" fill="#0B0A20"/>
+
+  <!-- center divider -->
+  <line x1="460" y1="32" x2="460" y2="348" stroke="#7F77DD" stroke-width="1" stroke-dasharray="5 5" opacity="0.35"/>
+  <circle cx="460" cy="190" r="28" fill="#0B0A20" stroke="#7F77DD" stroke-width="1" opacity="0.6"/>
+  <text x="460" y="186" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="600">vs</text>
+  <text x="460" y="200" text-anchor="middle" fill="#94a3b8" font-size="9">different</text>
+  <text x="460" y="212" text-anchor="middle" fill="#94a3b8" font-size="9">products</text>
+
+  <!-- LEFT: mechanistic interpretability -->
+  <rect x="32" y="48" width="396" height="300" rx="18" fill="url(#splitPurple)" stroke="#C390EE" stroke-width="1.2" filter="url(#splitGlowP)"/>
+  <text x="230" y="78" text-anchor="middle" fill="#C390EE" font-size="10" font-weight="700" letter-spacing="0.1em">MECHANISTIC INTERPRETABILITY</text>
+  <text x="230" y="118" text-anchor="middle" fill="#EEEDFE" font-size="20" font-weight="700">"What concept</text>
+  <text x="230" y="144" text-anchor="middle" fill="#EEEDFE" font-size="20" font-weight="700">is this?"</text>
+
+  <!-- icon: magnifier + label tag -->
+  <g transform="translate(230,200)" opacity="0.9">
+    <circle cx="0" cy="0" r="34" fill="none" stroke="#C390EE" stroke-width="1.2" class="split-pulse-p"/>
+    <circle cx="-8" cy="-4" r="14" fill="none" stroke="#AFA9EC" stroke-width="1.4"/>
+    <line x1="2" y1="6" x2="14" y2="18" stroke="#AFA9EC" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="-22" y="22" width="44" height="16" rx="4" fill="rgba(195,144,238,0.2)" stroke="#C390EE" stroke-width="0.8"/>
+    <text x="0" y="34" text-anchor="middle" fill="#C390EE" font-size="8" font-weight="600">label</text>
+  </g>
+
+  <g font-size="11" fill="#AFA9EC" text-anchor="middle">
+    <text x="230" y="268">Name the feature</text>
+    <text x="230" y="286">Human-readable circuit</text>
+    <text x="230" y="318" fill="#C390EE" font-weight="700" font-size="12">Product: legibility</text>
+  </g>
+
+  <!-- RIGHT: anomaly detection -->
+  <rect x="492" y="48" width="396" height="300" rx="18" fill="url(#splitAmber)" stroke="#FFC97A" stroke-width="1.2" filter="url(#splitGlowA)"/>
+  <text x="690" y="78" text-anchor="middle" fill="#FFC97A" font-size="10" font-weight="700" letter-spacing="0.1em">ANOMALY DETECTION</text>
+  <text x="690" y="118" text-anchor="middle" fill="#EEEDFE" font-size="20" font-weight="700">"Has this run</text>
+  <text x="690" y="144" text-anchor="middle" fill="#EEEDFE" font-size="20" font-weight="700">diverged?"</text>
+
+  <!-- icon: two points mapping to same coordinate -->
+  <g transform="translate(690,200)" opacity="0.9">
+    <circle cx="0" cy="0" r="34" fill="none" stroke="#FFC97A" stroke-width="1.2" class="split-pulse-a"/>
+    <circle cx="-16" cy="8" r="7" fill="#FFC97A" opacity="0.85"/>
+    <circle cx="16" cy="-8" r="7" fill="#5DCAA5" opacity="0.85"/>
+    <line x1="-16" y1="8" x2="0" y2="-14" stroke="#AFA9EC" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="16" y1="-8" x2="0" y2="-14" stroke="#AFA9EC" stroke-width="1" stroke-dasharray="3 2"/>
+    <circle cx="0" cy="-14" r="5" fill="#FFFFFF"/>
+    <rect x="-18" y="22" width="36" height="16" rx="4" fill="rgba(255,201,122,0.2)" stroke="#FFC97A" stroke-width="0.8"/>
+    <text x="0" y="34" text-anchor="middle" fill="#FFC97A" font-size="8" font-weight="600">#4413</text>
+  </g>
+
+  <g font-size="11" fill="#AFA9EC" text-anchor="middle">
+    <text x="690" y="268">Platonic code trajectory</text>
+    <text x="690" y="286">Baseline &#183; cluster &#183; drift</text>
+    <text x="690" y="318" fill="#FFC97A" font-weight="700" font-size="12">Product: detection</text>
+  </g>
+
+  <text x="460" y="368" text-anchor="middle" fill="#94a3b8" font-size="11" font-style="italic">Different questions &#8594; different representations</text>
+</svg>

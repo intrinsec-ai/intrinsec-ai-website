@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="gwTitle gwDesc" font-family="Inter, -apple-system, sans-serif">
+  <title id="gwTitle">Instrumented AI gateway for platonic trajectory tracking</title>
+  <desc id="gwDesc">An instrumented AI gateway wraps inference and the shared-memory bus to capture residual-stream shape across agents, not just boundary events.</desc>
+  <defs>
+    <linearGradient id="gwRiver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#534AB7"/>
+      <stop offset="100%" stop-color="#26215C"/>
+    </linearGradient>
+    <linearGradient id="gwBox" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(29,158,117,0.12)"/>
+      <stop offset="100%" stop-color="rgba(29,158,117,0.04)"/>
+    </linearGradient>
+    <linearGradient id="gwBus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A2840" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#243857" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <style>
+    @keyframes gwPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .gw-store { animation: gwPulse 3s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .gw-store { animation: none; opacity: 0.75; } }
+  </style>
+
+  <rect width="520" height="440" fill="#0B0A20"/>
+  <text x="260" y="26" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="0.08em" text-anchor="middle">WHERE IT RUNS &#183; INSTRUMENTED AI GATEWAY</text>
+
+  <!-- faded classic app gateway (wrong layer) -->
+  <rect x="20" y="44" width="100" height="72" rx="8" fill="rgba(127,119,221,0.03)" stroke="#64748b" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.55"/>
+  <text x="70" y="68" fill="#64748b" font-size="8" font-weight="600" text-anchor="middle">App gateway</text>
+  <text x="70" y="82" fill="#64748b" font-size="7" font-style="italic" text-anchor="middle">mosaic only</text>
+  <text x="70" y="96" fill="#64748b" font-size="7" text-anchor="middle">misses the bus</text>
+  <path d="M 120 80 L 148 80" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.4"/>
+  <text x="134" y="74" fill="#64748b" font-size="6" text-anchor="middle">bypass</text>
+
+  <!-- Instrumented AI gateway -->
+  <rect x="140" y="40" width="360" height="300" rx="16" fill="url(#gwBox)" stroke="#1D9E75" stroke-width="1.6"/>
+  <text x="320" y="62" fill="#5DCAA5" font-size="10" font-weight="700" text-anchor="middle">Instrumented AI gateway</text>
+  <text x="320" y="78" fill="#AFA9EC" font-size="8" font-style="italic" text-anchor="middle">inference in the path &#183; residual stream visible</text>
+
+  <!-- three agent streams inside gateway -->
+  <g opacity="0.9">
+    <rect x="188" y="92" width="28" height="120" rx="14" fill="url(#gwRiver)" opacity="0.55"/>
+    <rect x="196" y="92" width="12" height="120" rx="6" fill="#AFA9EC" opacity="0.35"/>
+    <rect x="268" y="92" width="28" height="120" rx="14" fill="url(#gwRiver)" opacity="0.55"/>
+    <rect x="276" y="92" width="12" height="120" rx="6" fill="#AFA9EC" opacity="0.35"/>
+    <rect x="348" y="92" width="28" height="120" rx="14" fill="url(#gwRiver)" opacity="0.55"/>
+    <rect x="356" y="92" width="12" height="120" rx="6" fill="#AFA9EC" opacity="0.35"/>
+    <text x="202" y="228" fill="#AFA9EC" font-size="7" text-anchor="middle" opacity="0.7">agent</text>
+    <text x="282" y="228" fill="#AFA9EC" font-size="7" text-anchor="middle" opacity="0.7">agent</text>
+    <text x="362" y="228" fill="#AFA9EC" font-size="7" text-anchor="middle" opacity="0.7">agent</text>
+  </g>
+
+  <!-- tap lines from streams to store -->
+  <g stroke="#5DCAA5" stroke-width="0.8" opacity="0.55">
+    <path d="M 202 160 L 240 160 L 240 248"/>
+    <path d="M 282 150 L 260 150 L 260 248"/>
+    <path d="M 362 165 L 280 165 L 280 248"/>
+  </g>
+
+  <!-- trajectory store inside gateway -->
+  <rect x="168" y="248" width="304" height="56" rx="8" fill="rgba(29,158,117,0.1)" stroke="#1D9E75" stroke-width="1" class="gw-store"/>
+  <text x="320" y="268" fill="#5DCAA5" font-size="9" font-weight="700" text-anchor="middle">PLATONIC TRAJECTORY STORE</text>
+  <text x="320" y="284" fill="#AFA9EC" font-size="8" text-anchor="middle">baselines &#183; routes &#183; fork detection</text>
+  <g font-size="7" font-weight="600">
+    <rect x="188" y="274" width="22" height="12" rx="2" fill="rgba(255,201,122,0.2)" stroke="#FFC97A" stroke-width="0.5"/>
+    <text x="199" y="283" fill="#FFC97A" text-anchor="middle">#4</text>
+    <rect x="216" y="274" width="22" height="12" rx="2" fill="rgba(255,201,122,0.2)" stroke="#FFC97A" stroke-width="0.5"/>
+    <text x="227" y="283" fill="#FFC97A" text-anchor="middle">#7</text>
+    <rect x="244" y="274" width="28" height="12" rx="2" fill="rgba(255,201,122,0.2)" stroke="#FFC97A" stroke-width="0.5"/>
+    <text x="258" y="283" fill="#FFC97A" text-anchor="middle">4113</text>
+    <rect x="400" y="274" width="28" height="12" rx="2" fill="rgba(248,113,113,0.15)" stroke="#F87171" stroke-width="0.5"/>
+    <text x="414" y="283" fill="#F87171" text-anchor="middle">fork</text>
+  </g>
+
+  <!-- shared-memory bus through gateway -->
+  <rect x="156" y="352" width="328" height="44" rx="6" fill="url(#gwBus)" stroke="#7AA6D8" stroke-width="1"/>
+  <line x1="156" y1="362" x2="484" y2="362" stroke="#7AA6D8" stroke-width="0.8" opacity="0.6"/>
+  <line x1="156" y1="386" x2="484" y2="386" stroke="#7AA6D8" stroke-width="0.8" opacity="0.6"/>
+  <text x="320" y="348" fill="#7AA6D8" font-size="8" font-style="italic" text-anchor="middle">shared-memory bus</text>
+  <g fill="#FFC97A" opacity="0.85">
+    <circle cx="200" cy="374" r="1.5"/><circle cx="260" cy="374" r="1.5"/><circle cx="320" cy="374" r="1.5"/>
+    <circle cx="380" cy="374" r="1.5"/><circle cx="440" cy="374" r="1.5"/>
+  </g>
+  <g fill="#C390EE" opacity="0.8">
+    <circle cx="230" cy="386" r="1.5"/><circle cx="350" cy="386" r="1.5"/><circle cx="410" cy="386" r="1.5"/>
+  </g>
+
+  <!-- bus connects through gateway bottom -->
+  <path d="M 282 212 L 282 352" fill="none" stroke="#FFC97A" stroke-width="1.2" opacity="0.5"/>
+  <path d="M 362 212 L 362 352" fill="none" stroke="#C390EE" stroke-width="1" stroke-dasharray="3 3" opacity="0.45"/>
+
+  <text x="260" y="424" fill="#94a3b8" font-size="9" font-style="italic" text-anchor="middle">Traffic flows through the gateway &#8212; not around it</text>
+</svg>

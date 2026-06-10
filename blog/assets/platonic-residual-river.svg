@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 520 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="riverTitle riverDesc" font-family="Inter, -apple-system, sans-serif">
+  <title id="riverTitle">The residual stream as a high-dimensional river</title>
+  <desc id="riverDesc">A luminous column flowing through layers; one vector updated at every depth.</desc>
+  <defs>
+    <linearGradient id="riverCore" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#26215C"/>
+      <stop offset="35%" stop-color="#534AB7"/>
+      <stop offset="65%" stop-color="#7F77DD"/>
+      <stop offset="100%" stop-color="#EEEDFE"/>
+    </linearGradient>
+    <linearGradient id="riverSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#AFA9EC" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#EEEDFE" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#AFA9EC" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="riverGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7F77DD" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#7F77DD" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="riverGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#7F77DD" stroke-width="0.25" opacity="0.15"/>
+    </pattern>
+  </defs>
+  <style>
+    @keyframes riverFlow {
+      0% { transform: translateY(12px); opacity: 0.2; }
+      50% { opacity: 0.9; }
+      100% { transform: translateY(-12px); opacity: 0.2; }
+    }
+    .flow-particle { animation: riverFlow 4s ease-in-out infinite; }
+    .flow-particle-d { animation: riverFlow 4s ease-in-out infinite 0.8s; }
+    .flow-particle-e { animation: riverFlow 4s ease-in-out infinite 1.6s; }
+    @media (prefers-reduced-motion: reduce) {
+      .flow-particle, .flow-particle-d, .flow-particle-e { animation: none; opacity: 0.7; }
+    }
+  </style>
+
+  <rect width="520" height="480" fill="#0B0A20"/>
+  <rect width="520" height="480" fill="url(#riverGrid)" opacity="0.4"/>
+
+  <!-- ambient glow -->
+  <ellipse cx="260" cy="240" rx="120" ry="200" fill="url(#riverGlow)"/>
+
+  <!-- dimension hint: R^d -->
+  <g opacity="0.45">
+    <text x="420" y="88" fill="#AFA9EC" font-size="22" font-style="italic" text-anchor="end">&#8477;</text>
+    <text x="448" y="92" fill="#FFC97A" font-size="14" font-weight="600">d</text>
+    <text x="420" y="108" fill="#94a3b8" font-size="9" text-anchor="end">4096 dims</text>
+    <line x1="380" y1="120" x2="380" y2="360" stroke="#7F77DD" stroke-width="0.6" opacity="0.35"/>
+    <line x1="400" y1="120" x2="400" y2="360" stroke="#7F77DD" stroke-width="0.6" opacity="0.25"/>
+    <g stroke="#7F77DD" stroke-width="0.5" opacity="0.3">
+      <line x1="372" y1="140" x2="388" y2="140"/><line x1="372" y1="200" x2="388" y2="200"/>
+      <line x1="372" y1="260" x2="388" y2="260"/><line x1="372" y1="320" x2="388" y2="320"/>
+    </g>
+    <text x="420" y="380" fill="#64748b" font-size="8" font-style="italic" text-anchor="end">one vector</text>
+    <text x="420" y="392" fill="#64748b" font-size="8" font-style="italic" text-anchor="end">per position</text>
+  </g>
+
+  <!-- layer axis -->
+  <g font-size="8" fill="#64748b" text-anchor="end" opacity="0.7">
+    <text x="168" y="128">L32</text>
+    <text x="168" y="188">L24</text>
+    <text x="168" y="248">L16</text>
+    <text x="168" y="308">L8</text>
+    <text x="168" y="368">L0</text>
+  </g>
+  <line x1="176" y1="120" x2="176" y2="376" stroke="#7F77DD" stroke-width="0.5" opacity="0.25" stroke-dasharray="2 4"/>
+
+  <!-- the river -->
+  <rect x="196" y="96" width="128" height="304" rx="64" fill="url(#riverCore)" opacity="0.55"/>
+  <rect x="228" y="96" width="64" height="304" rx="32" fill="url(#riverSheen)" opacity="0.7"/>
+  <rect x="248" y="96" width="24" height="304" rx="12" fill="#EEEDFE" opacity="0.12"/>
+
+  <!-- internal flow lines -->
+  <g stroke="#CECBF6" stroke-width="0.5" opacity="0.25" fill="none">
+    <path d="M 220 380 C 210 300, 230 220, 220 140"/>
+    <path d="M 260 380 C 270 300, 250 220, 260 140"/>
+    <path d="M 300 380 C 290 300, 310 220, 300 140"/>
+  </g>
+
+  <!-- flowing particles -->
+  <circle cx="240" cy="320" r="2.5" fill="#FFC97A" class="flow-particle"/>
+  <circle cx="260" cy="260" r="2" fill="#AFA9EC" class="flow-particle-d"/>
+  <circle cx="250" cy="180" r="2.5" fill="#EEEDFE" class="flow-particle-e"/>
+  <circle cx="270" cy="140" r="1.8" fill="#FFC97A" opacity="0.8" class="flow-particle"/>
+
+  <!-- layer write rings -->
+  <g fill="none" stroke="#5DCAA5" stroke-width="0.8" opacity="0.45">
+    <ellipse cx="260" cy="160" rx="52" ry="6"/>
+    <ellipse cx="260" cy="220" rx="52" ry="6"/>
+    <ellipse cx="260" cy="280" rx="52" ry="6"/>
+    <ellipse cx="260" cy="340" rx="52" ry="6"/>
+  </g>
+
+  <!-- caps -->
+  <text x="260" y="84" fill="#94a3b8" font-size="9" font-style="italic" text-anchor="middle">unembed</text>
+  <path d="M 260 88 L 260 96" stroke="#AFA9EC" stroke-width="0.6" opacity="0.4"/>
+  <text x="260" y="418" fill="#94a3b8" font-size="9" font-style="italic" text-anchor="middle">embed</text>
+  <path d="M 260 400 L 260 408" stroke="#AFA9EC" stroke-width="0.6" opacity="0.4"/>
+
+  <text x="260" y="36" fill="#AFA9EC" font-size="10" font-weight="600" letter-spacing="0.1em" text-anchor="middle">RESIDUAL STREAM</text>
+  <text x="260" y="52" fill="#94a3b8" font-size="9" font-style="italic" text-anchor="middle">high-dimensional river of meaning</text>
+
+  <!-- scale note -->
+  <rect x="32" y="400" width="156" height="56" rx="8" fill="rgba(127,119,221,0.06)" stroke="#7F77DD" stroke-width="0.6"/>
+  <text x="110" y="420" fill="#94a3b8" font-size="8" text-anchor="middle">32 layers &#215; d=4096</text>
+  <text x="110" y="436" fill="#FFC97A" font-size="11" font-weight="700" text-anchor="middle">~130K floats / token</text>
+  <text x="110" y="450" fill="#64748b" font-size="7" font-style="italic" text-anchor="middle">before context length</text>
+</svg>

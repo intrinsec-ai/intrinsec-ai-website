@@ -1,0 +1,148 @@
+<svg viewBox="0 0 920 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pmTitle pmDesc" font-family="Inter, -apple-system, sans-serif">
+  <title id="pmTitle">Different models converge on the same platonic manifold</title>
+  <desc id="pmDesc">Two models use private rotated coordinate grids. The same behavior projects to one point on a shared glowing platonic shape. Text anchors fix the frame.</desc>
+
+  <defs>
+    <radialGradient id="pmCoreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFC97A" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#7F77DD" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0B0A20" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pmPointGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#FFC97A" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FFC97A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pmWire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFC97A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7F77DD" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="pmBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <marker id="pmDot" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <circle cx="3" cy="3" r="2.2" fill="#FFC97A"/>
+    </marker>
+  </defs>
+
+  <style>
+    .pm-bg-grid line { stroke: rgba(127,119,221,0.07); stroke-width: 0.6; }
+    .pm-orbit { fill: none; stroke: url(#pmWire); stroke-width: 1.1; opacity: 0.55; transform-origin: 460px 205px; animation: pmSpin 48s linear infinite; }
+    .pm-orbit-2 { animation-duration: 64s; animation-direction: reverse; opacity: 0.35; }
+    .pm-orbit-3 { animation-duration: 36s; opacity: 0.45; }
+    .pm-core-pulse { animation: pmPulse 3.6s ease-in-out infinite; transform-origin: 460px 205px; }
+    .pm-beam-a, .pm-beam-b { fill: none; stroke-width: 1.6; stroke-dasharray: 7 9; animation: pmFlow 2.8s linear infinite; }
+    .pm-beam-a { stroke: #C390EE; }
+    .pm-beam-b { stroke: #5DCAA5; }
+    .pm-anchor { animation: pmTwinkle 2.2s ease-in-out infinite; }
+    .pm-anchor:nth-child(2) { animation-delay: 0.4s; }
+    .pm-anchor:nth-child(3) { animation-delay: 0.8s; }
+    .pm-anchor:nth-child(4) { animation-delay: 1.2s; }
+    .pm-anchor:nth-child(5) { animation-delay: 1.6s; }
+    .pm-anchor:nth-child(6) { animation-delay: 2.0s; }
+    @keyframes pmSpin { to { transform: rotate(360deg); } }
+    @keyframes pmPulse { 0%,100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.03); } }
+    @keyframes pmFlow { to { stroke-dashoffset: -64; } }
+    @keyframes pmTwinkle { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .pm-orbit, .pm-core-pulse, .pm-beam-a, .pm-beam-b, .pm-anchor { animation: none; }
+    }
+  </style>
+
+  <rect width="920" height="420" fill="#0B0A20"/>
+
+  <!-- subtle background grid -->
+  <g class="pm-bg-grid">
+    <line x1="0" y1="70" x2="920" y2="70"/><line x1="0" y1="140" x2="920" y2="140"/>
+    <line x1="0" y1="210" x2="920" y2="210"/><line x1="0" y1="280" x2="920" y2="280"/>
+    <line x1="0" y1="350" x2="920" y2="350"/>
+    <line x1="115" y1="0" x2="115" y2="420"/><line x1="230" y1="0" x2="230" y2="420"/>
+    <line x1="460" y1="0" x2="460" y2="420"/><line x1="690" y1="0" x2="690" y2="420"/>
+    <line x1="805" y1="0" x2="805" y2="420"/>
+  </g>
+
+  <text x="460" y="34" text-anchor="middle" fill="#94a3b8" font-size="11" font-style="italic">capable models = different sketches of one shape</text>
+
+  <!-- anchor constellation (codebook fixes frame) -->
+  <g opacity="0.85">
+    <circle class="pm-anchor" cx="330" cy="58" r="3" fill="#FFC97A"/>
+    <circle class="pm-anchor" cx="390" cy="42" r="2.5" fill="#AFA9EC"/>
+    <circle class="pm-anchor" cx="460" cy="36" r="3.5" fill="#FFC97A"/>
+    <circle class="pm-anchor" cx="530" cy="42" r="2.5" fill="#AFA9EC"/>
+    <circle class="pm-anchor" cx="590" cy="58" r="3" fill="#FFC97A"/>
+    <circle class="pm-anchor" cx="420" cy="72" r="2" fill="#7F77DD"/>
+    <path d="M330 58 L390 42 L460 36 L530 42 L590 58" fill="none" stroke="#FFC97A" stroke-width="0.6" opacity="0.25"/>
+    <text x="460" y="88" text-anchor="middle" fill="#FFC97A" font-size="10" font-weight="600" letter-spacing="0.06em">SHARED ANCHORS</text>
+  </g>
+
+  <!-- Model A: skewed private basis -->
+  <g transform="translate(118,118) rotate(-14)">
+    <rect x="-88" y="-78" width="176" height="156" rx="10" fill="rgba(127,119,221,0.04)" stroke="#7F77DD" stroke-width="0.8" stroke-dasharray="3 3"/>
+    <g stroke="#7F77DD" stroke-width="0.55" opacity="0.45">
+      <line x1="-70" y1="-60" x2="70" y2="-60"/><line x1="-70" y1="-30" x2="70" y2="-30"/>
+      <line x1="-70" y1="0" x2="70" y2="0"/><line x1="-70" y1="30" x2="70" y2="30"/>
+      <line x1="-70" y1="60" x2="70" y2="60"/>
+      <line x1="-50" y1="-70" x2="-50" y2="70"/><line x1="-20" y1="-70" x2="-20" y2="70"/>
+      <line x1="10" y1="-70" x2="10" y2="70"/><line x1="40" y1="-70" x2="40" y2="70"/>
+    </g>
+    <circle cx="24" cy="8" r="9" fill="rgba(195,144,238,0.25)" stroke="#C390EE" stroke-width="1.4"/>
+    <circle cx="24" cy="8" r="3.5" fill="#C390EE"/>
+    <text x="0" y="-92" text-anchor="middle" fill="#AFA9EC" font-size="11" font-weight="700" transform="rotate(14)">Model A</text>
+    <text x="0" y="-78" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(14)">private basis</text>
+  </g>
+
+  <!-- Model B: different skew -->
+  <g transform="translate(802,118) rotate(18)">
+    <rect x="-88" y="-78" width="176" height="156" rx="10" fill="rgba(93,202,165,0.04)" stroke="#5DCAA5" stroke-width="0.8" stroke-dasharray="3 3"/>
+    <g stroke="#5DCAA5" stroke-width="0.55" opacity="0.45">
+      <line x1="-70" y1="-60" x2="70" y2="-60"/><line x1="-70" y1="-30" x2="70" y2="-30"/>
+      <line x1="-70" y1="0" x2="70" y2="0"/><line x1="-70" y1="30" x2="70" y2="30"/>
+      <line x1="-70" y1="60" x2="70" y2="60"/>
+      <line x1="-50" y1="-70" x2="-50" y2="70"/><line x1="-20" y1="-70" x2="-20" y2="70"/>
+      <line x1="10" y1="-70" x2="10" y2="70"/><line x1="40" y1="-70" x2="40" y2="70"/>
+    </g>
+    <circle cx="-18" cy="22" r="9" fill="rgba(93,202,165,0.22)" stroke="#5DCAA5" stroke-width="1.4"/>
+    <circle cx="-18" cy="22" r="3.5" fill="#5DCAA5"/>
+    <text x="0" y="-92" text-anchor="middle" fill="#5DCAA5" font-size="11" font-weight="700" transform="rotate(-18)">Model B</text>
+    <text x="0" y="-78" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(-18)">private basis</text>
+  </g>
+
+  <!-- central platonic manifold -->
+  <circle cx="460" cy="205" r="118" fill="url(#pmCoreGlow)" filter="url(#pmBlur)" class="pm-core-pulse"/>
+
+  <g class="pm-core-pulse">
+    <!-- wireframe orbits -->
+    <ellipse class="pm-orbit" cx="460" cy="205" rx="108" ry="42"/>
+    <ellipse class="pm-orbit pm-orbit-2" cx="460" cy="205" rx="92" ry="78" transform="rotate(52 460 205)"/>
+    <ellipse class="pm-orbit pm-orbit-3" cx="460" cy="205" rx="72" ry="100" transform="rotate(-38 460 205)"/>
+
+    <!-- icosahedron-ish wireframe projection -->
+    <g fill="none" stroke="url(#pmWire)" stroke-width="1.2" opacity="0.75">
+      <polygon points="460,108 520,145 500,215 420,215 400,145" opacity="0.7"/>
+      <polygon points="460,302 520,265 500,195 420,195 400,265" opacity="0.5"/>
+      <line x1="460" y1="108" x2="460" y2="302"/><line x1="520" y1="145" x2="520" y2="265"/>
+      <line x1="400" y1="145" x2="400" y2="265"/><line x1="500" y1="215" x2="500" y2="195"/>
+      <line x1="420" y1="215" x2="420" y2="195"/><line x1="460" y1="108" x2="400" y2="265"/>
+      <line x1="460" y1="108" x2="520" y2="265"/><line x1="500" y1="215" x2="400" y2="145"/>
+      <line x1="420" y1="215" x2="520" y2="145"/>
+    </g>
+
+    <!-- the shared platonic point -->
+    <circle cx="460" cy="205" r="22" fill="url(#pmPointGlow)" opacity="0.55"/>
+    <circle cx="460" cy="205" r="6" fill="#FFFFFF"/>
+    <circle cx="460" cy="205" r="11" fill="none" stroke="#FFC97A" stroke-width="1.2" opacity="0.8"/>
+  </g>
+
+  <text x="460" y="338" text-anchor="middle" fill="#FFC97A" font-size="12" font-weight="700" letter-spacing="0.04em">PLATONIC CODE</text>
+  <text x="460" y="356" text-anchor="middle" fill="#AFA9EC" font-size="10">same behavior &#8594; same coordinate</text>
+
+  <!-- projection beams -->
+  <path class="pm-beam-a" d="M 154 168 C 260 150, 360 175, 448 200" marker-end="url(#pmDot)"/>
+  <path class="pm-beam-b" d="M 766 188 C 660 195, 560 200, 472 205" marker-end="url(#pmDot)"/>
+
+  <!-- behavior labels -->
+  <text x="154" y="148" text-anchor="middle" fill="#C390EE" font-size="10" font-weight="600">behavior &#x03C4;</text>
+  <text x="766" y="168" text-anchor="middle" fill="#5DCAA5" font-size="10" font-weight="600">behavior &#x03C4;</text>
+
+  <text x="460" y="398" text-anchor="middle" fill="#94a3b8" font-size="11" font-style="italic">rotation &#183; scale &#183; stretch cancel out when you measure against shared anchors</text>
+</svg>
