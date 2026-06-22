@@ -7,6 +7,7 @@
     <meta name="description" content="AI agents forget every session. Attackers don't. Intrinsec reads intent in the prompt across sessions. The first half of the story your SIEM never sees.">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0f1a">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:title" content="Intrinsec AI · AI agents forget. Attackers don't.">
     <meta property="og:description" content="Two halves of one story. SIEM and UEBA correlate effects after execution. Intrinsec reads intent before execution: compressed in every prompt, persisted across sessions.">
     <meta property="og:type" content="website">
@@ -1075,6 +1076,119 @@
             background: #ffffff;
             border-color: rgba(14, 165, 233, 0.22);
             box-shadow: 0 4px 24px rgba(14, 165, 233, 0.1);
+        }
+
+        /* Explainer video sitting just below the before/after diagram. */
+        .memory-cure-video {
+            max-width: 860px;
+            margin: 48px auto 0;
+            padding-top: 36px;
+            border-top: 1px solid rgba(125, 211, 252, 0.14);
+        }
+
+        [data-theme="light"] .memory-cure-video {
+            border-top-color: rgba(14, 165, 233, 0.16);
+        }
+
+        .memory-cure-video-eyebrow {
+            font-family: var(--mono, 'SFMono-Regular', 'Menlo', monospace);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(125, 211, 252, 0.85);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        [data-theme="light"] .memory-cure-video-eyebrow {
+            color: rgba(14, 116, 165, 0.95);
+        }
+
+        .memory-cure-video-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            box-shadow: 0 30px 80px -40px rgba(125, 211, 252, 0.35);
+            background: #000;
+        }
+
+        [data-theme="light"] .memory-cure-video-frame {
+            border-color: rgba(14, 165, 233, 0.22);
+            box-shadow: 0 24px 60px -40px rgba(14, 165, 233, 0.25);
+        }
+
+        .memory-cure-video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .memory-cure-video-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            background:
+                linear-gradient(180deg, rgba(10, 15, 26, 0.15), rgba(10, 15, 26, 0.72)),
+                url('https://i.ytimg.com/vi/cmTahKO4F8I/maxresdefault.jpg') center / cover no-repeat;
+        }
+
+        .memory-cure-video-fallback:focus-visible {
+            outline: 2px solid rgba(125, 211, 252, 0.85);
+            outline-offset: 3px;
+        }
+
+        .memory-cure-video-fallback-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .memory-cure-video-play {
+            width: 72px;
+            height: 72px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.92);
+            color: #0a0f1a;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .memory-cure-video-play svg {
+            width: 28px;
+            height: 28px;
+            margin-left: 4px;
+        }
+
+        .memory-cure-video-fallback-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+        }
+
+        .memory-cure-video-frame.is-file-protocol iframe {
+            display: none;
+        }
+
+        .memory-cure-video-frame.is-file-protocol .memory-cure-video-fallback {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .memory-cure-video { margin-top: 32px; padding-top: 24px; }
+            .memory-cure-video-frame { border-radius: 12px; }
         }
 
         /* ============================================= */
@@ -2489,6 +2603,35 @@
                     </div>
                 </div>
             </div>
+
+            <div class="memory-cure-video">
+                <div class="memory-cure-video-eyebrow">[ Watch · the amnesia problem, explained ]</div>
+                <div class="memory-cure-video-frame" id="memoryCureVideoFrame">
+                    <iframe
+                        id="memoryCureVideoEmbed"
+                        data-video-id="cmTahKO4F8I"
+                        title="Intrinsec — curing AI agent security's amnesia"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                    <a
+                        class="memory-cure-video-fallback"
+                        href="https://youtu.be/cmTahKO4F8I"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Watch Intrinsec video on YouTube">
+                        <span class="memory-cure-video-fallback-inner">
+                            <span class="memory-cure-video-play" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </span>
+                            <span class="memory-cure-video-fallback-label">Watch on YouTube</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
             </div>
         </div>
     </section>
@@ -2556,6 +2699,27 @@
     (function () {
         const el = document.getElementById('footerYear');
         if (el) el.textContent = String(new Date().getFullYear());
+    })();
+
+    // YouTube embed needs a valid HTTP origin/referrer. file:// previews cannot satisfy that.
+    (function () {
+        const frame = document.getElementById('memoryCureVideoFrame');
+        const iframe = document.getElementById('memoryCureVideoEmbed');
+        if (!frame || !iframe) return;
+
+        const videoId = iframe.getAttribute('data-video-id');
+        if (!videoId) return;
+
+        const origin = window.location.origin;
+        const isFileProtocol = window.location.protocol === 'file:' || !origin || origin === 'null';
+
+        if (isFileProtocol) {
+            frame.classList.add('is-file-protocol');
+            return;
+        }
+
+        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId)
+            + '?rel=0&origin=' + encodeURIComponent(origin);
     })();
     
     // Scroll animations for sections
