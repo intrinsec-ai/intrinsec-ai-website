@@ -477,22 +477,39 @@
             }
         }
     </style>
+
+    <style>
+        /* Brand mark — injected by migrate_blog.py to match the new design system */
+        .intr-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none !important;
+            border-bottom: 0 !important;
+        }
+        .intr-brand-mark {
+            height: 38px;
+            width: auto;
+            display: block;
+            filter: invert(1) hue-rotate(180deg) saturate(1.05);
+        }
+        [data-theme="light"] .intr-brand-mark { filter: none; }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="header-content">
                 <div style="display: flex; align-items: center; gap: 32px;">
-                    <a href="../index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
+                    <a href="../index.html" class="logo intr-brand" aria-label="Intrinsec AI home">
+                        <img src="../intrinsec-ai-logo.png" alt="Intrinsec AI" class="intr-brand-mark">
+                    </a>
                     <nav style="display: flex; gap: 24px; align-items: center;">
-                        <a href="../products.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: color 0.3s ease; font-weight: 500;">Products</a>
-                        <a href="index.html" style="color: var(--ice); text-decoration: none; font-size: 0.9375rem; font-weight: 500; border-bottom: 2px solid var(--ice);">Research</a>
+                        <a href="../index.html">Home</a>
+                        <a href="../products.html">Products</a>
+                        <a href="index.html" aria-current="page">Research</a>
                     </nav>
                 </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-                    <span id="themeText">Dark</span>
-                </button>
             </div>
         </div>
     </header>
@@ -645,9 +662,9 @@
         const themeText = document.getElementById('themeText');
         
         // Get saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeUI(savedTheme);
+        if (themeIcon && themeText) updateThemeUI(savedTheme);
         
         function updateThemeUI(theme) {
             if (theme === 'light') {
@@ -659,13 +676,13 @@
             }
         }
         
-        themeToggle.addEventListener('click', function() {
+        if (themeToggle) themeToggle.addEventListener('click', function() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeUI(newTheme);
+            if (themeIcon && themeText) updateThemeUI(newTheme);
         });
     })();
     </script>

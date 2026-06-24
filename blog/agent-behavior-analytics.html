@@ -791,6 +791,24 @@
             .hero-label, .hero h1, .hero-sub, .hero-tags { opacity: 1; animation: none; }
         }
     </style>
+
+    <style>
+        /* Brand mark — injected by migrate_blog.py to match the new design system */
+        .intr-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none !important;
+            border-bottom: 0 !important;
+        }
+        .intr-brand-mark {
+            height: 38px;
+            width: auto;
+            display: block;
+            filter: invert(1) hue-rotate(180deg) saturate(1.05);
+        }
+        [data-theme="light"] .intr-brand-mark { filter: none; }
+    </style>
 </head>
 <body>
 
@@ -798,17 +816,16 @@
 
 <header id="mainHeader">
     <div class="header-inner">
-        <div style="display:flex;align-items:center;gap:24px;">
-            <a href="../index.html" class="logo">Intrinsec AI</a>
+        <div style="display:flex; align-items:center; gap:24px;">
+            <a href="../index.html" class="logo intr-brand" aria-label="Intrinsec AI home">
+                <img src="../intrinsec-ai-logo.png" alt="Intrinsec AI" class="intr-brand-mark">
+            </a>
             <nav>
+                <a href="../index.html">Home</a>
                 <a href="../products.html">Products</a>
-                <a href="index.html" class="active-link">Research</a>
+                <a href="index.html" aria-current="page">Research</a>
             </nav>
         </div>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <span id="themeIcon">🌙</span>
-            <span id="themeText">Dark</span>
-        </button>
     </div>
 </header>
 
@@ -1015,21 +1032,21 @@
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const themeText = document.getElementById('themeText');
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeUI(savedTheme);
+    if (themeIcon && themeText) updateThemeUI(savedTheme);
 
     function updateThemeUI(theme) {
         themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
         themeText.textContent = theme === 'light' ? 'Light' : 'Dark';
     }
 
-    themeToggle.addEventListener('click', function() {
+    if (themeToggle) themeToggle.addEventListener('click', function() {
         const cur = document.documentElement.getAttribute('data-theme');
         const next = cur === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        updateThemeUI(next);
+        if (themeIcon && themeText) updateThemeUI(next);
     });
 
     const progressFill = document.getElementById('progressFill');

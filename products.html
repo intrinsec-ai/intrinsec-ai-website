@@ -3,2682 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products · Intrinsec AI · Cure the Amnesia</title>
-    <meta name="description" content="Adaptive memory for one agent or an entire fleet. Identity Plane for single-agent security. SIEM-less detection for fleet threats. No data lake required.">
-    <meta name="color-scheme" content="dark light">
-    <meta name="theme-color" content="#0a0f1a">
-    <meta property="og:title" content="Intrinsec AI · One agent or a thousand. The amnesia is the same.">
-    <meta property="og:description" content="Adaptive identity for a single agent. SIEM-less threat detection for a fleet. No data lake. No hard storage. Just memory that works.">
+    <title>Products · Intrinsec AI · Intent memory for AI agents</title>
+    <meta name="description" content="Intent memory for one agent or an entire fleet. Identity Plane catches drift in a single agent. Fleet Memory catches coordinated campaigns across thousands. Computational memory recycles inference compute into threat memory.">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0b0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta property="og:title" content="Intrinsec AI · Products · Intent memory for AI agents">
+    <meta property="og:description" content="One agent or a thousand. The amnesia is the same. Intrinsec memory across the intent and computational surfaces.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="demo-page-screenshot.png">
+    <meta property="og:image" content="intrinsec-ai-logo.png">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="intrinsec-ai-logo.png">
+    <link rel="apple-touch-icon" href="intrinsec-ai-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script>
-        // Set theme early to avoid a flash on first paint. Default to dark; only light if user chose it via the toggle.
-        (function () {
-            try {
-                const savedTheme = localStorage.getItem('theme');
-                const theme = savedTheme || 'dark';
-                document.documentElement.setAttribute('data-theme', theme);
-            } catch (e) {}
-        })();
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         :root {
-            --navy: #0a0f1a;
-            --navy-light: #151b2b;
-            --navy-lighter: #1f2937;
-            --ice: #7dd3fc;
-            --ice-bright: #38bdf8;
-            --ice-glow: rgba(125, 211, 252, 0.12);
-            --ice-glow-strong: rgba(125, 211, 252, 0.2);
-            --text: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-dim: #94a3b8;
-            --text-subtle: #64748b;
-            --red: #ef4444;
-            --red-glow: rgba(239, 68, 68, 0.15);
-        }
-        
-        /* Light theme variables */
-        [data-theme="light"] {
-            --navy: #ffffff;
-            --navy-light: #f8fafc;
-            --navy-lighter: #f1f5f9;
-            --ice: #0284c7;
-            --ice-bright: #0369a1;
-            --ice-glow: rgba(2, 132, 199, 0.1);
-            --ice-glow-strong: rgba(2, 132, 199, 0.15);
-            --text: #0f172a;
-            --text-secondary: #1e293b;
-            --text-dim: #475569;
-            --text-subtle: #64748b;
-            --red: #dc2626;
-            --red-glow: rgba(220, 38, 38, 0.1);
-        }
-        
-        [data-theme="light"] body {
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(2, 132, 199, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.02) 0%, transparent 50%);
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--navy);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-        }
-        
-        html {
-            scroll-behavior: smooth;
+            --bg: #0a0b0d;
+            --bg-2: #101216;
+            --ink: #f3f4f6;
+            --ink-dim: #a1a7b3;
+            --ink-subtle: #6b7280;
+            --rule: #1f2329;
+            --rule-strong: #2a2f37;
+            --accent: #7dd3fc;
+            --accent-2: #34d399;
+            --warn: #fca5a5;
+            --container: 1180px;
         }
 
-        /* Skip link (a11y) */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, sans-serif;
+            font-feature-settings: "ss01", "cv11", "ss03";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(52, 211, 153, 0.04), transparent 60%);
+            background-attachment: fixed;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
         .skip-link {
             position: absolute;
             left: 12px;
-            top: 12px;
+            top: -100px;
             padding: 10px 14px;
-            border-radius: 10px;
-            background: var(--navy-lighter);
-            color: var(--text);
-            border: 1px solid rgba(125, 211, 252, 0.25);
-            text-decoration: none;
-            transform: translateY(-150%);
-            transition: transform 0.2s ease;
+            border-radius: 8px;
+            background: var(--bg-2);
+            color: var(--ink);
+            border: 1px solid var(--rule);
+            font-size: 13px;
             z-index: 1000;
         }
-        .skip-link:focus {
-            transform: translateY(0);
-        }
+        .skip-link:focus { top: 12px; }
 
-        /* Keyboard focus */
-        :focus-visible {
-            outline: 2px solid var(--ice);
-            outline-offset: 3px;
-            border-radius: 10px;
-        }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.001ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.001ms !important;
-            }
-        }
-        
         .container {
-            max-width: 1200px;
+            max-width: var(--container);
             margin: 0 auto;
             padding: 0 32px;
-            width: 100%;
-            box-sizing: border-box;
         }
-        
-        /* Header */
+
+        /* ===== Header ===== */
         header {
-            padding: 32px 0;
             position: sticky;
             top: 0;
-            background: rgba(10, 15, 26, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
+            z-index: 50;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(10, 11, 13, 0.78);
+            border-bottom: 1px solid var(--rule);
         }
-        
-        [data-theme="light"] header {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        nav a {
-            position: relative;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--ice);
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--ice);
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        nav a[style*="border-bottom"]::after {
-            display: none;
-        }
-
-        .nav {
-            display: flex;
+            padding: 18px 0;
             gap: 24px;
-            align-items: center;
         }
-
+        .header-left { display: flex; align-items: center; gap: 36px; }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .brand-mark {
+            height: 40px;
+            width: auto;
+            display: block;
+            filter: invert(1) hue-rotate(180deg) saturate(1.05);
+        }
+        .footer-brand .brand-mark { height: 44px; }
+        .nav { display: flex; gap: 24px; }
         .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            transition: color 0.3s ease;
-            font-weight: 500;
+            font-size: 14px;
+            color: var(--ink-dim);
+            transition: color 0.15s ease;
         }
-
-        .nav-link[aria-current="page"] {
-            color: var(--ice);
-        }
-
-        .nav-link[aria-current="page"]::after {
-            width: 100%;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink); }
         .header-cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 16px;
+            font-size: 13px;
+            padding: 8px 14px;
+            border: 1px solid var(--rule-strong);
             border-radius: 8px;
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
-            color: var(--navy);
-            text-decoration: none;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            letter-spacing: -0.005em;
-            line-height: 1;
-            min-height: 36px;
-            white-space: nowrap;
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 4px 14px rgba(125, 211, 252, 0.18);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            color: var(--ink);
+            transition: border-color 0.15s ease, background 0.15s ease;
         }
-
-        .header-cta::after { content: none; }
-
         .header-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 22px rgba(125, 211, 252, 0.28);
+            border-color: var(--accent);
+            background: rgba(125, 211, 252, 0.06);
         }
 
-        [data-theme="light"] .header-cta {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.2);
-        }
+        section { padding: 96px 0; border-top: 1px solid var(--rule); }
+        section:first-of-type { border-top: none; }
 
-        [data-theme="light"] .header-cta:hover {
-            box-shadow: 0 8px 22px rgba(14, 165, 233, 0.28);
-        }
-
-        @media (max-width: 600px) {
-            .header-cta { display: none; }
-        }
-
-        /* Footer */
-        footer {
-            padding: 64px 0 28px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background: rgba(0, 0, 0, 0.08);
-        }
-        [data-theme="light"] footer {
-            background: rgba(0, 0, 0, 0.02);
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
-            gap: 56px;
-            margin-bottom: 40px;
-        }
-        .footer-brand {
-            max-width: 380px;
-        }
-        .footer-logo {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-        .footer-tag {
-            margin-top: 14px;
-            color: var(--text-dim);
-            font-size: 0.875rem;
-            line-height: 1.65;
-        }
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .footer-col-title {
-            color: var(--text);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            color: var(--accent);
+            margin-bottom: 18px;
         }
-        .footer-col a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+        .eyebrow-dim { color: var(--ink-dim); }
+        .eyebrow-green { color: var(--accent-2); }
+
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(44px, 6vw, 72px); line-height: 1.04; }
+        h2 { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; }
+        h3 { font-size: 22px; line-height: 1.3; }
+
+        p { color: var(--ink-dim); font-size: 17px; line-height: 1.6; }
+        .lede { color: var(--ink); font-size: clamp(18px, 2vw, 22px); line-height: 1.5; max-width: 760px; }
+
+        .accent-2 { color: var(--accent-2); }
+        .accent { color: var(--accent); }
+        .warn { color: var(--warn); }
+
+        /* ===== Hero ===== */
+        .hero { padding: 100px 0 80px; }
+        .hero h1 { max-width: 16ch; }
+        .hero-sub {
+            margin-top: 24px;
+            max-width: 640px;
+            font-size: 18px;
+            line-height: 1.55;
+            color: var(--ink-dim);
         }
-        .footer-col a:hover {
-            color: var(--ice);
-        }
-        .footer-bottom {
+        .proof-pills {
+            margin-top: 40px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-dim);
-            font-size: 0.8125rem;
+            gap: 10px;
             flex-wrap: wrap;
         }
-        [data-theme="light"] .footer-bottom {
-            border-top-color: rgba(0, 0, 0, 0.08);
-        }
-        .footer-patent {
-            color: var(--text-subtle);
-        }
-        @media (max-width: 720px) {
-            footer {
-                padding: 48px 0 24px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 32px;
-                margin-bottom: 32px;
-            }
-            .footer-brand {
-                grid-column: 1 / -1;
-                max-width: 100%;
-            }
-        }
-        
-        .logo {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: -0.02em;
-            transition: all 0.3s ease;
-            position: relative;
-            display: inline-block;
-            text-decoration: none;
-        }
-        
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
-            transition: width 0.3s ease;
-        }
-        
-        .logo:hover::after {
-            width: 100%;
-        }
-        
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 8px;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        [data-theme="light"] .theme-toggle {
-            background: #ffffff;
-            border: 1px solid rgba(2, 132, 199, 0.18);
-            color: var(--text-dim);
-        }
-        
-        .theme-toggle:hover {
-            background: rgba(125, 211, 252, 0.08);
-            border-color: rgba(125, 211, 252, 0.35);
-            color: var(--ice);
-        }
-
-        [data-theme="light"] .theme-toggle:hover {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.4);
-            color: var(--ice-bright);
-        }
-
-        .theme-toggle-svg {
-            display: block;
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .theme-toggle-svg--sun { display: none; }
-        [data-theme="light"] .theme-toggle-svg--moon { display: none; }
-        [data-theme="light"] .theme-toggle-svg--sun { display: block; }
-
-        .theme-toggle:active .theme-toggle-svg {
-            transform: rotate(20deg);
-        }
-        
-        /* Hero */
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 24px;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-            color: var(--text);
-        }
-        
-        .hero .gradient {
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 50%, var(--ice) 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .tagline-second {
-            margin-top: 12px;
-            font-size: 1.125rem;
-            color: var(--text-dim);
-            max-width: 620px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-proof {
-            margin: 28px auto 0;
-            max-width: 720px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .proof-pill {
+        .pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 12px;
+            padding: 6px 14px;
+            border: 1px solid var(--rule);
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            color: var(--text-dim);
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: 0.005em;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
         }
-
-        [data-theme="light"] .proof-pill {
-            background: #ffffff;
-            border: 1px solid rgba(2, 132, 199, 0.2);
-            color: #0369a1;
-            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.05);
-        }
-
-        .proof-icon {
+        .pill::before {
+            content: "";
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--ice);
-            box-shadow: 0 0 6px rgba(125, 211, 252, 0.45);
-            flex-shrink: 0;
+            background: var(--accent);
         }
 
-        [data-theme="light"] .proof-icon {
-            background: var(--ice-bright);
-            box-shadow: 0 0 6px rgba(2, 132, 199, 0.3);
-        }
-
-        /* Products Grid */
-        .products-section {
-            padding: 80px 0;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-        
-        .product-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
-            border: 2px solid rgba(125, 211, 252, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        [data-theme="light"] .product-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(248, 250, 252, 0.95) 100%);
-            border: 2px solid rgba(2, 132, 199, 0.2);
-        }
-        
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--ice);
-            box-shadow: 0 12px 40px rgba(125, 211, 252, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-        
-        .product-card:hover::before {
-            opacity: 1;
-        }
-        
-        /* Featured Product Card */
-        .product-card--featured {
-            position: relative;
-            background: linear-gradient(135deg, 
-                rgba(125, 211, 252, 0.08) 0%, 
-                var(--navy-light) 50%, 
-                rgba(56, 189, 248, 0.06) 100%);
-            border: 2px solid var(--ice);
-            box-shadow: 0 8px 40px rgba(125, 211, 252, 0.25),
-                        0 0 80px rgba(125, 211, 252, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            animation: featured-glow 4s ease-in-out infinite;
-        }
-        
-        [data-theme="light"] .product-card--featured {
-            background: linear-gradient(135deg, 
-                rgba(2, 132, 199, 0.05) 0%, 
-                var(--navy-light) 50%, 
-                rgba(2, 132, 199, 0.03) 100%);
-            border: 2px solid var(--ice);
-            box-shadow: 0 8px 40px rgba(2, 132, 199, 0.2),
-                        0 0 60px rgba(2, 132, 199, 0.1);
-        }
-        
-        .product-card--featured::before {
-            opacity: 1;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--ice) 20%, 
-                var(--ice-bright) 50%, 
-                var(--ice) 80%, 
-                transparent 100%);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-        }
-        
-        .product-card--featured:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(125, 211, 252, 0.35),
-                        0 0 100px rgba(125, 211, 252, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-        
-        @keyframes featured-glow {
-            0%, 100% {
-                box-shadow: 0 8px 40px rgba(125, 211, 252, 0.25),
-                            0 0 80px rgba(125, 211, 252, 0.15),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            }
-            50% {
-                box-shadow: 0 8px 40px rgba(125, 211, 252, 0.35),
-                            0 0 100px rgba(125, 211, 252, 0.25),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            }
-        }
-        
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        
-        .product-icon {
-            font-size: 3rem;
-            margin-bottom: 24px;
-            display: block;
-        }
-
-        
-        .product-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-        
-        .product-description {
-            font-size: 1.0625rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-        
-        .product-features {
-            list-style: none;
-            padding: 0;
-            margin-top: 24px;
-        }
-        
-        .product-features li {
-            padding: 12px 0;
-            color: var(--text-dim);
-            font-size: 0.9375rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            padding-left: 24px;
-        }
-        
-        [data-theme="light"] .product-features li {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .product-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .product-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--ice);
-            font-weight: 600;
-        }
-        
-        /* Enhanced Features List */
-        .product-features--enhanced li {
-            padding: 16px 0 16px 48px;
-            font-size: 1rem;
-            border-bottom: 1px solid rgba(125, 211, 252, 0.15);
-            transition: all 0.3s ease;
-        }
-        
-        [data-theme="light"] .product-features--enhanced li {
-            border-bottom: 1px solid rgba(2, 132, 199, 0.15);
-        }
-        
-        .product-features--enhanced li:hover {
-            background: rgba(125, 211, 252, 0.05);
-            padding-left: 52px;
-            border-left: 3px solid var(--ice);
-            border-radius: 8px;
-        }
-        
-        .product-features--enhanced li::before {
-            content: attr(data-icon);
-            font-size: 1.5rem;
-            left: 12px;
-            filter: drop-shadow(0 2px 4px rgba(125, 211, 252, 0.3));
-        }
-        
-        .product-highlight {
-            background: rgba(125, 211, 252, 0.08);
-            border-left: 3px solid var(--ice);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-top: 24px;
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        
-        [data-theme="light"] .product-highlight {
-            background: rgba(2, 132, 199, 0.08);
-        }
-        
-        .product-highlight--featured {
-            background: linear-gradient(135deg, 
-                rgba(125, 211, 252, 0.15) 0%, 
-                rgba(56, 189, 248, 0.1) 100%);
-            border: 2px solid var(--ice);
-            border-left-width: 4px;
-            box-shadow: 0 4px 16px rgba(125, 211, 252, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        
-        [data-theme="light"] .product-highlight--featured {
-            background: linear-gradient(135deg, 
-                rgba(2, 132, 199, 0.12) 0%, 
-                rgba(2, 132, 199, 0.08) 100%);
-        }
-        
-        .product-image {
-            width: 100%;
-            margin: 24px 0;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .product-image.product-image--example {
-            background: rgba(0, 0, 0, 0.18);
-            padding: 14px;
-            border-radius: 14px;
-        }
-        
-        [data-theme="light"] .product-image.product-image--example {
-            background: rgba(0, 0, 0, 0.04);
-        }
-        
-        [data-theme="light"] .product-image {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        
-        .product-card:hover .product-image {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.15);
-        }
-        
-        .product-card--featured .product-image {
-            border: 2px solid rgba(125, 211, 252, 0.3);
-            box-shadow: 0 8px 32px rgba(125, 211, 252, 0.2);
-        }
-        
-        .product-card--featured:hover .product-image {
-            border-color: var(--ice);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.3);
-        }
-        
-        /* Control Plane Hero Product */
-        .control-plane-hero {
-            padding: 0 0 100px;
-        }
-        
-        .cp-hero-card {
-            background: linear-gradient(135deg, 
-                rgba(125, 211, 252, 0.06) 0%, 
-                var(--navy-light) 40%, 
-                rgba(56, 189, 248, 0.04) 100%);
-            border: 2px solid rgba(125, 211, 252, 0.25);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.18),
-                        0 0 80px rgba(125, 211, 252, 0.08);
-            position: relative;
-            animation: featured-glow 4s ease-in-out infinite;
-        }
-        
-        [data-theme="light"] .cp-hero-card {
-            background: linear-gradient(135deg, 
-                rgba(2, 132, 199, 0.04) 0%, 
-                var(--navy-light) 40%, 
-                rgba(2, 132, 199, 0.02) 100%);
-            border: 2px solid rgba(2, 132, 199, 0.2);
-            box-shadow: 0 12px 48px rgba(2, 132, 199, 0.12);
-        }
-        
-        .cp-hero-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--ice) 20%, 
-                var(--ice-bright) 50%, 
-                var(--ice) 80%, 
-                transparent 100%);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-        }
-        
-        .cp-hero-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            align-items: center;
-        }
-        
-        .cp-hero-text {
-            padding: 56px 48px;
-        }
-        
-        .cp-hero-badge {
+        .btn-primary {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(125, 211, 252, 0.12);
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            border-radius: 24px;
-            padding: 6px 16px;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--ice);
+            padding: 14px 22px;
+            background: var(--ink);
+            color: var(--bg);
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+        .btn-primary:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* ===== Surface section header ===== */
+        .surface-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .surface-header .badge {
+            font-size: 11px;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 24px;
+            padding: 4px 10px;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            color: var(--ink-dim);
         }
-        
-        [data-theme="light"] .cp-hero-badge {
-            background: rgba(2, 132, 199, 0.1);
-            border-color: rgba(2, 132, 199, 0.3);
+        .surface-tag-line {
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            margin-bottom: 8px;
         }
-        
-        .cp-hero-badge-dot {
+        .surface-intro h2 { margin-bottom: 18px; max-width: 18ch; }
+        .surface-intro .lede { max-width: 720px; }
+
+        /* ===== Product card ===== */
+        .product-card {
+            margin-top: 56px;
+            border: 1px solid var(--rule);
+            border-radius: 16px;
+            padding: 56px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+            position: relative;
+        }
+        .product-card-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+        .product-card.reverse .product-card-text { order: 2; }
+        .product-card.reverse .product-card-visual { order: 1; }
+
+        .product-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            margin-bottom: 18px;
+        }
+        .product-badge-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--ice);
-            animation: cp-pulse 2s ease-in-out infinite;
+            background: var(--accent);
         }
-        
-        @keyframes cp-pulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
-        }
-        
-        .cp-hero-title {
-            font-size: clamp(2rem, 3.5vw, 2.75rem);
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-        }
-        
-        .cp-hero-title .gradient {
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 50%, var(--ice) 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .cp-hero-desc {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
+        .product-card.computational .product-badge-dot { background: var(--accent-2); }
+
+        .product-title { margin-bottom: 18px; }
+        .product-title .accent, .product-title .accent-2 { display: block; }
+
+        .product-desc {
+            color: var(--ink);
+            font-size: 18px;
+            line-height: 1.55;
             margin-bottom: 28px;
+            max-width: 48ch;
         }
-        
-        .cp-hero-capabilities {
-            list-style: none;
+
+        .capability-list { list-style: none; }
+        .capability-list li {
+            padding: 14px 0 14px 24px;
+            position: relative;
+            border-top: 1px solid var(--rule);
+            color: var(--ink-dim);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .capability-list li:first-child { border-top: none; }
+        .capability-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            top: 14px;
+            color: var(--accent);
+            font-size: 10px;
+        }
+        .product-card.computational .capability-list li::before { color: var(--accent-2); }
+        .capability-list li b { color: var(--ink); font-weight: 600; }
+
+        /* ===== Visual containers ===== */
+        .visual-frame {
+            border: 1px solid var(--rule);
+            border-radius: 12px;
             padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        
-        .cp-hero-capabilities li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 1rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-        
-        .cp-hero-capabilities li .cap-icon {
-            flex-shrink: 0;
-            width: 24px;
-            height: 24px;
-            background: rgba(125, 211, 252, 0.12);
-            border: 1px solid rgba(125, 211, 252, 0.25);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            color: var(--ice);
-            margin-top: 2px;
-        }
-        
-        [data-theme="light"] .cp-hero-capabilities li .cap-icon {
-            background: rgba(2, 132, 199, 0.1);
-            border-color: rgba(2, 132, 199, 0.2);
-        }
-        
-        .cp-hero-visual {
-            position: relative;
-            padding: 24px 24px 24px 0;
-        }
-        
-        .cp-hero-visual img {
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3),
-                        0 0 60px rgba(125, 211, 252, 0.1);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-        
-        [data-theme="light"] .cp-hero-visual img {
-            border-color: rgba(2, 132, 199, 0.15);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .cp-hero-card:hover .cp-hero-visual img {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.25),
-                        0 0 80px rgba(125, 211, 252, 0.15);
-        }
-        
-        
-        @media (max-width: 900px) {
-            .cp-hero-inner {
-                grid-template-columns: 1fr;
-            }
-            .cp-hero-text {
-                padding: 40px 32px 24px;
-            }
-            .cp-hero-visual {
-                padding: 0 24px 32px;
-            }
-        }
-        
-        /* Fleet / SIEM-less Section */
-        .fleet-hero {
-            padding: 0 0 100px;
-        }
-
-        .fleet-hero-card {
-            background: linear-gradient(135deg,
-                rgba(125, 211, 252, 0.04) 0%,
-                var(--navy-light) 40%,
-                rgba(56, 189, 248, 0.03) 100%);
-            border: 2px solid rgba(125, 211, 252, 0.18);
-            border-radius: 20px;
+            background: var(--bg-2);
             overflow: hidden;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-            position: relative;
         }
-
-        [data-theme="light"] .fleet-hero-card {
-            background: linear-gradient(135deg,
-                rgba(2, 132, 199, 0.03) 0%,
-                var(--navy-light) 40%,
-                rgba(2, 132, 199, 0.02) 100%);
-            border-color: rgba(2, 132, 199, 0.16);
-            box-shadow: 0 8px 32px rgba(2, 132, 199, 0.08);
-        }
-
-        .fleet-hero-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            align-items: center;
-        }
-
-        .fleet-hero-visual {
-            order: -1;
-            padding: 24px 0 24px 24px;
-        }
-
-        .fleet-hero-visual img {
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3),
-                        0 0 60px rgba(125, 211, 252, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        [data-theme="light"] .fleet-hero-visual img {
-            border-color: rgba(2, 132, 199, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-        }
-
-        .fleet-hero-card:hover .fleet-hero-visual img {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.2),
-                        0 0 80px rgba(125, 211, 252, 0.1);
-        }
-
-        @media (max-width: 900px) {
-            .fleet-hero-inner {
-                grid-template-columns: 1fr;
-            }
-            .fleet-hero-visual {
-                order: 0;
-                padding: 0 24px 0;
-            }
-            .fleet-hero-text {
-                padding: 32px 32px 40px;
-            }
-        }
-
-        /* ── Computation Behavior Analytics hero ── */
-        .compute-plane-hero {
-            padding: 0 0 100px;
-        }
-
-        .compute-plane-hero .cp-hero-card {
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-            animation: none;
-            border-width: 2px;
-        }
-
-        /* Custom attribution-graph visualization */
-        .compute-vis {
-            background: rgba(125, 211, 252, 0.03);
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            border-radius: 14px;
-            padding: 22px 22px 18px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25),
-                        0 0 60px rgba(125, 211, 252, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        [data-theme="light"] .compute-vis {
-            background: rgba(2, 132, 199, 0.025);
-            border-color: rgba(2, 132, 199, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-        }
-
-        .cp-hero-card:hover .compute-vis {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.18),
-                        0 0 80px rgba(125, 211, 252, 0.12);
-        }
-
-        .compute-vis-svg {
+        .visual-frame img {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        .cv-band {
-            fill: rgba(125, 211, 252, 0.07);
-            stroke: rgba(125, 211, 252, 0.18);
-            stroke-width: 1;
-            stroke-dasharray: 3 3;
-        }
-
-        .cv-baseline-dash {
-            stroke: rgba(125, 211, 252, 0.22);
-            stroke-width: 1;
-            stroke-dasharray: 2 3;
-        }
-
-        .cv-trace {
-            fill: none;
-            stroke: rgba(125, 211, 252, 0.42);
-            stroke-width: 1;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .cv-trace--alert {
-            fill: none;
-            stroke: rgba(248, 113, 113, 0.9);
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 100;
-        }
-
-        .cv-callout-label {
-            fill: rgba(248, 113, 113, 0.95);
-            font-size: 9px;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .cv-meta-label {
-            fill: rgba(148, 163, 184, 0.6);
-            font-size: 9.5px;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .cv-meta-score {
-            fill: rgba(248, 113, 113, 0.95);
-            font-weight: 600;
-        }
-
-        [data-theme="light"] .cv-band {
-            fill: rgba(2, 132, 199, 0.06);
-            stroke: rgba(2, 132, 199, 0.18);
-        }
-
-        [data-theme="light"] .cv-baseline-dash {
-            stroke: rgba(2, 132, 199, 0.22);
-        }
-
-        [data-theme="light"] .cv-trace {
-            stroke: rgba(2, 132, 199, 0.45);
-        }
-
-        [data-theme="light"] .cv-meta-label {
-            fill: rgba(71, 85, 105, 0.7);
-        }
-
-        /* Product section label */
-        .product-section-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--ice);
-            text-align: center;
-            margin-bottom: 32px;
-            padding: 6px 18px;
-            display: inline-block;
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            border-radius: 100px;
-        }
-
-        [data-theme="light"] .product-section-label {
-            background: rgba(14, 165, 233, 0.08);
-            border-color: rgba(14, 165, 233, 0.22);
-        }
-
-        .use-cases-section {
-            text-align: center;
-        }
-
-        .use-cases-section--fleet {
-            padding-top: 0;
-        }
-
-        /* Section */
-        section {
-            padding: 80px 0;
-        }
-        
-        h2 {
-            font-size: clamp(2rem, 4vw, 2.75rem);
-            text-align: center;
-            margin-bottom: 24px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        
-        .section-intro {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto 60px;
-            text-align: center;
-            line-height: 1.7;
-        }
-        
-        /* Use Cases Section */
-        .use-cases-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, rgba(125, 211, 252, 0.03) 0%, transparent 100%);
-        }
-        
-        [data-theme="light"] .use-cases-section {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.02) 0%, transparent 100%);
-        }
-        
-        .use-cases-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .use-cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-        
-        .use-case-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
-            border-radius: 16px;
+        .visual-svg {
+            border: 1px solid var(--rule);
+            border-radius: 12px;
             padding: 32px;
-            border: 2px solid rgba(125, 211, 252, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
         }
-        
-        [data-theme="light"] .use-case-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-            border: 2px solid rgba(2, 132, 199, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        .visual-svg svg { width: 100%; height: auto; display: block; }
+        .visual-caption {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
         }
-        
-        .use-case-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--ice);
-            box-shadow: 0 12px 48px rgba(125, 211, 252, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                        0 0 60px rgba(125, 211, 252, 0.15);
+
+        /* ===== Use case row ===== */
+        .use-case-strip {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--rule);
         }
-        
+        .use-case-label {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            margin-bottom: 24px;
+        }
+        .use-case-card {
+            border: 1px solid var(--rule);
+            border-radius: 12px;
+            padding: 32px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+        }
         .use-case-card h3 {
-            color: var(--ice);
-            font-size: 1.375rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-        
-        .use-case-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .use-case-card li {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.8;
+            color: var(--ink);
             margin-bottom: 12px;
-            padding-left: 24px;
-            position: relative;
+            font-size: 22px;
         }
-        
-        .use-case-card li::before {
-            content: '→';
+        .use-case-card p {
+            color: var(--ink-dim);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+        .use-case-points { list-style: none; margin-bottom: 24px; }
+        .use-case-points li {
+            padding: 10px 0 10px 20px;
+            position: relative;
+            font-size: 14px;
+            color: var(--ink-dim);
+            line-height: 1.5;
+        }
+        .use-case-points li::before {
+            content: "◆";
             position: absolute;
             left: 0;
-            color: var(--ice);
-            font-weight: 600;
+            top: 12px;
+            font-size: 8px;
+            color: var(--accent);
         }
-        
-        .use-case-card li:last-child {
-            margin-bottom: 0;
-        }
-        
-        .use-case-card .blog-link {
-            margin-top: 20px;
-            font-size: 0.9375rem;
-            display: block;
-        }
-        
-        .use-case-card .blog-link a {
-            color: var(--ice);
-            text-decoration: none;
-            border-bottom: 1px solid var(--ice);
-            transition: opacity 0.3s ease;
-            display: inline-block;
-        }
-        
-        .use-case-card .blog-link a:hover {
-            opacity: 0.8;
-        }
-        
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 100px 0;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
-            color: var(--navy);
-            padding: 20px 56px;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 1.0625rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: -0.01em;
-            box-shadow: 0 4px 20px rgba(125, 211, 252, 0.3);
-        }
-        
-        .cta-button:hover {
-            background: linear-gradient(135deg, var(--ice-bright) 0%, var(--ice) 100%);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 16px 48px var(--ice-glow-strong);
-        }
-        
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-            
-            .product-card {
-                padding: 32px;
-            }
-            
-            .hero {
-                padding: 60px 0 40px;
-            }
-        }
-
-        /* ── Bento Grid: Core Components ── */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 48px;
-        }
-
-        .bento-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
-            border: 1px solid rgba(125, 211, 252, 0.1);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="light"] .bento-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(248, 250, 252, 0.95) 100%);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--ice), transparent);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-
-        .bento-card:hover {
-            border-color: rgba(125, 211, 252, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(125, 211, 252, 0.1);
-        }
-
-        .bento-card:hover::before { opacity: 1; }
-
-        .bento-card--span2 { grid-column: span 2; }
-        .bento-card--span3 { grid-column: span 3; }
-
-        .bento-card--featured {
-            border: 2px solid var(--ice);
-            background: linear-gradient(135deg,
-                rgba(125, 211, 252, 0.06) 0%,
-                var(--navy-light) 50%,
-                rgba(56, 189, 248, 0.04) 100%);
-            box-shadow: 0 8px 40px rgba(125, 211, 252, 0.15),
-                        0 0 60px rgba(125, 211, 252, 0.08);
-            animation: featured-glow 4s ease-in-out infinite;
-        }
-
-        [data-theme="light"] .bento-card--featured {
-            background: linear-gradient(135deg,
-                rgba(2, 132, 199, 0.04) 0%,
-                var(--navy-light) 50%,
-                rgba(2, 132, 199, 0.02) 100%);
-            border-color: var(--ice);
-            box-shadow: 0 8px 40px rgba(2, 132, 199, 0.12);
-        }
-
-        .bento-card--featured::before {
-            opacity: 1;
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, var(--ice) 20%, var(--ice-bright) 50%, var(--ice) 80%, transparent 100%);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-        }
-
-        .bento-card--featured:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 16px 56px rgba(125, 211, 252, 0.25),
-                        0 0 80px rgba(125, 211, 252, 0.12);
-        }
-
-        .bento-card--core {
-            border-color: rgba(125, 211, 252, 0.18);
-        }
-
-        [data-theme="light"] .bento-card--core {
-            border-color: rgba(2, 132, 199, 0.14);
-        }
-
-        .bento-card--core::before {
-            opacity: 0.35;
-        }
-
-        .bento-card--core:hover {
-            border-color: var(--ice);
-            transform: translateY(-6px);
-            box-shadow: 0 16px 48px rgba(125, 211, 252, 0.18),
-                        0 0 60px rgba(125, 211, 252, 0.08);
-        }
-
-        .bento-card-inner {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-
-        .bento-card-text { flex: 1; min-width: 0; }
-
-        .bento-card-visual {
-            flex: 0 0 46%;
-            max-width: 46%;
-        }
-
-        .bento-card-visual img {
-            width: 100%;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.15);
-            padding: 10px;
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        [data-theme="light"] .bento-card-visual img {
-            background: rgba(0, 0, 0, 0.03);
-            border-color: rgba(2, 132, 199, 0.1);
-        }
-
-        .bento-card--featured:hover .bento-card-visual img {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(125, 211, 252, 0.2);
-        }
-
-        .bento-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 18px;
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            color: var(--ice);
-        }
-
-        [data-theme="light"] .bento-icon {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .bento-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
-
-        .bento-card p {
-            font-size: 0.9375rem;
-            color: var(--text-dim);
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        .bento-tag {
-            display: inline-block;
-            margin-top: 14px;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--ice);
-            background: rgba(125, 211, 252, 0.1);
-            border: 1px solid rgba(125, 211, 252, 0.2);
-        }
-
-        .bento-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 14px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--ice);
-            text-decoration: none;
-            transition: gap 0.2s ease;
-        }
-
-        .bento-link:hover { gap: 10px; }
-
-        @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-card--span2 { grid-column: span 1; }
-            .bento-card--span3 { grid-column: span 1; }
-            .bento-card-inner { flex-direction: column; }
-            .bento-card-visual { flex: none; max-width: 100%; }
-        }
-
-        /* ── Use Case Tiles ── */
-        .usecase-tiles {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 48px;
-        }
-
-        .usecase-tile {
-            text-align: center;
-            padding: 28px 16px;
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.95) 100%);
-            border: 1px solid rgba(125, 211, 252, 0.08);
-            border-radius: 14px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        [data-theme="light"] .usecase-tile {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border-color: rgba(2, 132, 199, 0.08);
-        }
-
-        .usecase-tile:hover {
-            border-color: rgba(125, 211, 252, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px rgba(125, 211, 252, 0.1);
-        }
-
-        .usecase-tile-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 14px;
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.12);
-            color: var(--ice);
-        }
-
-        [data-theme="light"] .usecase-tile-icon {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.1);
-        }
-
-        .usecase-tile h3 {
-            font-size: 0.9375rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 6px;
-            line-height: 1.35;
-        }
-
-        .usecase-tile p {
-            font-size: 0.8125rem;
-            color: var(--text-dim);
-            line-height: 1.55;
-            margin: 0;
-        }
-
-        .usecase-tile .tile-link {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--ice);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-
-        .usecase-tile .tile-link:hover { border-color: var(--ice); }
-
-        @media (max-width: 680px) {
-            .usecase-tiles { grid-template-columns: 1fr; }
-        }
-
-        /* ── Shadow AI Spotlight ── */
-        .shadow-spotlight {
-            margin-top: 48px;
-            margin-bottom: 32px;
-            background: linear-gradient(135deg,
-                rgba(251, 146, 60, 0.05) 0%,
-                var(--navy-light) 40%,
-                rgba(125, 211, 252, 0.04) 100%);
-            border: 1px solid rgba(251, 146, 60, 0.25);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        [data-theme="light"] .shadow-spotlight {
-            background: linear-gradient(135deg,
-                rgba(234, 88, 12, 0.04) 0%,
-                rgba(255, 255, 255, 0.98) 40%,
-                rgba(2, 132, 199, 0.03) 100%);
-            border-color: rgba(234, 88, 12, 0.2);
-        }
-
-        .shadow-spotlight::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(251, 146, 60, 0.8) 30%,
-                var(--ice) 70%,
-                transparent 100%);
-        }
-
-        .shadow-spotlight-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            align-items: stretch;
-        }
-
-        .shadow-spotlight-text {
-            padding: 44px 48px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .shadow-spotlight-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(251, 146, 60, 0.1);
-            border: 1px solid rgba(251, 146, 60, 0.3);
-            border-radius: 24px;
-            padding: 5px 14px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: rgba(251, 146, 60, 0.9);
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            margin-bottom: 20px;
-        }
-
-        [data-theme="light"] .shadow-spotlight-badge {
-            background: rgba(234, 88, 12, 0.08);
-            border-color: rgba(234, 88, 12, 0.25);
-            color: rgba(194, 65, 12, 0.9);
-        }
-
-        .shadow-spotlight-badge-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: rgba(251, 146, 60, 0.9);
-            animation: cp-pulse 2s ease-in-out infinite;
-        }
-
-        [data-theme="light"] .shadow-spotlight-badge-dot {
-            background: rgba(194, 65, 12, 0.9);
-        }
-
-        .shadow-spotlight-title {
-            font-size: clamp(1.25rem, 2.2vw, 1.625rem);
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 14px;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
-        }
-
-        .shadow-spotlight-desc {
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            line-height: 1.75;
-            margin-bottom: 24px;
-        }
-
-        .shadow-spotlight-points {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .shadow-spotlight-points li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-
-        .shadow-spotlight-points li .sp-icon {
-            flex-shrink: 0;
-            width: 20px;
-            height: 20px;
-            background: rgba(125, 211, 252, 0.1);
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6875rem;
-            color: var(--ice);
-            margin-top: 2px;
-        }
-
-        [data-theme="light"] .shadow-spotlight-points li .sp-icon {
-            background: rgba(2, 132, 199, 0.08);
-            border-color: rgba(2, 132, 199, 0.15);
-        }
-
-        .shadow-spotlight-visual {
-            background: rgba(0, 0, 0, 0.25);
-            border-left: 1px solid rgba(251, 146, 60, 0.15);
-            padding: 44px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        [data-theme="light"] .shadow-spotlight-visual {
-            background: rgba(0, 0, 0, 0.03);
-            border-left-color: rgba(234, 88, 12, 0.12);
-        }
-
-        .org-policy-block {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            border-radius: 10px;
-            padding: 18px 20px;
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-            font-size: 0.7875rem;
-            line-height: 1.65;
-        }
-
-        [data-theme="light"] .org-policy-block {
-            background: rgba(248, 250, 252, 0.9);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .org-policy-block .opb-label {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--ice);
-            margin-bottom: 10px;
-            opacity: 0.7;
-        }
-
-        .org-policy-block .opb-text {
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-
-        .agent-verdict-row {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .agent-verdict {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.8125rem;
-        }
-
-        [data-theme="light"] .agent-verdict {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(0, 0, 0, 0.07);
-        }
-
-        .agent-verdict-name {
-            color: var(--text-dim);
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-            font-size: 0.75rem;
-        }
-
-        .agent-verdict-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-        }
-
-        .agent-verdict-status--ok {
-            color: #4ade80;
-        }
-
-        .agent-verdict-status--warn {
-            color: rgba(251, 146, 60, 0.9);
-        }
-
-        [data-theme="light"] .agent-verdict-status--warn {
-            color: rgba(194, 65, 12, 0.9);
-        }
-
-        .verdict-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        @media (max-width: 860px) {
-            .shadow-spotlight-inner {
-                grid-template-columns: 1fr;
-            }
-            .shadow-spotlight-text {
-                padding: 36px 28px 24px;
-            }
-            .shadow-spotlight-visual {
-                border-left: none;
-                border-top: 1px solid rgba(251, 146, 60, 0.15);
-                padding: 28px 28px 36px;
-            }
-        }
-
-        /* ── Identity Compaction Block ── */
-        .identity-compaction {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(125, 211, 252, 0.12);
-            border-radius: 10px;
-            padding: 16px 18px;
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-            font-size: 0.7375rem;
-        }
-
-        [data-theme="light"] .identity-compaction {
-            background: rgba(248, 250, 252, 0.9);
-            border-color: rgba(2, 132, 199, 0.1);
-        }
-
-        .ic-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .ic-title {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: rgba(251, 146, 60, 0.8);
-        }
-
-        [data-theme="light"] .ic-title {
-            color: rgba(194, 65, 12, 0.85);
-        }
-
-        .ic-agent {
-            font-size: 0.6875rem;
-            color: var(--text-subtle);
-        }
-
-        .ic-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.06);
-            margin-bottom: 12px;
-        }
-
-        [data-theme="light"] .ic-divider {
-            background: rgba(0, 0, 0, 0.07);
-        }
-
-        .ic-prose {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-style: italic;
-            margin-bottom: 12px;
-        }
-
-        .ic-score-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        [data-theme="light"] .ic-score-row {
-            border-top-color: rgba(0, 0, 0, 0.07);
-        }
-
-        .ic-score-label {
-            font-size: 0.6875rem;
-            color: var(--text-subtle);
-        }
-
-        .ic-score-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: rgba(251, 146, 60, 0.9);
-        }
-
-        [data-theme="light"] .ic-score-number {
-            color: rgba(194, 65, 12, 0.9);
-        }
-
-        /* 2×2 use case tile grid */
-        .usecase-tiles--2col {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        @media (max-width: 680px) {
-            .usecase-tiles--2col { grid-template-columns: 1fr; }
-        }
+        .use-case-points li b { color: var(--ink); font-weight: 600; }
 
-        /* ── Open Source click-through strip (Identity Plane lane) ── */
+        /* OSS strip */
         .oss-strip {
             display: flex;
             align-items: center;
-            gap: 20px;
-            padding: 18px 22px;
-            margin-top: 28px;
-            background: linear-gradient(135deg, rgba(125, 211, 252, 0.04) 0%, rgba(21, 27, 43, 0.6) 100%);
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            border-radius: 14px;
-            text-decoration: none;
-            color: inherit;
-            transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+            gap: 16px;
+            padding: 16px 20px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 10px;
+            background: rgba(125, 211, 252, 0.04);
+            font-size: 13px;
+            transition: border-color 0.15s ease;
+            margin-top: 8px;
         }
-
-        [data-theme="light"] .oss-strip {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.04) 0%, rgba(248, 250, 252, 0.9) 100%);
-            border-color: rgba(2, 132, 199, 0.16);
-        }
-
-        .oss-strip:hover {
-            border-color: rgba(125, 211, 252, 0.4);
-            transform: translateY(-1px);
-        }
-
-        [data-theme="light"] .oss-strip:hover {
-            border-color: rgba(2, 132, 199, 0.4);
-        }
-
-        .oss-strip-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--ice);
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.22);
-            border-radius: 20px;
-            padding: 5px 12px;
-        }
-
-        [data-theme="light"] .oss-strip-badge {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.22);
-        }
-
-        .oss-strip-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            line-height: 1.45;
-        }
-
-        .oss-strip-text strong {
-            color: var(--text);
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .oss-strip-text > span {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-
-        .oss-strip-cta {
-            flex-shrink: 0;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--ice);
-            white-space: nowrap;
-        }
-
-        .oss-strip:hover .oss-strip-cta {
-            color: var(--ice-bright);
-        }
-
-        @media (max-width: 680px) {
-            .oss-strip {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 16px 18px;
-            }
-            .oss-strip-cta { align-self: flex-end; }
-        }
-
-        /* Inset variant: docked to bottom of shadow-spotlight-text column */
-        .oss-strip--inset {
-            margin-top: auto;
-            margin-bottom: 0;
-            padding: 14px 16px;
-            gap: 14px;
-        }
-
-        .oss-strip--inset .oss-strip-badge {
-            font-size: 0.65rem;
-            padding: 4px 10px;
-        }
-
-        .oss-strip--inset .oss-strip-text strong {
-            font-size: 0.875rem;
-        }
-
-        .oss-strip--inset .oss-strip-text > span {
-            font-size: 0.78rem;
-        }
-
-        .oss-strip--inset .oss-strip-cta {
-            font-size: 0.8125rem;
-        }
-
-        @media (max-width: 900px) {
-            .oss-strip--inset {
-                flex-direction: row;
-                align-items: center;
-                gap: 14px;
-            }
-            .oss-strip--inset .oss-strip-cta { align-self: center; }
-        }
-
-        @media (max-width: 520px) {
-            .oss-strip--inset {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .oss-strip--inset .oss-strip-cta { align-self: flex-end; }
-        }
-
-        /* ── Open Source Reference Section ── */
-        .oss-reference {
-            padding: 100px 0;
-            border-top: 1px solid rgba(125, 211, 252, 0.08);
-        }
-
-        [data-theme="light"] .oss-reference {
-            border-top-color: rgba(2, 132, 199, 0.08);
-        }
-
-        .oss-reference-header {
-            text-align: center;
-            margin-bottom: 52px;
-        }
-
+        .oss-strip:hover { border-color: var(--accent); }
         .oss-badge {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
+            gap: 6px;
+            font-size: 10px;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--text-subtle);
-            background: rgba(125, 211, 252, 0.06);
-            border: 1px solid rgba(125, 211, 252, 0.15);
-            border-radius: 20px;
-            padding: 5px 14px;
-            margin-bottom: 20px;
+            color: var(--accent);
+            padding: 4px 10px;
+            border: 1px solid rgba(125, 211, 252, 0.4);
+            border-radius: 999px;
+            flex-shrink: 0;
         }
+        .oss-text { flex: 1; line-height: 1.5; }
+        .oss-text strong { color: var(--ink); display: block; font-weight: 600; }
+        .oss-text span { color: var(--ink-dim); font-size: 13px; }
+        .oss-cta { color: var(--accent); white-space: nowrap; font-size: 13px; }
 
-        [data-theme="light"] .oss-badge {
-            background: rgba(2, 132, 199, 0.05);
-            border-color: rgba(2, 132, 199, 0.15);
-        }
-
-        .oss-badge svg { flex-shrink: 0; }
-
-        .oss-reference-header h2 {
-            font-size: clamp(1.75rem, 3.5vw, 2.4rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text);
-            margin-bottom: 16px;
-        }
-
-        .oss-reference-header .oss-intro {
-            font-size: 1.125rem;
-            color: var(--text-dim);
-            max-width: 640px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        .oss-reference-header .oss-intro a {
-            color: var(--ice);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(125, 211, 252, 0.3);
-            transition: border-color 0.2s ease;
-        }
-
-        .oss-reference-header .oss-intro a:hover {
-            border-bottom-color: var(--ice);
-        }
-
-        .oss-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(21, 27, 43, 0.97) 100%);
-            border: 1px solid rgba(125, 211, 252, 0.14);
-            border-radius: 20px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-        }
-
-        [data-theme="light"] .oss-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .oss-card-left {
-            padding: 48px 44px;
-            border-right: 1px solid rgba(125, 211, 252, 0.08);
-        }
-
-        [data-theme="light"] .oss-card-left {
-            border-right-color: rgba(2, 132, 199, 0.08);
-        }
-
-        .oss-pkg {
-            display: inline-block;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-            font-size: 0.8125rem;
-            color: var(--ice);
-            background: rgba(125, 211, 252, 0.07);
-            border: 1px solid rgba(125, 211, 252, 0.2);
+        /* Mock dashboard fallback (when no image) */
+        .mock-dashboard {
+            background: var(--bg-2);
             border-radius: 8px;
-            padding: 6px 14px;
-            margin-bottom: 20px;
-            letter-spacing: 0.01em;
+            padding: 28px;
+            font-family: 'Inter', sans-serif;
         }
-
-        [data-theme="light"] .oss-pkg {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.2);
+        .mock-policy {
+            background: rgba(125, 211, 252, 0.05);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 18px;
         }
-
-        .oss-card-left h3 {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: var(--text);
-            letter-spacing: -0.02em;
+        .mock-label {
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
             margin-bottom: 10px;
         }
-
-        .oss-card-desc {
-            font-size: 0.9375rem;
-            color: var(--text-dim);
-            line-height: 1.75;
-            margin-bottom: 32px;
+        .mock-prose {
+            font-size: 13px;
+            color: var(--ink-dim);
+            line-height: 1.55;
+            font-style: italic;
         }
-
-        .oss-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 36px;
-        }
-
-        .oss-col-label {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .oss-col-label--included { color: rgba(125, 211, 252, 0.75); }
-        .oss-col-label--limits   { color: var(--text-subtle); }
-
-        [data-theme="light"] .oss-col-label--included { color: var(--ice-bright); }
-
-        .oss-cols ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .mock-row {
             display: flex;
-            flex-direction: column;
-            gap: 9px;
-        }
-
-        .oss-cols ul li {
-            font-size: 0.875rem;
-            line-height: 1.5;
-            padding-left: 18px;
-            position: relative;
-            color: var(--text-dim);
-        }
-
-        .oss-col-included li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: rgba(125, 211, 252, 0.6);
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-
-        [data-theme="light"] .oss-col-included li::before { color: var(--ice-bright); }
-
-        .oss-col-limits li {
-            color: var(--text-subtle);
-        }
-
-        .oss-col-limits li::before {
-            content: '×';
-            position: absolute;
-            left: 0;
-            color: rgba(148, 163, 184, 0.55);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .oss-actions {
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .oss-btn-github {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 11px 22px;
-            border-radius: 10px;
-            font-size: 0.9375rem;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: -0.01em;
-            background: var(--text);
-            color: var(--navy);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid transparent;
-        }
-
-        [data-theme="light"] .oss-btn-github {
-            background: var(--text);
-            color: #fff;
-        }
-
-        .oss-btn-github:hover {
-            opacity: 0.88;
-            transform: translateY(-2px);
-        }
-
-        .oss-btn-openclaw {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9375rem;
-            font-weight: 500;
-            color: var(--text-dim);
-            text-decoration: none;
-            padding: 11px 4px;
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .oss-btn-openclaw:hover {
-            color: var(--ice);
-            border-bottom-color: rgba(125, 211, 252, 0.4);
-        }
-
-        /* Terminal panel (right side of OSS card) */
-        .oss-terminal-panel {
-            padding: 36px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .oss-terminal {
-            background: #0d1117;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 14px;
-            overflow: hidden;
-            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-        }
-
-        [data-theme="light"] .oss-terminal {
-            background: #1e2432;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .oss-terminal-bar {
-            display: flex;
-            align-items: center;
-            gap: 7px;
             padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .oss-terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .oss-terminal-dot:nth-child(1) { background: rgba(255, 95, 86, 0.6); }
-        .oss-terminal-dot:nth-child(2) { background: rgba(255, 189, 46, 0.6); }
-        .oss-terminal-dot:nth-child(3) { background: rgba(39, 201, 63, 0.5); }
-
-        .oss-terminal-title {
-            margin-left: 8px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 0.02em;
-        }
-
-        .oss-terminal-body {
-            padding: 24px;
-            font-size: 0.75rem;
-            line-height: 1.7;
-            color: #8b949e;
-            overflow-x: auto;
-            white-space: pre;
-        }
-
-        .oss-terminal-body .t-cmd    { color: #58a6ff; }
-        .oss-terminal-body .t-ok     { color: #3fb950; }
-        .oss-terminal-body .t-label  { color: #f0883e; font-weight: 600; }
-        .oss-terminal-body .t-anchor { color: #79c0ff; }
-        .oss-terminal-body .t-muted  { color: rgba(139, 148, 158, 0.45); }
-        .oss-terminal-body .t-warn   { color: #d29922; }
-        .oss-terminal-body .t-alert  { color: #f85149; }
-        .oss-terminal-body .t-dim    { color: rgba(139, 148, 158, 0.6); }
-        .oss-terminal-body .t-drift  { color: #bc8cff; }
-
-        .oss-cta-note {
-            margin-top: 24px;
-            font-size: 0.8125rem;
-            color: var(--text-subtle);
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        .oss-cta-note a {
-            color: var(--ice);
-            text-decoration: none;
-        }
-
-        .oss-cta-note a:hover { text-decoration: underline; }
-
-        @media (max-width: 900px) {
-            .oss-card {
-                grid-template-columns: 1fr;
-            }
-            .oss-card-left {
-                border-right: none;
-                border-bottom: 1px solid rgba(125, 211, 252, 0.08);
-                padding: 40px 32px;
-            }
-            .oss-terminal-panel {
-                padding: 32px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .oss-cols {
-                grid-template-columns: 1fr;
-            }
-            .oss-card-left {
-                padding: 32px 24px;
-            }
-            .oss-terminal-panel {
-                padding: 24px;
-            }
-        }
-
-        /* Agentic SIEM compression visual */
-        .siem-compression-card {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .scc-raw,
-        .scc-output {
-            background: rgba(125, 211, 252, 0.04);
-            border: 1px solid rgba(125, 211, 252, 0.12);
-            border-radius: 10px;
-            padding: 16px 18px;
-        }
-
-        [data-theme="light"] .scc-raw,
-        [data-theme="light"] .scc-output {
-            background: rgba(2, 132, 199, 0.04);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .scc-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text-subtle);
-            margin-bottom: 6px;
-        }
-
-        .scc-number {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            line-height: 1;
-            margin-bottom: 4px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .scc-number--accent {
-            color: var(--ice);
-            font-size: 2rem;
-        }
-
-        .scc-sublabel {
-            font-size: 0.75rem;
-            color: var(--text-subtle);
+            border: 1px solid var(--rule);
+            border-radius: 8px;
             margin-bottom: 10px;
+            font-size: 13px;
         }
-
-        .scc-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .scc-tag {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(125, 211, 252, 0.07);
-            color: var(--text-dim);
-            border: 1px solid rgba(125, 211, 252, 0.12);
-        }
-
-        [data-theme="light"] .scc-tag {
-            background: rgba(2, 132, 199, 0.06);
-            border-color: rgba(2, 132, 199, 0.12);
-        }
-
-        .scc-arrow {
-            display: flex;
+        .mock-row .agent-name { color: var(--ink); font-weight: 500; }
+        .mock-status {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 0 4px;
-            color: var(--ice);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
-
-        .scc-arrow-label {
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--ice);
-            letter-spacing: 0.04em;
-        }
-
-        .scc-threat-rows {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .scc-threat-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
-
-        .scc-threat-count {
-            margin-left: auto;
-            font-size: 0.7rem;
-            color: var(--text-subtle);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .scc-threat-dot {
+        .mock-status .dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            flex-shrink: 0;
         }
+        .mock-status.ok { color: var(--accent-2); }
+        .mock-status.ok .dot { background: var(--accent-2); }
+        .mock-status.warn { color: var(--warn); }
+        .mock-status.warn .dot { background: var(--warn); }
 
-        .scc-threat-row--high .scc-threat-dot { background: var(--red); }
-        .scc-threat-row--med .scc-threat-dot  { background: #f59e0b; }
-        .scc-threat-row--low .scc-threat-dot  { background: var(--ice); }
-
-        /* Neural memory visualization */
-        .neural-memory-vis {
+        .mock-compaction {
+            margin-top: 18px;
+            padding: 20px;
+            border: 1px solid var(--rule);
+            border-radius: 8px;
+            background: rgba(252, 165, 165, 0.04);
+        }
+        .mock-compaction-head {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 4px 0;
-        }
-
-        .nmv-svg {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-        }
-
-        .nmv-caption {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 11px;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ice);
-            opacity: 0.65;
+            color: var(--warn);
+        }
+        .mock-compaction-prose {
+            font-size: 13px;
+            color: var(--ink-dim);
+            line-height: 1.55;
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+        .mock-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-top: 12px;
+            border-top: 1px solid var(--rule);
+        }
+        .mock-score-label {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+        }
+        .mock-score-num {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--warn);
+            letter-spacing: -0.02em;
+        }
+
+        /* ===== Section: dual product surface ===== */
+        .surface-section { padding: 96px 0; }
+        .surface-section .container > .surface-intro { max-width: 780px; }
+
+        /* ===== Architecture diagram ===== */
+        .architecture-wrap {
+            margin: 48px 0 24px;
+            padding: 32px;
+            border: 1px solid var(--rule);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+        }
+        .architecture-svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+        .architecture-footnote {
+            margin-top: 8px;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            color: var(--ink);
+            text-transform: uppercase;
+        }
+        .architecture-footnote-dim { color: var(--ink-dim); text-transform: none; letter-spacing: 0; }
+        .architecture-footnote b { font-weight: 600; }
+        @media (max-width: 720px) {
+            .architecture-wrap { padding: 16px; margin: 32px 0 16px; }
+            .architecture-footnote { font-size: 11px; }
+        }
+
+        /* ===== CTA ===== */
+        .cta { padding: 96px 0; text-align: center; }
+        .cta h2 { margin-bottom: 32px; max-width: 22ch; margin-left: auto; margin-right: auto; }
+
+        /* ===== Footer ===== */
+        footer {
+            border-top: 1px solid var(--rule);
+            padding: 64px 0 40px;
+            background: var(--bg);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-brand .brand { margin-bottom: 16px; }
+        .footer-tag {
+            font-size: 14px;
+            color: var(--ink-dim);
+            max-width: 36ch;
+            line-height: 1.55;
+        }
+        .footer-col-title {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--ink-dim);
+            padding: 6px 0;
+            transition: color 0.15s ease;
+        }
+        .footer-col a:hover { color: var(--ink); }
+        .footer-bottom {
+            border-top: 1px solid var(--rule);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--ink-subtle);
+            letter-spacing: 0.08em;
+        }
+        .footer-patent {
+            padding: 4px 12px;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        /* ===== Video ===== */
+        .video-wrap {
+            margin-top: 56px;
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 14px;
+            background: var(--bg-2);
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .video-caption {
+            margin-top: 14px;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
             text-align: center;
         }
 
-        .nmv-line--outer   { stroke: rgba(125,211,252,0.09); stroke-width: 0.8; }
-        .nmv-line--mid     { stroke: rgba(125,211,252,0.20); stroke-width: 1; }
-        .nmv-line--core-int{ stroke: rgba(125,211,252,0.35); stroke-width: 1.2; }
-
-        .nmv-node--outer   { fill: rgba(125,211,252,0.22); }
-        .nmv-node--mid     { fill: rgba(125,211,252,0.50); }
-        .nmv-node--core    { fill: rgba(125,211,252,0.82); }
-        .nmv-node--central { fill: #7dd3fc; filter: drop-shadow(0 0 5px rgba(125,211,252,0.75)); }
-
-        [data-theme="light"] .nmv-line--outer    { stroke: rgba(2,132,199,0.10); }
-        [data-theme="light"] .nmv-line--mid      { stroke: rgba(2,132,199,0.22); }
-        [data-theme="light"] .nmv-line--core-int { stroke: rgba(2,132,199,0.38); }
-        [data-theme="light"] .nmv-node--outer    { fill: rgba(2,132,199,0.22); }
-        [data-theme="light"] .nmv-node--mid      { fill: rgba(2,132,199,0.50); }
-        [data-theme="light"] .nmv-node--core     { fill: rgba(2,132,199,0.82); }
-        [data-theme="light"] .nmv-node--central  { fill: #0284c7; filter: drop-shadow(0 0 5px rgba(2,132,199,0.6)); }
-
-        /* ── Mobile: 768px ── */
-        @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            header { padding: 20px 0; }
-            section { padding: 48px 0; }
-            .hero { padding: 56px 0 40px; }
-            .hero h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); margin-bottom: 16px; }
-            .hero p { font-size: 1.05rem; }
-            .tagline-second { font-size: 1rem; }
-            .header-left { gap: 20px; }
-            .nav { gap: 16px; }
-            .nav-link { font-size: 0.8125rem; }
-            .control-plane-hero { padding-bottom: 48px; }
-            .fleet-hero { padding-bottom: 48px; }
-            .cp-hero-title { font-size: clamp(1.25rem, 3.5vw, 1.75rem); }
-            .shadow-spotlight-text { padding: 28px 24px 20px; }
-            .shadow-spotlight-visual { padding: 24px; }
-            .oss-reference { padding: 60px 0; }
-            .oss-reference-header { margin-bottom: 32px; }
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .container { padding: 0 24px; }
+            section { padding: 72px 0; }
+            .hero { padding: 72px 0 56px; }
+            .surface-section { padding: 72px 0; }
+            .product-card { padding: 36px 28px; }
+            .product-card-inner { grid-template-columns: 1fr; gap: 40px; }
+            .product-card.reverse .product-card-text { order: 1; }
+            .product-card.reverse .product-card-visual { order: 2; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+            .nav { display: none; }
+            .oss-strip { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
 
-        /* ── Mobile: small phones ── */
-        @media (max-width: 480px) {
-            .container { padding: 0 16px; }
-            header { padding: 16px 0; }
-            .header-content { flex-wrap: wrap; gap: 12px; }
-            .header-left { gap: 14px; }
-            .nav { gap: 12px; }
-            .nav-link { font-size: 0.75rem; }
-            .logo { font-size: 14px; }
-            .theme-toggle { width: 32px; height: 32px; padding: 6px; }
-            .theme-toggle-svg { width: 14px; height: 14px; }
-            section { padding: 36px 0; }
-            .hero { padding: 40px 0 28px; }
-            .hero h1 { font-size: 1.5rem; line-height: 1.25; margin-bottom: 12px; }
-            .hero p { font-size: 0.95rem; }
-            .tagline-second { font-size: 0.9rem; }
-            .cp-hero-text { padding: 28px 20px 20px; }
-            .cp-hero-visual { padding: 0 16px 24px; }
-            .cp-hero-title { font-size: 1.15rem; }
-            .cp-hero-desc { font-size: 0.875rem; }
-            .cp-hero-capabilities li { font-size: 0.8125rem; }
-            .fleet-hero-visual { padding: 0 16px 0; }
-            .fleet-hero-text { padding: 24px 20px 28px; }
-            .compute-plane-hero { padding-bottom: 48px; }
-            .compute-vis { padding: 14px 14px 12px; }
-            .shadow-spotlight-text { padding: 24px 20px 16px; }
-            .shadow-spotlight-visual { padding: 20px 16px 24px; }
-            .shadow-spotlight-title { font-size: 1.1rem; }
-            .shadow-spotlight-desc { font-size: 0.875rem; }
-            .shadow-spotlight-points li { font-size: 0.8125rem; }
-            .org-policy-block { padding: 14px 16px; font-size: 0.7rem; }
-            .agent-verdict { flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; }
-            .agent-verdict-name { font-size: 0.75rem; }
-            .agent-verdict-status { font-size: 0.7rem; }
-            .identity-compaction { padding: 14px 14px; }
-            .ic-header { flex-direction: column; gap: 4px; }
-            .ic-prose { font-size: 0.7rem; }
-            .usecase-tile { padding: 22px 14px; }
-            .usecase-tile h3 { font-size: 0.875rem; }
-            .usecase-tile p { font-size: 0.75rem; }
-            .oss-reference { padding: 44px 0; }
-            .oss-reference-header h2 { font-size: 1.25rem; }
-            .oss-pkg { font-size: 0.7rem; padding: 4px 10px; }
-            .oss-card-left { padding: 24px 16px; }
-            .oss-card-desc { font-size: 0.8125rem; }
-            .oss-col-label { font-size: 0.65rem; }
-            .oss-col-included li, .oss-col-limits li { font-size: 0.75rem; }
-            .oss-terminal-panel { padding: 16px; }
-            .oss-terminal-body { font-size: 0.65rem; line-height: 1.7; }
-            .oss-terminal { overflow-x: auto; }
-            .oss-cta-note { font-size: 0.75rem; }
-            .oss-actions { flex-direction: column; gap: 8px; }
-            .oss-btn-github, .oss-btn-openclaw { text-align: center; }
-            .cta h2 { font-size: 1.25rem; }
-            .cta-button { padding: 14px 32px; font-size: 0.9rem; }
-            .footer-grid { gap: 24px; }
-            .footer-col a, .footer-bottom { font-size: 0.8125rem; }
-            .footer-tag { font-size: 0.8125rem; }
-            .bento-card { padding: 24px; }
+        @media (max-width: 600px) {
+            .container { padding: 0 20px; }
+            .product-card { padding: 28px 22px; }
+            .header-cta { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    <a href="index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
+                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                    </a>
                     <nav class="nav" aria-label="Primary">
                         <a class="nav-link" href="index.html">Home</a>
                         <a class="nav-link" href="products.html" aria-current="page">Products</a>
@@ -2687,15 +681,6 @@
                 </div>
                 <div class="header-right">
                     <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
-                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
-                        <svg class="theme-toggle-svg theme-toggle-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
-                        <svg class="theme-toggle-svg theme-toggle-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="4"/>
-                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
@@ -2703,396 +688,341 @@
 
     <main id="main">
 
+    <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <h1>One agent or a thousand.<br><span class="gradient">The amnesia is the same.</span></h1>
-            <p class="tagline-second">Adaptive memory for one agent or an entire fleet.</p>
-            <div class="hero-proof" aria-label="Status">
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Agent or fleet</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Memoryful guardrail</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Intention-time detection</span>
+            <p class="eyebrow">Products · Intent and computational memory</p>
+            <h1>One agent or a thousand.<br><span class="accent-2">The amnesia is the same.</span></h1>
+            <p class="hero-sub">Adaptive memory across the two surfaces a per-message filter can't see. Single-agent or fleet-wide. No data lake required.</p>
+            <div class="proof-pills" aria-label="Status">
+                <span class="pill">Agent or fleet</span>
+                <span class="pill">Memoryful guardrail</span>
+                <span class="pill">Agent behavior analytics</span>
+                <span class="pill">Intention-time detection</span>
             </div>
         </div>
     </section>
 
-    <section class="control-plane-hero">
+    <!-- ===== Architecture overview ===== -->
+    <section class="surface-section" id="architecture">
         <div class="container">
-            <div class="cp-hero-card">
-                <div class="cp-hero-inner">
-                    <div class="cp-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            Per-agent &middot; Memory
+            <div class="surface-intro">
+                <p class="surface-tag-line">Two failures · two fixes · one picture</p>
+                <h2>Where the taps sit.</h2>
+                <p class="lede">Two memory surfaces, tapped where attacks actually live — on the message stream before the agent acts, and on the inference engine's own computation as it acts.</p>
+            </div>
+
+            <div class="architecture-wrap">
+                <svg class="architecture-svg" viewBox="0 0 1180 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: intent memory taps the message stream, computational fingerprint memory taps the residual stream inside agent inference; events are covered by SIEM and UEBA only after the action.">
+                    <defs>
+                        <marker id="archArrGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a1a7b3"/></marker>
+                        <marker id="archArrCyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7dd3fc"/></marker>
+                        <marker id="archArrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/></marker>
+                    </defs>
+
+                    <!-- Row 1: stream -> agent -> action -->
+                    <g>
+                        <text x="30" y="22" fill="#6b7280" font-size="11" letter-spacing="3" font-family="Inter">MESSAGE STREAM</text>
+                        <g font-family="Inter">
+                            <rect x="30"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="76"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="122" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="168" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="214" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <text x="49"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₁</text>
+                            <text x="95"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₂</text>
+                            <text x="141" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₃</text>
+                            <text x="187" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₄</text>
+                            <text x="233" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₅</text>
+                            <text x="260" y="66" fill="#a1a7b3" font-size="14">…</text>
+                        </g>
+                    </g>
+
+                    <line x1="288" y1="61" x2="338" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+
+                    <!-- Agent inference box -->
+                    <g font-family="Inter">
+                        <rect x="348" y="20" width="420" height="84" rx="12" fill="none" stroke="rgba(255,255,255,0.45)"/>
+                        <text x="558" y="44" text-anchor="middle" fill="#f3f4f6" font-size="16" font-weight="600">Agent inference</text>
+                        <text x="558" y="62" text-anchor="middle" fill="#a1a7b3" font-size="11" letter-spacing="2">vLLM · SGLang · self-hosted LLM</text>
+                        <rect x="420" y="74" width="276" height="22" rx="5" fill="none" stroke="rgba(52,211,153,0.55)"/>
+                        <text x="558" y="89" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2">RESIDUAL STREAM</text>
+                    </g>
+
+                    <line x1="772" y1="61" x2="822" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+
+                    <!-- Action box -->
+                    <g font-family="Inter">
+                        <text x="836" y="22" fill="#6b7280" font-size="11" letter-spacing="3">ACTION</text>
+                        <rect x="836" y="40" width="320" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                        <text x="996" y="66" text-anchor="middle" fill="#f3f4f6" font-size="13">tool call · file write · response</text>
+                        <text x="996" y="104" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2">SIEM / UEBA · ONLY AFTER THIS</text>
+                    </g>
+
+                    <!-- Taps down -->
+                    <path d="M 141 84 L 141 178" stroke="#7dd3fc" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrCyan)"/>
+                    <text x="155" y="138" fill="#7dd3fc" font-size="12" letter-spacing="3" font-family="Inter">COMPRESS</text>
+
+                    <path d="M 558 110 L 558 178" stroke="#34d399" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrGreen)"/>
+                    <text x="572" y="148" fill="#34d399" font-size="12" letter-spacing="3" font-family="Inter">RECYCLE</text>
+
+                    <!-- LEFT: Intent memory -->
+                    <g font-family="Inter">
+                        <rect x="30" y="190" width="500" height="150" rx="12" fill="rgba(125,211,252,0.05)" stroke="#7dd3fc"/>
+                        <text x="50" y="218" fill="#7dd3fc" font-size="12" letter-spacing="3">INTENT MEMORY</text>
+                        <text x="50" y="256" fill="#f3f4f6" font-size="24" font-weight="600">Bounded coreset</text>
+                        <text x="50" y="286" fill="#a1a7b3" font-size="14">Compression layer over the stream, admitting only the</text>
+                        <text x="50" y="306" fill="#a1a7b3" font-size="14">security-relevant tokens, evict the benign mass before</text>
+                        <text x="50" y="326" fill="#a1a7b3" font-size="14">any correlator reads.</text>
+                    </g>
+
+                    <!-- RIGHT: Fingerprint memory -->
+                    <g font-family="Inter">
+                        <rect x="556" y="190" width="600" height="150" rx="12" fill="rgba(52,211,153,0.05)" stroke="#34d399"/>
+                        <text x="576" y="218" fill="#34d399" font-size="12" letter-spacing="3">FINGERPRINT MEMORY</text>
+                        <text x="576" y="256" fill="#f3f4f6" font-size="24" font-weight="600">Recycled inference compute</text>
+                        <text x="576" y="286" fill="#a1a7b3" font-size="14">The engine already computes a fingerprint per request.</text>
+                        <text x="576" y="306" fill="#a1a7b3" font-size="14">Reuse it (no second model, no extra pass) and</text>
+                        <text x="576" y="326" fill="#a1a7b3" font-size="14">remember it across sessions.</text>
+                    </g>
+
+                    <!-- Bottom: persistence bar -->
+                    <g font-family="Inter">
+                        <rect x="30" y="380" width="1126" height="74" rx="10" fill="none" stroke="rgba(255,255,255,0.3)" stroke-dasharray="6,5"/>
+                        <text x="593" y="412" text-anchor="middle" fill="#f3f4f6" font-size="14" letter-spacing="3">MEMORY PERSISTS ACROSS SESSIONS · ACROSS AGENTS</text>
+                        <text x="280" y="438" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="3">beats COMPOSITION</text>
+                        <text x="856" y="438" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="3">beats UNDECIDABILITY</text>
+                    </g>
+                </svg>
+            </div>
+
+            <p class="architecture-footnote"><span class="architecture-footnote-dim">Event is covered by SIEM / UEBA.</span> <b>We own intent and fingerprint.</b></p>
+        </div>
+    </section>
+
+    <!-- ===== Intent surface (lead, current focus) ===== -->
+    <section class="surface-section" id="intent-surface">
+        <div class="container">
+            <div class="surface-intro">
+                <p class="surface-tag-line">Surface one · Current focus</p>
+                <h2><span class="accent">Intent memory.</span></h2>
+                <p class="lede">Compress the prompt stream into a small, bounded memory of what is being steered. Cross-session attacks stop being invisible. Works for one agent, or across an entire fleet.</p>
+            </div>
+
+            <!-- Identity Plane (per-agent) -->
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <div class="product-card-text">
+                        <div class="product-badge">
+                            <span class="product-badge-dot"></span>
+                            Per-agent · Intent memory
                         </div>
-                        <h2 class="cp-hero-title">
-                            <span class="gradient">Identity Plane</span>
-                        </h2>
-                        <p class="cp-hero-desc">
-                            One adaptive memory per agent. Cross-session attacks stop being invisible.
-                        </p>
-                        <ul class="cp-hero-capabilities">
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Memory, not classification</strong> — identity built from compressed behavior across every session</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Trajectory detection</strong> — drift, injection, exfiltration caught before the pattern completes</span>
-                            </li>
+                        <h2 class="product-title"><span class="accent">Identity Plane</span></h2>
+                        <p class="product-desc">One adaptive memory per agent. Identity built from compressed behavior across every session, so drift, injection, and exfiltration surface before the pattern completes.</p>
+                        <ul class="capability-list">
+                            <li><b>Memory, not classification.</b> Identity built from compressed behavior across every session.</li>
+                            <li><b>Trajectory detection.</b> Drift, injection, exfiltration caught before the pattern completes.</li>
+                            <li><b>Bounded coreset.</b> Fixed capacity, no unbounded log.</li>
                         </ul>
                     </div>
-                    <div class="cp-hero-visual">
-                        <img 
-                            src="control-plane-dashboard.png" 
-                            alt="Identity Plane Dashboard showing identity monitoring, threat analytics, and intent envelope tracking" 
-                            loading="lazy"
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="fleet-hero">
-        <div class="container">
-            <div class="fleet-hero-card">
-                <div class="fleet-hero-inner">
-                    <div class="fleet-hero-visual">
-                        <img
-                            src="siem-compression.png"
-                            alt="Raw inbound prompts compressed into a unified intent view across all agents, surfacing novel threat patterns without a SIEM or data lake"
-                            loading="lazy"
-                        >
-                    </div>
-                    <div class="cp-hero-text fleet-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            Fleet-wide &middot; Memory
+                    <div class="product-card-visual">
+                        <div class="visual-frame">
+                            <img src="control-plane-dashboard.png" alt="Identity Plane dashboard showing identity monitoring, threat analytics, and intent envelope tracking" loading="lazy">
                         </div>
-                        <h2 class="cp-hero-title">
-                            <span class="gradient">SIEM-less Detection</span>
-                        </h2>
-                        <p class="cp-hero-desc">
-                            Fleet-wide threats, no data lake. Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible.
-                        </p>
-                        <ul class="cp-hero-capabilities">
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Shared fleet memory</strong> — millions of prompts compressed into one cohesive story</span>
-                            </li>
-                            <li>
-                                <span class="cap-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Coordinated attack detection</strong> — campaigns surface even when every individual request passes</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="compute-plane-hero">
-        <div class="container">
-            <div class="cp-hero-card">
-                <div class="cp-hero-inner">
-                    <div class="cp-hero-text">
-                        <div class="cp-hero-badge">
-                            <span class="cp-hero-badge-dot"></span>
-                            Computation signature &middot; Memory
-                        </div>
-                        <h2 class="cp-hero-title">
-                            <span class="gradient">Computation Behavior Analytics</span>
-                        </h2>
-                        <p class="cp-hero-desc">
-                            Prompt injection is inevitable. Every inbound prompt induces a computation signature. We remember them across every agent and prompt. Unusual prompts surface against the baseline.
-                        </p>
-                    </div>
-                    <div class="cp-hero-visual">
-                        <div class="compute-vis" role="img" aria-label="Computation behavior analytics: baseline memory of signatures across agents and prompts, with unusual prompts surfacing against the baseline">
-                            <svg viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="compute-vis-svg">
-                                <!-- Header labels -->
-                                <text x="0"   y="14" class="cv-meta-label">Baseline memory</text>
-                                <text x="320" y="14" class="cv-meta-label" text-anchor="end">Multi-agent &middot; Cross-prompt</text>
-
-                                <!-- Confidence band around the cluster -->
-                                <rect x="10" y="108" width="300" height="32" rx="14" class="cv-band"/>
-
-                                <!-- Center reference line (dashed) -->
-                                <line x1="10" y1="124" x2="310" y2="124" class="cv-baseline-dash"/>
-
-                                <!-- Baseline traces (signatures clustering together) -->
-                                <polyline points="10,120 40,114 70,124 100,116 130,128 160,116 190,124 220,118 250,128 280,118 310,122" class="cv-trace"/>
-                                <polyline points="10,122 40,118 70,118 100,124 130,118 160,124 190,116 220,124 250,118 280,124 310,118" class="cv-trace"/>
-                                <polyline points="10,118 40,124 70,116 100,128 130,118 160,126 190,116 220,128 250,118 280,124 310,118" class="cv-trace"/>
-                                <polyline points="10,124 40,118 70,126 100,116 130,124 160,118 190,128 220,116 250,122 280,116 310,124" class="cv-trace"/>
-                                <polyline points="10,118 40,122 70,118 100,122 130,116 160,122 190,118 220,122 250,116 280,122 310,118" class="cv-trace"/>
-                                <polyline points="10,120 40,116 70,120 100,118 130,124 160,120 190,118 220,124 250,118 280,124 310,120" class="cv-trace"/>
-                                <polyline points="10,126 40,120 70,122 100,120 130,128 160,120 190,122 220,118 250,124 280,120 310,124" class="cv-trace"/>
-
-                                <!-- Anomalous trace: same fine-grain wiggle character as baselines, -->
-                                <!-- but riding a different overall envelope (one slow modulation, not flat) -->
-                                <polyline class="cv-trace--alert" pathLength="100"
-                                          points="10,120 32,117 58,110 80,103 105,94 128,85 150,84 170,88 192,84 215,96 238,104 262,112 286,116 310,120">
-                                    <animate attributeName="stroke-dashoffset"
-                                             values="100;0;0;100;100"
-                                             keyTimes="0;0.45;0.7;0.95;1"
-                                             dur="4s" repeatCount="indefinite"/>
-                                </polyline>
-
-                                <!-- Callout on the off-baseline trace -->
-                                <text x="168" y="62" class="cv-callout-label" text-anchor="middle">Unusual prompt</text>
-
-                                <!-- Footer meta -->
-                                <text x="0"   y="270" class="cv-meta-label">Computation signature</text>
-                            </svg>
+                        <div class="visual-caption">
+                            <span>Identity Plane</span>
+                            <span>Live dashboard</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Identity Plane Use Cases -->
-    <section class="use-cases-section" id="identity-plane-usecases">
-        <div class="container">
-            <div class="product-section-label">Identity Plane · Use Cases</div>
-
-            <!-- Enterprise AI Governance Spotlight -->
-            <div class="shadow-spotlight">
-                <div class="shadow-spotlight-inner">
-                    <div class="shadow-spotlight-text">
-                        <div class="shadow-spotlight-badge">
-                            <span class="shadow-spotlight-badge-dot"></span>
-                            Enterprise · AI Governance
-                        </div>
-                        <h3 class="shadow-spotlight-title">Define your agents. Detect drift.</h3>
-                        <p class="shadow-spotlight-desc">
-                            Describe what your agents should do in plain language. Everything that doesn't fit gets surfaced.
-                        </p>
-                        <ul class="shadow-spotlight-points">
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Org identity profile</strong> — natural-language description of sanctioned agent behavior</span>
-                            </li>
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Intent divergence, not rules</strong> — deviation from modeled identity, so novel threats surface automatically</span>
-                            </li>
+                <!-- Use case: Enterprise AI Governance -->
+                <div class="use-case-strip">
+                    <div class="use-case-label">Use case · Enterprise AI Governance</div>
+                    <div class="use-case-card">
+                        <h3>Define your agents. Detect drift.</h3>
+                        <p>Describe what your agents should do in plain language. Everything that doesn't fit gets surfaced.</p>
+                        <ul class="use-case-points">
+                            <li><b>Org identity profile.</b> Natural-language description of sanctioned agent behavior.</li>
+                            <li><b>Intent divergence, not rules.</b> Deviation from modeled identity, so novel threats surface automatically.</li>
                         </ul>
 
-                        <a class="oss-strip oss-strip--inset" href="openclaw.html" aria-label="Open the OpenClaw Identity Plane open-source reference page">
-                            <span class="oss-strip-badge">
+                        <div class="mock-dashboard" style="margin: 24px 0;">
+                            <div class="mock-policy">
+                                <div class="mock-label">Organizational Identity Profile</div>
+                                <div class="mock-prose">"This agent handles pre-trade compliance checks for Meridian Capital. It validates order parameters against regulatory limits, flags anomalous positions, and escalates to the compliance desk. It has read-only access to trading systems and never initiates, modifies, or cancels orders."</div>
+                            </div>
+                            <div class="mock-row">
+                                <span class="agent-name">compliance-sentinel-v3</span>
+                                <span class="mock-status ok"><span class="dot"></span>Within org identity</span>
+                            </div>
+                            <div class="mock-row">
+                                <span class="agent-name">exec-desk-assistant</span>
+                                <span class="mock-status warn"><span class="dot"></span>Off-org identity detected</span>
+                            </div>
+                            <div class="mock-compaction">
+                                <div class="mock-compaction-head">
+                                    <span>Identity Compaction</span>
+                                    <span>exec-desk-assistant</span>
+                                </div>
+                                <div class="mock-compaction-prose">"Sustained pressure to initiate trade orders outside its read-only mandate. Recurring attempts to disable pre-trade risk checks. Identity is being displaced toward unauthorized order execution with suppressed audit visibility."</div>
+                                <div class="mock-score">
+                                    <span class="mock-score-label">Off-org identity score</span>
+                                    <span class="mock-score-num">0.96</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="oss-strip" href="openclaw.html" aria-label="Open the OpenClaw Identity Plane open-source reference page">
+                            <span class="oss-badge">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
                                 Open Source
                             </span>
-                            <span class="oss-strip-text">
+                            <span class="oss-text">
                                 <strong>Try it on your own agent.</strong>
                                 <span>Observational OpenClaw plugin. Watch drift live.</span>
                             </span>
-                            <span class="oss-strip-cta">See it in action <span aria-hidden="true">→</span></span>
+                            <span class="oss-cta">See it in action →</span>
                         </a>
                     </div>
-                    <div class="shadow-spotlight-visual">
-                        <div class="org-policy-block">
-                            <div class="opb-label">Organizational Identity Profile</div>
-                            <div class="opb-text">"This agent handles pre-trade compliance checks for Meridian Capital. It validates order parameters against regulatory limits, flags anomalous positions, and escalates to the compliance desk. It has read-only access to trading systems and never initiates, modifies, or cancels orders."</div>
-                        </div>
-                        <div class="agent-verdict-row">
-                            <div class="agent-verdict">
-                                <span class="agent-verdict-name">compliance-sentinel-v3</span>
-                                <span class="agent-verdict-status agent-verdict-status--ok">
-                                    <span class="verdict-dot"></span>
-                                    Within org identity
-                                </span>
-                            </div>
-                            <div class="agent-verdict">
-                                <span class="agent-verdict-name">exec-desk-assistant</span>
-                                <span class="agent-verdict-status agent-verdict-status--warn">
-                                    <span class="verdict-dot"></span>
-                                    Off-org identity detected
-                                </span>
-                            </div>
-                        </div>
-                        <div class="identity-compaction">
-                            <div class="ic-header">
-                                <span class="ic-title">Identity Compaction</span>
-                                <span class="ic-agent">exec-desk-assistant</span>
-                            </div>
-                            <div class="ic-divider"></div>
-                            <p class="ic-prose">"Sustained pressure to initiate trade orders outside its read-only mandate. Recurring attempts to disable pre-trade risk checks. Identity is being displaced toward unauthorized order execution with suppressed audit visibility."</p>
-                            <div class="ic-score-row">
-                                <span class="ic-score-label">Off-org identity score</span>
-                                <span class="ic-score-number">0.96</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- SIEM-less Use Cases -->
-    <section class="use-cases-section use-cases-section--fleet" id="siem-less-usecases">
-        <div class="container">
-            <div class="product-section-label">SIEM-less Detection · Use Cases</div>
-
-            <!-- Agentic SIEM Spotlight -->
-            <div class="shadow-spotlight" style="margin-bottom: 24px;">
-                <div class="shadow-spotlight-inner">
-                    <div class="shadow-spotlight-text">
-                        <div class="shadow-spotlight-badge">
-                            <span class="shadow-spotlight-badge-dot"></span>
-                            Fleet Memory · Security Operations
+            <!-- Fleet Memory (SIEM-less) -->
+            <div class="product-card reverse" style="margin-top: 24px;">
+                <div class="product-card-inner">
+                    <div class="product-card-text">
+                        <div class="product-badge">
+                            <span class="product-badge-dot"></span>
+                            Fleet-wide · Intent memory
                         </div>
-                        <h3 class="shadow-spotlight-title">Lossless memory. Bounded size.</h3>
-                        <p class="shadow-spotlight-desc">
-                            A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out. That gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.
-                        </p>
-                        <ul class="shadow-spotlight-points">
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Deduplicate to novelty</strong> — 10,000 identical probes become one pattern and a count</span>
-                            </li>
-                            <li>
-                                <span class="sp-icon">&#9670;</span>
-                                <span><strong style="color: var(--text);">Fragment-level extraction</strong> — captures the 50 threat tokens, not the 2,000-token prompt</span>
-                            </li>
+                        <h2 class="product-title"><span class="accent">Fleet Memory</span><span style="display:block; font-size: 0.6em; color: var(--ink-dim); font-weight: 500; letter-spacing: 0.04em; margin-top: 8px;">SIEM-less detection</span></h2>
+                        <p class="product-desc">Fleet-wide threats, no data lake. Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible.</p>
+                        <ul class="capability-list">
+                            <li><b>Shared fleet memory.</b> Millions of prompts compressed into one cohesive story.</li>
+                            <li><b>Coordinated attack detection.</b> Campaigns surface even when every individual request passes.</li>
+                            <li><b>No SIEM, no lake.</b> Bounded memory, not unbounded storage.</li>
                         </ul>
                     </div>
-                    <div class="shadow-spotlight-visual">
-                        <div class="neural-memory-vis" role="img" aria-label="Neural memory consolidation: lossless threat memory visualization">
-                            <svg class="nmv-svg" viewBox="0 0 280 228" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <radialGradient id="nmvGrad" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%"   stop-color="#7dd3fc" stop-opacity="0.18"/>
-                                        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
-                                    </radialGradient>
-                                </defs>
-
-                                <!-- Outer core halo -->
-                                <ellipse cx="140" cy="112" rx="55" ry="50" fill="url(#nmvGrad)">
-                                    <animate attributeName="rx" values="55;64;55" dur="4s" repeatCount="indefinite"/>
-                                    <animate attributeName="ry" values="50;58;50" dur="4s" repeatCount="indefinite"/>
-                                    <animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
-                                </ellipse>
-                                <!-- Inner engram glow -->
-                                <ellipse cx="140" cy="112" rx="24" ry="22" fill="#7dd3fc" fill-opacity="0.07">
-                                    <animate attributeName="fill-opacity" values="0.07;0.14;0.07" dur="4s" repeatCount="indefinite"/>
-                                </ellipse>
-
-                                <!-- Outer → mid connections -->
-                                <line x1="140" y1="5"   x2="140" y2="44"  class="nmv-line--outer"/>
-                                <line x1="185" y1="15"  x2="198" y2="68"  class="nmv-line--outer"/>
-                                <line x1="225" y1="38"  x2="198" y2="68"  class="nmv-line--outer"/>
-                                <line x1="258" y1="72"  x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="268" y1="112" x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="255" y1="155" x2="208" y2="130" class="nmv-line--outer"/>
-                                <line x1="225" y1="188" x2="178" y2="178" class="nmv-line--outer"/>
-                                <line x1="185" y1="210" x2="178" y2="178" class="nmv-line--outer"/>
-                                <line x1="140" y1="222" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="95"  y1="212" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="55"  y1="190" x2="100" y2="178" class="nmv-line--outer"/>
-                                <line x1="20"  y1="158" x2="72"  y2="130" class="nmv-line--outer"/>
-                                <line x1="10"  y1="112" x2="72"  y2="130" class="nmv-line--outer"/>
-                                <line x1="18"  y1="68"  x2="80"  y2="68"  class="nmv-line--outer"/>
-                                <line x1="50"  y1="32"  x2="80"  y2="68"  class="nmv-line--outer"/>
-                                <line x1="95"  y1="10"  x2="140" y2="44"  class="nmv-line--outer"/>
-
-                                <!-- Mid → core connections -->
-                                <line x1="140" y1="44"  x2="140" y2="112" class="nmv-line--mid"/>
-                                <line x1="198" y1="68"  x2="162" y2="98"  class="nmv-line--mid"/>
-                                <line x1="208" y1="130" x2="155" y2="126" class="nmv-line--mid"/>
-                                <line x1="178" y1="178" x2="155" y2="126" class="nmv-line--mid"/>
-                                <line x1="100" y1="178" x2="128" y2="128" class="nmv-line--mid"/>
-                                <line x1="72"  y1="130" x2="120" y2="99"  class="nmv-line--mid"/>
-                                <line x1="80"  y1="68"  x2="120" y2="99"  class="nmv-line--mid"/>
-
-                                <!-- Core internal connections -->
-                                <line x1="120" y1="99"  x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="162" y1="98"  x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="128" y1="128" x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="155" y1="126" x2="140" y2="112" class="nmv-line--core-int"/>
-                                <line x1="120" y1="99"  x2="162" y2="98"  class="nmv-line--core-int"/>
-                                <line x1="128" y1="128" x2="155" y2="126" class="nmv-line--core-int"/>
-
-                                <!-- Animated synapse fires (4 paths, staggered) -->
-                                <line x1="140" y1="5"   x2="140" y2="44"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.75;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="0s"/>
-                                </line>
-                                <line x1="140" y1="44"  x2="140" y2="112" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.75;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="0s"/>
-                                </line>
-                                <line x1="258" y1="72"  x2="208" y2="130" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.65;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="1.8s"/>
-                                </line>
-                                <line x1="208" y1="130" x2="155" y2="126" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.65;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="1.8s"/>
-                                </line>
-                                <line x1="55"  y1="190" x2="100" y2="178" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="3.4s"/>
-                                </line>
-                                <line x1="100" y1="178" x2="128" y2="128" stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="3.4s"/>
-                                </line>
-                                <line x1="18"  y1="68"  x2="80"  y2="68"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.30;0.50;0.70;1" dur="7s" repeatCount="indefinite" begin="5.1s"/>
-                                </line>
-                                <line x1="80"  y1="68"  x2="120" y2="99"  stroke="#7dd3fc" stroke-width="1.2" stroke-opacity="0">
-                                    <animate attributeName="stroke-opacity" values="0;0;0.70;0;0" keyTimes="0;0.35;0.52;0.72;1" dur="7s" repeatCount="indefinite" begin="5.1s"/>
-                                </line>
-
-                                <!-- Outer nodes -->
-                                <circle cx="140" cy="5"   r="2" class="nmv-node--outer"/>
-                                <circle cx="185" cy="15"  r="2" class="nmv-node--outer"/>
-                                <circle cx="225" cy="38"  r="2" class="nmv-node--outer"/>
-                                <circle cx="258" cy="72"  r="2" class="nmv-node--outer"/>
-                                <circle cx="268" cy="112" r="2" class="nmv-node--outer"/>
-                                <circle cx="255" cy="155" r="2" class="nmv-node--outer"/>
-                                <circle cx="225" cy="188" r="2" class="nmv-node--outer"/>
-                                <circle cx="185" cy="210" r="2" class="nmv-node--outer"/>
-                                <circle cx="140" cy="222" r="2" class="nmv-node--outer"/>
-                                <circle cx="95"  cy="212" r="2" class="nmv-node--outer"/>
-                                <circle cx="55"  cy="190" r="2" class="nmv-node--outer"/>
-                                <circle cx="20"  cy="158" r="2" class="nmv-node--outer"/>
-                                <circle cx="10"  cy="112" r="2" class="nmv-node--outer"/>
-                                <circle cx="18"  cy="68"  r="2" class="nmv-node--outer"/>
-                                <circle cx="50"  cy="32"  r="2" class="nmv-node--outer"/>
-                                <circle cx="95"  cy="10"  r="2" class="nmv-node--outer"/>
-
-                                <!-- Mid ring nodes -->
-                                <circle cx="140" cy="44"  r="3" class="nmv-node--mid"/>
-                                <circle cx="198" cy="68"  r="3" class="nmv-node--mid"/>
-                                <circle cx="208" cy="130" r="3" class="nmv-node--mid"/>
-                                <circle cx="178" cy="178" r="3" class="nmv-node--mid"/>
-                                <circle cx="100" cy="178" r="3" class="nmv-node--mid"/>
-                                <circle cx="72"  cy="130" r="3" class="nmv-node--mid"/>
-                                <circle cx="80"  cy="68"  r="3" class="nmv-node--mid"/>
-
-                                <!-- Core satellite nodes -->
-                                <circle cx="120" cy="99"  r="4"   class="nmv-node--core"/>
-                                <circle cx="162" cy="98"  r="4"   class="nmv-node--core"/>
-                                <circle cx="128" cy="128" r="3.5" class="nmv-node--core"/>
-                                <circle cx="155" cy="126" r="3.5" class="nmv-node--core"/>
-
-                                <!-- Central engram node -->
-                                <circle cx="140" cy="112" r="6.5" class="nmv-node--central">
-                                    <animate attributeName="r" values="6.5;7.8;6.5" dur="4s" repeatCount="indefinite"/>
-                                </circle>
-                            </svg>
-                            <div class="nmv-caption">LOSSLESS THREAT MEMORY</div>
+                    <div class="product-card-visual">
+                        <div class="visual-frame">
+                            <img src="siem-compression.png" alt="Raw inbound prompts compressed into a unified intent view across all agents, surfacing novel threat patterns without a SIEM or data lake" loading="lazy">
                         </div>
+                        <div class="visual-caption">
+                            <span>Fleet compression</span>
+                            <span>Shared memory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use case: Agentic SIEM augmentation -->
+                <div class="use-case-strip">
+                    <div class="use-case-label">Use case · Security Operations</div>
+                    <div class="use-case-card">
+                        <h3>Lossless memory. Bounded size.</h3>
+                        <p>A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out. That gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.</p>
+                        <ul class="use-case-points">
+                            <li><b>Deduplicate to novelty.</b> 10,000 identical probes become one pattern and a count.</li>
+                            <li><b>Fragment-level extraction.</b> Captures the 50 threat tokens, not the 2,000-token prompt.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
+            <div class="video-wrap">
+                <div class="video-frame">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/cmTahKO4F8I"
+                        title="Intrinsec — intent memory addresses composition"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Watch · intent memory, addressing composition</div>
+            </div>
         </div>
     </section>
 
+    <!-- ===== Computational surface ===== -->
+    <section class="surface-section" id="computational-surface" style="border-top: 1px solid var(--rule);">
+        <div class="container">
+            <div class="surface-intro">
+                <p class="surface-tag-line" style="color: var(--accent-2);">Surface two</p>
+                <h2><span class="accent-2">Computational memory.</span></h2>
+                <p class="lede">Prompt injection is inevitable. Every inbound prompt induces a computation signature in the inference engine. We recycle it across every agent and prompt. Unusual prompts surface against the baseline.</p>
+            </div>
+
+            <div class="product-card computational">
+                <div class="product-card-inner">
+                    <div class="product-card-text">
+                        <div class="product-badge">
+                            <span class="product-badge-dot"></span>
+                            Computation signature · Memory
+                        </div>
+                        <h2 class="product-title"><span class="accent-2">Computation Behavior Analytics</span></h2>
+                        <p class="product-desc">Recycle the fingerprint your inference engine already computes. No second model, no extra pass. Persistent memory across sessions and agents turns "is this harmful?" into "does this computation match normal?"</p>
+                        <ul class="capability-list">
+                            <li><b>Free signal.</b> Reuse compute the engine already produces.</li>
+                            <li><b>Inside view.</b> The mechanism, not the boundary.</li>
+                            <li><b>Engine-native.</b> Plugs into vLLM, SGLang, and self-hosted LLM stacks.</li>
+                        </ul>
+                    </div>
+                    <div class="product-card-visual">
+                        <div class="visual-svg">
+                            <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baseline traces with anomalous trace surfacing above the band">
+                                <text x="0" y="18" fill="#34d399" font-size="10" letter-spacing="3" font-family="Inter">BASELINE MEMORY</text>
+                                <text x="380" y="18" fill="#6b7280" font-size="10" letter-spacing="3" font-family="Inter" text-anchor="end">MULTI-AGENT · CROSS-PROMPT</text>
+
+                                <rect x="10" y="140" width="360" height="40" rx="16" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.3)"/>
+                                <line x1="10" y1="160" x2="370" y2="160" stroke="#34d399" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.4"/>
+
+                                <g stroke="#a1a7b3" stroke-width="0.8" fill="none" opacity="0.55">
+                                    <polyline points="10,156 50,152 90,162 130,154 170,164 210,156 250,162 290,154 330,164 370,158"/>
+                                    <polyline points="10,162 50,156 90,156 130,162 170,156 210,162 250,154 290,162 330,156 370,162"/>
+                                    <polyline points="10,158 50,164 90,154 130,166 170,156 210,164 250,154 290,166 330,158 370,162"/>
+                                    <polyline points="10,164 50,158 90,166 130,156 170,164 210,158 250,168 290,156 330,160 370,156"/>
+                                    <polyline points="10,158 50,160 90,158 130,160 170,154 210,160 250,156 290,162 330,158 370,160"/>
+                                </g>
+
+                                <polyline points="10,160 36,156 64,148 92,138 122,124 152,108 180,100 208,104 236,116 264,130 292,142 320,150 350,154 370,158"
+                                          stroke="#fca5a5" stroke-width="1.6" fill="none"/>
+
+                                <text x="180" y="88" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2" font-family="Inter">UNUSUAL PROMPT</text>
+                                <line x1="180" y1="92" x2="180" y2="102" stroke="#fca5a5" stroke-width="0.8"/>
+
+                                <text x="0" y="270" fill="#6b7280" font-size="10" letter-spacing="2" font-family="Inter">Computation signature → does this match normal?</text>
+                            </svg>
+                            <div class="visual-caption">
+                                <span>Free signal</span>
+                                <span>Inside view</span>
+                                <span>Persistent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-wrap">
+                    <div class="video-frame">
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
+                            title="Intrinsec — computational intent memory"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-caption">Watch · computational fingerprint memory, addressing undecidability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
     <section class="cta">
         <div class="container">
             <h2>Give your security memory.<br>Before someone exploits the amnesia.</h2>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Request a demo</a>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
         </div>
     </section>
 
@@ -3102,8 +1032,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">Intrinsec AI</a>
-                    <p class="footer-tag">Adaptive intent memory for AI agents. Cross-session threats caught at intention time.</p>
+                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                    </a>
+                    <p class="footer-tag">Adaptive intent and computational memory for AI agents. Cross-session threats caught at intention time.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>
@@ -3113,46 +1045,19 @@
                 <div class="footer-col" aria-label="Company">
                     <div class="footer-col-title">Company</div>
                     <a href="index.html">Home</a>
+                    <a href="blog/index.html">Research</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <div>© <span id="footerYear">2025</span> Intrinsec AI</div>
+                <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
                 <div class="footer-patent">Patent pending</div>
             </div>
         </div>
     </footer>
 
     <script>
-    // Theme Toggle Functionality
-    (function() {
-        const themeToggle = document.getElementById('themeToggle');
-        if (!themeToggle) return;
-
-        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        updateAria(initialTheme);
-
-        function updateAria(theme) {
-            const isLight = theme === 'light';
-            themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-            themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
-        }
-
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            try { localStorage.setItem('theme', newTheme); } catch (e) {}
-            updateAria(newTheme);
-        });
-    })();
-
-    // Footer year
-    (function () {
-        const el = document.getElementById('footerYear');
-        if (el) el.textContent = String(new Date().getFullYear());
-    })();
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
-

@@ -3,2131 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrinsec AI · AI agents forget. Attackers don't.</title>
-    <meta name="description" content="AI agents forget every session. Attackers don't. Intrinsec reads intent in the prompt across sessions. The first half of the story your SIEM never sees.">
-    <meta name="color-scheme" content="dark light">
-    <meta name="theme-color" content="#0a0f1a">
+    <title>Intrinsec AI · AI agent security has an amnesia problem.</title>
+    <meta name="description" content="Three surfaces: event, intent, computational. SIEMs cover events. We watch intent and computational and turn them into memory, so AI threats can't hide across messages.">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0b0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta property="og:title" content="Intrinsec AI · AI agents forget. Attackers don't.">
-    <meta property="og:description" content="Two halves of one story. SIEM and UEBA correlate effects after execution. Intrinsec reads intent before execution: compressed in every prompt, persisted across sessions.">
+    <meta property="og:title" content="Intrinsec AI · AI agent security has an amnesia problem.">
+    <meta property="og:description" content="Memory on the intent and computational surfaces, so AI threats can't hide between messages.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="demo-page-screenshot.png">
+    <meta property="og:image" content="intrinsec-ai-logo.png">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="intrinsec-ai-logo.png">
+    <link rel="apple-touch-icon" href="intrinsec-ai-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script>
-        // Set theme early to avoid a flash on first paint. Default to dark; only light if user chose it via the toggle.
-        (function () {
-            try {
-                const savedTheme = localStorage.getItem('theme');
-                const theme = savedTheme || 'dark';
-                document.documentElement.setAttribute('data-theme', theme);
-            } catch (e) {}
-        })();
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         :root {
-            --navy: #0a0f1a;
-            --navy-light: #151b2b;
-            --navy-lighter: #1f2937;
-            --ice: #7dd3fc;
-            --ice-bright: #38bdf8;
-            --ice-glow: rgba(125, 211, 252, 0.12);
-            --ice-glow-strong: rgba(125, 211, 252, 0.2);
-            --text: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-dim: #94a3b8;
-            --text-subtle: #64748b;
-            --red: #ef4444;
-            --red-glow: rgba(239, 68, 68, 0.15);
-        }
-        
-        /* Light theme variables - softer and more readable */
-        [data-theme="light"] {
-            --navy: #f5f7fa;
-            --navy-light: #e8edf2;
-            --navy-lighter: #dce4eb;
-            --ice: #0ea5e9;
-            --ice-bright: #0284c7;
-            --ice-glow: rgba(14, 165, 233, 0.08);
-            --ice-glow-strong: rgba(14, 165, 233, 0.12);
-            --text: #1e293b;
-            --text-secondary: #334155;
-            --text-dim: #475569;
-            --text-subtle: #64748b;
-            --red: #dc2626;
-            --red-glow: rgba(220, 38, 38, 0.08);
-        }
-        
-        [data-theme="light"] body {
-            background: linear-gradient(180deg, #f5f7fa 0%, #e8edf2 50%, #dce4eb 100%);
-            background-attachment: fixed;
-        }
-        
-        /* Light mode animation brightness reduction */
-        [data-theme="light"] .hero::before {
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.02) 0%, transparent 70%);
-            opacity: 0.3;
+            --bg: #0a0b0d;
+            --bg-2: #101216;
+            --ink: #f3f4f6;
+            --ink-dim: #a1a7b3;
+            --ink-subtle: #6b7280;
+            --rule: #1f2329;
+            --rule-strong: #2a2f37;
+            --accent: #7dd3fc;
+            --accent-2: #34d399;
+            --warn: #fca5a5;
+            --container: 1180px;
         }
 
-        [data-theme="light"] .hero::after {
-            background:
-                radial-gradient(circle at 20% 30%, rgba(14, 165, 233, 0.01) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.01) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.008) 0%, transparent 60%);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        @keyframes heroGlowLight {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.15;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.12);
-                opacity: 0.22;
-            }
-        }
+        html { scroll-behavior: smooth; }
 
-        @keyframes heroParticlesLight {
-            0%, 100% {
-                opacity: 0.12;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.2;
-                transform: scale(1.06);
-            }
-        }
-
-        [data-theme="light"] .hero::before {
-            animation: heroGlowLight 14s ease-in-out infinite;
-        }
-
-        [data-theme="light"] .hero::after {
-            animation: heroParticlesLight 28s ease-in-out infinite;
-        }
-        
-        [data-theme="light"] .gradient {
-            filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.18));
-        }
-        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--navy);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.03) 0%, transparent 50%);
-            color: var(--text);
-            line-height: 1.7;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, sans-serif;
+            font-feature-settings: "ss01", "cv11", "ss03";
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
             overflow-x: hidden;
-            max-width: 100%;
-            word-wrap: break-word;
-        }
-        
-        html {
-            scroll-behavior: smooth;
+            background-image:
+                radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(52, 211, 153, 0.04), transparent 60%);
+            background-attachment: fixed;
         }
 
-        /* Skip link (a11y) */
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== Skip link ===== */
         .skip-link {
             position: absolute;
             left: 12px;
-            top: 12px;
+            top: -100px;
             padding: 10px 14px;
-            border-radius: 10px;
-            background: var(--navy-lighter);
-            color: var(--text);
-            border: 1px solid rgba(125, 211, 252, 0.25);
-            text-decoration: none;
-            transform: translateY(-150%);
-            transition: transform 0.2s ease;
+            border-radius: 8px;
+            background: var(--bg-2);
+            color: var(--ink);
+            border: 1px solid var(--rule);
+            font-size: 13px;
             z-index: 1000;
         }
-        .skip-link:focus {
-            transform: translateY(0);
-        }
+        .skip-link:focus { top: 12px; }
 
-        /* Keyboard focus */
-        :focus-visible {
-            outline: 2px solid var(--ice);
-            outline-offset: 3px;
-            border-radius: 10px;
-        }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.001ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.001ms !important;
-            }
-        }
-        
+        /* ===== Layout ===== */
         .container {
-            max-width: 1200px;
+            max-width: var(--container);
             margin: 0 auto;
             padding: 0 32px;
-            width: 100%;
-            box-sizing: border-box;
         }
-        
-        /* Header */
+
+        /* ===== Header ===== */
         header {
-            padding: 32px 0;
             position: sticky;
             top: 0;
-            background: rgba(10, 15, 26, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
+            z-index: 50;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(10, 11, 13, 0.78);
+            border-bottom: 1px solid var(--rule);
         }
-        
-        [data-theme="light"] header {
-            background: rgba(245, 247, 250, 0.98);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.15);
-            box-shadow: 0 2px 20px rgba(14, 165, 233, 0.08);
-        }
-        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        nav a {
-            position: relative;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--ice);
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--ice);
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .nav {
-            display: flex;
+            padding: 18px 0;
             gap: 24px;
-            align-items: center;
         }
-
+        .header-left { display: flex; align-items: center; gap: 36px; }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .brand-mark {
+            height: 40px;
+            width: auto;
+            display: block;
+            /* The logo PNG is dark-navy + teal on white. invert(1) flips light/dark,
+               hue-rotate(180deg) returns the teal close to its original hue. */
+            filter: invert(1) hue-rotate(180deg) saturate(1.05);
+        }
+        .footer-brand .brand-mark { height: 44px; }
+        .nav { display: flex; gap: 24px; }
         .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            transition: color 0.3s ease;
-            font-weight: 500;
+            font-size: 14px;
+            color: var(--ink-dim);
+            transition: color 0.15s ease;
         }
-
-        .nav-link[aria-current="page"] {
-            color: var(--ice);
-        }
-
-        .nav-link[aria-current="page"]::after {
-            width: 100%;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink); }
         .header-cta {
+            font-size: 13px;
+            padding: 8px 14px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 8px;
+            color: var(--ink);
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+        .header-cta:hover {
+            border-color: var(--accent);
+            background: rgba(125, 211, 252, 0.06);
+        }
+
+        /* ===== Section base ===== */
+        section { padding: 96px 0; border-top: 1px solid var(--rule); }
+        section:first-of-type { border-top: none; }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 18px;
+        }
+        .eyebrow-dim { color: var(--ink-dim); }
+
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(44px, 6vw, 80px); line-height: 1.04; }
+        h2 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.1; }
+        h3 { font-size: 22px; line-height: 1.3; }
+
+        p { color: var(--ink-dim); font-size: 17px; line-height: 1.6; }
+        .lede { color: var(--ink); font-size: clamp(18px, 2vw, 22px); line-height: 1.5; max-width: 760px; }
+
+        .accent-2 { color: var(--accent-2); }
+        .accent { color: var(--accent); }
+        .warn { color: var(--warn); }
+
+        /* ===== Hero ===== */
+        .hero { padding: 120px 0 96px; }
+        .hero h1 { max-width: 14ch; }
+        .hero-tagline {
+            margin-top: 24px;
+            font-size: clamp(20px, 2.4vw, 28px);
+            color: var(--ink);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        .hero-sub {
+            margin-top: 22px;
+            max-width: 640px;
+            font-size: 18px;
+            line-height: 1.55;
+            color: var(--ink-dim);
+        }
+        .hero-cta {
+            margin-top: 40px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn-primary {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 8px 16px;
+            gap: 8px;
+            padding: 14px 22px;
+            background: var(--ink);
+            color: var(--bg);
             border-radius: 8px;
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
-            color: var(--navy);
-            text-decoration: none;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            letter-spacing: -0.005em;
-            line-height: 1;
-            min-height: 36px;
-            white-space: nowrap;
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 4px 14px rgba(125, 211, 252, 0.18);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+            transition: transform 0.15s ease, background 0.15s ease;
         }
-
-        .header-cta::after { content: none; }
-
-        .header-cta:hover {
+        .btn-primary:hover {
+            background: var(--accent);
             transform: translateY(-1px);
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 22px rgba(125, 211, 252, 0.28);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 22px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--ink);
+            transition: border-color 0.15s ease;
+        }
+        .btn-secondary:hover { border-color: var(--accent); }
+
+        .proof-pills {
+            margin-top: 56px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+        }
+        .pill::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
         }
 
-        [data-theme="light"] .header-cta {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.2);
+        /* ===== Surfaces section ===== */
+        .surfaces-header { max-width: 880px; }
+        .surfaces-header h2 { margin-bottom: 22px; }
+        .surfaces-grid {
+            margin-top: 56px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .surface-card {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 32px 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .surface-card.is-event { opacity: 0.78; }
+        .surface-card.is-watched {
+            border-color: rgba(125, 211, 252, 0.35);
+        }
+        .surface-card.is-watched::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.04), transparent 70%);
+            pointer-events: none;
+        }
+        .surface-tag {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            margin-bottom: 14px;
+        }
+        .surface-card.is-watched .surface-tag { color: var(--accent); }
+        .surface-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 24px; }
+        .surface-card p { font-size: 15px; line-height: 1.55; }
+        .surface-meta {
+            margin-top: auto;
+            padding-top: 22px;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            border-top: 1px solid var(--rule);
+            margin-top: 28px;
+        }
+        .surface-card.is-watched .surface-meta { color: var(--accent-2); }
+
+        /* ===== Surfaces CTA link ===== */
+        .surfaces-cta {
+            margin-top: 56px;
+            display: flex;
+            justify-content: center;
+        }
+        .surfaces-cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 22px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--ink);
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+        .surfaces-cta-link:hover {
+            border-color: var(--accent);
+            background: rgba(125, 211, 252, 0.06);
         }
 
-        [data-theme="light"] .header-cta:hover {
-            box-shadow: 0 8px 22px rgba(14, 165, 233, 0.28);
-        }
+        /* ===== CTA ===== */
+        .cta { padding: 96px 0; text-align: center; }
+        .cta h2 { margin-bottom: 32px; max-width: 20ch; margin-left: auto; margin-right: auto; }
 
-        @media (max-width: 600px) {
-            .header-cta { display: none; }
-        }
-
-        /* Footer */
+        /* ===== Footer ===== */
         footer {
-            padding: 64px 0 28px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background: rgba(0, 0, 0, 0.08);
-        }
-        [data-theme="light"] footer {
-            background: linear-gradient(180deg, #e8edf2 0%, #dce4eb 100%);
-            border-top: 1px solid rgba(14, 165, 233, 0.15);
+            border-top: 1px solid var(--rule);
+            padding: 64px 0 40px;
+            background: var(--bg);
         }
         .footer-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
-            gap: 56px;
-            margin-bottom: 40px;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
         }
-        .footer-brand {
-            max-width: 380px;
-        }
-        .footer-logo {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
+        .footer-brand .brand { margin-bottom: 16px; }
         .footer-tag {
-            margin-top: 14px;
-            color: var(--text-dim);
-            font-size: 0.875rem;
-            line-height: 1.65;
-        }
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            font-size: 14px;
+            color: var(--ink-dim);
+            max-width: 36ch;
+            line-height: 1.55;
         }
         .footer-col-title {
-            color: var(--text);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-        .footer-col a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .footer-col a:hover {
-            color: var(--ice);
-        }
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-dim);
-            font-size: 0.8125rem;
-            flex-wrap: wrap;
-        }
-        [data-theme="light"] .footer-bottom {
-            border-top-color: rgba(14, 165, 233, 0.12);
-        }
-        .footer-patent {
-            color: var(--text-subtle);
-        }
-        @media (max-width: 720px) {
-            footer {
-                padding: 48px 0 24px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 32px;
-                margin-bottom: 32px;
-            }
-            .footer-brand {
-                grid-column: 1 / -1;
-                max-width: 100%;
-            }
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 8px;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        [data-theme="light"] .theme-toggle {
-            background: #ffffff;
-            border: 1px solid rgba(14, 165, 233, 0.18);
-            color: var(--text-dim);
-        }
-        
-        .theme-toggle:hover {
-            background: rgba(125, 211, 252, 0.08);
-            border-color: rgba(125, 211, 252, 0.35);
-            color: var(--ice);
-        }
-        
-        [data-theme="light"] .theme-toggle:hover {
-            background: rgba(14, 165, 233, 0.06);
-            border-color: rgba(14, 165, 233, 0.4);
-            color: var(--ice-bright);
-        }
-        
-        .theme-toggle-svg {
-            display: block;
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-        
-        .theme-toggle-svg--sun { display: none; }
-        [data-theme="light"] .theme-toggle-svg--moon { display: none; }
-        [data-theme="light"] .theme-toggle-svg--sun { display: block; }
-        
-        .theme-toggle:active .theme-toggle-svg {
-            transform: rotate(20deg);
-        }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(125, 211, 252, 0.3) 50%, 
-                transparent 100%);
-            opacity: 0.5;
-        }
-        
-        [data-theme="light"] header::after {
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(14, 165, 233, 0.15) 50%, 
-                transparent 100%);
-            opacity: 0.4;
-        }
-        
-        .logo {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: -0.02em;
-            transition: all 0.3s ease;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--ice), var(--ice-bright));
-            transition: width 0.3s ease;
-        }
-        
-        .logo:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero */
-        .hero {
-            padding: 96px 0 112px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(125, 211, 252, 0.04) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: heroGlow 14s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.025) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(125, 211, 252, 0.025) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(125, 211, 252, 0.015) 0%, transparent 60%);
-            animation: heroParticles 28s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        @keyframes heroParticles {
-            0%, 100% {
-                opacity: 0.25;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(1.06);
-            }
-        }
-
-        @keyframes heroGlow {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.12);
-                opacity: 0.4;
-            }
-        }
-        
-        .hero > .container {
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: clamp(2.75rem, 6vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 32px;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            color: var(--text);
-            animation: fadeInUp 0.8s ease-out;
-            position: relative;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .gradient {
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 50%, var(--ice) 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 12s ease-in-out infinite;
-            position: relative;
-            filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.18));
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .tagline {
-            font-size: 1.375rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-            font-weight: 400;
-            line-height: 1.6;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            position: relative;
-        }
-        .hero-cta {
-            margin-top: 34px;
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.35s both;
-        }
-
-        .hero-cta .cta-button {
-            padding: 13px 28px;
-            font-size: 0.9375rem;
-            min-width: 180px;
-            box-shadow: 0 4px 14px rgba(125, 211, 252, 0.18);
-        }
-
-        .hero-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 13px 28px;
-            min-width: 180px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9375rem;
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(125, 211, 252, 0.22);
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        }
-
-        [data-theme="light"] .hero-secondary {
-            background: #ffffff;
-            border: 1px solid rgba(14, 165, 233, 0.25);
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-            color: #0369a1;
-        }
-
-        [data-theme="light"] .hero-secondary:hover {
-            border-color: rgba(14, 165, 233, 0.45);
-            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.12);
-        }
-
-        .hero-secondary:hover {
-            transform: translateY(-1px);
-            border-color: rgba(125, 211, 252, 0.4);
-            box-shadow: 0 6px 18px rgba(125, 211, 252, 0.12);
-            background: rgba(125, 211, 252, 0.04);
-        }
-
-        .hero-proof {
-            margin: 28px auto 0;
-            max-width: 720px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            animation: fadeInUp 0.8s ease-out 0.5s both;
-        }
-
-        .proof-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 12px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            color: var(--text-dim);
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: 0.005em;
-        }
-
-        [data-theme="light"] .proof-pill {
-            background: #ffffff;
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            color: #0369a1;
-            box-shadow: 0 1px 3px rgba(14, 165, 233, 0.05);
-        }
-
-        .proof-icon {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--ice);
-            box-shadow: 0 0 6px rgba(125, 211, 252, 0.45);
-            flex-shrink: 0;
-        }
-
-        [data-theme="light"] .proof-icon {
-            background: var(--ice-bright);
-            box-shadow: 0 0 6px rgba(14, 165, 233, 0.3);
-        }
-        
-        /* Section */
-        section {
-            padding: 100px 0;
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        h2 {
-            font-size: clamp(2rem, 4vw, 2.75rem);
-            text-align: center;
-            margin-bottom: 24px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text);
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--ice), transparent);
-            border-radius: 2px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.125rem;
-            color: var(--text-dim);
-            max-width: 680px;
-            margin: 0 auto 80px;
-            line-height: 1.7;
-        }
-
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 120px 0;
-        }
-        
-        [data-theme="light"] .cta {
-            background: linear-gradient(180deg, rgba(224, 242, 254, 0.5) 0%, rgba(14, 165, 233, 0.08) 100%);
-        }
-
-        .cta h2 {
-            margin-bottom: 40px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--ice) 0%, var(--ice-bright) 100%);
-            color: var(--navy);
-            padding: 18px 44px;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            letter-spacing: -0.01em;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 14px rgba(125, 211, 252, 0.2);
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            background: linear-gradient(135deg, var(--ice-bright) 0%, var(--ice) 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(125, 211, 252, 0.22);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        [data-theme="light"] .cta-button {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.18);
-        }
-
-        [data-theme="light"] .cta-button:hover {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.22);
-        }
-
-            .cta {
-                padding: 60px 0;
-            }
-
-            .cta-button {
-                padding: 16px 36px;
-                font-size: 0.9375rem;
-                min-width: 200px;
-            }
-        }
-
-        /* ---- Amnesia explainer strip ---- */
-        .amnesia-strip {
-            padding: 56px 0 36px;
-        }
-
-        .strip-cards {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 20px;
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        .strip-card {
-            text-align: center;
-            padding: 20px 16px;
-            flex: 1;
-            max-width: 240px;
-        }
-
-        .strip-gap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            min-width: 36px;
-            padding: 8px 0;
-            opacity: 0.7;
-        }
-
-        .strip-gap-line {
-            width: 1px;
-            flex: 0 0 auto;
-            height: 22px;
-            background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.45), transparent);
-        }
-
-        .strip-gap-icon {
-            display: block;
-            width: 12px;
-            height: 12px;
-            color: var(--text-dim);
-            opacity: 0.85;
-            flex: 0 0 auto;
-        }
-
-        [data-theme="light"] .strip-gap-line {
-            background: linear-gradient(180deg, transparent, rgba(71, 85, 105, 0.35), transparent);
-        }
-
-        .strip-viz {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 12px;
-            height: 32px;
-            margin-bottom: 14px;
-        }
-
-        .sv-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(125, 211, 252, 0.08);
-            border: 1.5px solid rgba(125, 211, 252, 0.18);
-        }
-
-        .sv-dot:nth-child(1) { animation: guardPulse 3.6s ease-in-out infinite 0s; }
-        .sv-dot:nth-child(2) { animation: guardPulse 3.6s ease-in-out infinite 1.2s; }
-        .sv-dot:nth-child(3) { animation: guardPulse 3.6s ease-in-out infinite 2.4s; }
-
-        @keyframes guardPulse {
-            0%, 28%, 100% {
-                background: rgba(125, 211, 252, 0.08);
-                border-color: rgba(125, 211, 252, 0.18);
-                box-shadow: none;
-            }
-            12%, 18% {
-                background: rgba(34, 197, 94, 0.3);
-                border-color: rgba(34, 197, 94, 0.5);
-                box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
-            }
-        }
-
-        [data-theme="light"] .sv-dot {
-            background: rgba(14, 165, 233, 0.06);
-            border-color: rgba(14, 165, 233, 0.15);
-        }
-
-        .strip-viz-siem {
-            gap: 5px;
-        }
-
-        .sv-bar {
-            width: 6px;
-            border-radius: 2px;
-            background: var(--text-subtle);
-            transform-origin: bottom;
-            animation: siemBuild 4.5s ease-in-out infinite;
-        }
-
-        .sv-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
-        .sv-bar:nth-child(2) { height: 20px; animation-delay: 0.4s; }
-        .sv-bar:nth-child(3) { height: 15px; animation-delay: 0.8s; }
-        .sv-bar:nth-child(4) { height: 24px; animation-delay: 1.2s; }
-
-        @keyframes siemBuild {
-            0%, 8% { opacity: 0; transform: scaleY(0); }
-            18%, 68% { opacity: 0.45; transform: scaleY(1); }
-            80%, 100% { opacity: 0; transform: scaleY(0); }
-        }
-
-        .sv-alert {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--red);
-            opacity: 0;
-            animation: siemAlert 4.5s ease-in-out infinite;
-            margin-left: 2px;
-        }
-
-        @keyframes siemAlert {
-            0%, 52% { opacity: 0; transform: scale(0.5); }
-            62%, 76% { opacity: 1; transform: scale(1.1); }
-            88%, 100% { opacity: 0; transform: scale(0.5); }
-        }
-
-        .strip-label {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .strip-desc {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            line-height: 1.5;
-        }
-
-        @media (max-width: 480px) {
-            .strip-cards { flex-direction: column; align-items: center; gap: 8px; }
-            .strip-gap { flex-direction: row; min-width: 0; }
-            .strip-gap-line { width: 22px; height: 1px; background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.45), transparent); }
-            [data-theme="light"] .strip-gap-line { background: linear-gradient(90deg, transparent, rgba(71, 85, 105, 0.35), transparent); }
-        }
-
-        /* ---- Memory Cure section ---- */
-        .memory-cure {
-            padding: 40px 0 60px;
-        }
-
-        /* Let this one section breathe wider than the default 1040px container,
-           so the 1160-wide diagram has room and its labels stay legible. */
-        .memory-cure > .container {
-            max-width: 1200px;
-        }
-
-        .memory-cure-block {
-            background: linear-gradient(180deg, rgba(125, 211, 252, 0.035), rgba(125, 211, 252, 0.01));
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            border-radius: 20px;
-            padding: 40px 40px 32px;
-            box-shadow: 0 1px 0 rgba(125, 211, 252, 0.06) inset,
-                        0 30px 80px -40px rgba(125, 211, 252, 0.25);
-        }
-
-        [data-theme="light"] .memory-cure-block {
-            background: linear-gradient(180deg, rgba(14, 165, 233, 0.035), rgba(14, 165, 233, 0.008));
-            border-color: rgba(14, 165, 233, 0.18);
-            box-shadow: 0 1px 0 rgba(14, 165, 233, 0.05) inset,
-                        0 24px 60px -40px rgba(14, 165, 233, 0.2);
-        }
-
-        .memory-cure-intro {
-            max-width: 820px;
-            margin: 0 auto 32px;
-            padding: 4px 0 4px 22px;
-            background: transparent;
-            border: none;
-            border-left: 3px solid rgba(125, 211, 252, 0.7);
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .memory-cure-intro p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text);
-            text-align: left;
-            margin: 0;
-        }
-
-        .memory-cure-intro em {
-            color: rgba(186, 230, 253, 0.95);
-            font-style: italic;
-            font-weight: 500;
-        }
-
-        [data-theme="light"] .memory-cure-intro {
-            background: transparent;
-            border: none;
-            border-left: 3px solid rgba(14, 165, 233, 0.7);
-            box-shadow: none;
-        }
-
-        [data-theme="light"] .memory-cure-intro em {
-            color: rgba(12, 74, 110, 1);
-        }
-
-        .memory-cure-card {
-            max-width: 640px;
-            margin: 0 auto;
-            background: var(--navy-light);
-            border: 1px solid rgba(125, 211, 252, 0.18);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        [data-theme="light"] .memory-cure-card {
-            background: #ffffff;
-            border-color: rgba(14, 165, 233, 0.2);
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
-        }
-
-        .memory-cure-visual {
-            padding: 32px 32px 8px;
-        }
-
-        .memory-cure-caption {
-            padding: 16px 32px 28px;
-            text-align: center;
-        }
-
-        .memory-cure-caption .mc-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-
-        .memory-cure-caption .mc-text {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-
-        [data-theme="light"] .memory-cure-card {
-            background: #ffffff;
-            border-color: rgba(14, 165, 233, 0.22);
-            box-shadow: 0 4px 24px rgba(14, 165, 233, 0.1);
-        }
-
-        /* Explainer video sitting just below the before/after diagram. */
-        .memory-cure-video {
-            max-width: 860px;
-            margin: 48px auto 0;
-            padding-top: 36px;
-            border-top: 1px solid rgba(125, 211, 252, 0.14);
-        }
-
-        [data-theme="light"] .memory-cure-video {
-            border-top-color: rgba(14, 165, 233, 0.16);
-        }
-
-        .memory-cure-video-eyebrow {
-            font-family: var(--mono, 'SFMono-Regular', 'Menlo', monospace);
-            font-size: 0.72rem;
+            font-size: 11px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: rgba(125, 211, 252, 0.85);
-            text-align: center;
+            color: var(--ink-subtle);
             margin-bottom: 16px;
         }
-
-        [data-theme="light"] .memory-cure-video-eyebrow {
-            color: rgba(14, 116, 165, 0.95);
-        }
-
-        .memory-cure-video-frame {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            box-shadow: 0 30px 80px -40px rgba(125, 211, 252, 0.35);
-            background: #000;
-        }
-
-        [data-theme="light"] .memory-cure-video-frame {
-            border-color: rgba(14, 165, 233, 0.22);
-            box-shadow: 0 24px 60px -40px rgba(14, 165, 233, 0.25);
-        }
-
-        .memory-cure-video-frame iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .memory-cure-video-fallback {
-            position: absolute;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #fff;
-            background:
-                linear-gradient(180deg, rgba(10, 15, 26, 0.15), rgba(10, 15, 26, 0.72)),
-                url('https://i.ytimg.com/vi/cmTahKO4F8I/maxresdefault.jpg') center / cover no-repeat;
-        }
-
-        .memory-cure-video-fallback:focus-visible {
-            outline: 2px solid rgba(125, 211, 252, 0.85);
-            outline-offset: 3px;
-        }
-
-        .memory-cure-video-fallback-inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding: 24px;
-            text-align: center;
-        }
-
-        .memory-cure-video-play {
-            width: 72px;
-            height: 72px;
-            border-radius: 999px;
-            display: grid;
-            place-items: center;
-            background: rgba(255, 255, 255, 0.92);
-            color: #0a0f1a;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-        }
-
-        .memory-cure-video-play svg {
-            width: 28px;
-            height: 28px;
-            margin-left: 4px;
-        }
-
-        .memory-cure-video-fallback-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
-        }
-
-        .memory-cure-video-frame.is-file-protocol iframe {
-            display: none;
-        }
-
-        .memory-cure-video-frame.is-file-protocol .memory-cure-video-fallback {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            .memory-cure-video { margin-top: 32px; padding-top: 24px; }
-            .memory-cure-video-frame { border-radius: 12px; }
-        }
-
-        /* ============================================= */
-        /* Compression Diagram: raw → funnel → intent    */
-        /* ============================================= */
-
-        .memory-cure {
-            padding: 70px 0 100px;
-        }
-
-        .compression-wrap {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        .compression-diagram {
+        .footer-col a {
             display: block;
-            width: 100%;
-            height: auto;
-            overflow: visible;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .cd-label {
-            font-size: 13px;
-            font-weight: 500;
-            fill: rgba(203, 213, 225, 0.78);
-            letter-spacing: 0.02em;
-        }
-
-        [data-theme="light"] .cd-label {
-            fill: rgba(51, 65, 85, 0.85);
-        }
-
-        /* ---- Streams (left: raw inbound) ---- */
-        .cd-stream {
-            fill: none;
-            stroke-width: 1.4;
-            stroke-linecap: round;
-            stroke-dasharray: 6 10;
-            opacity: 0.85;
-            animation: cdStreamFlow 5s linear infinite;
-        }
-        .cd-s1 { stroke: #ec4899; animation-duration: 4.8s; }
-        .cd-s2 { stroke: #f59e0b; animation-duration: 5.6s; }
-        .cd-s3 { stroke: #06b6d4; animation-duration: 4.2s; }
-        .cd-s4 { stroke: #10b981; animation-duration: 5.0s; }
-        .cd-s5 { stroke: #8b5cf6; animation-duration: 4.5s; }
-        .cd-s6 { stroke: #f43f5e; animation-duration: 5.3s; }
-        .cd-s7 { stroke: #3b82f6; animation-duration: 4.7s; }
-        .cd-s8 { stroke: #eab308; animation-duration: 5.1s; }
-
-        @keyframes cdStreamFlow {
-            from { stroke-dashoffset: 0; }
-            to   { stroke-dashoffset: -96; }
-        }
-
-        /* ---- Particles ---- */
-        .cd-particles circle {
-            animation: cdTwinkle 3.4s ease-in-out infinite;
-        }
-        .cd-particles circle:nth-child(3n)   { animation-delay: 0.4s; }
-        .cd-particles circle:nth-child(3n+1) { animation-delay: 1.2s; }
-        .cd-particles circle:nth-child(3n+2) { animation-delay: 2.0s; }
-
-        @keyframes cdTwinkle {
-            0%, 100% { opacity: 0.25; }
-            50% { opacity: 0.95; }
-        }
-
-        /* ---- Media chips ---- */
-        .cd-chip rect {
-            stroke-width: 1;
-            rx: 3;
-        }
-        .cd-chip-text rect  { fill: rgba(59, 130, 246, 0.16); stroke: rgba(59, 130, 246, 0.65); }
-        .cd-chip-image rect { fill: rgba(249, 115, 22, 0.16); stroke: rgba(249, 115, 22, 0.65); }
-        .cd-chip-audio rect { fill: rgba(16, 185, 129, 0.16); stroke: rgba(16, 185, 129, 0.65); }
-        .cd-chip-video rect { fill: rgba(139, 92, 246, 0.16); stroke: rgba(139, 92, 246, 0.65); }
-
-        .cd-chip text {
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-        .cd-chip-text text  { fill: rgba(147, 197, 253, 1); }
-        .cd-chip-image text { fill: rgba(253, 186, 116, 1); }
-        .cd-chip-audio text { fill: rgba(110, 231, 183, 1); }
-        .cd-chip-video text { fill: rgba(196, 181, 253, 1); }
-
-        .cd-chip { animation: cdChipPulse 4.4s ease-in-out infinite; }
-        .cd-chip:nth-child(2n) { animation-delay: 1.2s; }
-        .cd-chip:nth-child(3n) { animation-delay: 2.2s; }
-
-        @keyframes cdChipPulse {
-            0%, 100% { opacity: 0.82; }
-            50%      { opacity: 1; }
-        }
-
-        /* Audio waveform mini-bars */
-        .cd-wave rect {
-            fill: rgba(110, 231, 183, 0.85);
-            transform-box: fill-box;
-            transform-origin: center bottom;
-            animation: cdWave 1.2s ease-in-out infinite;
-        }
-        .cd-wave rect:nth-child(1) { animation-delay: 0s;   }
-        .cd-wave rect:nth-child(2) { animation-delay: 0.15s;}
-        .cd-wave rect:nth-child(3) { animation-delay: 0.30s;}
-        .cd-wave rect:nth-child(4) { animation-delay: 0.45s;}
-        .cd-wave rect:nth-child(5) { animation-delay: 0.60s;}
-        .cd-wave rect:nth-child(6) { animation-delay: 0.75s;}
-
-        @keyframes cdWave {
-            0%, 100% { transform: scaleY(0.4); }
-            50%      { transform: scaleY(1); }
-        }
-
-        /* ---- Crystal (right) ---- */
-        .cd-crystal-aura { fill: url(#cdCrystalGrad); animation: cdAuraPulse 4.6s ease-in-out infinite; }
-        @keyframes cdAuraPulse {
-            0%, 100% { opacity: 0.55; }
-            50% { opacity: 1; }
-        }
-
-        .cd-crystal-face {
-            fill: rgba(125, 211, 252, 0.1);
-            stroke: rgba(186, 230, 253, 1);
-            stroke-width: 1.5;
-        }
-        [data-theme="light"] .cd-crystal-face {
-            fill: rgba(14, 165, 233, 0.08);
-            stroke: rgba(2, 132, 199, 1);
-        }
-
-        /* Memory strata: accumulated layers of history */
-        .cd-crystal-stratum {
-            fill: none;
-            stroke: rgba(186, 230, 253, 0.4);
-            stroke-width: 0.7;
-            stroke-linecap: round;
-        }
-        [data-theme="light"] .cd-crystal-stratum { stroke: rgba(2, 132, 199, 0.4); }
-
-        /* Data spine: continuous thread of time through the memory */
-        .cd-crystal-spine {
-            stroke: rgba(186, 230, 253, 0.55);
-            stroke-width: 1;
-            stroke-dasharray: 2 3;
-            animation: cdSpineFlow 2.6s linear infinite;
-        }
-        [data-theme="light"] .cd-crystal-spine { stroke: rgba(2, 132, 199, 0.55); }
-
-        @keyframes cdSpineFlow {
-            from { stroke-dashoffset: 0; }
-            to   { stroke-dashoffset: -20; }
-        }
-
-        /* Trapped signals: each a pulsing signal held by memory */
-        .cd-mem-signals circle {
-            fill: rgba(232, 248, 255, 1);
-            filter: drop-shadow(0 0 3px rgba(125, 211, 252, 0.95));
-            animation: cdMemBlink 3.6s ease-in-out infinite;
-        }
-        .cd-mem-signals circle:nth-child(1) { animation-delay: 0s;   }
-        .cd-mem-signals circle:nth-child(2) { animation-delay: 0.4s; }
-        .cd-mem-signals circle:nth-child(3) { animation-delay: 0.8s; }
-        .cd-mem-signals circle:nth-child(4) { animation-delay: 1.2s; }
-        .cd-mem-signals circle:nth-child(5) { animation-delay: 1.6s; }
-        .cd-mem-signals circle:nth-child(6) { animation-delay: 2.0s; }
-        .cd-mem-signals circle:nth-child(7) { animation-delay: 2.4s; }
-        .cd-mem-signals circle:nth-child(8) { animation-delay: 2.8s; }
-        .cd-mem-signals circle:nth-child(9) { animation-delay: 3.2s; }
-
-        [data-theme="light"] .cd-mem-signals circle {
-            fill: rgba(2, 132, 199, 1);
-            filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.85));
-        }
-
-        @keyframes cdMemBlink {
-            0%, 100% { opacity: 0.35; }
-            50%      { opacity: 1; }
-        }
-
-        /* Tiny "memory" wordmark under the crystal */
-        .cd-crystal-tag {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            fill: rgba(186, 230, 253, 0.9);
-        }
-        .cd-crystal-sub {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 8px;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            fill: rgba(186, 230, 253, 0.65);
-        }
-        [data-theme="light"] .cd-crystal-tag { fill: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .cd-crystal-sub { fill: rgba(71, 85, 105, 0.85); }
-
-        .cd-crystal {
-            animation: cdCrystalPulse 4.6s ease-in-out infinite;
-        }
-
-        @keyframes cdCrystalPulse {
-            0%, 100% {
-                opacity: 0.9;
-                filter: drop-shadow(0 0 6px rgba(125, 211, 252, 0.45));
-            }
-            50% {
-                opacity: 1;
-                filter: drop-shadow(0 0 18px rgba(125, 211, 252, 0.95));
-            }
-        }
-
-        [data-theme="light"] .cd-crystal {
-            filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.35));
-        }
-
-        .cd-conn {
-            stroke: rgba(125, 211, 252, 0.5);
-            stroke-width: 0.9;
-        }
-        [data-theme="light"] .cd-conn { stroke: rgba(14, 165, 233, 0.55); }
-
-        /* ---- Alert pills ---- */
-        .cd-alert { animation: cdAlertFade 3.2s ease-in-out infinite; }
-        .cd-alert:nth-child(2n) { animation-delay: 1.6s; }
-        .cd-alert:nth-child(3n) { animation-delay: 0.8s; }
-
-        @keyframes cdAlertFade {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-
-        .cd-alert rect {
-            rx: 11;
-            stroke-width: 1;
-        }
-        .cd-alert text {
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .cd-alert-critical rect   { fill: rgba(239, 68, 68, 0.14); stroke: rgba(239, 68, 68, 0.7); }
-        .cd-alert-critical circle { fill: rgba(239, 68, 68, 1); filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.9)); }
-        .cd-alert-critical text   { fill: rgba(252, 165, 165, 1); }
-
-        .cd-alert-warning rect   { fill: rgba(245, 158, 11, 0.14); stroke: rgba(245, 158, 11, 0.7); }
-        .cd-alert-warning circle { fill: rgba(245, 158, 11, 1); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.9)); }
-        .cd-alert-warning text   { fill: rgba(253, 186, 116, 1); }
-
-        [data-theme="light"] .cd-alert-critical text { fill: rgba(153, 27, 27, 1); }
-        [data-theme="light"] .cd-alert-warning text  { fill: rgba(120, 53, 15, 1); }
-
-        /* ---- Bracket ---- */
-        .cd-bracket {
-            fill: none;
-            stroke: rgba(203, 213, 225, 0.45);
-            stroke-width: 1;
-        }
-        .cd-bracket-label {
-            font-size: 12px;
-            font-weight: 600;
-            fill: rgba(203, 213, 225, 0.9);
-            letter-spacing: 0.02em;
-        }
-        [data-theme="light"] .cd-bracket { stroke: rgba(71, 85, 105, 0.5); }
-        [data-theme="light"] .cd-bracket-label { fill: rgba(51, 65, 85, 1); }
-
-        /* ======================================================================
-           INVERSION DIAGRAM: Legacy rail (muted/desaturated) + divider + agent rail
-           ====================================================================== */
-
-        /* Small top/bottom rail eyebrows: bracketed, monospace (e2b-style) */
-        .il-eyebrow, .ci-rail-eyebrow {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-        }
-        .il-eyebrow { fill: rgba(148, 163, 184, 0.85); }
-        .ci-rail-eyebrow { fill: rgba(125, 211, 252, 1); }
-        [data-theme="light"] .il-eyebrow { fill: rgba(51, 65, 85, 1); }
-        [data-theme="light"] .ci-rail-eyebrow { fill: rgba(14, 165, 233, 1); }
-
-        /* Taglines: monospace "> STATUS" terminal feel */
-        .il-tagline, .ci-rail-tagline {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 10.5px;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-        }
-        .il-tagline { fill: rgba(148, 163, 184, 0.75); }
-        .ci-rail-tagline { fill: rgba(186, 230, 253, 0.9); }
-        [data-theme="light"] .il-tagline { fill: rgba(71, 85, 105, 0.9); }
-        [data-theme="light"] .ci-rail-tagline { fill: rgba(2, 132, 199, 1); }
-
-        .il-stage-title {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            fill: rgba(148, 163, 184, 0.85);
-        }
-        .il-stage-sub {
-            font-size: 9px;
-            font-style: italic;
-            fill: rgba(148, 163, 184, 0.75);
-            letter-spacing: 0.02em;
-        }
-        [data-theme="light"] .il-stage-title { fill: rgba(51, 65, 85, 1); }
-        [data-theme="light"] .il-stage-sub   { fill: rgba(71, 85, 105, 0.85); }
-
-        /* Event chips (left column) */
-        .il-event rect {
-            fill: rgba(100, 116, 139, 0.08);
-            stroke: rgba(148, 163, 184, 0.5);
-            stroke-width: 1;
-            rx: 3;
-        }
-        .il-event text {
-            font-size: 10px;
-            font-weight: 500;
-            fill: rgba(148, 163, 184, 0.9);
-        }
-        .il-event circle { fill: rgba(148, 163, 184, 0.6); }
-        [data-theme="light"] .il-event rect { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.45); }
-        [data-theme="light"] .il-event text { fill: rgba(51, 65, 85, 0.95); }
-        [data-theme="light"] .il-event circle { fill: rgba(100, 116, 139, 0.6); }
-
-        /* Dashed flow lines and arrowheads between legacy stages */
-        .il-flow {
-            fill: none;
-            stroke: rgba(148, 163, 184, 0.5);
-            stroke-width: 1.2;
-            stroke-dasharray: 4 5;
-            animation: ilFlowShift 6s linear infinite;
-        }
-        .il-arrow-head { fill: rgba(148, 163, 184, 0.7); }
-        [data-theme="light"] .il-flow { stroke: rgba(100, 116, 139, 0.55); }
-        [data-theme="light"] .il-arrow-head { fill: rgba(71, 85, 105, 0.75); }
-
-        @keyframes ilFlowShift {
-            from { stroke-dashoffset: 0; }
-            to   { stroke-dashoffset: -54; }
-        }
-
-        /* Data lake cylinder */
-        .il-lake-aura {
-            fill: url(#ilLakeGrad);
-            animation: ilLakeAuraPulse 5.4s ease-in-out infinite;
-        }
-        @keyframes ilLakeAuraPulse {
-            0%, 100% { opacity: 0.45; }
-            50%      { opacity: 0.9; }
-        }
-        .il-lake-body {
-            fill: rgba(100, 116, 139, 0.1);
-            stroke: rgba(148, 163, 184, 0.6);
-            stroke-width: 1.2;
-        }
-        .il-lake-top {
-            fill: rgba(100, 116, 139, 0.22);
-            stroke: rgba(148, 163, 184, 0.75);
-            stroke-width: 1.2;
-        }
-        .il-lake-wave {
-            fill: none;
-            stroke: rgba(148, 163, 184, 0.35);
-            stroke-width: 0.7;
-            stroke-dasharray: 3 4;
-        }
-        [data-theme="light"] .il-lake-body { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.55); }
-        [data-theme="light"] .il-lake-top  { fill: rgba(100, 116, 139, 0.18); stroke: rgba(100, 116, 139, 0.7); }
-        [data-theme="light"] .il-lake-wave { stroke: rgba(100, 116, 139, 0.4); }
-
-        /* Correlator graph */
-        .il-corr-node {
-            fill: rgba(100, 116, 139, 0.28);
-            stroke: rgba(148, 163, 184, 0.75);
-            stroke-width: 1;
-            animation: ilCorrBlink 4s ease-in-out infinite;
-        }
-        .il-corr-node:nth-child(8)  { animation-delay: 0.3s; }
-        .il-corr-node:nth-child(9)  { animation-delay: 0.8s; }
-        .il-corr-node:nth-child(10) { animation-delay: 1.3s; }
-        .il-corr-node:nth-child(11) { animation-delay: 1.8s; }
-        .il-corr-node:nth-child(12) { animation-delay: 2.3s; }
-        .il-corr-edge {
-            fill: none;
-            stroke: rgba(148, 163, 184, 0.4);
-            stroke-width: 0.8;
-        }
-        [data-theme="light"] .il-corr-node { fill: rgba(100, 116, 139, 0.2); stroke: rgba(71, 85, 105, 0.75); }
-        [data-theme="light"] .il-corr-edge { stroke: rgba(100, 116, 139, 0.45); }
-
-        @keyframes ilCorrBlink {
-            0%, 100% { opacity: 0.55; }
-            50%      { opacity: 1; }
-        }
-
-        /* Late alert compound pill */
-        .il-late rect {
-            fill: rgba(245, 158, 11, 0.1);
-            stroke: rgba(245, 158, 11, 0.55);
-            stroke-width: 1;
-            rx: 11;
-        }
-        .il-late line { stroke: rgba(245, 158, 11, 0.3); stroke-width: 0.8; stroke-dasharray: 2 3; }
-        .il-late circle {
-            fill: rgba(245, 158, 11, 0.95);
-            filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.75));
-        }
-        .il-late-main {
-            font-size: 11px;
-            font-weight: 700;
-            fill: rgba(251, 191, 36, 0.98);
-            letter-spacing: 0.02em;
-        }
-        .il-late-sub {
-            font-size: 9px;
-            font-weight: 500;
-            font-style: italic;
-            fill: rgba(251, 191, 36, 0.7);
-            letter-spacing: 0.03em;
-        }
-        [data-theme="light"] .il-late-main { fill: rgba(120, 53, 15, 1); }
-        [data-theme="light"] .il-late-sub  { fill: rgba(120, 53, 15, 0.8); }
-
-        /* Blocking cross-session threats output: cool cyan counterpart to the bottom rail's amber "Cross-session threat hunting" pill (identical shape, complementary semantics: block pre-execution vs hunt post-execution) */
-        .ci-intent-out rect {
-            fill: rgba(125, 211, 252, 0.08);
-            stroke: rgba(125, 211, 252, 0.55);
-            stroke-width: 1;
-            rx: 11;
-        }
-        .ci-intent-out line { stroke: rgba(125, 211, 252, 0.3); stroke-width: 0.8; stroke-dasharray: 2 3; }
-        .ci-intent-out circle {
-            fill: rgba(125, 211, 252, 0.95);
-            filter: drop-shadow(0 0 4px rgba(125, 211, 252, 0.75));
-        }
-        .ci-intent-out-main {
-            font-size: 11px;
-            font-weight: 700;
-            fill: rgba(186, 230, 253, 0.98);
-            letter-spacing: 0.02em;
-        }
-        .ci-intent-out-sub {
-            font-size: 9px;
-            font-weight: 500;
-            font-style: italic;
-            fill: rgba(186, 230, 253, 0.7);
-            letter-spacing: 0.03em;
-        }
-        [data-theme="light"] .ci-intent-out rect   { fill: rgba(14, 165, 233, 0.08); stroke: rgba(14, 165, 233, 0.6); }
-        [data-theme="light"] .ci-intent-out circle { fill: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .ci-intent-out-main   { fill: rgba(12, 74, 110, 1); }
-        [data-theme="light"] .ci-intent-out-sub    { fill: rgba(12, 74, 110, 0.8); }
-
-        /* Strike-through tags: the three distinctions, made visible as ✗ over legacy pieces */
-        .il-strike-line {
-            stroke: rgba(239, 68, 68, 0.75);
-            stroke-width: 1.8;
-            stroke-linecap: round;
-        }
-        .il-strike-tag-bg {
-            fill: rgba(239, 68, 68, 0.12);
-            stroke: rgba(239, 68, 68, 0.65);
-            stroke-width: 1;
-            rx: 4;
-        }
-        .il-strike-tag-text {
-            font-size: 10px;
-            font-weight: 700;
-            fill: rgba(252, 165, 165, 1);
-            letter-spacing: 0.02em;
-        }
-        [data-theme="light"] .il-strike-tag-bg { fill: rgba(239, 68, 68, 0.08); stroke: rgba(220, 38, 38, 0.65); }
-        [data-theme="light"] .il-strike-tag-text { fill: rgba(153, 27, 27, 1); }
-
-        /* Inversion divider */
-        .iv-divider-line {
-            stroke: rgba(125, 211, 252, 0.3);
-            stroke-width: 1;
-            stroke-dasharray: 2 4;
-        }
-        .iv-divider-pill {
-            fill: rgba(125, 211, 252, 0.08);
-            stroke: rgba(125, 211, 252, 0.6);
-            stroke-width: 1.2;
-            rx: 14;
-        }
-        .iv-divider-text {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            fill: rgba(186, 230, 253, 0.95);
-        }
-        [data-theme="light"] .iv-divider-line { stroke: rgba(14, 165, 233, 0.4); }
-        [data-theme="light"] .iv-divider-pill { fill: rgba(14, 165, 233, 0.08); stroke: rgba(14, 165, 233, 0.6); }
-        [data-theme="light"] .iv-divider-text { fill: rgba(2, 132, 199, 1); }
-
-        /* ---- Divider arrow hints (subtle, monospace-feel) ---- */
-        .iv-divider-arrow {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            fill: rgba(148, 163, 184, 0.75);
-        }
-        [data-theme="light"] .iv-divider-arrow { fill: rgba(71, 85, 105, 0.85); }
-
-        /* ---- Upstream guardrails annotation (top rail, left of raw zone) ---- */
-        .ci-upstream-chip {
-            fill: rgba(148, 163, 184, 0.1);
-            stroke: rgba(148, 163, 184, 0.55);
-            stroke-width: 1;
-            stroke-dasharray: 3 3;
-            rx: 4;
-        }
-        .ci-upstream-chip-text {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 9.5px;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            fill: rgba(186, 230, 253, 0.85);
-        }
-        .ci-upstream-sub {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 9px;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            fill: rgba(148, 163, 184, 0.85);
-        }
-        [data-theme="light"] .ci-upstream-chip      { fill: rgba(100, 116, 139, 0.06); stroke: rgba(100, 116, 139, 0.7); }
-        [data-theme="light"] .ci-upstream-chip-text { fill: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .ci-upstream-sub       { fill: rgba(71, 85, 105, 0.95); }
-
-        /* ---- AGENTIC AI chip (bottom rail, above Correlator) ---- */
-        .il-agentic-chip-bg {
-            fill: rgba(125, 211, 252, 0.12);
-            stroke: rgba(125, 211, 252, 0.7);
-            stroke-width: 1;
-            rx: 3;
-            animation: ilAgenticPulse 3.2s ease-in-out infinite;
-        }
-        .il-agentic-chip-text {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 8.5px;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            fill: rgba(186, 230, 253, 1);
-        }
-        [data-theme="light"] .il-agentic-chip-bg   { fill: rgba(14, 165, 233, 0.1); stroke: rgba(2, 132, 199, 0.85); }
-        [data-theme="light"] .il-agentic-chip-text { fill: rgba(2, 132, 199, 1); }
-
-        @keyframes ilAgenticPulse {
-            0%, 100% { opacity: 0.75; }
-            50%      { opacity: 1; }
-        }
-
-        /* ---- Neutral "domain" label replacing the red strike tags ---- */
-        .il-domain-bg {
-            fill: rgba(100, 116, 139, 0.07);
-            stroke: rgba(148, 163, 184, 0.4);
-            stroke-width: 1;
-            stroke-dasharray: 3 3;
-            rx: 6;
-        }
-        .il-domain-text {
-            font-size: 10px;
-            font-weight: 600;
-            fill: rgba(148, 163, 184, 0.95);
-            letter-spacing: 0.04em;
-        }
-        [data-theme="light"] .il-domain-bg   { fill: rgba(100, 116, 139, 0.05); stroke: rgba(100, 116, 139, 0.55); }
-        [data-theme="light"] .il-domain-text { fill: rgba(51, 65, 85, 1); }
-
-        /* ---- Shared attack-lifecycle timeline (e2b-style footer axis) ---- */
-        .iv-timeline-caption {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            fill: rgba(148, 163, 184, 0.85);
-        }
-        .iv-timeline-line { stroke: rgba(148, 163, 184, 0.5); stroke-width: 1.2; }
-        .iv-timeline-head { fill: rgba(148, 163, 184, 0.75); }
-        .iv-timeline-tick { stroke: rgba(148, 163, 184, 0.65); stroke-width: 1.2; }
-        .iv-timeline-label {
-            font-size: 10px;
-            font-weight: 600;
-            fill: rgba(186, 230, 253, 0.9);
-            letter-spacing: 0.02em;
-        }
-        .iv-timeline-span { rx: 2; }
-        .iv-timeline-span-before { fill: rgba(125, 211, 252, 0.85); }
-        .iv-timeline-span-after  { fill: rgba(148, 163, 184, 0.55); }
-        .iv-timeline-span-label {
-            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-        .iv-timeline-span-label-before { fill: rgba(125, 211, 252, 1); }
-        .iv-timeline-span-label-after  { fill: rgba(148, 163, 184, 0.95); }
-        [data-theme="light"] .iv-timeline-caption { fill: rgba(51, 65, 85, 1); }
-        [data-theme="light"] .iv-timeline-line { stroke: rgba(100, 116, 139, 0.55); }
-        [data-theme="light"] .iv-timeline-head { fill: rgba(71, 85, 105, 0.85); }
-        [data-theme="light"] .iv-timeline-tick { stroke: rgba(71, 85, 105, 0.7); }
-        [data-theme="light"] .iv-timeline-label { fill: rgba(2, 132, 199, 0.95); }
-        [data-theme="light"] .iv-timeline-span-before { fill: rgba(14, 165, 233, 0.9); }
-        [data-theme="light"] .iv-timeline-span-after  { fill: rgba(100, 116, 139, 0.55); }
-        [data-theme="light"] .iv-timeline-span-label-before { fill: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .iv-timeline-span-label-after  { fill: rgba(51, 65, 85, 1); }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            .cd-stream, .cd-particles circle, .cd-chip, .cd-wave rect,
-            .cd-crystal, .cd-crystal-aura, .cd-alert,
-            .il-flow, .il-corr-node, .il-lake-aura { animation: none; }
-        }
-
-        @media (max-width: 720px) {
-            .memory-cure { padding: 50px 0 70px; }
-            .memory-cure-block { padding: 24px 16px 18px; border-radius: 14px; }
-            .memory-cure-intro { padding-left: 16px; margin-bottom: 22px; }
-            .cd-label { font-size: 11px; }
-            .cd-chip text { font-size: 8px; }
-            .cd-alert text { font-size: 9px; }
-            .il-eyebrow, .ci-rail-eyebrow { font-size: 8px; letter-spacing: 0.14em; }
-            .il-tagline, .ci-rail-tagline { font-size: 9px; }
-            .il-stage-title { font-size: 9px; letter-spacing: 0.14em; }
-            .il-event text { font-size: 9px; }
-            .il-late-main { font-size: 10px; }
-            .il-late-sub  { font-size: 8px; }
-            .il-strike-tag-text { font-size: 9px; }
-            .iv-divider-text { font-size: 9px; letter-spacing: 0.14em; }
-        }
-
-        /* ==========================================================================
-           Mobile-stacked dual-rail diagram (phones ≤ 768px).
-           Desktop continues to render the SVG; phones get this HTML/CSS stack
-           so text stays legible and the narrative reads top-to-bottom.
-           ========================================================================== */
-        .compression-mobile {
-            display: none;
-            max-width: 100%;
-            margin: 0 auto;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .cm-rail {
-            position: relative;
-            padding: 14px 14px 18px;
-            border-radius: 14px;
-            border: 1px solid transparent;
-        }
-        .cm-rail-agent {
-            background: linear-gradient(180deg, rgba(125, 211, 252, 0.05), rgba(125, 211, 252, 0.02));
-            border-color: rgba(125, 211, 252, 0.28);
-        }
-        .cm-rail-legacy {
-            background: linear-gradient(180deg, rgba(251, 191, 36, 0.05), rgba(251, 191, 36, 0.02));
-            border-color: rgba(251, 191, 36, 0.28);
-        }
-
-        .cm-rail-head {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            font-size: 9.5px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-        }
-        .cm-eyebrow-agent  { color: rgba(186, 230, 253, 0.9); }
-        .cm-eyebrow-legacy { color: rgba(251, 191, 36, 0.9); }
-        .cm-tagline        { color: rgba(148, 163, 184, 0.75); font-weight: 500; letter-spacing: 0.1em; }
-
-        .cm-pipeline {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 6px;
-        }
-
-        .cm-node {
-            border-radius: 10px;
-            padding: 10px 12px;
-            text-align: center;
-            border: 1px solid;
-        }
-        .cm-rail-agent .cm-node {
-            background: rgba(125, 211, 252, 0.06);
-            border-color: rgba(125, 211, 252, 0.38);
-            color: rgba(186, 230, 253, 0.92);
-        }
-        .cm-rail-legacy .cm-node {
-            background: rgba(251, 191, 36, 0.06);
-            border-color: rgba(251, 191, 36, 0.38);
-            color: rgba(251, 191, 36, 0.92);
-        }
-        .cm-node-title {
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.01em;
-        }
-        .cm-node-sub {
-            margin-top: 3px;
-            font-size: 10.5px;
-            font-style: italic;
-            opacity: 0.78;
-        }
-        .cm-node-meta {
-            margin-top: 3px;
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            font-size: 9px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            opacity: 0.65;
-        }
-
-        .cm-arrow {
-            align-self: center;
             font-size: 14px;
-            line-height: 1;
-            opacity: 0.55;
+            color: var(--ink-dim);
+            padding: 6px 0;
+            transition: color 0.15s ease;
         }
-        .cm-rail-agent .cm-arrow  { color: rgba(125, 211, 252, 0.75); }
-        .cm-rail-legacy .cm-arrow { color: rgba(251, 191, 36, 0.75); }
-
-        .cm-pill {
-            position: relative;
-            border-radius: 11px;
-            padding: 12px 14px 11px;
-            border: 1px solid;
-            text-align: center;
-        }
-        .cm-pill-cool {
-            background: rgba(125, 211, 252, 0.08);
-            border-color: rgba(125, 211, 252, 0.55);
-        }
-        .cm-pill-warm {
-            background: rgba(251, 191, 36, 0.07);
-            border-color: rgba(251, 191, 36, 0.55);
-        }
-        .cm-pill-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 12.5px;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-        }
-        .cm-pill-cool .cm-pill-title { color: rgba(186, 230, 253, 0.98); }
-        .cm-pill-warm .cm-pill-title { color: rgba(251, 191, 36, 0.98); }
-        .cm-pill-title::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .cm-pill-cool .cm-pill-title::before {
-            background: rgba(125, 211, 252, 0.95);
-            box-shadow: 0 0 6px rgba(125, 211, 252, 0.75);
-        }
-        .cm-pill-warm .cm-pill-title::before {
-            background: rgba(251, 191, 36, 0.95);
-            box-shadow: 0 0 6px rgba(251, 191, 36, 0.7);
-        }
-        .cm-pill-divider {
-            margin: 7px auto 6px;
-            height: 1px;
-            width: 82%;
-        }
-        .cm-pill-cool .cm-pill-divider { background: repeating-linear-gradient(to right, rgba(125,211,252,0.4) 0 2px, transparent 2px 5px); }
-        .cm-pill-warm .cm-pill-divider { background: repeating-linear-gradient(to right, rgba(251,191,36,0.4)  0 2px, transparent 2px 5px); }
-        .cm-pill-sub {
-            font-size: 10.5px;
-            font-style: italic;
-            line-height: 1.5;
-            letter-spacing: 0.03em;
-        }
-        .cm-pill-cool .cm-pill-sub { color: rgba(186, 230, 253, 0.72); }
-        .cm-pill-warm .cm-pill-sub { color: rgba(251, 191, 36, 0.75); }
-
-        /* Divider between the two rails on mobile */
-        .cm-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 14px 0;
-        }
-        .cm-divider-line {
-            flex: 1;
-            height: 0;
-            border-top: 1px dashed rgba(125, 211, 252, 0.35);
-        }
-        .cm-divider-pill {
-            padding: 6px 10px;
-            border-radius: 14px;
-            background: rgba(125, 211, 252, 0.08);
-            border: 1px solid rgba(125, 211, 252, 0.55);
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            color: rgba(186, 230, 253, 0.95);
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        /* Attack lifecycle axis at the bottom */
-        .cm-timeline {
-            margin-top: 18px;
-            padding: 14px 12px;
-            border-radius: 12px;
-            background: rgba(148, 163, 184, 0.04);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-        }
-        .cm-timeline-caption {
-            text-align: center;
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(186, 230, 253, 0.8);
-            margin-bottom: 10px;
-        }
-        .cm-timeline-track {
-            position: relative;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(148, 163, 184, 0.15);
-            overflow: hidden;
-            display: flex;
-        }
-        .cm-timeline-span { height: 100%; flex: 1; }
-        .cm-timeline-span-before { background: rgba(125, 211, 252, 0.75); }
-        .cm-timeline-span-after  { background: rgba(251, 191, 36, 0.55); }
-
-        .cm-timeline-ticks {
+        .footer-col a:hover { color: var(--ink); }
+        .footer-bottom {
+            border-top: 1px solid var(--rule);
+            padding-top: 24px;
             display: flex;
             justify-content: space-between;
-            margin-top: 6px;
-            font-size: 9.5px;
-            color: rgba(148, 163, 184, 0.8);
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            letter-spacing: 0.04em;
+            align-items: center;
+            font-size: 12px;
+            color: var(--ink-subtle);
+            letter-spacing: 0.08em;
         }
-        .cm-timeline-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-top: 10px;
-            font-size: 10.5px;
-            line-height: 1.4;
-            color: rgba(203, 213, 225, 0.82);
+        .footer-patent {
+            padding: 4px 12px;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
         }
-        .cm-legend-row {
+
+        /* ===== Timeline rule above the surface cards ===== */
+        .surfaces-timeline {
+            margin-top: 56px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 16px;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
         }
-        .cm-legend-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
+        .surfaces-timeline-rule {
+            flex: 1;
+            height: 1px;
+            background: var(--rule);
         }
-        .cm-legend-dot-cool { background: rgba(125, 211, 252, 0.95); box-shadow: 0 0 6px rgba(125, 211, 252, 0.6); }
-        .cm-legend-dot-warm { background: rgba(251, 191, 36, 0.95);  box-shadow: 0 0 6px rgba(251, 191, 36, 0.6); }
 
-        /* Light theme adjustments for the mobile stack */
-        [data-theme="light"] .cm-rail-agent {
-            background: linear-gradient(180deg, rgba(14,165,233,0.05), rgba(14,165,233,0.02));
-            border-color: rgba(14, 165, 233, 0.32);
+        /* ===== Persistence caption below the cards ===== */
+        .surfaces-persist {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
         }
-        [data-theme="light"] .cm-rail-legacy {
-            background: linear-gradient(180deg, rgba(217,119,6,0.05), rgba(217,119,6,0.02));
-            border-color: rgba(217, 119, 6, 0.32);
-        }
-        [data-theme="light"] .cm-rail-agent .cm-node { background: rgba(14,165,233,0.06); border-color: rgba(14,165,233,0.42); color: rgba(12,74,110,0.95); }
-        [data-theme="light"] .cm-rail-legacy .cm-node { background: rgba(217,119,6,0.06); border-color: rgba(217,119,6,0.42); color: rgba(120,53,15,0.95); }
-        [data-theme="light"] .cm-eyebrow-agent  { color: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .cm-eyebrow-legacy { color: rgba(120, 53, 15, 1); }
-        [data-theme="light"] .cm-tagline        { color: rgba(71, 85, 105, 0.85); }
-        [data-theme="light"] .cm-rail-agent .cm-arrow  { color: rgba(2, 132, 199, 0.7); }
-        [data-theme="light"] .cm-rail-legacy .cm-arrow { color: rgba(217, 119, 6, 0.75); }
-        [data-theme="light"] .cm-pill-cool { background: rgba(14, 165, 233, 0.08); border-color: rgba(14, 165, 233, 0.6); }
-        [data-theme="light"] .cm-pill-cool .cm-pill-title { color: rgba(12, 74, 110, 1); }
-        [data-theme="light"] .cm-pill-cool .cm-pill-sub   { color: rgba(12, 74, 110, 0.82); }
-        [data-theme="light"] .cm-pill-cool .cm-pill-title::before { background: rgba(2, 132, 199, 1); box-shadow: 0 0 6px rgba(2, 132, 199, 0.55); }
-        [data-theme="light"] .cm-pill-warm { background: rgba(217, 119, 6, 0.08); border-color: rgba(217, 119, 6, 0.6); }
-        [data-theme="light"] .cm-pill-warm .cm-pill-title { color: rgba(120, 53, 15, 1); }
-        [data-theme="light"] .cm-pill-warm .cm-pill-sub   { color: rgba(120, 53, 15, 0.82); }
-        [data-theme="light"] .cm-pill-warm .cm-pill-title::before { background: rgba(217, 119, 6, 1); box-shadow: 0 0 6px rgba(217, 119, 6, 0.55); }
-        [data-theme="light"] .cm-divider-line { border-top-color: rgba(14, 165, 233, 0.45); }
-        [data-theme="light"] .cm-divider-pill { background: rgba(14, 165, 233, 0.08); border-color: rgba(14, 165, 233, 0.6); color: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .cm-timeline { background: rgba(100, 116, 139, 0.05); border-color: rgba(100, 116, 139, 0.3); }
-        [data-theme="light"] .cm-timeline-caption { color: rgba(2, 132, 199, 1); }
-        [data-theme="light"] .cm-timeline-span-before { background: rgba(14, 165, 233, 0.9); }
-        [data-theme="light"] .cm-timeline-span-after  { background: rgba(217, 119, 6, 0.6); }
-        [data-theme="light"] .cm-timeline-ticks { color: rgba(71, 85, 105, 0.9); }
-        [data-theme="light"] .cm-timeline-legend { color: rgba(51, 65, 85, 0.92); }
-        [data-theme="light"] .cm-legend-dot-cool { background: rgba(2, 132, 199, 1);  box-shadow: 0 0 6px rgba(2, 132, 199, 0.5); }
-        [data-theme="light"] .cm-legend-dot-warm { background: rgba(217, 119, 6, 1);  box-shadow: 0 0 6px rgba(217, 119, 6, 0.5); }
 
-        /* Toggle: desktop sees the SVG; phones see the stack. */
-        @media (max-width: 768px) {
-            .compression-wrap   { display: none; }
-            .compression-mobile { display: block; }
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .container { padding: 0 24px; }
+            section { padding: 72px 0; }
+            .hero { padding: 80px 0 64px; }
+            .surfaces-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+            .nav { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 20px; }
+            .hero-cta { flex-direction: column; align-items: stretch; }
+            .btn-primary, .btn-secondary { justify-content: center; }
+            .header-cta { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="header-left">
-                    <a href="index.html" class="logo" style="text-decoration: none;">Intrinsec AI</a>
+                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                    </a>
                     <nav class="nav" aria-label="Primary">
                         <a class="nav-link" href="index.html" aria-current="page">Home</a>
                         <a class="nav-link" href="products.html">Products</a>
@@ -2136,15 +442,6 @@
                 </div>
                 <div class="header-right">
                     <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
-                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
-                        <svg class="theme-toggle-svg theme-toggle-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
-                        <svg class="theme-toggle-svg theme-toggle-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="4"/>
-                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
@@ -2152,494 +449,75 @@
 
     <main id="main">
 
+    <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <h1>
-                AI Agent security has an <br><span class="gradient">amnesia problem.</span>
-            </h1>
-            <p class="tagline">We cure it.</p>
+            <p class="eyebrow">Memoryful guardrail · Intention-time detection</p>
+            <h1>AI agent security has an <span class="accent-2">amnesia problem.</span></h1>
+            <p class="hero-tagline">We cure it.</p>
+            <p class="hero-sub">Threat memory on intent and the model's own computation, so AI threats can't hide between messages.</p>
             <div class="hero-cta">
-                <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button">Request a demo</a>
-                <a href="products.html" class="hero-secondary">See Products <span style="opacity: 0.9;">→</span></a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
+                <a href="products.html" class="btn-secondary">See products</a>
             </div>
-            <div class="hero-proof" aria-label="Status">
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Agent or fleet</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Memoryful guardrail</span>
-                <span class="proof-pill"><span class="proof-icon" aria-hidden="true"></span>Intention-time detection</span>
+            <div class="proof-pills" aria-label="Status">
+                <span class="pill">Agent or fleet</span>
+                <span class="pill">Memoryful guardrail</span>
+                <span class="pill">Agent behavior analytics</span>
+                <span class="pill">Intention-time detection</span>
             </div>
         </div>
     </section>
 
-    <section class="amnesia-strip">
+    <!-- ===== The three surfaces ===== -->
+    <section id="surfaces">
         <div class="container">
-            <div class="strip-cards">
-                <div class="strip-card">
-                    <div class="strip-viz">
-                        <span class="sv-dot"></span>
-                        <span class="sv-dot"></span>
-                        <span class="sv-dot"></span>
-                    </div>
-                    <div class="strip-label">Guardrails & classifiers</div>
-                    <div class="strip-desc">No memory. Reset every prompt.</div>
+            <div class="surfaces-header">
+                <p class="eyebrow">The three surfaces of an agent</p>
+                <h2>SIEMs cover events.<br><span class="accent">We watch intent and computation</span>,<br>and turn them into memory.</h2>
+                <p class="lede" style="margin-top: 22px;">A guardrail reads one message, decides, then forgets. SIEMs see everything, but only after the agent has already acted. The two surfaces in between are where attacks actually live.</p>
+            </div>
+
+            <div class="surfaces-timeline" aria-hidden="true">
+                <span class="surfaces-timeline-end">Before execution</span>
+                <span class="surfaces-timeline-rule"></span>
+                <span class="surfaces-timeline-end">After execution</span>
+            </div>
+
+            <div class="surfaces-grid">
+                <div class="surface-card is-watched">
+                    <div class="surface-tag">Intent surface</div>
+                    <h3>What is steered.</h3>
+                    <p>We compress every prompt stream into a small, bounded <b style="color: var(--ink);">memory of intent</b>. Cross-session attacks live in the aggregate — we see them before the agent acts.</p>
+                    <div class="surface-meta">Intent memory · Current focus</div>
                 </div>
-                <div class="strip-gap" aria-hidden="true">
-                    <span class="strip-gap-line"></span>
-                    <svg class="strip-gap-icon" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                        <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-                    </svg>
-                    <span class="strip-gap-line"></span>
+                <div class="surface-card is-watched">
+                    <div class="surface-tag">Computational surface</div>
+                    <h3>How it computes.</h3>
+                    <p>The model already produces a fingerprint per request. We recycle it into <b style="color: var(--ink);">computational memory</b>. "Is this harmful?" becomes "does this match normal?"</p>
+                    <div class="surface-meta">Computational memory</div>
                 </div>
-                <div class="strip-card">
-                    <div class="strip-viz strip-viz-siem">
-                        <span class="sv-bar"></span>
-                        <span class="sv-bar"></span>
-                        <span class="sv-bar"></span>
-                        <span class="sv-bar"></span>
-                        <span class="sv-alert">!</span>
-                    </div>
-                    <div class="strip-label">SIEM · UEBA · Agentic SIEM</div>
-                    <div class="strip-desc">Memory of raw events. Intent stitched after the fact.</div>
+                <div class="surface-card is-event">
+                    <div class="surface-tag">Event surface</div>
+                    <h3>What it did.</h3>
+                    <p>Tool calls, file writes, logs, network flows. Mature and well-covered by SIEM, UEBA, and agentic SIEMs — but only after the agent has already acted.</p>
+                    <div class="surface-meta">Covered by SIEM · UEBA</div>
                 </div>
+            </div>
+
+            <p class="surfaces-persist">Memory persists across sessions · across agents</p>
+
+            <div class="surfaces-cta">
+                <a href="products.html" class="surfaces-cta-link">See how each memory ships in product <span aria-hidden="true">→</span></a>
             </div>
         </div>
     </section>
 
-    <section class="memory-cure">
-        <div class="container">
-            <div class="memory-cure-block">
-            <div class="memory-cure-intro">
-                <p>Guardrails see one prompt at a time, then forget. SIEMs see everything, but only after the agent has already acted. Intrinsec remembers intent <em>across sessions</em>, and blocks cross-session threats <em>before</em> they execute.</p>
-            </div>
-            <div class="compression-wrap">
-                <svg class="compression-diagram" viewBox="0 0 1160 820" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <defs>
-                        <radialGradient id="cdCrystalGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="rgba(232, 248, 255, 0.8)"/>
-                            <stop offset="60%" stop-color="rgba(125, 211, 252, 0.28)"/>
-                            <stop offset="100%" stop-color="rgba(125, 211, 252, 0)"/>
-                        </radialGradient>
-                        <radialGradient id="ilLakeGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="rgba(251, 191, 36, 0.45)"/>
-                            <stop offset="60%" stop-color="rgba(217, 119, 6, 0.16)"/>
-                            <stop offset="100%" stop-color="rgba(217, 119, 6, 0)"/>
-                        </radialGradient>
-                    </defs>
-
-                    <!-- ========== LEGACY RAIL (bottom · second half · after execution) ========== -->
-                    <!-- Shifted +108 on X so the rail content sits centered in the 1160-wide viewBox.
-                         Eyebrow (x=-78) and tagline (x=1022) compensate so they still render at absolute x=30 / x=1130. -->
-                    <g class="il-legacy-rail" transform="translate(108, 450)">
-                        <text class="il-eyebrow" x="-78" y="22">[ AFTER EXECUTION ]</text>
-                        <text class="il-tagline" x="1022" y="22" text-anchor="end">&gt; SIEM · UEBA · Agentic SIEM</text>
-
-                        <!-- Event chips (stacked) -->
-                        <g class="il-events">
-                            <g class="il-event" transform="translate(20, 74)">
-                                <rect width="185" height="22"/>
-                                <circle cx="12" cy="11" r="2.5"/>
-                                <text x="24" y="15">failed login</text>
-                            </g>
-                            <g class="il-event" transform="translate(20, 102)">
-                                <rect width="185" height="22"/>
-                                <circle cx="12" cy="11" r="2.5"/>
-                                <text x="24" y="15">network flow</text>
-                            </g>
-                            <g class="il-event" transform="translate(20, 130)">
-                                <rect width="185" height="22"/>
-                                <circle cx="12" cy="11" r="2.5"/>
-                                <text x="24" y="15">file write</text>
-                            </g>
-                            <g class="il-event" transform="translate(20, 158)">
-                                <rect width="185" height="22"/>
-                                <circle cx="12" cy="11" r="2.5"/>
-                                <text x="24" y="15">process spawn</text>
-                            </g>
-                            <g class="il-event" transform="translate(20, 186)" opacity="0.55">
-                                <rect width="185" height="22"/>
-                                <text x="92" y="15" text-anchor="middle">… more telemetry</text>
-                            </g>
-                        </g>
-
-                        <!-- Converging flow: events → data lake top -->
-                        <path class="il-flow" d="M 205,85  L 270,130"/>
-                        <path class="il-flow" d="M 205,113 L 270,138"/>
-                        <path class="il-flow" d="M 205,141 L 270,145"/>
-                        <path class="il-flow" d="M 205,169 L 270,155"/>
-                        <path class="il-flow" d="M 205,197 L 270,164"/>
-
-                        <!-- Data lake cylinder (SIEM's memory of raw events: after-the-fact counterpart to Intrinsec's intent gem) -->
-                        <g class="il-lake">
-                            <ellipse class="il-lake-aura" cx="355" cy="172" rx="115" ry="62"/>
-                            <path class="il-lake-body" d="M 270,130 L 270,210 A 85,15 0 0 0 440,210 L 440,130 Z"/>
-                            <path class="il-lake-wave" d="M 275,152 Q 355,162 435,152"/>
-                            <path class="il-lake-wave" d="M 275,175 Q 355,185 435,175"/>
-                            <path class="il-lake-wave" d="M 275,198 Q 355,208 435,198"/>
-                            <ellipse class="il-lake-top" cx="355" cy="130" rx="85" ry="15"/>
-                        </g>
-
-                        <!-- Arrow: lake → correlator -->
-                        <path class="il-flow" d="M 445,172 L 498,172"/>
-                        <path class="il-arrow-head" d="M 494,167 L 504,172 L 494,177 Z"/>
-
-                        <!-- Correlator graph (positioned to center-align with lake & alert pill: mirrors the top rail's LLM graph vertical alignment) -->
-                        <g class="il-corr" transform="translate(500, 122)">
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="85"  y2="8"/>
-                            <line class="il-corr-edge" x1="85"  y1="8"  x2="148" y2="28"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="20"  y2="82"/>
-                            <line class="il-corr-edge" x1="85"  y1="8"  x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="148" y1="28" x2="145" y2="82"/>
-                            <line class="il-corr-edge" x1="20"  y1="82" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="80"  y1="92" x2="145" y2="82"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="148" y1="28" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="145" y2="82"/>
-                            <circle class="il-corr-node" cx="25"  cy="22" r="5"/>
-                            <circle class="il-corr-node" cx="85"  cy="8"  r="5"/>
-                            <circle class="il-corr-node" cx="148" cy="28" r="5"/>
-                            <circle class="il-corr-node" cx="20"  cy="82" r="5"/>
-                            <circle class="il-corr-node" cx="80"  cy="92" r="6"/>
-                            <circle class="il-corr-node" cx="145" cy="82" r="5"/>
-                        </g>
-
-                        <!-- Arrow: correlator → alert -->
-                        <path class="il-flow" d="M 665,172 L 735,172"/>
-                        <path class="il-arrow-head" d="M 730,167 L 742,172 L 730,177 Z"/>
-
-                        <!-- Cross-session threat hunting pill (post-execution counterpart: identical shape to the top-rail "Blocking cross-session threats" pill) -->
-                        <g class="il-late" transform="translate(740, 138)">
-                            <rect width="220" height="68"/>
-                            <circle cx="18" cy="22" r="5"/>
-                            <text class="il-late-main" x="30" y="26" text-anchor="start">Cross-session threat hunting</text>
-                            <line x1="20" y1="38" x2="200" y2="38"/>
-                            <text class="il-late-sub"  x="110" y="52" text-anchor="middle">intent reconstructed from raw events</text>
-                            <text class="il-late-sub"  x="110" y="62" text-anchor="middle">post-execution · after the fact</text>
-                        </g>
-
-                    </g>
-
-                    <!-- ========== AGENT-NATIVE RAIL (top · first half · before execution) ========== -->
-                    <text class="ci-rail-eyebrow" x="30"   y="22">[ BEFORE EXECUTION ]</text>
-                    <text class="ci-rail-tagline" x="1130" y="22" text-anchor="end">&gt; INTRINSEC</text>
-
-                    <!-- Shifted +108 on X so the rail content sits centered in the 1160-wide viewBox (matches the bottom rail). -->
-                    <g class="ci-agent-rail" transform="translate(108, 46)">
-
-                    <text class="cd-label" x="112" y="28" text-anchor="middle">Input</text>
-                    <text class="cd-label" x="355" y="28" text-anchor="middle">Memory</text>
-                    <text class="cd-label" x="580" y="28" text-anchor="middle">LLM · Agent</text>
-                    <text class="cd-label" x="837" y="28" text-anchor="middle">Output</text>
-
-                    <!-- Upstream guardrails / classifiers annotation (no memory, reset per prompt) -->
-                    <g class="ci-upstream">
-                        <rect class="ci-upstream-chip" x="12" y="42" width="212" height="34"/>
-                        <text class="ci-upstream-chip-text" x="22" y="57">⊙ UPSTREAM · GUARDRAILS</text>
-                        <text class="ci-upstream-sub" x="22" y="70">no memory · reset every prompt</text>
-                    </g>
-
-                    <g class="cd-raw-zone">
-                        <path class="cd-stream cd-s1" d="M 10,90  C 80,70   180,165 303,219"/>
-                        <path class="cd-stream cd-s2" d="M 10,125 C 90,105  195,185 303,219"/>
-                        <path class="cd-stream cd-s3" d="M 10,160 C 100,150 205,200 303,220"/>
-                        <path class="cd-stream cd-s4" d="M 10,195 C 110,185 215,215 303,220"/>
-                        <path class="cd-stream cd-s5" d="M 10,230 C 110,230 215,225 303,221"/>
-                        <path class="cd-stream cd-s6" d="M 10,265 C 100,285 205,235 303,221"/>
-                        <path class="cd-stream cd-s7" d="M 10,305 C 90,320  195,250 303,222"/>
-                        <path class="cd-stream cd-s8" d="M 10,345 C 80,355  180,270 303,222"/>
-
-                        <g class="cd-particles">
-                            <circle cx="30"  cy="105" r="1.3" fill="#ec4899"/>
-                            <circle cx="55"  cy="145" r="1.0" fill="#f59e0b"/>
-                            <circle cx="85"  cy="115" r="1.4" fill="#06b6d4"/>
-                            <circle cx="110" cy="180" r="1.1" fill="#10b981"/>
-                            <circle cx="140" cy="115" r="1.2" fill="#8b5cf6"/>
-                            <circle cx="165" cy="205" r="1.0" fill="#f43f5e"/>
-                            <circle cx="195" cy="150" r="1.3" fill="#3b82f6"/>
-                            <circle cx="220" cy="240" r="1.1" fill="#eab308"/>
-                            <circle cx="255" cy="185" r="1.2" fill="#ec4899"/>
-                            <circle cx="240" cy="265" r="1.0" fill="#06b6d4"/>
-                            <circle cx="258" cy="215" r="1.3" fill="#8b5cf6"/>
-                            <circle cx="250" cy="290" r="1.0" fill="#f59e0b"/>
-                            <circle cx="65"  cy="255" r="1.0" fill="#3b82f6"/>
-                            <circle cx="125" cy="300" r="1.2" fill="#10b981"/>
-                            <circle cx="185" cy="340" r="1.0" fill="#f43f5e"/>
-                            <circle cx="245" cy="330" r="1.3" fill="#eab308"/>
-                            <circle cx="230" cy="355" r="1.0" fill="#ec4899"/>
-                            <circle cx="265" cy="320" r="1.1" fill="#06b6d4"/>
-                            <circle cx="95"  cy="75"  r="1.1" fill="#8b5cf6"/>
-                            <circle cx="150" cy="55"  r="1.0" fill="#3b82f6"/>
-                            <circle cx="210" cy="80"  r="1.3" fill="#f59e0b"/>
-                            <circle cx="262" cy="105" r="1.1" fill="#10b981"/>
-                            <circle cx="242" cy="140" r="1.0" fill="#f43f5e"/>
-                            <circle cx="230" cy="180" r="1.2" fill="#eab308"/>
-                        </g>
-
-                        <g class="cd-chip cd-chip-text" transform="translate(55, 110)">
-                            <rect width="56" height="16"/>
-                            <text x="28" y="11" text-anchor="middle">text</text>
-                        </g>
-                        <g class="cd-chip cd-chip-image" transform="translate(140, 85)">
-                            <rect width="44" height="30"/>
-                            <path d="M 4,24 L 13,14 L 20,20 L 30,8 L 40,24 Z" fill="rgba(249,115,22,0.45)" stroke="none"/>
-                            <circle cx="34" cy="8" r="2.2" fill="rgba(253,186,116,1)" stroke="none"/>
-                        </g>
-                        <g class="cd-chip cd-chip-video" transform="translate(215, 135)">
-                            <rect width="48" height="28"/>
-                            <path d="M 20,9 L 20,19 L 30,14 Z" fill="rgba(196,181,253,1)" stroke="none"/>
-                        </g>
-                        <g class="cd-chip cd-chip-audio" transform="translate(80, 205)">
-                            <rect width="86" height="22"/>
-                            <g class="cd-wave" transform="translate(6, 4)">
-                                <rect x="0"  y="6" width="3" height="14" rx="1"/>
-                                <rect x="8"  y="3" width="3" height="16" rx="1"/>
-                                <rect x="16" y="7" width="3" height="12" rx="1"/>
-                                <rect x="24" y="2" width="3" height="18" rx="1"/>
-                                <rect x="32" y="5" width="3" height="15" rx="1"/>
-                                <rect x="40" y="8" width="3" height="12" rx="1"/>
-                            </g>
-                            <text x="76" y="15" text-anchor="end" style="font-size:8px;">audio</text>
-                        </g>
-                        <g class="cd-chip cd-chip-text" transform="translate(200, 240)">
-                            <rect width="60" height="16"/>
-                            <text x="30" y="11" text-anchor="middle">text</text>
-                        </g>
-                        <g class="cd-chip cd-chip-image" transform="translate(225, 195)">
-                            <rect width="42" height="28"/>
-                            <path d="M 4,22 L 12,12 L 19,18 L 28,7 L 38,22 Z" fill="rgba(249,115,22,0.45)" stroke="none"/>
-                        </g>
-                        <g class="cd-chip cd-chip-video" transform="translate(90, 290)">
-                            <rect width="46" height="26"/>
-                            <path d="M 18,8 L 18,18 L 28,13 Z" fill="rgba(196,181,253,1)" stroke="none"/>
-                        </g>
-                        <g class="cd-chip cd-chip-text" transform="translate(208, 265)">
-                            <rect width="58" height="16"/>
-                            <text x="29" y="11" text-anchor="middle">text</text>
-                        </g>
-                    </g>
-
-                    <g class="cd-crystal-zone">
-                        <circle class="cd-crystal-aura" cx="355" cy="220" r="70"/>
-
-                        <g class="cd-crystal">
-                            <path class="cd-crystal-face" d="M 355,160 L 405,220 L 355,280 L 305,220 Z"/>
-
-                            <path class="cd-crystal-stratum" d="M 334,180 Q 355,183 376,180"/>
-                            <path class="cd-crystal-stratum" d="M 322,200 Q 355,204 388,200"/>
-                            <path class="cd-crystal-stratum" d="M 318,220 Q 355,224 392,220"/>
-                            <path class="cd-crystal-stratum" d="M 322,240 Q 355,244 388,240"/>
-                            <path class="cd-crystal-stratum" d="M 334,260 Q 355,263 376,260"/>
-
-                            <line class="cd-crystal-spine" x1="355" y1="162" x2="355" y2="278"/>
-
-                            <g class="cd-mem-signals">
-                                <circle cx="343" cy="192" r="1.3"/>
-                                <circle cx="368" cy="191" r="1.4"/>
-                                <circle cx="337" cy="210" r="1.2"/>
-                                <circle cx="373" cy="213" r="1.3"/>
-                                <circle cx="345" cy="228" r="1.1"/>
-                                <circle cx="370" cy="232" r="1.3"/>
-                                <circle cx="340" cy="248" r="1.2"/>
-                                <circle cx="368" cy="250" r="1.1"/>
-                                <circle cx="352" cy="266" r="1.2"/>
-                            </g>
-
-                            <text class="cd-crystal-tag" x="355" y="305" text-anchor="middle">cross-session intent memory</text>
-                            <text class="cd-crystal-sub" x="355" y="318" text-anchor="middle">stateful · adaptive · pre-execution</text>
-                        </g>
-
-                        <!-- Flow: gem → LLM/Agent (mirrors lake → correlator on the bottom rail) -->
-                        <path class="il-flow" d="M 405,220 L 498,220"/>
-                        <path class="il-arrow-head" d="M 494,215 L 504,220 L 494,225 Z"/>
-
-                        <g class="il-corr" transform="translate(500, 170)">
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="85"  y2="8"/>
-                            <line class="il-corr-edge" x1="85"  y1="8"  x2="148" y2="28"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="20"  y2="82"/>
-                            <line class="il-corr-edge" x1="85"  y1="8"  x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="148" y1="28" x2="145" y2="82"/>
-                            <line class="il-corr-edge" x1="20"  y1="82" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="80"  y1="92" x2="145" y2="82"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="148" y1="28" x2="80"  y2="92"/>
-                            <line class="il-corr-edge" x1="25"  y1="22" x2="145" y2="82"/>
-                            <circle class="il-corr-node" cx="25"  cy="22" r="5"/>
-                            <circle class="il-corr-node" cx="85"  cy="8"  r="5"/>
-                            <circle class="il-corr-node" cx="148" cy="28" r="5"/>
-                            <circle class="il-corr-node" cx="20"  cy="82" r="5"/>
-                            <circle class="il-corr-node" cx="80"  cy="92" r="6"/>
-                            <circle class="il-corr-node" cx="145" cy="82" r="5"/>
-                        </g>
-
-                        <!-- Flow: LLM/Agent → output (mirrors correlator → alert on the bottom rail) -->
-                        <path class="il-flow" d="M 665,220 L 735,220"/>
-                        <path class="il-arrow-head" d="M 730,215 L 742,220 L 730,225 Z"/>
-
-                        <!-- Blocking cross-session threats output (parallels the "Cross-session threat hunting" pill on the bottom rail: identical shape) -->
-                        <g class="ci-intent-out" transform="translate(740, 186)">
-                            <rect width="220" height="68"/>
-                            <circle cx="18" cy="22" r="5"/>
-                            <text class="ci-intent-out-main" x="30" y="26" text-anchor="start">Blocking cross-session threats</text>
-                            <line x1="20" y1="38" x2="200" y2="38"/>
-                            <text class="ci-intent-out-sub"  x="110" y="52" text-anchor="middle">intent inferred from stateful memory</text>
-                            <text class="ci-intent-out-sub"  x="110" y="62" text-anchor="middle">pre-execution · before the fact</text>
-                        </g>
-                    </g>
-
-                    </g>
-
-                    <!-- ========== COMPLEMENTARY HANDOFF DIVIDER ========== -->
-                    <g class="iv-divider">
-                        <line class="iv-divider-line" x1="30"   y1="425" x2="275"  y2="425"/>
-                        <line class="iv-divider-line" x1="885"  y1="425" x2="1130" y2="425"/>
-                        <g transform="translate(580, 425)">
-                            <rect class="iv-divider-pill" x="-300" y="-14" width="600" height="28"/>
-                            <text class="iv-divider-text" x="0" y="4" text-anchor="middle">[ SAME PIPELINE · PREVENTION vs FORENSICS ]</text>
-                        </g>
-                    </g>
-
-                    <!-- ========== SHARED ATTACK LIFECYCLE AXIS ========== -->
-                    <g class="iv-timeline" transform="translate(0, 745)">
-                        <text class="iv-timeline-caption" x="580" y="0" text-anchor="middle">ATTACK LIFECYCLE</text>
-                        <line class="iv-timeline-line" x1="80" y1="18" x2="1080" y2="18"/>
-                        <path class="iv-timeline-head" d="M 1076,13 L 1086,18 L 1076,23 Z"/>
-                        <line class="iv-timeline-tick" x1="80"  y1="12" x2="80"  y2="24"/>
-                        <line class="iv-timeline-tick" x1="580" y1="12" x2="580" y2="24"/>
-                        <line class="iv-timeline-tick" x1="1076" y1="12" x2="1076" y2="24"/>
-                        <text class="iv-timeline-label" x="80" y="40" text-anchor="start">intent · prompt arrives</text>
-                        <text class="iv-timeline-label" x="580" y="40" text-anchor="middle">action · tool call fires</text>
-                        <text class="iv-timeline-label" x="1076" y="40" text-anchor="end">effect · event in logs</text>
-                        <!-- Coverage spans -->
-                        <rect class="iv-timeline-span iv-timeline-span-before" x="80" y="56" width="500" height="5"/>
-                        <rect class="iv-timeline-span iv-timeline-span-after"  x="580" y="56" width="496" height="5"/>
-                        <text class="iv-timeline-span-label iv-timeline-span-label-before" x="330" y="74" text-anchor="middle">Intrinsec · intent memory (pre-execution)</text>
-                        <text class="iv-timeline-span-label iv-timeline-span-label-after"  x="828" y="74" text-anchor="middle">SIEM · UEBA · Agentic SIEM (raw-event memory)</text>
-                    </g>
-                </svg>
-            </div>
-
-            <!-- Mobile-only stacked rendition of the same dual-rail story.
-                 Desktop renders the SVG above; phones (≤ 768px) see this HTML stack
-                 so every label stays legible and the pipeline reads top-to-bottom. -->
-            <div class="compression-mobile" aria-hidden="true">
-                <div class="cm-rail cm-rail-agent">
-                    <div class="cm-rail-head">
-                        <span class="cm-eyebrow-agent">[ BEFORE EXECUTION ]</span>
-                        <span class="cm-tagline">&gt; INTRINSEC</span>
-                    </div>
-                    <div class="cm-pipeline">
-                        <div class="cm-node">
-                            <div class="cm-node-title">Input</div>
-                            <div class="cm-node-sub">multimodal prompts &amp; tool calls</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-node">
-                            <div class="cm-node-title">Memory</div>
-                            <div class="cm-node-sub">cross-session intent</div>
-                            <div class="cm-node-meta">stateful · adaptive</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-node">
-                            <div class="cm-node-title">LLM · Agent</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-pill cm-pill-cool">
-                            <div class="cm-pill-title">Blocking cross-session threats</div>
-                            <div class="cm-pill-divider"></div>
-                            <div class="cm-pill-sub">intent inferred from stateful memory</div>
-                            <div class="cm-pill-sub">pre-execution · before the fact</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cm-divider">
-                    <div class="cm-divider-line"></div>
-                    <div class="cm-divider-pill">Prevention vs Forensics</div>
-                    <div class="cm-divider-line"></div>
-                </div>
-
-                <div class="cm-rail cm-rail-legacy">
-                    <div class="cm-rail-head">
-                        <span class="cm-eyebrow-legacy">[ AFTER EXECUTION ]</span>
-                        <span class="cm-tagline">&gt; SIEM · UEBA · Agentic SIEM</span>
-                    </div>
-                    <div class="cm-pipeline">
-                        <div class="cm-node">
-                            <div class="cm-node-title">Events</div>
-                            <div class="cm-node-sub">failed logins · flows · process spawns</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-node">
-                            <div class="cm-node-title">Data Lake</div>
-                            <div class="cm-node-sub">raw events</div>
-                            <div class="cm-node-meta">post-execution memory</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-node">
-                            <div class="cm-node-title">Correlator · UEBA</div>
-                        </div>
-                        <div class="cm-arrow">↓</div>
-                        <div class="cm-pill cm-pill-warm">
-                            <div class="cm-pill-title">Cross-session threat hunting</div>
-                            <div class="cm-pill-divider"></div>
-                            <div class="cm-pill-sub">intent reconstructed from raw events</div>
-                            <div class="cm-pill-sub">post-execution · after the fact</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cm-timeline">
-                    <div class="cm-timeline-caption">Attack Lifecycle</div>
-                    <div class="cm-timeline-track">
-                        <div class="cm-timeline-span cm-timeline-span-before"></div>
-                        <div class="cm-timeline-span cm-timeline-span-after"></div>
-                    </div>
-                    <div class="cm-timeline-ticks">
-                        <span>intent</span>
-                        <span>action</span>
-                        <span>effect</span>
-                    </div>
-                    <div class="cm-timeline-legend">
-                        <div class="cm-legend-row"><span class="cm-legend-dot cm-legend-dot-cool"></span>Intrinsec · intent memory (pre-execution)</div>
-                        <div class="cm-legend-row"><span class="cm-legend-dot cm-legend-dot-warm"></span>SIEM · UEBA · raw-event memory (post-execution)</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="memory-cure-video">
-                <div class="memory-cure-video-eyebrow">[ Watch · the amnesia problem, explained ]</div>
-                <div class="memory-cure-video-frame" id="memoryCureVideoFrame">
-                    <iframe
-                        id="memoryCureVideoEmbed"
-                        data-video-id="cmTahKO4F8I"
-                        title="Intrinsec — curing AI agent security's amnesia"
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
-                    <a
-                        class="memory-cure-video-fallback"
-                        href="https://youtu.be/cmTahKO4F8I"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Watch Intrinsec video on YouTube">
-                        <span class="memory-cure-video-fallback-inner">
-                            <span class="memory-cure-video-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </span>
-                            <span class="memory-cure-video-fallback-label">Watch on YouTube</span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- ===== CTA ===== -->
     <section class="cta">
         <div class="container">
             <h2>Cure your security's amnesia.<br>Before someone exploits it.</h2>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="cta-button" style="margin-bottom: 28px; display: inline-block;">Request a demo</a>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
         </div>
     </section>
 
@@ -2649,8 +527,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">Intrinsec AI</a>
-                    <p class="footer-tag">Adaptive intent memory for AI agents. Cross-session threats caught at intention time.</p>
+                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                    </a>
+                    <p class="footer-tag">Adaptive intent and computational memory for AI agents. Cross-session threats caught at intention time.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>
@@ -2664,83 +544,14 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <div>© <span id="footerYear">2025</span> Intrinsec AI</div>
+                <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
                 <div class="footer-patent">Patent pending</div>
             </div>
         </div>
     </footer>
 
     <script>
-    // Theme Toggle Functionality
-    (function() {
-        const themeToggle = document.getElementById('themeToggle');
-        if (!themeToggle) return;
-
-        // Theme is set early in <head>; keep aria state in sync (icon swap is CSS-driven).
-        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        updateAria(initialTheme);
-
-        function updateAria(theme) {
-            const isLight = theme === 'light';
-            themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-            themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
-        }
-
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            try { localStorage.setItem('theme', newTheme); } catch (e) {}
-            updateAria(newTheme);
-        });
-    })();
-
-    // Footer year
-    (function () {
-        const el = document.getElementById('footerYear');
-        if (el) el.textContent = String(new Date().getFullYear());
-    })();
-
-    // YouTube embed needs a valid HTTP origin/referrer. file:// previews cannot satisfy that.
-    (function () {
-        const frame = document.getElementById('memoryCureVideoFrame');
-        const iframe = document.getElementById('memoryCureVideoEmbed');
-        if (!frame || !iframe) return;
-
-        const videoId = iframe.getAttribute('data-video-id');
-        if (!videoId) return;
-
-        const origin = window.location.origin;
-        const isFileProtocol = window.location.protocol === 'file:' || !origin || origin === 'null';
-
-        if (isFileProtocol) {
-            frame.classList.add('is-file-protocol');
-            return;
-        }
-
-        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId)
-            + '?rel=0&origin=' + encodeURIComponent(origin);
-    })();
-    
-    // Scroll animations for sections
-    const sections = document.querySelectorAll('section');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-
-    // Make first section visible immediately
-    if (sections.length > 0) {
-        sections[0].classList.add('visible');
-    }
-
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
