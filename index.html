@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrinsec AI · AI agent security has an amnesia problem.</title>
-    <meta name="description" content="Three surfaces: event, intent, computational. SIEMs cover events. We watch intent and computational and turn them into memory, so AI threats can't hide across messages.">
+    <title>Intrinsec AI · Anomaly detection for self-hosted LLMs · Catch what doesn't match normal, without paying for inference twice</title>
+    <meta name="description" content="Anomaly detection for self-hosted LLMs. Intrinsec AI plugs into vLLM and SGLang and baselines how your model normally computes, so prompt injection, jailbreaks, data exposure, rogue tool calls, and drift surface without a second model, an extra pass, or added latency.">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0a0b0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta property="og:title" content="Intrinsec AI · AI agent security has an amnesia problem.">
-    <meta property="og:description" content="Memory on the intent and computational surfaces, so AI threats can't hide between messages.">
+    <meta property="og:title" content="Intrinsec AI · Anomaly detection for self-hosted LLMs">
+    <meta property="og:description" content="Catch injections, jailbreaks, data exposure, rogue tool calls, and drift without running a second model. Plugs into vLLM and SGLang.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="intrinsec-ai-logo-dark-on-bg.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -147,7 +147,7 @@
         .eyebrow-dim { color: var(--ink-dim); }
 
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(44px, 6vw, 80px); line-height: 1.04; }
+        h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.06; }
         h2 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.1; }
         h3 { font-size: 22px; line-height: 1.3; }
 
@@ -160,21 +160,15 @@
 
         /* ===== Hero ===== */
         .hero { padding: 120px 0 96px; }
-        .hero h1 { max-width: 14ch; }
-        .hero-tagline {
-            margin-top: 24px;
-            font-size: clamp(20px, 2.4vw, 28px);
-            color: var(--ink);
-            font-weight: 500;
-            letter-spacing: -0.01em;
-        }
+        .hero h1 { max-width: 22ch; }
         .hero-sub {
-            margin-top: 22px;
-            max-width: 640px;
+            margin-top: 26px;
+            max-width: 680px;
             font-size: 18px;
-            line-height: 1.55;
+            line-height: 1.6;
             color: var(--ink-dim);
         }
+        .hero-sub b { color: var(--ink); font-weight: 500; }
         .hero-cta {
             margin-top: 40px;
             display: flex;
@@ -237,83 +231,206 @@
             background: var(--accent);
         }
 
-        /* ===== Surfaces section ===== */
-        .surfaces-header { max-width: 880px; }
-        .surfaces-header h2 { margin-bottom: 22px; }
-        .surfaces-grid {
+        /* ===== Video ===== */
+        .video-wrap {
+            margin-top: 48px;
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 14px;
+            background: var(--bg-2);
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .video-caption {
+            margin-top: 14px;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            text-align: center;
+        }
+
+        /* ===== Problem: today vs with Intrinsec AI ===== */
+        .compare-header { max-width: 880px; }
+        .compare-header h2 { margin-bottom: 22px; }
+        .compare-grid {
             margin-top: 56px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        .surface-card {
+        .compare-card {
             border: 1px solid var(--rule);
             border-radius: 14px;
             padding: 32px 28px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            display: flex;
-            flex-direction: column;
-            position: relative;
         }
-        .surface-card.is-event { opacity: 0.78; }
-        .surface-card.is-watched {
-            border-color: rgba(125, 211, 252, 0.35);
+        .compare-card.is-today { opacity: 0.85; }
+        .compare-card.is-intrinsec {
+            border-color: rgba(52, 211, 153, 0.35);
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.04), rgba(255, 255, 255, 0));
         }
-        .surface-card.is-watched::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 14px;
-            background: linear-gradient(180deg, rgba(125, 211, 252, 0.04), transparent 70%);
-            pointer-events: none;
-        }
-        .surface-tag {
+        .compare-tag {
             font-size: 11px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--ink-subtle);
             margin-bottom: 14px;
         }
-        .surface-card.is-watched .surface-tag { color: var(--accent); }
-        .surface-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 24px; }
-        .surface-card p { font-size: 15px; line-height: 1.55; }
-        .surface-meta {
-            margin-top: auto;
-            padding-top: 22px;
-            font-size: 12px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            border-top: 1px solid var(--rule);
-            margin-top: 28px;
-        }
-        .surface-card.is-watched .surface-meta { color: var(--accent-2); }
-
-        /* ===== Surfaces CTA link ===== */
-        .surfaces-cta {
-            margin-top: 56px;
-            display: flex;
-            justify-content: center;
-        }
-        .surfaces-cta-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 22px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
+        .compare-card.is-today .compare-tag { color: var(--warn); }
+        .compare-card.is-intrinsec .compare-tag { color: var(--accent-2); }
+        .compare-card h3 { color: var(--ink); margin-bottom: 18px; font-size: 24px; }
+        .compare-list { list-style: none; }
+        .compare-list li {
+            position: relative;
+            padding-left: 26px;
+            margin-bottom: 14px;
             font-size: 15px;
-            color: var(--ink);
-            transition: border-color 0.15s ease, background 0.15s ease;
+            line-height: 1.55;
+            color: var(--ink-dim);
         }
-        .surfaces-cta-link:hover {
-            border-color: var(--accent);
-            background: rgba(125, 211, 252, 0.06);
+        .compare-list li b { color: var(--ink); font-weight: 500; }
+        .compare-card.is-today .compare-list li::before {
+            content: "×";
+            position: absolute;
+            left: 0;
+            color: var(--warn);
+            font-weight: 600;
+        }
+        .compare-card.is-intrinsec .compare-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        /* ===== Failure-modes strip ===== */
+        .modes-strip {
+            margin-top: 24px;
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 32px;
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.03), rgba(255, 255, 255, 0));
+            text-align: center;
+        }
+        .modes-label {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 20px;
+        }
+        .modes-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .mode-chip {
+            padding: 8px 16px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 999px;
+            font-size: 14px;
+            color: var(--ink);
+        }
+        .modes-note {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--ink-dim);
+        }
+
+        /* ===== How it works ===== */
+        .steps-grid {
+            margin-top: 56px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .step-card {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 32px 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+        }
+        .step-num {
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 14px;
+        }
+        .step-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
+        .step-card p { font-size: 15px; line-height: 1.55; }
+
+        .diagram-wrap {
+            margin-top: 48px;
+            padding: 32px;
+            border: 1px solid var(--rule);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+        }
+        .diagram-svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+        .diagram-footnote {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--ink-dim);
+            text-align: center;
+        }
+        @media (max-width: 720px) {
+            .diagram-wrap { padding: 16px; margin-top: 32px; }
+        }
+
+        /* ===== Beyond binary verdicts strip ===== */
+        .beyond-strip {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 36px 32px;
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.03), rgba(255, 255, 255, 0));
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        .beyond-label {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 6px 14px;
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .beyond-strip h3 { color: var(--ink); margin-bottom: 12px; }
+        .beyond-strip p { font-size: 16px; max-width: 72ch; }
+        @media (max-width: 720px) {
+            .beyond-strip { grid-template-columns: 1fr; gap: 18px; }
         }
 
         /* ===== CTA ===== */
         .cta { padding: 96px 0; text-align: center; }
-        .cta h2 { margin-bottom: 32px; max-width: 20ch; margin-left: auto; margin-right: auto; }
+        .cta h2 { margin-bottom: 24px; max-width: 22ch; margin-left: auto; margin-right: auto; }
+        .cta p { max-width: 60ch; margin: 0 auto 32px; }
 
         /* ===== Footer ===== */
         footer {
@@ -368,40 +485,13 @@
             text-transform: uppercase;
         }
 
-        /* ===== Timeline rule above the surface cards ===== */
-        .surfaces-timeline {
-            margin-top: 56px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .surfaces-timeline-rule {
-            flex: 1;
-            height: 1px;
-            background: var(--rule);
-        }
-
-        /* ===== Persistence caption below the cards ===== */
-        .surfaces-persist {
-            margin-top: 28px;
-            text-align: center;
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-
         /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .container { padding: 0 24px; }
             section { padding: 72px 0; }
             .hero { padding: 80px 0 64px; }
-            .surfaces-grid { grid-template-columns: 1fr; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 12px; }
             .nav { display: none; }
@@ -441,7 +531,7 @@
                     </nav>
                 </div>
                 <div class="header-right">
-                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
+                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
                 </div>
             </div>
         </div>
@@ -452,63 +542,195 @@
     <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">Memoryful guardrail · Intention-time detection</p>
-            <h1>AI agent security has an <span class="accent-2">amnesia problem.</span></h1>
-            <p class="hero-tagline">We cure it.</p>
-            <p class="hero-sub">Threat memory on intent and the model's own computation, so AI threats can't hide between messages.</p>
+            <p class="eyebrow">For teams serving their own models · vLLM · SGLang</p>
+            <h1>Catch what doesn't match normal.<br><span class="accent-2">Without paying for inference twice.</span></h1>
+            <p class="hero-sub">Prompt injection, jailbreaks, data leaking into responses, tool calls that should never happen: <b>you can't enumerate every failure mode</b>. Intrinsec AI plugs into your inference engine and baselines how your model normally computes, so anything atypical surfaces. <b>No second model. No extra pass. No added latency.</b></p>
             <div class="hero-cta">
-                <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
-                <a href="products.html" class="btn-secondary">See products</a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
+                <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
-            <div class="proof-pills" aria-label="Status">
-                <span class="pill">Agent or fleet</span>
-                <span class="pill">Memoryful guardrail</span>
-                <span class="pill">Agent behavior analytics</span>
-                <span class="pill">Intention-time detection</span>
+            <div class="proof-pills" aria-label="Key facts">
+                <span class="pill">0 extra model calls</span>
+                <span class="pill">0 added latency</span>
+                <span class="pill">Plugs into vLLM &amp; SGLang</span>
+                <span class="pill">Runs in your infra</span>
             </div>
         </div>
     </section>
 
-    <!-- ===== The three surfaces ===== -->
-    <section id="surfaces">
+    <!-- ===== Demo ===== -->
+    <section id="demo">
         <div class="container">
-            <div class="surfaces-header">
-                <p class="eyebrow">The three surfaces of an agent</p>
-                <h2>SIEMs cover events.<br><span class="accent">We watch intent and computation</span>,<br>and turn them into memory.</h2>
-                <p class="lede" style="margin-top: 22px;">A guardrail reads one message, decides, then forgets. SIEMs see everything, but only after the agent has already acted. The two surfaces in between are where attacks actually live.</p>
+            <p class="eyebrow">See it work</p>
+            <h2>Two minutes, on real traffic.</h2>
+            <p class="lede" style="margin-top: 22px;">Anomalous traffic surfacing against a learned baseline, with no guardrail model in the loop.</p>
+            <div class="video-wrap">
+                <div class="video-frame">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
+                        title="Intrinsec AI: anomaly detection for self-hosted LLMs, 2-minute demo"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">2-minute demo · prompt injection and drift detection inside the inference engine</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Problem: pay twice ===== -->
+    <section id="problem">
+        <div class="container">
+            <div class="compare-header">
+                <p class="eyebrow">The problem</p>
+                <h2>You're paying for compute <span class="warn">twice</span>.<br>And the second pass still misses.</h2>
+                <p class="lede" style="margin-top: 22px;">Every guarded request runs through your model once for the answer, and through a second model to check it. That doubles cost and latency, and a judge can only recognize the failure modes someone already enumerated.</p>
             </div>
 
-            <div class="surfaces-timeline" aria-hidden="true">
-                <span class="surfaces-timeline-end">Before execution</span>
-                <span class="surfaces-timeline-rule"></span>
-                <span class="surfaces-timeline-end">After execution</span>
-            </div>
-
-            <div class="surfaces-grid">
-                <div class="surface-card is-watched">
-                    <div class="surface-tag">Intent surface</div>
-                    <h3>What is steered.</h3>
-                    <p>We compress every prompt stream into a small, bounded <b style="color: var(--ink);">memory of intent</b>. Cross-session attacks live in the aggregate — we see them before the agent acts.</p>
-                    <div class="surface-meta">Intent memory</div>
+            <div class="compare-grid">
+                <div class="compare-card is-today">
+                    <div class="compare-tag">Today · The second-model tax</div>
+                    <h3>Guardrails and LLM judges</h3>
+                    <ul class="compare-list">
+                        <li><b>Double compute, added latency.</b> Every request is re-run through a judge that sits in the request path.</li>
+                        <li><b>Enumerated coverage.</b> A judge recognizes only the attack patterns it was trained on, and attacks can hide in images, audio, and files. Every new surface needs another filter.</li>
+                    </ul>
                 </div>
-                <div class="surface-card is-watched">
-                    <div class="surface-tag">Computational surface</div>
-                    <h3>How it computes.</h3>
-                    <p>The model already produces a fingerprint per request. We recycle it into <b style="color: var(--ink);">computational memory</b>. "Is this harmful?" becomes "does this match normal?"</p>
-                    <div class="surface-meta">Computational memory</div>
-                </div>
-                <div class="surface-card is-event">
-                    <div class="surface-tag">Event surface</div>
-                    <h3>What it did.</h3>
-                    <p>Tool calls, file writes, logs, network flows. Mature and well-covered by SIEM, UEBA, and agentic SIEMs — but only after the agent has already acted.</p>
-                    <div class="surface-meta">Covered by SIEM · UEBA</div>
+                <div class="compare-card is-intrinsec">
+                    <div class="compare-tag">With Intrinsec AI · Reuse what you already compute</div>
+                    <h3>Detection inside the engine</h3>
+                    <ul class="compare-list">
+                        <li><b>Zero extra cost or latency.</b> We reuse the compute your engine already produces; nothing new sits in the request path.</li>
+                        <li><b>Whole-class coverage.</b> The computation is where the action ultimately happens, whatever the source or modality. Anything atypical surfaces there, even when the input looks fine.</li>
+                    </ul>
                 </div>
             </div>
 
-            <p class="surfaces-persist">Memory persists across sessions · across agents</p>
+            <div class="modes-strip">
+                <div class="modes-label">One baseline catches</div>
+                <div class="modes-chips">
+                    <span class="mode-chip">Prompt injection</span>
+                    <span class="mode-chip">Jailbreaks</span>
+                    <span class="mode-chip">Obfuscated prompts</span>
+                    <span class="mode-chip">Sensitive-data exposure</span>
+                    <span class="mode-chip">Rogue tool calls</span>
+                    <span class="mode-chip">Atypical outputs</span>
+                    <span class="mode-chip">Traffic drift</span>
+                    <span class="mode-chip">Out-of-domain use</span>
+                </div>
+                <p class="modes-note">If it doesn't match how your workload normally computes, it surfaces. That includes failure modes no one has named yet.</p>
+            </div>
+        </div>
+    </section>
 
-            <div class="surfaces-cta">
-                <a href="products.html" class="surfaces-cta-link">See how each memory ships in product <span aria-hidden="true">→</span></a>
+    <!-- ===== How it works ===== -->
+    <section id="how-it-works">
+        <div class="container">
+            <p class="eyebrow">How it works</p>
+            <h2>Three steps. No new model.</h2>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">Step 1</div>
+                    <h3>Plug into your engine.</h3>
+                    <p>A connector for vLLM and SGLang. Your model and your traffic never leave your infrastructure.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Step 2</div>
+                    <h3>Reuse the compute.</h3>
+                    <p>Every forward pass already produces rich internal state, including the KV cache. We distill it into a compact behavioral fingerprint per request.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Step 3</div>
+                    <h3>Surface what doesn't match.</h3>
+                    <p>Fingerprints build a baseline of normal for your workload. Anything atypical stands out, and alerts flow to the tools you already use.</p>
+                </div>
+            </div>
+
+            <div class="diagram-wrap">
+                <svg class="diagram-svg" viewBox="0 0 1180 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: requests flow through the inference engine to actions; Intrinsec AI recycles the engine's own compute into a fingerprint baseline that surfaces injections, jailbreaks, data exposure, rogue tool calls, and drift.">
+                    <defs>
+                        <marker id="archArrGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a1a7b3"/></marker>
+                        <marker id="archArrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/></marker>
+                    </defs>
+
+                    <!-- Row 1: stream -> engine -> action -->
+                    <g>
+                        <text x="30" y="22" fill="#6b7280" font-size="11" letter-spacing="3" font-family="Inter">REQUEST STREAM</text>
+                        <g font-family="Inter">
+                            <rect x="30"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="76"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="122" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="168" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <rect x="214" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                            <text x="49"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₁</text>
+                            <text x="95"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₂</text>
+                            <text x="141" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₃</text>
+                            <text x="187" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₄</text>
+                            <text x="233" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₅</text>
+                            <text x="260" y="66" fill="#a1a7b3" font-size="14">…</text>
+                        </g>
+                    </g>
+
+                    <line x1="288" y1="61" x2="338" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+
+                    <!-- Inference engine box -->
+                    <g font-family="Inter">
+                        <rect x="348" y="20" width="420" height="98" rx="12" fill="none" stroke="rgba(255,255,255,0.45)"/>
+                        <text x="558" y="48" text-anchor="middle" fill="#f3f4f6" font-size="16" font-weight="600">Inference engine</text>
+                        <text x="558" y="66" text-anchor="middle" fill="#a1a7b3" font-size="11" letter-spacing="2">vLLM · SGLang · self-hosted LLM</text>
+                        <rect x="480" y="78" width="156" height="24" rx="5" fill="none" stroke="rgba(52,211,153,0.55)"/>
+                        <text x="558" y="94" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2">KV CACHE</text>
+                    </g>
+
+                    <line x1="772" y1="61" x2="822" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+
+                    <!-- Action box -->
+                    <g font-family="Inter">
+                        <text x="836" y="22" fill="#6b7280" font-size="11" letter-spacing="3">RESPONSE</text>
+                        <rect x="836" y="40" width="320" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
+                        <text x="996" y="66" text-anchor="middle" fill="#f3f4f6" font-size="13">tool call · file write · response</text>
+                        <text x="996" y="104" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2">A SECOND MODEL WOULD RE-RUN ALL OF THIS</text>
+                    </g>
+
+                    <!-- Recycle tap -->
+                    <path d="M 558 124 L 558 190" stroke="#34d399" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrGreen)"/>
+                    <text x="572" y="162" fill="#34d399" font-size="12" letter-spacing="3" font-family="Inter">RECYCLE</text>
+
+                    <!-- Fingerprint memory -->
+                    <g font-family="Inter">
+                        <rect x="278" y="202" width="600" height="150" rx="12" fill="rgba(52,211,153,0.05)" stroke="#34d399"/>
+                        <text x="298" y="230" fill="#34d399" font-size="12" letter-spacing="3">FINGERPRINT BASELINE</text>
+                        <text x="298" y="268" fill="#f3f4f6" font-size="24" font-weight="600">Recycled inference compute</text>
+                        <text x="298" y="298" fill="#a1a7b3" font-size="14">The engine already computes a fingerprint per request.</text>
+                        <text x="298" y="318" fill="#a1a7b3" font-size="14">Reuse it (no second model, no extra pass) and</text>
+                        <text x="298" y="338" fill="#a1a7b3" font-size="14">baseline normal behavior for your workload.</text>
+                    </g>
+
+                    <!-- Anomaly out -->
+                    <g font-family="Inter">
+                        <line x1="878" y1="277" x2="938" y2="277" stroke="#fca5a5" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+                        <text x="952" y="252" fill="#fca5a5" font-size="12" letter-spacing="2">INJECTION · JAILBREAK</text>
+                        <text x="952" y="272" fill="#fca5a5" font-size="12" letter-spacing="2">DATA LEAK · ROGUE TOOLS</text>
+                        <text x="952" y="292" fill="#fca5a5" font-size="12" letter-spacing="2">DRIFT · OFF-DOMAIN</text>
+                        <text x="952" y="314" fill="#6b7280" font-size="11" letter-spacing="2">→ your alerting stack</text>
+                    </g>
+                </svg>
+                <p class="diagram-footnote">Detection rides along with inference. The request path is untouched.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Beyond binary verdicts ===== -->
+    <section id="beyond">
+        <div class="container">
+            <div class="beyond-strip">
+                <span class="beyond-label">Where this goes</span>
+                <div>
+                    <h3>Beyond binary verdicts.</h3>
+                    <p>DLP taught security to classify data. We classify computation. A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. We label that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in one unified representation space, the labels are not bound to text.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -516,8 +738,10 @@
     <!-- ===== CTA ===== -->
     <section class="cta">
         <div class="container">
-            <h2>Cure your security's amnesia.<br>Before someone exploits it.</h2>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
+            <p class="eyebrow" style="text-align: center;">Design partners</p>
+            <h2>Run vLLM or SGLang in production?</h2>
+            <p>We're working with a small number of design partners to evaluate detection against their own traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
         </div>
     </section>
 
@@ -530,7 +754,7 @@
                     <a href="index.html" class="brand" aria-label="Intrinsec AI home">
                         <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
-                    <p class="footer-tag">Adaptive intent and computational memory for AI agents. Cross-session threats caught at intention time.</p>
+                    <p class="footer-tag">Anomaly detection for self-hosted LLMs. No second model, no extra pass, no added latency.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>

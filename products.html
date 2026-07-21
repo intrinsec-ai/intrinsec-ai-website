@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products · Intrinsec AI · Intent memory for AI agents</title>
-    <meta name="description" content="Intent memory for one agent or an entire fleet. Identity Plane catches drift in a single agent. Fleet Memory catches coordinated campaigns across thousands. Computational memory recycles inference compute into threat memory.">
+    <title>Plato · Intrinsec AI · Anomaly detection for self-hosted LLMs</title>
+    <meta name="description" content="Plato, from Intrinsec AI, plugs into vLLM and SGLang and reuses the compute your engine already produces to catch anything atypical: prompt injection, jailbreaks, data exposure, rogue tool calls, drift. No second model, no extra pass, no added latency.">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0a0b0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta property="og:title" content="Intrinsec AI · Products · Intent memory for AI agents">
-    <meta property="og:description" content="One agent or a thousand. The amnesia is the same. Intrinsec memory across the intent and computational surfaces.">
+    <meta property="og:title" content="Intrinsec AI · Product · Anomaly detection for self-hosted LLMs">
+    <meta property="og:description" content="Detection inside the inference engine. Anything that deviates from your workload's normal surfaces, with zero extra model calls and zero added latency. Plugs into vLLM and SGLang.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="intrinsec-ai-logo-dark-on-bg.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -139,7 +139,6 @@
             color: var(--accent);
             margin-bottom: 18px;
         }
-        .eyebrow-dim { color: var(--ink-dim); }
         .eyebrow-green { color: var(--accent-2); }
 
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
@@ -156,13 +155,21 @@
 
         /* ===== Hero ===== */
         .hero { padding: 100px 0 80px; }
-        .hero h1 { max-width: 16ch; }
+        .hero h1 { max-width: 20ch; }
         .hero-sub {
             margin-top: 24px;
-            max-width: 640px;
+            max-width: 660px;
             font-size: 18px;
             line-height: 1.55;
             color: var(--ink-dim);
+        }
+        .hero-sub b { color: var(--ink); font-weight: 500; }
+        .hero-cta {
+            margin-top: 36px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
         }
         .proof-pills {
             margin-top: 40px;
@@ -206,23 +213,20 @@
             background: var(--accent);
             transform: translateY(-1px);
         }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 22px;
+            border: 1px solid var(--rule-strong);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--ink);
+            transition: border-color 0.15s ease;
+        }
+        .btn-secondary:hover { border-color: var(--accent); }
 
-        /* ===== Surface section header ===== */
-        .surface-header {
-            display: flex;
-            align-items: baseline;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
-        .surface-header .badge {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            color: var(--ink-dim);
-        }
+        /* ===== Section intro ===== */
         .surface-tag-line {
             font-size: 12px;
             letter-spacing: 0.22em;
@@ -230,8 +234,10 @@
             color: var(--ink-subtle);
             margin-bottom: 8px;
         }
-        .surface-intro h2 { margin-bottom: 18px; max-width: 18ch; }
+        .surface-intro h2 { margin-bottom: 18px; max-width: 22ch; }
         .surface-intro .lede { max-width: 720px; }
+        .surface-section { padding: 96px 0; }
+        .surface-section .container > .surface-intro { max-width: 780px; }
 
         /* ===== Product card ===== */
         .product-card {
@@ -248,8 +254,6 @@
             gap: 56px;
             align-items: start;
         }
-        .product-card.reverse .product-card-text { order: 2; }
-        .product-card.reverse .product-card-visual { order: 1; }
 
         .product-badge {
             display: inline-flex;
@@ -265,9 +269,8 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--accent);
+            background: var(--accent-2);
         }
-        .product-card.computational .product-badge-dot { background: var(--accent-2); }
 
         .product-title { margin-bottom: 18px; }
         .product-title .accent, .product-title .accent-2 { display: block; }
@@ -295,25 +298,12 @@
             position: absolute;
             left: 0;
             top: 14px;
-            color: var(--accent);
+            color: var(--accent-2);
             font-size: 10px;
         }
-        .product-card.computational .capability-list li::before { color: var(--accent-2); }
         .capability-list li b { color: var(--ink); font-weight: 600; }
 
         /* ===== Visual containers ===== */
-        .visual-frame {
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 0;
-            background: var(--bg-2);
-            overflow: hidden;
-        }
-        .visual-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
         .visual-svg {
             border: 1px solid var(--rule);
             border-radius: 12px;
@@ -331,188 +321,6 @@
             color: var(--ink-subtle);
         }
 
-        /* ===== Use case row ===== */
-        .use-case-strip {
-            margin-top: 40px;
-            padding-top: 32px;
-            border-top: 1px solid var(--rule);
-        }
-        .use-case-label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 24px;
-        }
-        .use-case-card {
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 32px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .use-case-card h3 {
-            color: var(--ink);
-            margin-bottom: 12px;
-            font-size: 22px;
-        }
-        .use-case-card p {
-            color: var(--ink-dim);
-            margin-bottom: 24px;
-            font-size: 15px;
-        }
-        .use-case-points { list-style: none; margin-bottom: 24px; }
-        .use-case-points li {
-            padding: 10px 0 10px 20px;
-            position: relative;
-            font-size: 14px;
-            color: var(--ink-dim);
-            line-height: 1.5;
-        }
-        .use-case-points li::before {
-            content: "◆";
-            position: absolute;
-            left: 0;
-            top: 12px;
-            font-size: 8px;
-            color: var(--accent);
-        }
-        .use-case-points li b { color: var(--ink); font-weight: 600; }
-
-        /* OSS strip */
-        .oss-strip {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px 20px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 10px;
-            background: rgba(125, 211, 252, 0.04);
-            font-size: 13px;
-            transition: border-color 0.15s ease;
-            margin-top: 8px;
-        }
-        .oss-strip:hover { border-color: var(--accent); }
-        .oss-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent);
-            padding: 4px 10px;
-            border: 1px solid rgba(125, 211, 252, 0.4);
-            border-radius: 999px;
-            flex-shrink: 0;
-        }
-        .oss-text { flex: 1; line-height: 1.5; }
-        .oss-text strong { color: var(--ink); display: block; font-weight: 600; }
-        .oss-text span { color: var(--ink-dim); font-size: 13px; }
-        .oss-cta { color: var(--accent); white-space: nowrap; font-size: 13px; }
-
-        /* Mock dashboard fallback (when no image) */
-        .mock-dashboard {
-            background: var(--bg-2);
-            border-radius: 8px;
-            padding: 28px;
-            font-family: 'Inter', sans-serif;
-        }
-        .mock-policy {
-            background: rgba(125, 211, 252, 0.05);
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 18px;
-        }
-        .mock-label {
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-        .mock-prose {
-            font-size: 13px;
-            color: var(--ink-dim);
-            line-height: 1.55;
-            font-style: italic;
-        }
-        .mock-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            border: 1px solid var(--rule);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-        .mock-row .agent-name { color: var(--ink); font-weight: 500; }
-        .mock-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-        .mock-status .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-        .mock-status.ok { color: var(--accent-2); }
-        .mock-status.ok .dot { background: var(--accent-2); }
-        .mock-status.warn { color: var(--warn); }
-        .mock-status.warn .dot { background: var(--warn); }
-
-        .mock-compaction {
-            margin-top: 18px;
-            padding: 20px;
-            border: 1px solid var(--rule);
-            border-radius: 8px;
-            background: rgba(252, 165, 165, 0.04);
-        }
-        .mock-compaction-head {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--warn);
-        }
-        .mock-compaction-prose {
-            font-size: 13px;
-            color: var(--ink-dim);
-            line-height: 1.55;
-            font-style: italic;
-            margin-bottom: 14px;
-        }
-        .mock-score {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding-top: 12px;
-            border-top: 1px solid var(--rule);
-        }
-        .mock-score-label {
-            font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .mock-score-num {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--warn);
-            letter-spacing: -0.02em;
-        }
-
-        /* ===== Section: dual product surface ===== */
-        .surface-section { padding: 96px 0; }
-        .surface-section .container > .surface-intro { max-width: 780px; }
-
         /* ===== Architecture diagram ===== */
         .architecture-wrap {
             margin: 48px 0 24px;
@@ -529,22 +337,134 @@
             margin: 0 auto;
         }
         .architecture-footnote {
-            margin-top: 8px;
+            margin-top: 16px;
             font-size: 13px;
-            letter-spacing: 0.08em;
-            color: var(--ink);
-            text-transform: uppercase;
+            color: var(--ink-dim);
+            text-align: center;
         }
-        .architecture-footnote-dim { color: var(--ink-dim); text-transform: none; letter-spacing: 0; }
-        .architecture-footnote b { font-weight: 600; }
         @media (max-width: 720px) {
             .architecture-wrap { padding: 16px; margin: 32px 0 16px; }
-            .architecture-footnote { font-size: 11px; }
+        }
+
+        /* ===== Detects grid ===== */
+        .detects-grid {
+            margin-top: 48px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .detect-card {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 32px 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+        }
+        .detect-tag {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 14px;
+        }
+        .detect-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
+        .detect-card p { font-size: 15px; line-height: 1.55; }
+
+        /* ===== Beyond strip ===== */
+        .beyond-strip {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 36px 32px;
+            background: linear-gradient(180deg, rgba(125, 211, 252, 0.03), rgba(255, 255, 255, 0));
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        .beyond-label {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 6px 14px;
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .beyond-strip h3 { color: var(--ink); margin-bottom: 12px; }
+        .beyond-strip p { font-size: 16px; max-width: 72ch; }
+        @media (max-width: 720px) {
+            .beyond-strip { grid-template-columns: 1fr; gap: 18px; }
+        }
+
+        /* ===== Also from Intrinsec AI ===== */
+        .also-grid {
+            margin-top: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .also-card {
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 32px 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.15s ease;
+        }
+        .also-card:hover { border-color: rgba(125, 211, 252, 0.35); }
+        .also-tag {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+        .also-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
+        .also-card p { font-size: 15px; line-height: 1.55; }
+        .also-link {
+            margin-top: auto;
+            padding-top: 20px;
+            font-size: 14px;
+            color: var(--accent);
+        }
+
+        /* ===== Video ===== */
+        .video-wrap {
+            margin-top: 48px;
+            border: 1px solid var(--rule);
+            border-radius: 14px;
+            padding: 14px;
+            background: var(--bg-2);
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .video-caption {
+            margin-top: 14px;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            text-align: center;
         }
 
         /* ===== CTA ===== */
         .cta { padding: 96px 0; text-align: center; }
-        .cta h2 { margin-bottom: 32px; max-width: 22ch; margin-left: auto; margin-right: auto; }
+        .cta h2 { margin-bottom: 24px; max-width: 22ch; margin-left: auto; margin-right: auto; }
+        .cta p { max-width: 60ch; margin: 0 auto 32px; }
 
         /* ===== Footer ===== */
         footer {
@@ -599,38 +519,6 @@
             text-transform: uppercase;
         }
 
-        /* ===== Video ===== */
-        .video-wrap {
-            margin-top: 56px;
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 14px;
-            background: var(--bg-2);
-        }
-        .video-frame {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-        }
-        .video-frame iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .video-caption {
-            margin-top: 14px;
-            font-size: 12px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            text-align: center;
-        }
-
         /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .container { padding: 0 24px; }
@@ -639,17 +527,18 @@
             .surface-section { padding: 72px 0; }
             .product-card { padding: 36px 28px; }
             .product-card-inner { grid-template-columns: 1fr; gap: 40px; }
-            .product-card.reverse .product-card-text { order: 1; }
-            .product-card.reverse .product-card-visual { order: 2; }
+            .detects-grid { grid-template-columns: 1fr; }
+            .also-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 12px; }
             .nav { display: none; }
-            .oss-strip { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
 
         @media (max-width: 600px) {
             .container { padding: 0 20px; }
             .product-card { padding: 28px 22px; }
+            .hero-cta { flex-direction: column; align-items: stretch; }
+            .btn-primary, .btn-secondary { justify-content: center; }
             .header-cta { display: none; }
         }
 
@@ -680,7 +569,7 @@
                     </nav>
                 </div>
                 <div class="header-right">
-                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
+                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
                 </div>
             </div>
         </div>
@@ -691,38 +580,54 @@
     <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">Products · Intent and computational memory</p>
-            <h1>One agent or a thousand.<br><span class="accent-2">The amnesia is the same.</span></h1>
-            <p class="hero-sub">Adaptive memory across the two surfaces a per-message filter can't see. Single-agent or fleet-wide. No data lake required.</p>
-            <div class="proof-pills" aria-label="Status">
-                <span class="pill">Agent or fleet</span>
-                <span class="pill">Memoryful guardrail</span>
-                <span class="pill">Agent behavior analytics</span>
-                <span class="pill">Intention-time detection</span>
+            <p class="eyebrow eyebrow-green">Intrinsec AI · Anomaly detection for self-hosted LLMs</p>
+            <h1>Plato.<br><span class="accent-2">Security signal from compute you already paid for.</span></h1>
+            <p class="hero-sub">Plato plugs into <b>vLLM and SGLang</b> and turns each request's inference compute into a compact behavioral fingerprint. Fingerprints build a baseline of normal for your workload, and <b>anything atypical surfaces against it</b>. <b>No second model. No extra pass. No added latency.</b></p>
+            <div class="hero-cta">
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
+                <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
+            </div>
+            <div class="proof-pills" aria-label="Key facts">
+                <span class="pill">0 extra model calls</span>
+                <span class="pill">0 added latency</span>
+                <span class="pill">Plugs into vLLM &amp; SGLang</span>
+                <span class="pill">Runs in your infra</span>
+            </div>
+
+            <div class="video-wrap" id="demo">
+                <div class="video-frame">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
+                        title="Plato by Intrinsec AI: 2-minute demo"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">2-minute demo · prompt injection and drift detection inside the inference engine</div>
             </div>
         </div>
     </section>
 
-    <!-- ===== Architecture overview ===== -->
-    <section class="surface-section" id="architecture">
+    <!-- ===== Architecture ===== -->
+    <section class="surface-section" id="architecture" style="border-top: 1px solid var(--rule);">
         <div class="container">
             <div class="surface-intro">
-                <p class="surface-tag-line">Two failures · two fixes · one picture</p>
-                <h2>Where the taps sit.</h2>
-                <p class="lede">Two memory surfaces, tapped where attacks actually live — on the message stream before the agent acts, and on the inference engine's own computation as it acts.</p>
+                <p class="surface-tag-line">How it fits</p>
+                <h2>Detection rides along with inference.</h2>
+                <p class="lede">A judge model re-runs your traffic to render a verdict. Plato taps the compute your engine already produces, so the request path is untouched and nothing new eats your latency budget.</p>
             </div>
 
             <div class="architecture-wrap">
-                <svg class="architecture-svg" viewBox="0 0 1180 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: intent memory taps the message stream, computational fingerprint memory taps the residual stream inside agent inference; events are covered by SIEM and UEBA only after the action.">
+                <svg class="architecture-svg" viewBox="0 0 1180 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: requests flow through the inference engine to responses; Intrinsec AI recycles the engine's own compute into a fingerprint baseline that surfaces injections, jailbreaks, data exposure, rogue tool calls, and drift.">
                     <defs>
                         <marker id="archArrGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a1a7b3"/></marker>
-                        <marker id="archArrCyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7dd3fc"/></marker>
                         <marker id="archArrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/></marker>
                     </defs>
 
-                    <!-- Row 1: stream -> agent -> action -->
+                    <!-- Row 1: stream -> engine -> action -->
                     <g>
-                        <text x="30" y="22" fill="#6b7280" font-size="11" letter-spacing="3" font-family="Inter">MESSAGE STREAM</text>
+                        <text x="30" y="22" fill="#6b7280" font-size="11" letter-spacing="3" font-family="Inter">REQUEST STREAM</text>
                         <g font-family="Inter">
                             <rect x="30"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
                             <rect x="76"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
@@ -740,239 +645,121 @@
 
                     <line x1="288" y1="61" x2="338" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
 
-                    <!-- Agent inference box -->
+                    <!-- Inference engine box -->
                     <g font-family="Inter">
-                        <rect x="348" y="20" width="420" height="84" rx="12" fill="none" stroke="rgba(255,255,255,0.45)"/>
-                        <text x="558" y="44" text-anchor="middle" fill="#f3f4f6" font-size="16" font-weight="600">Agent inference</text>
-                        <text x="558" y="62" text-anchor="middle" fill="#a1a7b3" font-size="11" letter-spacing="2">vLLM · SGLang · self-hosted LLM</text>
-                        <rect x="420" y="74" width="276" height="22" rx="5" fill="none" stroke="rgba(52,211,153,0.55)"/>
-                        <text x="558" y="89" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2">RESIDUAL STREAM</text>
+                        <rect x="348" y="20" width="420" height="98" rx="12" fill="none" stroke="rgba(255,255,255,0.45)"/>
+                        <text x="558" y="48" text-anchor="middle" fill="#f3f4f6" font-size="16" font-weight="600">Inference engine</text>
+                        <text x="558" y="66" text-anchor="middle" fill="#a1a7b3" font-size="11" letter-spacing="2">vLLM · SGLang · self-hosted LLM</text>
+                        <rect x="480" y="78" width="156" height="24" rx="5" fill="none" stroke="rgba(52,211,153,0.55)"/>
+                        <text x="558" y="94" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2">KV CACHE</text>
                     </g>
 
                     <line x1="772" y1="61" x2="822" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
 
-                    <!-- Action box -->
+                    <!-- Response box -->
                     <g font-family="Inter">
-                        <text x="836" y="22" fill="#6b7280" font-size="11" letter-spacing="3">ACTION</text>
+                        <text x="836" y="22" fill="#6b7280" font-size="11" letter-spacing="3">RESPONSE</text>
                         <rect x="836" y="40" width="320" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
                         <text x="996" y="66" text-anchor="middle" fill="#f3f4f6" font-size="13">tool call · file write · response</text>
-                        <text x="996" y="104" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2">SIEM / UEBA · ONLY AFTER THIS</text>
+                        <text x="996" y="104" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2">A SECOND MODEL WOULD RE-RUN ALL OF THIS</text>
                     </g>
 
-                    <!-- Taps down -->
-                    <path d="M 141 84 L 141 178" stroke="#7dd3fc" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrCyan)"/>
-                    <text x="155" y="138" fill="#7dd3fc" font-size="12" letter-spacing="3" font-family="Inter">COMPRESS</text>
+                    <!-- Recycle tap -->
+                    <path d="M 558 124 L 558 190" stroke="#34d399" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrGreen)"/>
+                    <text x="572" y="162" fill="#34d399" font-size="12" letter-spacing="3" font-family="Inter">RECYCLE</text>
 
-                    <path d="M 558 110 L 558 178" stroke="#34d399" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrGreen)"/>
-                    <text x="572" y="148" fill="#34d399" font-size="12" letter-spacing="3" font-family="Inter">RECYCLE</text>
-
-                    <!-- LEFT: Intent memory -->
+                    <!-- Fingerprint baseline -->
                     <g font-family="Inter">
-                        <rect x="30" y="190" width="500" height="150" rx="12" fill="rgba(125,211,252,0.05)" stroke="#7dd3fc"/>
-                        <text x="50" y="218" fill="#7dd3fc" font-size="12" letter-spacing="3">INTENT MEMORY</text>
-                        <text x="50" y="256" fill="#f3f4f6" font-size="24" font-weight="600">Bounded coreset</text>
-                        <text x="50" y="286" fill="#a1a7b3" font-size="14">Compression layer over the stream, admitting only the</text>
-                        <text x="50" y="306" fill="#a1a7b3" font-size="14">security-relevant tokens, evict the benign mass before</text>
-                        <text x="50" y="326" fill="#a1a7b3" font-size="14">any correlator reads.</text>
+                        <rect x="278" y="202" width="600" height="150" rx="12" fill="rgba(52,211,153,0.05)" stroke="#34d399"/>
+                        <text x="298" y="230" fill="#34d399" font-size="12" letter-spacing="3">FINGERPRINT BASELINE</text>
+                        <text x="298" y="268" fill="#f3f4f6" font-size="24" font-weight="600">Recycled inference compute</text>
+                        <text x="298" y="298" fill="#a1a7b3" font-size="14">The engine already computes a fingerprint per request.</text>
+                        <text x="298" y="318" fill="#a1a7b3" font-size="14">Reuse it (no second model, no extra pass) and</text>
+                        <text x="298" y="338" fill="#a1a7b3" font-size="14">baseline normal behavior for your workload.</text>
                     </g>
 
-                    <!-- RIGHT: Fingerprint memory -->
+                    <!-- Anomaly out -->
                     <g font-family="Inter">
-                        <rect x="556" y="190" width="600" height="150" rx="12" fill="rgba(52,211,153,0.05)" stroke="#34d399"/>
-                        <text x="576" y="218" fill="#34d399" font-size="12" letter-spacing="3">FINGERPRINT MEMORY</text>
-                        <text x="576" y="256" fill="#f3f4f6" font-size="24" font-weight="600">Recycled inference compute</text>
-                        <text x="576" y="286" fill="#a1a7b3" font-size="14">The engine already computes a fingerprint per request.</text>
-                        <text x="576" y="306" fill="#a1a7b3" font-size="14">Reuse it (no second model, no extra pass) and</text>
-                        <text x="576" y="326" fill="#a1a7b3" font-size="14">remember it across sessions.</text>
-                    </g>
-
-                    <!-- Bottom: persistence bar -->
-                    <g font-family="Inter">
-                        <rect x="30" y="380" width="1126" height="74" rx="10" fill="none" stroke="rgba(255,255,255,0.3)" stroke-dasharray="6,5"/>
-                        <text x="593" y="412" text-anchor="middle" fill="#f3f4f6" font-size="14" letter-spacing="3">MEMORY PERSISTS ACROSS SESSIONS · ACROSS AGENTS</text>
-                        <text x="280" y="438" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="3">beats COMPOSITION</text>
-                        <text x="856" y="438" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="3">beats UNDECIDABILITY</text>
+                        <line x1="878" y1="277" x2="938" y2="277" stroke="#fca5a5" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
+                        <text x="952" y="252" fill="#fca5a5" font-size="12" letter-spacing="2">INJECTION · JAILBREAK</text>
+                        <text x="952" y="272" fill="#fca5a5" font-size="12" letter-spacing="2">DATA LEAK · ROGUE TOOLS</text>
+                        <text x="952" y="292" fill="#fca5a5" font-size="12" letter-spacing="2">DRIFT · OFF-DOMAIN</text>
+                        <text x="952" y="314" fill="#6b7280" font-size="11" letter-spacing="2">→ your alerting stack</text>
                     </g>
                 </svg>
+                <p class="architecture-footnote">Your model and your traffic never leave your infrastructure.</p>
             </div>
-
-            <p class="architecture-footnote"><span class="architecture-footnote-dim">Event is covered by SIEM / UEBA.</span> <b>We own intent and fingerprint.</b></p>
         </div>
     </section>
 
-    <!-- ===== Intent surface ===== -->
-    <section class="surface-section" id="intent-surface">
+    <!-- ===== What it catches ===== -->
+    <section class="surface-section" id="what-it-catches" style="border-top: 1px solid var(--rule);">
         <div class="container">
             <div class="surface-intro">
-                <p class="surface-tag-line">Surface one</p>
-                <h2><span class="accent">Intent memory.</span></h2>
-                <p class="lede">Compress the prompt stream into a small, bounded memory of what is being steered. Cross-session attacks stop being invisible. Works for one agent, or across an entire fleet.</p>
+                <p class="surface-tag-line">What it catches</p>
+                <h2>One baseline. Every failure mode.</h2>
+                <p class="lede">Attacks no longer arrive only as text. They hide in images, audio, video, retrieved files. Putting a guardrail on every surface and enumerating everything it should block is a losing game. The computation is where the action ultimately happens, whatever the source or modality, and anything that deviates from normal surfaces there, including failure modes no one has named yet.</p>
             </div>
 
-            <!-- Identity Plane (per-agent) -->
+            <div class="detects-grid">
+                <div class="detect-card">
+                    <div class="detect-tag">Prompt injection</div>
+                    <h3>Injected instructions.</h3>
+                    <p>Instructions smuggled in through user input, retrieved documents, or tool results compute differently from your workload's normal, including variants no guardrail was trained on.</p>
+                </div>
+                <div class="detect-card">
+                    <div class="detect-tag">Jailbreaks &amp; obfuscation</div>
+                    <h3>Attacks in disguise.</h3>
+                    <p>Encodings, role-play framings, multi-turn coaxing. The text can be dressed up to read innocently; the computation underneath still doesn't match normal.</p>
+                </div>
+                <div class="detect-card">
+                    <div class="detect-tag">Data exposure</div>
+                    <h3>Information leaving.</h3>
+                    <p>Secrets, credentials, and sensitive information surfacing in responses where they never normally appear: the kind of leak a keyword filter can't enumerate.</p>
+                </div>
+                <div class="detect-card">
+                    <div class="detect-tag">Rogue tool calls</div>
+                    <h3>Actions it shouldn't take.</h3>
+                    <p>Requests steering the model toward tools it doesn't normally call (deletion, escalation, outbound access), flagged before the pattern becomes an incident.</p>
+                </div>
+                <div class="detect-card">
+                    <div class="detect-tag">Atypical outputs</div>
+                    <h3>Work it shouldn't do.</h3>
+                    <p>A support model giving legal advice. A coding assistant doing bulk extraction. Output behavior outside the job you deployed the model for stands out against the baseline.</p>
+                </div>
+                <div class="detect-card">
+                    <div class="detect-tag">Traffic drift</div>
+                    <h3>Traffic it wasn't built for.</h3>
+                    <p>When traffic shifts away from what you deployed for (abuse, misrouting, a compromised upstream), the change stands out against the baseline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Capabilities ===== -->
+    <section class="surface-section" id="capabilities" style="border-top: 1px solid var(--rule);">
+        <div class="container">
             <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-text">
                         <div class="product-badge">
                             <span class="product-badge-dot"></span>
-                            Per-agent · Intent memory
+                            Engine-native · Runs in your infra
                         </div>
-                        <h2 class="product-title"><span class="accent">Identity Plane</span></h2>
-                        <p class="product-desc">One adaptive memory per agent. Identity built from compressed behavior across every session, so drift, injection, and exfiltration surface before the pattern completes.</p>
+                        <h2 class="product-title"><span class="accent-2">Built for the serving stack you already run.</span></h2>
+                        <p class="product-desc">Plato is a plugin for your inference engine, not another service in the request path.</p>
                         <ul class="capability-list">
-                            <li><b>Memory, not classification.</b> Identity built from compressed behavior across every session.</li>
-                            <li><b>Trajectory detection.</b> Drift, injection, exfiltration caught before the pattern completes.</li>
-                            <li><b>Bounded coreset.</b> Fixed capacity, no unbounded log.</li>
-                        </ul>
-                    </div>
-                    <div class="product-card-visual">
-                        <div class="visual-frame">
-                            <img src="control-plane-dashboard.png" alt="Identity Plane dashboard showing identity monitoring, threat analytics, and intent envelope tracking" loading="lazy">
-                        </div>
-                        <div class="visual-caption">
-                            <span>Identity Plane</span>
-                            <span>Live dashboard</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Use case: Enterprise AI Governance -->
-                <div class="use-case-strip">
-                    <div class="use-case-label">Use case · Enterprise AI Governance</div>
-                    <div class="use-case-card">
-                        <h3>Define your agents. Detect drift.</h3>
-                        <p>Describe what your agents should do in plain language. Everything that doesn't fit gets surfaced.</p>
-                        <ul class="use-case-points">
-                            <li><b>Org identity profile.</b> Natural-language description of sanctioned agent behavior.</li>
-                            <li><b>Intent divergence, not rules.</b> Deviation from modeled identity, so novel threats surface automatically.</li>
-                        </ul>
-
-                        <div class="mock-dashboard" style="margin: 24px 0;">
-                            <div class="mock-policy">
-                                <div class="mock-label">Organizational Identity Profile</div>
-                                <div class="mock-prose">"This agent handles pre-trade compliance checks for Meridian Capital. It validates order parameters against regulatory limits, flags anomalous positions, and escalates to the compliance desk. It has read-only access to trading systems and never initiates, modifies, or cancels orders."</div>
-                            </div>
-                            <div class="mock-row">
-                                <span class="agent-name">compliance-sentinel-v3</span>
-                                <span class="mock-status ok"><span class="dot"></span>Within org identity</span>
-                            </div>
-                            <div class="mock-row">
-                                <span class="agent-name">exec-desk-assistant</span>
-                                <span class="mock-status warn"><span class="dot"></span>Off-org identity detected</span>
-                            </div>
-                            <div class="mock-compaction">
-                                <div class="mock-compaction-head">
-                                    <span>Identity Compaction</span>
-                                    <span>exec-desk-assistant</span>
-                                </div>
-                                <div class="mock-compaction-prose">"Sustained pressure to initiate trade orders outside its read-only mandate. Recurring attempts to disable pre-trade risk checks. Identity is being displaced toward unauthorized order execution with suppressed audit visibility."</div>
-                                <div class="mock-score">
-                                    <span class="mock-score-label">Off-org identity score</span>
-                                    <span class="mock-score-num">0.96</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a class="oss-strip" href="openclaw.html" aria-label="Open the OpenClaw Identity Plane open-source reference page">
-                            <span class="oss-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                                Open Source
-                            </span>
-                            <span class="oss-text">
-                                <strong>Try it on your own agent.</strong>
-                                <span>Observational OpenClaw plugin. Watch drift live.</span>
-                            </span>
-                            <span class="oss-cta">See it in action →</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fleet Memory (SIEM-less) -->
-            <div class="product-card reverse" style="margin-top: 24px;">
-                <div class="product-card-inner">
-                    <div class="product-card-text">
-                        <div class="product-badge">
-                            <span class="product-badge-dot"></span>
-                            Fleet-wide · Intent memory
-                        </div>
-                        <h2 class="product-title"><span class="accent">Fleet Memory</span><span style="display:block; font-size: 0.6em; color: var(--ink-dim); font-weight: 500; letter-spacing: 0.04em; margin-top: 8px;">SIEM-less detection</span></h2>
-                        <p class="product-desc">Fleet-wide threats, no data lake. Each request looks normal alone. Together, they're a coordinated campaign. One shared memory across the fleet makes the pattern visible.</p>
-                        <ul class="capability-list">
-                            <li><b>Shared fleet memory.</b> Millions of prompts compressed into one cohesive story.</li>
-                            <li><b>Coordinated attack detection.</b> Campaigns surface even when every individual request passes.</li>
-                            <li><b>No SIEM, no lake.</b> Bounded memory, not unbounded storage.</li>
-                        </ul>
-                    </div>
-                    <div class="product-card-visual">
-                        <div class="visual-frame">
-                            <img src="siem-compression.png" alt="Raw inbound prompts compressed into a unified intent view across all agents, surfacing novel threat patterns without a SIEM or data lake" loading="lazy">
-                        </div>
-                        <div class="visual-caption">
-                            <span>Fleet compression</span>
-                            <span>Shared memory</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Use case: Agentic SIEM augmentation -->
-                <div class="use-case-strip">
-                    <div class="use-case-label">Use case · Security Operations</div>
-                    <div class="use-case-card">
-                        <h3>Lossless memory. Bounded size.</h3>
-                        <p>A fleet generates millions of prompts. Most are noise. Agentic SIEMs decouple compute from storage and let agents figure it out. That gets costly. Intrinsec's memory gives your SIEM a curated starting point. Agents work less. Costs drop.</p>
-                        <ul class="use-case-points">
-                            <li><b>Deduplicate to novelty.</b> 10,000 identical probes become one pattern and a count.</li>
-                            <li><b>Fragment-level extraction.</b> Captures the 50 threat tokens, not the 2,000-token prompt.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-wrap">
-                <div class="video-frame">
-                    <iframe
-                        src="https://www.youtube-nocookie.com/embed/iqptIpBljnY"
-                        title="Intrinsec — intent memory addresses composition"
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Watch · intent memory, addressing composition</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== Computational surface ===== -->
-    <section class="surface-section" id="computational-surface" style="border-top: 1px solid var(--rule);">
-        <div class="container">
-            <div class="surface-intro">
-                <p class="surface-tag-line" style="color: var(--accent-2);">Surface two</p>
-                <h2><span class="accent-2">Computational memory.</span></h2>
-                <p class="lede">Prompt injection is inevitable. Every inbound prompt induces a computation signature in the inference engine. We recycle it across every agent and prompt. Unusual prompts surface against the baseline.</p>
-            </div>
-
-            <div class="product-card computational">
-                <div class="product-card-inner">
-                    <div class="product-card-text">
-                        <div class="product-badge">
-                            <span class="product-badge-dot"></span>
-                            Computation signature · Memory
-                        </div>
-                        <h2 class="product-title"><span class="accent-2">Computation Behavior Analytics</span></h2>
-                        <p class="product-desc">Recycle the fingerprint your inference engine already computes. No second model, no extra pass. Persistent memory across sessions and agents turns "is this harmful?" into "does this computation match normal?"</p>
-                        <ul class="capability-list">
-                            <li><b>Free signal.</b> Reuse compute the engine already produces.</li>
-                            <li><b>Inside view.</b> The mechanism, not the boundary.</li>
-                            <li><b>Engine-native.</b> Plugs into vLLM, SGLang, and self-hosted LLM stacks.</li>
+                            <li><b>Zero extra model calls.</b> Reuses the compute each forward pass already produces, including the KV cache the engine would otherwise discard.</li>
+                            <li><b>Zero added latency.</b> Fingerprinting happens alongside inference, not in front of it.</li>
+                            <li><b>Adaptive baseline.</b> Normal is learned from your own workload, not from a generic attack list.</li>
+                            <li><b>Fits your alerting.</b> Anomalies flow to the monitoring and security tools you already use.</li>
                         </ul>
                     </div>
                     <div class="product-card-visual">
                         <div class="visual-svg">
                             <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baseline traces with anomalous trace surfacing above the band">
-                                <text x="0" y="18" fill="#34d399" font-size="10" letter-spacing="3" font-family="Inter">BASELINE MEMORY</text>
-                                <text x="380" y="18" fill="#6b7280" font-size="10" letter-spacing="3" font-family="Inter" text-anchor="end">MULTI-AGENT · CROSS-PROMPT</text>
+                                <text x="0" y="18" fill="#34d399" font-size="10" letter-spacing="3" font-family="Inter">LEARNED BASELINE</text>
+                                <text x="380" y="18" fill="#6b7280" font-size="10" letter-spacing="3" font-family="Inter" text-anchor="end">YOUR TRAFFIC</text>
 
                                 <rect x="10" y="140" width="360" height="40" rx="16" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.3)"/>
                                 <line x1="10" y1="160" x2="370" y2="160" stroke="#34d399" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.4"/>
@@ -988,32 +775,66 @@
                                 <polyline points="10,160 36,156 64,148 92,138 122,124 152,108 180,100 208,104 236,116 264,130 292,142 320,150 350,154 370,158"
                                           stroke="#fca5a5" stroke-width="1.6" fill="none"/>
 
-                                <text x="180" y="88" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2" font-family="Inter">UNUSUAL PROMPT</text>
+                                <text x="180" y="88" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2" font-family="Inter">ANOMALOUS REQUEST</text>
                                 <line x1="180" y1="92" x2="180" y2="102" stroke="#fca5a5" stroke-width="0.8"/>
 
-                                <text x="0" y="270" fill="#6b7280" font-size="10" letter-spacing="2" font-family="Inter">Computation signature → does this match normal?</text>
+                                <text x="0" y="270" fill="#6b7280" font-size="10" letter-spacing="2" font-family="Inter">Every request scored against normal, at inference time</text>
                             </svg>
                             <div class="visual-caption">
-                                <span>Free signal</span>
-                                <span>Inside view</span>
-                                <span>Persistent</span>
+                                <span>No second model</span>
+                                <span>No extra pass</span>
+                                <span>No added latency</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="video-wrap">
-                    <div class="video-frame">
-                        <iframe
-                            src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
-                            title="Intrinsec — computational intent memory"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen></iframe>
-                    </div>
-                    <div class="video-caption">Watch · computational fingerprint memory, addressing undecidability</div>
+            <div class="beyond-strip" style="margin-top: 24px;">
+                <span class="beyond-label">Where this goes</span>
+                <div>
+                    <h3>Beyond binary verdicts.</h3>
+                    <p>DLP taught security to classify data. Plato classifies computation. A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. Plato labels that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in a shared, platonic representation space, the labels are not bound to text or to any one model. Hence the name.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Also from Intrinsec AI ===== -->
+    <section class="surface-section" id="also" style="border-top: 1px solid var(--rule);">
+        <div class="container">
+            <div class="surface-intro">
+                <p class="surface-tag-line">Also from Intrinsec AI</p>
+                <h2>The same idea, on the message stream.</h2>
+                <p class="lede">Plato baselines the model's computation. The same approach applies one level up: baselining what agents are asked to do, message by message, for one agent or an entire fleet.</p>
+            </div>
+
+            <div class="also-grid">
+                <a class="also-card" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Identity%20Plane%20%C2%B7%20Intrinsec%20AI">
+                    <div class="also-tag">Per-agent</div>
+                    <h3>Identity Plane.</h3>
+                    <p>Describe what an agent should do in plain language. An adaptive behavioral profile, built from compressed activity across sessions, surfaces everything that drifts away from that role (injection, exfiltration, displacement) before the pattern completes.</p>
+                    <span class="also-link">Ask about Identity Plane →</span>
+                </a>
+                <a class="also-card" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Fleet%20Memory%20%C2%B7%20Intrinsec%20AI">
+                    <div class="also-tag">Fleet-wide</div>
+                    <h3>Fleet Memory.</h3>
+                    <p>Each request looks normal alone; together they're a coordinated campaign. Millions of prompts compress into one bounded view, so fleet-wide patterns surface even when every individual request passes. No SIEM, no data lake.</p>
+                    <span class="also-link">Ask about Fleet Memory →</span>
+                </a>
+            </div>
+
+            <div class="video-wrap">
+                <div class="video-frame">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/iqptIpBljnY"
+                        title="Intrinsec AI: message-level monitoring across agents and fleets"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Watch · message-level monitoring, catching attacks composed across requests</div>
             </div>
         </div>
     </section>
@@ -1021,8 +842,10 @@
     <!-- ===== CTA ===== -->
     <section class="cta">
         <div class="container">
-            <h2>Give your security memory.<br>Before someone exploits the amnesia.</h2>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai" class="btn-primary">Request a demo →</a>
+            <p class="eyebrow eyebrow-green" style="text-align: center;">Design partners</p>
+            <h2>Run vLLM or SGLang in production?</h2>
+            <p>We're working with a small number of design partners to evaluate detection against their own traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
         </div>
     </section>
 
@@ -1035,7 +858,7 @@
                     <a href="index.html" class="brand" aria-label="Intrinsec AI home">
                         <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
-                    <p class="footer-tag">Adaptive intent and computational memory for AI agents. Cross-session threats caught at intention time.</p>
+                    <p class="footer-tag">Anomaly detection for self-hosted LLMs. No second model, no extra pass, no added latency.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>
