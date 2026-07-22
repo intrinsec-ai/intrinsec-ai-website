@@ -588,8 +588,8 @@
                 <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
             <div class="proof-pills" aria-label="Key facts">
-                <span class="pill">0 extra model calls</span>
-                <span class="pill">0 added latency</span>
+                <span class="pill">0 extra cost or latency</span>
+                <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
                 <span class="pill">Plugs into vLLM &amp; SGLang</span>
                 <span class="pill">Runs in your infra</span>
             </div>
@@ -752,6 +752,7 @@
                             <li><b>Zero extra model calls.</b> Reuses the compute each forward pass already produces, including the KV cache the engine would otherwise discard.</li>
                             <li><b>Zero added latency.</b> Fingerprinting happens alongside inference, not in front of it.</li>
                             <li><b>Adaptive baseline.</b> Normal is learned from your own workload, not from a generic attack list.</li>
+                            <li><b>Model-agnostic.</b> Swap or upgrade the model you serve (Qwen, GLM, Llama); the security layer carries over.</li>
                             <li><b>Fits your alerting.</b> Anomalies flow to the monitoring and security tools you already use.</li>
                         </ul>
                     </div>
