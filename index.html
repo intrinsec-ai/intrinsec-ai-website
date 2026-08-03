@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrinsec AI · Stop paying a second model to secure your LLM · Anomaly detection for self-hosted LLMs</title>
-    <meta name="description" content="Anomaly detection for self-hosted LLMs. Intrinsec AI plugs into vLLM and SGLang and baselines how your model normally computes, so prompt injection, jailbreaks, data exposure, rogue tool calls, and drift surface without a second model, an extra pass, or added latency.">
+    <title>Intrinsec AI · Anomaly detection on AI agent inference traffic</title>
+    <meta name="description" content="Anomaly detection on AI agent inference traffic. Intrinsec AI baselines how the model behind your agent computes during normal traffic, then surfaces and tags what doesn't match: prompt injection, rogue and broken tool calls, sensitive-data exposure, hallucination, and drift. No second model, no extra pass, no added latency.">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0a0b0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta property="og:title" content="Intrinsec AI · Anomaly detection for self-hosted LLMs">
-    <meta property="og:description" content="Catch injections, jailbreaks, data exposure, rogue tool calls, and drift without running a second model. Plugs into vLLM and SGLang.">
+    <meta property="og:title" content="Intrinsec AI · Anomaly detection on AI agent inference traffic">
+    <meta property="og:description" content="The action happens inside the model. We baseline how yours computes on normal traffic and tag everything that doesn't match, the way DLP tagged data.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="intrinsec-ai-logo-dark-on-bg.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -134,38 +134,35 @@
         }
 
         /* ===== Section base ===== */
-        section { padding: 96px 0; border-top: 1px solid var(--rule); }
+        section { padding: 104px 0; border-top: 1px solid var(--rule); }
         section:first-of-type { border-top: none; }
 
         .eyebrow {
             font-size: 12px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--ink-subtle);
             margin-bottom: 18px;
         }
-        .eyebrow-dim { color: var(--ink-dim); }
 
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
         h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.06; }
         h2 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.1; }
         h3 { font-size: 22px; line-height: 1.3; }
 
-        p { color: var(--ink-dim); font-size: 17px; line-height: 1.6; }
-        .lede { color: var(--ink); font-size: clamp(18px, 2vw, 22px); line-height: 1.5; max-width: 760px; }
+        p { color: var(--ink-dim); font-size: 17px; line-height: 1.65; }
+        .lede { color: var(--ink-dim); font-size: clamp(18px, 2vw, 21px); line-height: 1.6; max-width: 60ch; }
 
         .accent-2 { color: var(--accent-2); }
-        .accent { color: var(--accent); }
-        .warn { color: var(--warn); }
 
         /* ===== Hero ===== */
-        .hero { padding: 120px 0 96px; }
+        .hero { padding: 112px 0 104px; }
         .hero h1 { max-width: 22ch; }
         .hero-sub {
-            margin-top: 26px;
-            max-width: 680px;
-            font-size: 18px;
-            line-height: 1.6;
+            margin-top: 30px;
+            max-width: 58ch;
+            font-size: 19px;
+            line-height: 1.7;
             color: var(--ink-dim);
         }
         .hero-sub b { color: var(--ink); font-weight: 500; }
@@ -206,7 +203,7 @@
         .btn-secondary:hover { border-color: var(--accent); }
 
         .proof-pills {
-            margin-top: 56px;
+            margin-top: 52px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
@@ -219,16 +216,16 @@
             border: 1px solid var(--rule);
             border-radius: 999px;
             font-size: 12px;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--ink-dim);
+            color: var(--ink-subtle);
         }
         .pill::before {
             content: "";
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--accent);
+            background: var(--accent-2);
         }
 
         /* ===== Video ===== */
@@ -263,67 +260,152 @@
             text-align: center;
         }
 
-        /* ===== Problem: today vs with Intrinsec AI ===== */
-        .compare-header { max-width: 880px; }
-        .compare-header h2 { margin-bottom: 22px; }
-        .compare-grid {
-            margin-top: 56px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .compare-card {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 32px 28px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .compare-card.is-today { opacity: 0.85; }
-        .compare-card.is-intrinsec {
-            border-color: rgba(52, 211, 153, 0.35);
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.04), rgba(255, 255, 255, 0));
-        }
-        .compare-tag {
+        /* ===== Layer stack: what inference traffic means ===== */
+        .layer-stack { margin-top: 52px; }
+        .surface-label {
             font-size: 11px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--ink-subtle);
+            text-align: center;
             margin-bottom: 14px;
         }
-        .compare-card.is-today .compare-tag { color: var(--warn); }
-        .compare-card.is-intrinsec .compare-tag { color: var(--accent-2); }
-        .compare-card h3 { color: var(--ink); margin-bottom: 18px; font-size: 24px; }
-        .compare-list { list-style: none; }
-        .compare-list li {
-            position: relative;
-            padding-left: 26px;
-            margin-bottom: 14px;
-            font-size: 15px;
-            line-height: 1.55;
+        .surface-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+        .surface-chip {
+            padding: 6px 14px;
+            border: 1px dashed var(--rule-strong);
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             color: var(--ink-dim);
         }
-        .compare-list li b { color: var(--ink); font-weight: 500; }
-        .compare-card.is-today .compare-list li::before {
-            content: "×";
-            position: absolute;
-            left: 0;
-            color: var(--warn);
-            font-weight: 600;
+        .layer-arrow {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-subtle);
+            font-size: 15px;
+            line-height: 1;
         }
-        .compare-card.is-intrinsec .compare-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
+        .layer-arrow::before { content: "↓"; }
+        .layer-arrow.is-focus { color: var(--accent-2); }
+        .layer {
+            border: 1px solid var(--rule);
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+        }
+        .layer-title { font-size: 18px; font-weight: 600; color: var(--ink-dim); }
+        .layer-sub { font-size: 14px; color: var(--ink-subtle); margin-top: 4px; }
+        .layer-tag {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+        }
+        .layer.is-focus {
+            border-color: rgba(52, 211, 153, 0.5);
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.07), rgba(255, 255, 255, 0));
+            padding: 28px 24px;
+        }
+        .layer.is-focus .layer-title { font-size: 24px; color: var(--ink); }
+        .layer.is-focus .layer-sub { color: var(--ink-dim); }
+        .layer.is-focus .layer-tag { color: var(--accent-2); }
+
+        /* ===== Flow diagram: baseline, surface, tag ===== */
+        .flow { margin-top: 52px; }
+        .flow-row { display: flex; align-items: stretch; gap: 14px; }
+        .flow-box {
+            flex: 1;
+            border: 1px solid var(--rule);
+            border-radius: 12px;
+            padding: 20px 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+        }
+        .flow-box-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-subtle);
+            margin-bottom: 10px;
+        }
+        .flow-box-title { font-size: 16px; color: var(--ink); line-height: 1.4; }
+        .flow-box-note { font-size: 14px; color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
+        .flow-box.is-model { border-color: var(--rule-strong); }
+        .flow-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            border-radius: 999px;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
             color: var(--accent-2);
-            font-weight: 600;
+        }
+        .flow-box.is-baseline {
+            border-color: rgba(52, 211, 153, 0.5);
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.06), rgba(255, 255, 255, 0));
+        }
+        .flow-box.is-baseline .flow-box-label { color: var(--accent-2); }
+        .flow-box.is-anomaly {
+            border-color: rgba(252, 165, 165, 0.4);
+            background: linear-gradient(180deg, rgba(252, 165, 165, 0.05), rgba(255, 255, 255, 0));
+        }
+        .flow-box.is-anomaly .flow-box-label { color: var(--warn); }
+        .flow-arrow {
+            align-self: center;
+            color: var(--ink-subtle);
+            font-size: 18px;
+            line-height: 1;
+        }
+        .flow-arrow::before { content: "→"; }
+        .flow-tap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 0;
+        }
+        .flow-tap::before {
+            content: "";
+            width: 2px;
+            height: 24px;
+            background: repeating-linear-gradient(180deg, var(--accent-2) 0 5px, transparent 5px 10px);
+            opacity: 0.8;
+        }
+        .flow-tap span {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+        }
+        .flow-tap::after {
+            content: "";
+            width: 2px;
+            height: 24px;
+            background: repeating-linear-gradient(180deg, var(--accent-2) 0 5px, transparent 5px 10px);
+            opacity: 0.8;
         }
 
         /* ===== Failure-modes strip ===== */
         .modes-strip {
-            margin-top: 24px;
+            margin-top: 52px;
             border: 1px solid var(--rule);
             border-radius: 14px;
-            padding: 32px;
+            padding: 40px 32px;
             background: linear-gradient(180deg, rgba(52, 211, 153, 0.03), rgba(255, 255, 255, 0));
             text-align: center;
         }
@@ -338,19 +420,22 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
         }
         .mode-chip {
-            padding: 8px 16px;
+            padding: 9px 18px;
             border: 1px solid var(--rule-strong);
             border-radius: 999px;
             font-size: 14px;
             color: var(--ink);
         }
         .modes-note {
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 28px;
+            font-size: 15px;
             color: var(--ink-dim);
+            max-width: 62ch;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* ===== How it works ===== */
@@ -363,7 +448,7 @@
         .step-card {
             border: 1px solid var(--rule);
             border-radius: 14px;
-            padding: 32px 28px;
+            padding: 34px 30px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
         }
         .step-num {
@@ -376,28 +461,15 @@
         .step-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
         .step-card p { font-size: 15px; line-height: 1.55; }
 
-        .diagram-wrap {
-            margin-top: 48px;
-            padding: 32px;
-            border: 1px solid var(--rule);
-            border-radius: 16px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
-        }
-        .diagram-svg {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-width: 1180px;
-            margin: 0 auto;
-        }
         .diagram-footnote {
-            margin-top: 16px;
+            margin-top: 22px;
             font-size: 13px;
             color: var(--ink-dim);
             text-align: center;
         }
-        @media (max-width: 720px) {
-            .diagram-wrap { padding: 16px; margin-top: 32px; }
+        .diagram-footnote.is-dim {
+            margin-top: 6px;
+            color: var(--ink-subtle);
         }
 
         /* ===== Beyond binary verdicts strip ===== */
@@ -405,7 +477,7 @@
             border: 1px solid var(--rule);
             border-radius: 14px;
             padding: 36px 32px;
-            background: linear-gradient(180deg, rgba(125, 211, 252, 0.03), rgba(255, 255, 255, 0));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 32px;
@@ -415,11 +487,15 @@
             font-size: 11px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--accent-2);
             padding: 6px 14px;
-            border: 1px solid rgba(125, 211, 252, 0.35);
+            border: 1px solid rgba(52, 211, 153, 0.35);
             border-radius: 999px;
             white-space: nowrap;
+        }
+        .beyond-label.is-warn {
+            color: var(--warn);
+            border-color: rgba(252, 165, 165, 0.35);
         }
         .beyond-strip h3 { color: var(--ink); margin-bottom: 12px; }
         .beyond-strip p { font-size: 16px; max-width: 72ch; }
@@ -428,7 +504,7 @@
         }
 
         /* ===== CTA ===== */
-        .cta { padding: 96px 0; text-align: center; }
+        .cta { padding: 88px 0; text-align: center; }
         .cta h2 { margin-bottom: 24px; max-width: 22ch; margin-left: auto; margin-right: auto; }
         .cta p { max-width: 60ch; margin: 0 auto 32px; }
 
@@ -490,8 +566,13 @@
             .container { padding: 0 24px; }
             section { padding: 72px 0; }
             .hero { padding: 80px 0 64px; }
-            .compare-grid { grid-template-columns: 1fr; }
             .steps-grid { grid-template-columns: 1fr; }
+            .flow-row { flex-direction: column; gap: 12px; }
+            .flow-arrow { align-self: center; }
+            .flow-arrow::before { content: "↓"; }
+            .layer, .layer.is-focus { padding: 18px 20px; }
+            .layer-stack, .flow { margin-top: 40px; }
+            .modes-strip { margin-top: 40px; }
             .footer-grid { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 12px; }
             .nav { display: none; }
@@ -499,9 +580,15 @@
 
         @media (max-width: 600px) {
             .container { padding: 0 20px; }
+            h1 { font-size: 38px; }
             .hero-cta { flex-direction: column; align-items: stretch; }
             .btn-primary, .btn-secondary { justify-content: center; }
             .header-cta { display: none; }
+            .layer { align-items: flex-start; gap: 12px; }
+            .layer-title { font-size: 17px; }
+            .layer.is-focus .layer-title { font-size: 20px; }
+            .modes-strip { padding: 26px 20px; }
+            .beyond-strip { padding: 28px 22px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -542,17 +629,16 @@
     <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">For teams serving their own models · vLLM · SGLang</p>
-            <h1>Stop paying a second model<br><span class="accent-2">to secure your LLM.</span></h1>
-            <p class="hero-sub">Prompt injection, jailbreaks, data leaking into responses, tool calls that should never happen: <b>you can't enumerate every failure mode</b>. Intrinsec AI plugs into your inference engine and baselines how your model normally computes, so anything atypical surfaces. <b>No second model. No extra pass. No added latency.</b></p>
+            <p class="eyebrow">For agentic applications</p>
+            <h1>Anomaly detection on AI agent<br><span class="accent-2">inference traffic.</span></h1>
+            <p class="hero-sub">Agent stacks break in more ways than anyone can enumerate. We baseline how the model behind your agent fires during normal traffic, then surface and tag everything that doesn't match.</p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
                 <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
             <div class="proof-pills" aria-label="Key facts">
-                <span class="pill">0 extra cost or latency</span>
+                <span class="pill">No second model, no extra pass</span>
                 <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
-                <span class="pill">Plugs into vLLM &amp; SGLang</span>
                 <span class="pill">Runs in your infra</span>
             </div>
         </div>
@@ -562,64 +648,96 @@
     <section id="demo">
         <div class="container">
             <p class="eyebrow">See it work</p>
-            <h2>Two minutes, on real traffic.</h2>
-            <p class="lede" style="margin-top: 22px;">Anomalous traffic surfacing against a learned baseline, with no guardrail model in the loop.</p>
+            <h2>Two minutes, on live inference traffic.</h2>
+            <p class="lede" style="margin-top: 22px;">Anomalies surfacing against a learned inference baseline, with no guardrail model in the loop.</p>
             <div class="video-wrap">
                 <div class="video-frame">
                     <iframe
                         src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
-                        title="Intrinsec AI: anomaly detection for self-hosted LLMs, 2-minute demo"
+                        title="Intrinsec AI: anomaly detection on AI agent inference traffic, 2-minute demo"
                         loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">2-minute demo · prompt injection and drift detection inside the inference engine</div>
+                <div class="video-caption">2-minute demo · anomalies surfacing against an inference baseline</div>
             </div>
         </div>
     </section>
 
-    <!-- ===== Problem: pay twice ===== -->
-    <section id="problem">
+    <!-- ===== What inference traffic means ===== -->
+    <section id="inference-traffic">
         <div class="container">
-            <div class="compare-header">
-                <p class="eyebrow">The problem</p>
-                <h2>You're paying for compute <span class="warn">twice</span>.<br>And the second pass still misses.</h2>
-                <p class="lede" style="margin-top: 22px;">Every guarded request runs through your model once for the answer, and through a second model to check it. That doubles cost and latency, and a judge can only recognize the failure modes someone already enumerated.</p>
-            </div>
+            <p class="eyebrow">The layer that matters</p>
+            <h2>Inference traffic is what happens <span class="accent-2">inside the model</span>.</h2>
+            <p class="lede" style="margin-top: 22px;">Traffic means different things depending on where you sit. Packets on a wire. Prompts arriving at an endpoint. We watch one layer deeper: the computation the model performs when it answers.</p>
 
-            <div class="compare-grid">
-                <div class="compare-card is-today">
-                    <div class="compare-tag">Today · The second-model tax</div>
-                    <h3>Guardrails and LLM judges</h3>
-                    <ul class="compare-list">
-                        <li><b>Double compute, added latency.</b> Every request is re-run through a judge that sits in the request path.</li>
-                        <li><b>Enumerated coverage.</b> A judge recognizes only the attack patterns it was trained on, and attacks can hide in images, audio, and files. Every new surface needs another filter.</li>
-                    </ul>
+            <div class="layer-stack" role="img" aria-label="Three layers of traffic. Every input modality (text, images, audio, video, documents, tool results) passes down through network traffic, where pre-agentic security lives, and prompt and API traffic, where gateways and guardrails live, into inference traffic inside the model, where Intrinsec AI watches.">
+                <div class="surface-label">Growing surface</div>
+                <div class="surface-chips">
+                    <span class="surface-chip">Text</span>
+                    <span class="surface-chip">Images</span>
+                    <span class="surface-chip">Audio</span>
+                    <span class="surface-chip">Video</span>
+                    <span class="surface-chip">Documents</span>
+                    <span class="surface-chip">Tool results</span>
                 </div>
-                <div class="compare-card is-intrinsec">
-                    <div class="compare-tag">With Intrinsec AI · Reuse what you already compute</div>
-                    <h3>Detection inside the engine</h3>
-                    <ul class="compare-list">
-                        <li><b>Zero extra cost or latency.</b> We reuse the compute your engine already produces; nothing new sits in the request path.</li>
-                        <li><b>Whole-class coverage.</b> The computation is where the action ultimately happens, whatever the source or modality. Anything atypical surfaces there, even when the input looks fine.</li>
-                    </ul>
+                <div class="layer-arrow" aria-hidden="true"></div>
+                <div class="layer">
+                    <div>
+                        <div class="layer-title">Network traffic</div>
+                        <div class="layer-sub">Packets, TLS, egress</div>
+                    </div>
+                    <div class="layer-tag">Pre-agentic security</div>
+                </div>
+                <div class="layer-arrow" aria-hidden="true"></div>
+                <div class="layer">
+                    <div>
+                        <div class="layer-title">Prompt and API traffic</div>
+                        <div class="layer-sub">Inbound requests, text filters</div>
+                    </div>
+                    <div class="layer-tag">Gateways and guardrails</div>
+                </div>
+                <div class="layer-arrow is-focus" aria-hidden="true"></div>
+                <div class="layer is-focus">
+                    <div>
+                        <div class="layer-title">Inference traffic</div>
+                        <div class="layer-sub">Inside the model, where the action actually happens</div>
+                    </div>
+                    <div class="layer-tag">Intrinsec AI</div>
                 </div>
             </div>
+            <p class="diagram-footnote">Every new surface and modality adds another thing to filter at the edge. All of them still have to run through the same computation.</p>
+        </div>
+    </section>
+
+    <!-- ===== What goes wrong ===== -->
+    <section id="what-goes-wrong">
+        <div class="container">
+            <p class="eyebrow">Why a baseline</p>
+            <h2>The list of things that go wrong keeps growing.</h2>
+            <p class="lede" style="margin-top: 22px;">Some failures are attacks. Some are just a deep stack breaking. From the outside they look the same: traffic that passes every check, behavior that isn't what you deployed.</p>
 
             <div class="modes-strip">
-                <div class="modes-label">One baseline catches</div>
+                <div class="modes-label">One baseline surfaces</div>
                 <div class="modes-chips">
                     <span class="mode-chip">Prompt injection</span>
                     <span class="mode-chip">Jailbreaks</span>
-                    <span class="mode-chip">Obfuscated prompts</span>
                     <span class="mode-chip">Sensitive-data exposure</span>
                     <span class="mode-chip">Rogue tool calls</span>
-                    <span class="mode-chip">Atypical outputs</span>
-                    <span class="mode-chip">Traffic drift</span>
-                    <span class="mode-chip">Out-of-domain use</span>
+                    <span class="mode-chip">Broken tool calls</span>
+                    <span class="mode-chip">Hallucination</span>
+                    <span class="mode-chip">Drift and off-domain use</span>
                 </div>
-                <p class="modes-note">If it doesn't match how your workload normally computes, it surfaces. That includes failure modes no one has named yet.</p>
+                <p class="modes-note">The list isn't the product; the baseline is. Anything that doesn't match how your workload normally computes surfaces, including the failure modes no one has named yet.</p>
+            </div>
+
+            <div class="beyond-strip" style="margin-top: 20px;">
+                <span class="beyond-label is-warn">Not just attacks</span>
+                <div>
+                    <h3>Tool calls that quietly fail.</h3>
+                    <p>Sometimes a tool call just breaks: a malformed argument, a schema that drifted, a result the model answers around. Nobody attacked you and nothing threw an error, but the model still computes differently, so it surfaces the same way an injection does.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -628,108 +746,70 @@
     <section id="how-it-works">
         <div class="container">
             <p class="eyebrow">How it works</p>
-            <h2>Three steps. No new model.</h2>
+            <h2>Baseline. Surface. Tag.</h2>
 
             <div class="steps-grid">
                 <div class="step-card">
-                    <div class="step-num">Step 1</div>
-                    <h3>Plug into your engine.</h3>
-                    <p>A connector for vLLM and SGLang. Your model and your traffic never leave your infrastructure.</p>
+                    <div class="step-num">Baseline</div>
+                    <h3>Learn how your model fires.</h3>
+                    <p>We watch the model behind your agent during normal traffic and build a baseline of normal for your workload, learned from your own traffic rather than a generic attack list.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-num">Step 2</div>
-                    <h3>Reuse the compute.</h3>
-                    <p>Every forward pass already produces rich internal state, including the KV cache. We distill it into a compact behavioral fingerprint per request.</p>
+                    <div class="step-num">Surface</div>
+                    <h3>Score every request against it.</h3>
+                    <p>Anything atypical stands out, whatever the source or modality, even when the input itself reads perfectly fine.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-num">Step 3</div>
-                    <h3>Surface what doesn't match.</h3>
-                    <p>Fingerprints build a baseline of normal for your workload. Anything atypical stands out, and alerts flow to the tools you already use.</p>
+                    <div class="step-num">Tag</div>
+                    <h3>Label what surfaced.</h3>
+                    <p>DLP tagged data. We tag computation: domain, task, disposition, safety flags. Anomalies reach your alerting stack already labeled.</p>
                 </div>
             </div>
 
-            <div class="diagram-wrap">
-                <svg class="diagram-svg" viewBox="0 0 1180 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: requests flow through the inference engine to actions; Intrinsec AI recycles the engine's own compute into a fingerprint baseline that surfaces injections, jailbreaks, data exposure, rogue tool calls, and drift.">
-                    <defs>
-                        <marker id="archArrGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a1a7b3"/></marker>
-                        <marker id="archArrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/></marker>
-                    </defs>
+            <div class="flow" role="img" aria-label="Agent inputs flow into the model and out as actions. Intrinsec AI taps the model's computation off the request path to build an inference baseline, and tagged anomalies flow to your alerting stack.">
+                <div class="flow-row">
+                    <div class="flow-box">
+                        <div class="flow-box-label">Agent loop</div>
+                        <div class="flow-box-title">Prompts, tool results, retrieved documents, media</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true"></div>
+                    <div class="flow-box is-model">
+                        <div class="flow-box-label">Inference</div>
+                        <div class="flow-box-title">The model behind your agent</div>
+                        <span class="flow-tag">Computation</span>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true"></div>
+                    <div class="flow-box">
+                        <div class="flow-box-label">Actions</div>
+                        <div class="flow-box-title">Tool call, file write, response</div>
+                    </div>
+                </div>
 
-                    <!-- Row 1: stream -> engine -> action -->
-                    <g>
-                        <text x="30" y="22" fill="#6b7280" font-size="11" letter-spacing="3" font-family="Inter">REQUEST STREAM</text>
-                        <g font-family="Inter">
-                            <rect x="30"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                            <rect x="76"  y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                            <rect x="122" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                            <rect x="168" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                            <rect x="214" y="40" width="38" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                            <text x="49"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₁</text>
-                            <text x="95"  y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₂</text>
-                            <text x="141" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₃</text>
-                            <text x="187" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₄</text>
-                            <text x="233" y="66" text-anchor="middle" fill="#a1a7b3" font-size="13">m₅</text>
-                            <text x="260" y="66" fill="#a1a7b3" font-size="14">…</text>
-                        </g>
-                    </g>
+                <div class="flow-tap" aria-hidden="true"><span>Tap, off the request path</span></div>
 
-                    <line x1="288" y1="61" x2="338" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
-
-                    <!-- Inference engine box -->
-                    <g font-family="Inter">
-                        <rect x="348" y="20" width="420" height="98" rx="12" fill="none" stroke="rgba(255,255,255,0.45)"/>
-                        <text x="558" y="48" text-anchor="middle" fill="#f3f4f6" font-size="16" font-weight="600">Inference engine</text>
-                        <text x="558" y="66" text-anchor="middle" fill="#a1a7b3" font-size="11" letter-spacing="2">vLLM · SGLang · self-hosted LLM</text>
-                        <rect x="480" y="78" width="156" height="24" rx="5" fill="none" stroke="rgba(52,211,153,0.55)"/>
-                        <text x="558" y="94" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2">KV CACHE</text>
-                    </g>
-
-                    <line x1="772" y1="61" x2="822" y2="61" stroke="#a1a7b3" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
-
-                    <!-- Action box -->
-                    <g font-family="Inter">
-                        <text x="836" y="22" fill="#6b7280" font-size="11" letter-spacing="3">RESPONSE</text>
-                        <rect x="836" y="40" width="320" height="42" rx="6" fill="none" stroke="rgba(255,255,255,0.28)"/>
-                        <text x="996" y="66" text-anchor="middle" fill="#f3f4f6" font-size="13">tool call · file write · response</text>
-                        <text x="996" y="104" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2">A SECOND MODEL WOULD RE-RUN ALL OF THIS</text>
-                    </g>
-
-                    <!-- Recycle tap -->
-                    <path d="M 558 124 L 558 190" stroke="#34d399" stroke-width="1.6" stroke-dasharray="5,5" fill="none" marker-end="url(#archArrGreen)"/>
-                    <text x="572" y="162" fill="#34d399" font-size="12" letter-spacing="3" font-family="Inter">RECYCLE</text>
-
-                    <!-- Fingerprint memory -->
-                    <g font-family="Inter">
-                        <rect x="278" y="202" width="600" height="150" rx="12" fill="rgba(52,211,153,0.05)" stroke="#34d399"/>
-                        <text x="298" y="230" fill="#34d399" font-size="12" letter-spacing="3">FINGERPRINT BASELINE</text>
-                        <text x="298" y="268" fill="#f3f4f6" font-size="24" font-weight="600">Recycled inference compute</text>
-                        <text x="298" y="298" fill="#a1a7b3" font-size="14">The engine already computes a fingerprint per request.</text>
-                        <text x="298" y="318" fill="#a1a7b3" font-size="14">Reuse it (no second model, no extra pass) and</text>
-                        <text x="298" y="338" fill="#a1a7b3" font-size="14">baseline normal behavior for your workload.</text>
-                    </g>
-
-                    <!-- Anomaly out -->
-                    <g font-family="Inter">
-                        <line x1="878" y1="277" x2="938" y2="277" stroke="#fca5a5" stroke-width="1.5" marker-end="url(#archArrGrey)"/>
-                        <text x="952" y="252" fill="#fca5a5" font-size="12" letter-spacing="2">INJECTION · JAILBREAK</text>
-                        <text x="952" y="272" fill="#fca5a5" font-size="12" letter-spacing="2">DATA LEAK · ROGUE TOOLS</text>
-                        <text x="952" y="292" fill="#fca5a5" font-size="12" letter-spacing="2">DRIFT · OFF-DOMAIN</text>
-                        <text x="952" y="314" fill="#6b7280" font-size="11" letter-spacing="2">→ your alerting stack</text>
-                    </g>
-                </svg>
-                <p class="diagram-footnote">Detection rides along with inference. The request path is untouched.</p>
+                <div class="flow-row">
+                    <div class="flow-box is-baseline">
+                        <div class="flow-box-label">Inference baseline</div>
+                        <div class="flow-box-title">How your workload normally computes</div>
+                        <div class="flow-box-note">Learned from your own traffic, and updated as it shifts.</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true"></div>
+                    <div class="flow-box is-anomaly">
+                        <div class="flow-box-label">Tagged anomalies</div>
+                        <div class="flow-box-title">Domain · task · disposition · safety flag</div>
+                        <div class="flow-box-note">Into the alerting stack you already run.</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ===== Beyond binary verdicts ===== -->
-    <section id="beyond">
-        <div class="container">
-            <div class="beyond-strip">
+            <p class="diagram-footnote">Modern inference engines (vLLM, SGLang) and inference gateways. On-prem or cloud, always inside your infrastructure.</p>
+            <p class="diagram-footnote is-dim">Detection rides along with inference: no second model, no extra pass, no added latency.</p>
+
+            <div class="beyond-strip" style="margin-top: 56px;">
                 <span class="beyond-label">Where this goes</span>
                 <div>
-                    <h3>Beyond binary verdicts.</h3>
-                    <p>DLP taught security to classify data. We classify computation. A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. We label that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in one unified representation space, the labels are not bound to text.</p>
+                    <h3>DLP tagged data. We tag computation.</h3>
+                    <p>A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. We label that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in one unified representation space, the labels are not bound to text or to any one modality.</p>
                 </div>
             </div>
         </div>
@@ -739,8 +819,8 @@
     <section class="cta">
         <div class="container">
             <p class="eyebrow" style="text-align: center;">Design partners</p>
-            <h2>Run vLLM or SGLang in production?</h2>
-            <p>We're working with a small number of design partners to evaluate detection against their own traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
+            <h2>Running agents in production?</h2>
+            <p>We're working with a small number of design partners to baseline detection against their own inference traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
             <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
         </div>
     </section>
@@ -754,7 +834,7 @@
                     <a href="index.html" class="brand" aria-label="Intrinsec AI home">
                         <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
-                    <p class="footer-tag">Anomaly detection for self-hosted LLMs. No second model, no extra pass, no added latency.</p>
+                    <p class="footer-tag">Anomaly detection on AI agent inference traffic. Baseline how your model computes, tag what doesn't match.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>
