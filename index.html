@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intrinsec AI · Anomaly detection on AI agent inference traffic</title>
-    <meta name="description" content="Anomaly detection on AI agent inference traffic. Intrinsec AI baselines how the model behind your agent computes during normal traffic, then surfaces and tags what doesn't match: prompt injection, rogue and broken tool calls, sensitive-data exposure, hallucination, and drift. No second model, no extra pass, no added latency.">
+    <meta name="description" content="Anomaly detection on AI agent inference traffic. Intrinsec AI baselines how the model behind your agent computes during normal traffic, then surfaces and tags what doesn't match: prompt injection, rogue and broken tool calls, sensitive-data exposure, hallucination, and drift. Detection runs off the request path: no extra pass over your traffic, no added latency.">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0a0b0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -637,9 +637,9 @@
                 <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
             <div class="proof-pills" aria-label="Key facts">
-                <span class="pill">No second model, no extra pass</span>
+                <span class="pill">No added latency</span>
+                <span class="pill">Plugs into your inference engine or gateway</span>
                 <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
-                <span class="pill">Runs in your infra</span>
             </div>
         </div>
     </section>
@@ -649,7 +649,7 @@
         <div class="container">
             <p class="eyebrow">See it work</p>
             <h2>Two minutes, on live inference traffic.</h2>
-            <p class="lede" style="margin-top: 22px;">Anomalies surfacing against a learned inference baseline, with no guardrail model in the loop.</p>
+            <p class="lede" style="margin-top: 22px;">Anomalies surfacing against a learned inference baseline, with nothing added to the request path.</p>
             <div class="video-wrap">
                 <div class="video-frame">
                     <iframe
@@ -803,7 +803,7 @@
             </div>
 
             <p class="diagram-footnote">Modern inference engines (vLLM, SGLang) and inference gateways. On-prem or cloud, always inside your infrastructure.</p>
-            <p class="diagram-footnote is-dim">Detection rides along with inference: no second model, no extra pass, no added latency.</p>
+            <p class="diagram-footnote is-dim">Detection rides along with inference, off the request path: no extra pass over your traffic, no added latency.</p>
 
             <div class="beyond-strip" style="margin-top: 56px;">
                 <span class="beyond-label">Where this goes</span>
