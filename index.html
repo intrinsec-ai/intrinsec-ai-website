@@ -145,27 +145,34 @@
             margin-bottom: 18px;
         }
 
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
         h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.06; }
         h2 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.1; }
         h3 { font-size: 22px; line-height: 1.3; }
 
         p { color: var(--ink-dim); font-size: 17px; line-height: 1.65; }
-        .lede { color: var(--ink-dim); font-size: clamp(18px, 2vw, 21px); line-height: 1.6; max-width: 60ch; }
+        .lede { color: var(--ink-dim); font-size: clamp(18px, 2vw, 21px); line-height: 1.6; max-width: 60ch; text-wrap: pretty; }
 
         .accent-2 { color: var(--accent-2); }
 
         /* ===== Hero ===== */
         .hero { padding: 112px 0 104px; }
-        .hero h1 { max-width: 22ch; }
+        .hero h1 { max-width: 28ch; }
         .hero-sub {
             margin-top: 30px;
-            max-width: 58ch;
+            max-width: 92ch;
             font-size: 19px;
             line-height: 1.7;
             color: var(--ink-dim);
+            text-wrap: pretty;
         }
+        .hero-sub .line { display: block; }
         .hero-sub b { color: var(--ink); font-weight: 500; }
+        .hero-sub.is-secondary {
+            margin-top: 14px;
+            font-size: 16.5px;
+            color: var(--ink-subtle);
+        }
         .hero-cta {
             margin-top: 40px;
             display: flex;
@@ -630,14 +637,16 @@
     <section class="hero">
         <div class="container">
             <p class="eyebrow">For agentic applications</p>
-            <h1>Anomaly detection on AI agent<br><span class="accent-2">inference traffic.</span></h1>
-            <p class="hero-sub">Agent stacks break in more ways than anyone can enumerate. We baseline how the model behind your agent fires during normal traffic, then surface and tag everything that doesn't match.</p>
+            <h1>Anomaly detection on<br>AI agent <span class="accent-2">inference traffic.</span></h1>
+            <p class="hero-sub"><span class="line">Today's AI security products read the text going into a model and the text coming out.</span> <b class="line">We read the computation in between.</b></p>
+            <p class="hero-sub is-secondary"><span class="line">We baseline how the model behind your agent computes during normal traffic,</span> <span class="line">then surface and tag everything that doesn't match.</span></p>
             <div class="hero-cta">
                 <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
                 <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
             <div class="proof-pills" aria-label="Key facts">
                 <span class="pill">No added latency</span>
+                <span class="pill">Content never leaves your infrastructure</span>
                 <span class="pill">Plugs into your inference engine or gateway</span>
                 <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
             </div>
@@ -670,7 +679,7 @@
         <div class="container">
             <p class="eyebrow">The layer that matters</p>
             <h2>Inference traffic is what happens <span class="accent-2">inside the model</span>.</h2>
-            <p class="lede" style="margin-top: 22px;">Traffic means different things depending on where you sit. Packets on a wire. Prompts arriving at an endpoint. We watch one layer deeper: the computation the model performs when it answers.</p>
+            <p class="lede" style="margin-top: 22px;">Packets on a wire. Prompts at an endpoint. We watch one layer deeper: the computation the model performs when it answers.</p>
 
             <div class="layer-stack" role="img" aria-label="Three layers of traffic. Every input modality (text, images, audio, video, documents, tool results) passes down through network traffic, where pre-agentic security lives, and prompt and API traffic, where gateways and guardrails live, into inference traffic inside the model, where Intrinsec AI watches.">
                 <div class="surface-label">Growing surface</div>
@@ -806,12 +815,71 @@
             <p class="diagram-footnote is-dim">Detection rides along with inference, off the request path: no extra pass over your traffic, no added latency.</p>
 
             <div class="beyond-strip" style="margin-top: 56px;">
+                <span class="beyond-label">Privacy by construction</span>
+                <div>
+                    <h3>The wire has no field for your prompts.</h3>
+                    <p>The protocol between the tap and the scorer carries fingerprints and page identifiers — there is no field for prompt or response text. Verdicts come back keyed to pages; matching them to content is a local join inside your infrastructure. Content can't leave because the wire can't express it. Not a policy — a structural property.</p>
+                </div>
+            </div>
+
+            <div class="beyond-strip" style="margin-top: 20px;">
                 <span class="beyond-label">Where this goes</span>
                 <div>
                     <h3>DLP tagged data. We tag computation.</h3>
                     <p>A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. We label that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in one unified representation space, the labels are not bound to text or to any one modality.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ===== The operator view ===== -->
+    <section id="traffic-view">
+        <div class="container">
+            <p class="eyebrow">The operator view</p>
+            <h2>What your security team sees.</h2>
+            <p class="lede" style="margin-top: 22px;">Live inference traffic, scored and tagged page by page — verdicts, behavioral tags, drift.</p>
+            <div class="video-wrap">
+                <img src="traffic-view.png"
+                     alt="Plato's traffic view: a detections feed over live inference traffic. Each row shows an anomaly score, behavioral tags such as tool-invocation-request and personal-data-handling, the flagged page range, and a per-page sparkline — with no prompt or response text anywhere."
+                     width="1024" height="593" loading="lazy"
+                     style="width: 100%; height: auto; border-radius: 8px; display: block;">
+                <div class="video-caption">Plato's traffic view · live inference, tagged per page</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Where this is heading ===== -->
+    <section id="direction">
+        <div class="container">
+            <p class="eyebrow">Where this is heading</p>
+            <h2>The gateway keeps moving <span class="accent-2">toward the model</span>.</h2>
+            <p class="lede" style="margin-top: 22px;">Each generation of gateway governs one layer deeper. The first two are settled history. The third is where we build.</p>
+
+            <div class="flow" role="img" aria-label="Three generations of gateway. The API gateway, 2009 to 2023, governed HTTP calls. The AI gateway, 2023 to 2026, governs prompts and tokens. The secure inference gateway, next and still unclaimed, governs the computation itself — where Intrinsec AI builds.">
+                <div class="flow-row">
+                    <div class="flow-box">
+                        <div class="flow-box-label">2009 – 2023</div>
+                        <div class="flow-box-title">API gateway</div>
+                        <div class="flow-box-note">Governs HTTP calls. Auth, quotas, routing for ordinary service traffic.</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true"></div>
+                    <div class="flow-box">
+                        <div class="flow-box-label">2023 – 2026</div>
+                        <div class="flow-box-title">AI gateway</div>
+                        <div class="flow-box-note">Governs prompts and tokens. One API, spend control, guardrail hooks.</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true"></div>
+                    <div class="flow-box is-baseline">
+                        <div class="flow-box-label">Next</div>
+                        <div class="flow-box-title">Secure inference gateway</div>
+                        <div class="flow-box-note">Governs the computation itself.</div>
+                        <span class="flow-tag">Intrinsec AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="diagram-footnote">Serving engines already read the model's internal state on every request — and use it only to go faster. No security signal has ever been derived from it. That is the layer we claim.</p>
+            <p class="diagram-footnote is-dim">And because fingerprints carry no content, a behavior learned in one fleet can protect another — the way the malware world shares IOCs.</p>
         </div>
     </section>
 
@@ -839,7 +907,7 @@
                 <div class="footer-col" aria-label="Product">
                     <div class="footer-col-title">Product</div>
                     <a href="products.html">Products</a>
-                    <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="index.html#traffic-view">The operator view</a>
                 </div>
                 <div class="footer-col" aria-label="Company">
                     <div class="footer-col-title">Company</div>
