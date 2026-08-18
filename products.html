@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plato · Intrinsec AI · Anomaly detection on AI agent inference traffic</title>
     <meta name="description" content="Plato, from Intrinsec AI, watches the layer where the action happens: the computation inside the model behind your agent. It baselines how that model fires on normal traffic, then surfaces and tags what doesn't match, from prompt injection and rogue tool calls to broken tool calls and hallucination.">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0a0b0d">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#F3EFE4">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:title" content="Plato · Anomaly detection on AI agent inference traffic">
     <meta property="og:description" content="One baseline of how your model normally computes, and every deviation tagged the way DLP tagged data. Detection runs off the request path: no extra pass over your traffic, no added latency.">
@@ -17,639 +17,50 @@
     <link rel="apple-touch-icon" href="intrinsec-ai-logo-dark-on-bg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0b0d;
-            --bg-2: #101216;
-            --ink: #f3f4f6;
-            --ink-dim: #a1a7b3;
-            --ink-subtle: #6b7280;
-            --rule: #1f2329;
-            --rule-strong: #2a2f37;
-            --accent: #7dd3fc;
-            --accent-2: #34d399;
-            --warn: #fca5a5;
-            --container: 1180px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--ink);
-            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, sans-serif;
-            font-feature-settings: "ss01", "cv11", "ss03";
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.5;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(52, 211, 153, 0.04), transparent 60%);
-            background-attachment: fixed;
-        }
-
-        a { color: inherit; text-decoration: none; }
-
-        .skip-link {
-            position: absolute;
-            left: 12px;
-            top: -100px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            background: var(--bg-2);
-            color: var(--ink);
-            border: 1px solid var(--rule);
-            font-size: 13px;
-            z-index: 1000;
-        }
-        .skip-link:focus { top: 12px; }
-
-        .container {
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        /* ===== Header ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            background: rgba(10, 11, 13, 0.78);
-            border-bottom: 1px solid var(--rule);
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            gap: 24px;
-        }
-        .header-left { display: flex; align-items: center; gap: 36px; }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            font-size: 13px;
-            text-transform: uppercase;
-            color: var(--ink);
-        }
-        .brand-mark {
-            height: 40px;
-            width: auto;
-            display: block;
-            filter: invert(1) hue-rotate(180deg) saturate(1.05);
-        }
-        .footer-brand .brand-mark { height: 44px; }
-        .nav { display: flex; gap: 24px; }
-        .nav-link {
-            font-size: 14px;
-            color: var(--ink-dim);
-            transition: color 0.15s ease;
-        }
-        .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink); }
-        .header-cta {
-            font-size: 13px;
-            padding: 8px 14px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
-            color: var(--ink);
-            transition: border-color 0.15s ease, background 0.15s ease;
-        }
-        .header-cta:hover {
-            border-color: var(--accent);
-            background: rgba(125, 211, 252, 0.06);
-        }
-
-        section { padding: 104px 0; border-top: 1px solid var(--rule); }
-        section:first-of-type { border-top: none; }
-
-        .eyebrow {
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 18px;
-        }
-
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(44px, 6vw, 72px); line-height: 1.04; }
-        h2 { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; }
-        h3 { font-size: 22px; line-height: 1.3; }
-
-        p { color: var(--ink-dim); font-size: 17px; line-height: 1.65; }
-        .lede { color: var(--ink-dim); font-size: clamp(18px, 2vw, 21px); line-height: 1.6; max-width: 60ch; }
-
-        .accent-2 { color: var(--accent-2); }
-
-        /* ===== Hero ===== */
-        .hero { padding: 112px 0 96px; }
-        .hero h1 { max-width: 20ch; }
-        .hero-sub {
-            margin-top: 30px;
-            max-width: 58ch;
-            font-size: 19px;
-            line-height: 1.7;
-            color: var(--ink-dim);
-        }
-        .hero-sub b { color: var(--ink); font-weight: 500; }
-        .hero-cta {
-            margin-top: 36px;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .proof-pills {
-            margin-top: 48px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .pill::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-2);
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 22px;
-            background: var(--ink);
-            color: var(--bg);
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            transition: transform 0.15s ease, background 0.15s ease;
-        }
-        .btn-primary:hover {
-            background: var(--accent);
-            transform: translateY(-1px);
-        }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 22px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
-            font-size: 15px;
-            color: var(--ink);
-            transition: border-color 0.15s ease;
-        }
-        .btn-secondary:hover { border-color: var(--accent); }
-
-        /* ===== Section intro ===== */
-        .surface-tag-line {
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 8px;
-        }
-        .surface-intro h2 { margin-bottom: 20px; max-width: 22ch; }
-        .surface-section { padding: 104px 0; }
-        .surface-section .container > .surface-intro { max-width: 780px; }
-
-        /* ===== Product card ===== */
-        .product-card {
-            margin-top: 56px;
-            border: 1px solid var(--rule);
-            border-radius: 16px;
-            padding: 56px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            position: relative;
-        }
-        .product-card-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 56px;
-            align-items: start;
-        }
-
-        .product-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-dim);
-            margin-bottom: 18px;
-        }
-        .product-badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-2);
-        }
-
-        .product-title { margin-bottom: 18px; }
-        .product-title .accent, .product-title .accent-2 { display: block; }
-
-        .product-desc {
-            color: var(--ink);
-            font-size: 18px;
-            line-height: 1.55;
-            margin-bottom: 28px;
-            max-width: 48ch;
-        }
-
-        .capability-list { list-style: none; }
-        .capability-list li {
-            padding: 14px 0 14px 24px;
-            position: relative;
-            border-top: 1px solid var(--rule);
-            color: var(--ink-dim);
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        .capability-list li:first-child { border-top: none; }
-        .capability-list li::before {
-            content: "◆";
-            position: absolute;
-            left: 0;
-            top: 14px;
-            color: var(--accent-2);
-            font-size: 10px;
-        }
-        .capability-list li b { color: var(--ink); font-weight: 600; }
-
-        /* ===== Visual containers ===== */
-        .visual-svg {
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 32px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .visual-svg svg { width: 100%; height: auto; display: block; }
-        .visual-caption {
-            margin-top: 16px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-
-        /* ===== Flow diagram ===== */
-        .flow { margin-top: 52px; }
-        .flow-row { display: flex; align-items: stretch; gap: 14px; }
-        .flow-box {
-            flex: 1;
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 20px 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .flow-box-label {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 10px;
-        }
-        .flow-box-title { font-size: 16px; color: var(--ink); line-height: 1.4; }
-        .flow-box-note { font-size: 14px; color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
-        .flow-box.is-model { border-color: var(--rule-strong); }
-        .flow-tag {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 4px 12px;
-            border: 1px solid rgba(52, 211, 153, 0.5);
-            border-radius: 999px;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-        }
-        .flow-box.is-baseline {
-            border-color: rgba(52, 211, 153, 0.5);
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.06), rgba(255, 255, 255, 0));
-        }
-        .flow-box.is-baseline .flow-box-label { color: var(--accent-2); }
-        .flow-box.is-anomaly {
-            border-color: rgba(252, 165, 165, 0.4);
-            background: linear-gradient(180deg, rgba(252, 165, 165, 0.05), rgba(255, 255, 255, 0));
-        }
-        .flow-box.is-anomaly .flow-box-label { color: var(--warn); }
-        .flow-arrow {
-            align-self: center;
-            color: var(--ink-subtle);
-            font-size: 18px;
-            line-height: 1;
-        }
-        .flow-arrow::before { content: "→"; }
-        .flow-tap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            padding: 18px 0;
-        }
-        .flow-tap::before, .flow-tap::after {
-            content: "";
-            width: 2px;
-            height: 24px;
-            background: repeating-linear-gradient(180deg, var(--accent-2) 0 5px, transparent 5px 10px);
-            opacity: 0.8;
-        }
-        .flow-tap span {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-        }
-        .diagram-footnote {
-            margin-top: 22px;
-            font-size: 13px;
-            color: var(--ink-dim);
-            text-align: center;
-        }
-        .diagram-footnote.is-dim {
-            margin-top: 6px;
-            color: var(--ink-subtle);
-        }
-
-        /* ===== Detects grid ===== */
-        .detects-grid {
-            margin-top: 48px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .detect-card {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 32px 28px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .detect-tag {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 14px;
-        }
-        .detect-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
-        .detect-card p { font-size: 15px; line-height: 1.55; }
-
-        /* ===== Beyond strip ===== */
-        .beyond-strip {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 36px 32px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 32px;
-            align-items: start;
-        }
-        .beyond-label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            padding: 6px 14px;
-            border: 1px solid rgba(52, 211, 153, 0.35);
-            border-radius: 999px;
-            white-space: nowrap;
-        }
-        .beyond-strip h3 { color: var(--ink); margin-bottom: 12px; }
-        .beyond-strip p { font-size: 16px; max-width: 72ch; }
-        @media (max-width: 720px) {
-            .beyond-strip { grid-template-columns: 1fr; gap: 18px; }
-        }
-
-        /* ===== Also from Intrinsec AI ===== */
-        .also-grid {
-            margin-top: 48px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .also-card {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 32px 28px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            display: flex;
-            flex-direction: column;
-            transition: border-color 0.15s ease;
-        }
-        .also-card:hover { border-color: rgba(125, 211, 252, 0.35); }
-        .also-tag {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 14px;
-        }
-        .also-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
-        .also-card p { font-size: 15px; line-height: 1.55; }
-        .also-link {
-            margin-top: auto;
-            padding-top: 20px;
-            font-size: 14px;
-            color: var(--accent);
-        }
-
-        /* ===== Video ===== */
-        .video-wrap {
-            margin-top: 48px;
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 14px;
-            background: var(--bg-2);
-        }
-        .video-frame {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-        }
-        .video-frame iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .video-caption {
-            margin-top: 14px;
-            font-size: 12px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            text-align: center;
-        }
-
-        /* ===== CTA ===== */
-        .cta { padding: 96px 0; text-align: center; }
-        .cta h2 { margin-bottom: 24px; max-width: 22ch; margin-left: auto; margin-right: auto; }
-        .cta p { max-width: 60ch; margin: 0 auto 32px; }
-
-        /* ===== Footer ===== */
-        footer {
-            border-top: 1px solid var(--rule);
-            padding: 64px 0 40px;
-            background: var(--bg);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-        .footer-brand .brand { margin-bottom: 16px; }
-        .footer-tag {
-            font-size: 14px;
-            color: var(--ink-dim);
-            max-width: 36ch;
-            line-height: 1.55;
-        }
-        .footer-col-title {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 16px;
-        }
-        .footer-col a {
-            display: block;
-            font-size: 14px;
-            color: var(--ink-dim);
-            padding: 6px 0;
-            transition: color 0.15s ease;
-        }
-        .footer-col a:hover { color: var(--ink); }
-        .footer-bottom {
-            border-top: 1px solid var(--rule);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--ink-subtle);
-            letter-spacing: 0.08em;
-        }
-        .footer-patent {
-            padding: 4px 12px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 900px) {
-            .container { padding: 0 24px; }
-            section { padding: 72px 0; }
-            .hero { padding: 72px 0 56px; }
-            .surface-section { padding: 72px 0; }
-            .product-card { padding: 36px 28px; }
-            .product-card-inner { grid-template-columns: 1fr; gap: 40px; }
-            .detects-grid { grid-template-columns: 1fr; }
-            .also-grid { grid-template-columns: 1fr; }
-            .flow { margin-top: 40px; }
-            .flow-row { flex-direction: column; gap: 12px; }
-            .flow-arrow { align-self: center; }
-            .flow-arrow::before { content: "↓"; }
-            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 12px; }
-            .nav { display: none; }
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 0 20px; }
-            h1 { font-size: 38px; }
-            .product-card { padding: 28px 22px; }
-            .hero-cta { flex-direction: column; align-items: stretch; }
-            .btn-primary, .btn-secondary { justify-content: center; }
-            .header-cta { display: none; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="header-left">
-                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
-                    </a>
-                    <nav class="nav" aria-label="Primary">
-                        <a class="nav-link" href="index.html">Home</a>
-                        <a class="nav-link" href="products.html" aria-current="page">Products</a>
-                        <a class="nav-link" href="blog/index.html">Research</a>
-                    </nav>
-                </div>
-                <div class="header-right">
-                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
-                </div>
+    <header class="site-header">
+        <div class="container header-bar">
+            <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                <img src="intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
+            </a>
+            <nav class="nav" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="products.html" aria-current="page">Products</a>
+                <a href="blog/index.html">Research</a>
+            </nav>
+            <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
+            <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav">Menu</button>
+        </div>
+        <div class="nav-panel" id="mobile-nav" data-nav-panel hidden>
+            <div class="container">
+                <a href="index.html">Home</a>
+                <a href="products.html" aria-current="page">Products</a>
+                <a href="blog/index.html">Research</a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
             </div>
         </div>
     </header>
 
     <main id="main">
 
-    <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">Intrinsec AI · Product</p>
-            <h1>Plato.<br><span class="accent-2">Anomaly detection on inference traffic.</span></h1>
-            <p class="hero-sub">Plato watches the layer where the action happens: the computation inside the model behind your agent. It baselines how that model fires on normal traffic, then surfaces and tags what doesn't match.</p>
+            <p class="kicker">Intrinsec AI · Product</p>
+            <h1>Plato.<br><em>Anomaly detection on inference traffic.</em></h1>
+            <p class="hero-sub">Plato baselines how the model behind your agent computes, then tags what doesn't match — off the request path.</p>
             <div class="hero-cta">
-                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner</a>
                 <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
             </div>
-            <div class="proof-pills" aria-label="Key facts">
-                <span class="pill">No added latency</span>
-                <span class="pill">Plugs into your inference engine or gateway</span>
-                <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
-            </div>
+            <p class="proof">No added latency. Your engine or gateway. Qwen, GLM, Llama.</p>
 
-            <div class="video-wrap" id="demo">
-                <div class="video-frame">
+            <div class="media" id="demo">
+                <div class="media-frame">
                     <iframe
                         src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
                         title="Plato by Intrinsec AI: 2-minute demo"
@@ -658,196 +69,85 @@
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">2-minute demo · anomalies surfacing against an inference baseline</div>
+                <p class="media-caption">2-minute demo · anomalies surfacing against an inference baseline</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== Architecture ===== -->
-    <section class="surface-section" id="architecture" style="border-top: 1px solid var(--rule);">
+    <section class="section is-band" id="architecture">
         <div class="container">
-            <div class="surface-intro">
-                <p class="surface-tag-line">How it fits</p>
-                <h2>Detection rides along with inference.</h2>
-                <p class="lede">Nothing new sits in the request path. Plato taps the computation your engine already performs, so the answer your user is waiting for is untouched.</p>
-            </div>
-
-            <div class="flow" role="img" aria-label="Agent inputs flow into the model and out as actions. Plato taps the model's computation off the request path to build an inference baseline, and tagged anomalies flow to your alerting stack.">
-                <div class="flow-row">
-                    <div class="flow-box">
-                        <div class="flow-box-label">Agent loop</div>
-                        <div class="flow-box-title">Prompts, tool results, retrieved documents, media</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box is-model">
-                        <div class="flow-box-label">Inference</div>
-                        <div class="flow-box-title">The model behind your agent</div>
-                        <span class="flow-tag">Computation</span>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box">
-                        <div class="flow-box-label">Actions</div>
-                        <div class="flow-box-title">Tool call, file write, response</div>
-                    </div>
-                </div>
-
-                <div class="flow-tap" aria-hidden="true"><span>Tap, off the request path</span></div>
-
-                <div class="flow-row">
-                    <div class="flow-box is-baseline">
-                        <div class="flow-box-label">Inference baseline</div>
-                        <div class="flow-box-title">How your workload normally computes</div>
-                        <div class="flow-box-note">Learned from your own traffic, and updated as it shifts.</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box is-anomaly">
-                        <div class="flow-box-label">Tagged anomalies</div>
-                        <div class="flow-box-title">Domain · task · disposition · safety flag</div>
-                        <div class="flow-box-note">Into the alerting stack you already run.</div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="diagram-footnote">Modern inference engines (vLLM, SGLang) and inference gateways. On-prem or cloud, always inside your infrastructure.</p>
-            <p class="diagram-footnote is-dim">Your model and your traffic never leave it.</p>
+            <header class="section-head">
+                <p class="kicker">How it fits</p>
+                <h2>Sits next to the engine you already run.</h2>
+            </header>
+            <ul class="names" aria-label="Where Plato integrates">
+                <li>vLLM</li>
+                <li>SGLang</li>
+                <li>Inference gateways</li>
+                <li>On-prem or cloud</li>
+            </ul>
+            <p class="footnote">Off the request path. No added latency.</p>
         </div>
     </section>
 
-    <!-- ===== What it catches ===== -->
-    <section class="surface-section" id="what-it-catches" style="border-top: 1px solid var(--rule);">
+    <section class="section" id="what-it-catches">
         <div class="container">
-            <div class="surface-intro">
-                <p class="surface-tag-line">What it catches</p>
+            <header class="section-head">
+                <p class="kicker">What it catches</p>
                 <h2>One baseline. Every failure mode.</h2>
-                <p class="lede">Some failures are attacks and some are just a deep stack breaking. Both are deviations from how your workload normally computes, so one baseline surfaces both, including the failure modes no one has named yet.</p>
-            </div>
-
-            <div class="detects-grid">
-                <div class="detect-card">
-                    <div class="detect-tag">Prompt injection</div>
-                    <h3>Injected instructions.</h3>
-                    <p>Instructions smuggled in through user input, retrieved documents, or tool results compute differently from your workload's normal, including variants no guardrail was trained on.</p>
-                </div>
-                <div class="detect-card">
-                    <div class="detect-tag">Jailbreaks &amp; obfuscation</div>
-                    <h3>Attacks in disguise.</h3>
-                    <p>Encodings, role-play framings, multi-turn coaxing. The text can be dressed up to read innocently; the computation underneath still doesn't match normal.</p>
-                </div>
-                <div class="detect-card">
-                    <div class="detect-tag">Data exposure</div>
-                    <h3>Information leaving.</h3>
-                    <p>Secrets, credentials, and sensitive information surfacing in responses where they never normally appear: the kind of leak a keyword filter can't enumerate.</p>
-                </div>
-                <div class="detect-card">
-                    <div class="detect-tag">Rogue tool calls</div>
-                    <h3>Actions it shouldn't take.</h3>
-                    <p>Requests steering the model toward tools it doesn't normally call (deletion, escalation, outbound access), flagged before the pattern becomes an incident.</p>
-                </div>
-                <div class="detect-card">
-                    <div class="detect-tag">Broken tool calls</div>
-                    <h3>Nobody attacked you.</h3>
-                    <p>A malformed argument, a schema that drifted, a result the model answers around. Nothing threw an error, but the model still computes differently, so it surfaces anyway.</p>
-                </div>
-                <div class="detect-card">
-                    <div class="detect-tag">Hallucination &amp; drift</div>
-                    <h3>Work it shouldn't do.</h3>
-                    <p>Answers invented rather than grounded. A support model giving legal advice. Traffic shifting away from what you deployed for. All of it stands out against the baseline.</p>
-                </div>
-            </div>
+            </header>
+            <ul class="names" aria-label="Failure modes one baseline surfaces">
+                <li>Prompt injection</li>
+                <li>Jailbreaks</li>
+                <li>Sensitive-data exposure</li>
+                <li>Rogue tool calls</li>
+                <li>Broken tool calls</li>
+                <li>Hallucination</li>
+                <li>Drift and off-domain use</li>
+                <li>Multimodal (image, audio, video)</li>
+            </ul>
         </div>
     </section>
 
-    <!-- ===== Capabilities ===== -->
-    <section class="surface-section" id="capabilities" style="border-top: 1px solid var(--rule);">
+    <section class="section is-band" id="traffic-view">
         <div class="container">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <div class="product-card-text">
-                        <div class="product-badge">
-                            <span class="product-badge-dot"></span>
-                            Engine-native · Runs in your infra
-                        </div>
-                        <h2 class="product-title"><span class="accent-2">Built for the serving stack you already run.</span></h2>
-                        <p class="product-desc">Plato rides along with inference, not in front of it.</p>
-                        <ul class="capability-list">
-                            <li><b>Engines and gateways.</b> Modern inference engines including vLLM and SGLang, and inference gateways. On-prem or cloud.</li>
-                            <li><b>Zero extra cost or latency.</b> Reuses the compute each forward pass already produces, including the KV cache the engine would otherwise discard, so nothing new sits in the request path.</li>
-                            <li><b>Adaptive baseline.</b> Normal is learned from your own workload, not from a generic attack list.</li>
-                            <li><b>Model-agnostic.</b> Swap or upgrade the model you serve (Qwen, GLM, Llama); the security layer carries over.</li>
-                            <li><b>Tagged, not just flagged.</b> Anomalies arrive labeled by domain, task, disposition, and safety flag, in the tools you already use.</li>
-                        </ul>
-                    </div>
-                    <div class="product-card-visual">
-                        <div class="visual-svg">
-                            <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baseline traces with anomalous trace surfacing above the band">
-                                <text x="0" y="18" fill="#34d399" font-size="10" letter-spacing="3" font-family="Inter">LEARNED BASELINE</text>
-                                <text x="380" y="18" fill="#6b7280" font-size="10" letter-spacing="3" font-family="Inter" text-anchor="end">YOUR TRAFFIC</text>
-
-                                <rect x="10" y="140" width="360" height="40" rx="16" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.3)"/>
-                                <line x1="10" y1="160" x2="370" y2="160" stroke="#34d399" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.4"/>
-
-                                <g stroke="#a1a7b3" stroke-width="0.8" fill="none" opacity="0.55">
-                                    <polyline points="10,156 50,152 90,162 130,154 170,164 210,156 250,162 290,154 330,164 370,158"/>
-                                    <polyline points="10,162 50,156 90,156 130,162 170,156 210,162 250,154 290,162 330,156 370,162"/>
-                                    <polyline points="10,158 50,164 90,154 130,166 170,156 210,164 250,154 290,166 330,158 370,162"/>
-                                    <polyline points="10,164 50,158 90,166 130,156 170,164 210,158 250,168 290,156 330,160 370,156"/>
-                                    <polyline points="10,158 50,160 90,158 130,160 170,154 210,160 250,156 290,162 330,158 370,160"/>
-                                </g>
-
-                                <polyline points="10,160 36,156 64,148 92,138 122,124 152,108 180,100 208,104 236,116 264,130 292,142 320,150 350,154 370,158"
-                                          stroke="#fca5a5" stroke-width="1.6" fill="none"/>
-
-                                <text x="180" y="88" text-anchor="middle" fill="#fca5a5" font-size="11" letter-spacing="2" font-family="Inter">ANOMALOUS REQUEST</text>
-                                <line x1="180" y1="92" x2="180" y2="102" stroke="#fca5a5" stroke-width="0.8"/>
-
-                                <text x="0" y="270" fill="#6b7280" font-size="10" letter-spacing="2" font-family="Inter">Every request scored against normal, at inference time</text>
-                            </svg>
-                            <div class="visual-caption">
-                                <span>Off the request path</span>
-                                <span>No extra pass</span>
-                                <span>No added latency</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="beyond-strip" style="margin-top: 24px;">
-                <span class="beyond-label">Where this goes</span>
-                <div>
-                    <h3>DLP tagged data. Plato tags computation.</h3>
-                    <p>A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. Plato labels that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in a shared, platonic representation space, the labels are not bound to text, to a modality, or to any one model. Hence the name.</p>
-                </div>
-            </div>
+            <header class="section-head">
+                <p class="kicker">The operator view</p>
+                <h2>What your security team sees.</h2>
+            </header>
+            <figure class="media media-still">
+                <img src="ui-zoom-hq.png"
+                     alt="Plato's traffic view: detections over live inference, scored and tagged per page, with no prompt or response text."
+                     width="3074" height="2254" loading="lazy">
+                <figcaption class="media-caption">Live inference, scored and tagged per page. No prompt or response text on the wire.</figcaption>
+            </figure>
         </div>
     </section>
 
-    <!-- ===== Also from Intrinsec AI ===== -->
-    <section class="surface-section" id="also" style="border-top: 1px solid var(--rule);">
+    <section class="section" id="also">
         <div class="container">
-            <div class="surface-intro">
-                <p class="surface-tag-line">Also from Intrinsec AI</p>
+            <header class="section-head">
+                <p class="kicker">Also from Intrinsec AI</p>
                 <h2>The same idea, one level up.</h2>
-                <p class="lede">Plato baselines the model's computation. The same approach applies to the message stream: baselining what agents are asked to do, message by message, for one agent or an entire fleet.</p>
-            </div>
+            </header>
 
-            <div class="also-grid">
-                <a class="also-card" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Identity%20Plane%20%C2%B7%20Intrinsec%20AI">
-                    <div class="also-tag">Per-agent</div>
+            <div class="pair">
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Identity%20Plane%20%C2%B7%20Intrinsec%20AI">
+                    <p class="kicker">Per-agent</p>
                     <h3>Identity Plane.</h3>
-                    <p>Describe what an agent should do in plain language. An adaptive behavioral profile, built from compressed activity across sessions, surfaces everything that drifts away from that role (injection, exfiltration, displacement) before the pattern completes.</p>
-                    <span class="also-link">Ask about Identity Plane →</span>
+                    <p>Drift from a stated role, across sessions.</p>
+                    <span class="text-link">Ask about Identity Plane</span>
                 </a>
-                <a class="also-card" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Fleet%20Memory%20%C2%B7%20Intrinsec%20AI">
-                    <div class="also-tag">Fleet-wide</div>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Fleet%20Memory%20%C2%B7%20Intrinsec%20AI">
+                    <p class="kicker">Fleet-wide</p>
                     <h3>Fleet Memory.</h3>
-                    <p>Each request looks normal alone; together they're a coordinated campaign. Millions of prompts compress into one bounded view, so fleet-wide patterns surface even when every individual request passes. No SIEM, no data lake.</p>
-                    <span class="also-link">Ask about Fleet Memory →</span>
+                    <p>Campaigns that look normal request by request.</p>
+                    <span class="text-link">Ask about Fleet Memory</span>
                 </a>
             </div>
 
-            <div class="video-wrap">
-                <div class="video-frame">
+            <div class="media">
+                <div class="media-frame">
                     <iframe
                         src="https://www.youtube-nocookie.com/embed/iqptIpBljnY"
                         title="Intrinsec AI: message-level monitoring across agents and fleets"
@@ -856,39 +156,38 @@
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">Watch · message-level monitoring, catching attacks composed across requests</div>
+                <p class="media-caption">Watch · message-level monitoring, catching attacks composed across requests</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
-    <section class="cta">
+    <section class="cta-band">
         <div class="container">
-            <p class="eyebrow" style="text-align: center;">Design partners</p>
+            <p class="kicker">Design partners</p>
             <h2>Running agents in production?</h2>
-            <p>We're working with a small number of design partners to baseline detection against their own inference traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
+            <p>A small number of design partners. You bring a workload; we sit with your team until it proves itself, or doesn't.</p>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner</a>
         </div>
     </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                        <img src="intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
                     <p class="footer-tag">Anomaly detection on AI agent inference traffic. Baseline how your model computes, tag what doesn't match.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
-                    <div class="footer-col-title">Product</div>
+                    <h2>Product</h2>
                     <a href="products.html">Products</a>
                     <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
                 <div class="footer-col" aria-label="Company">
-                    <div class="footer-col-title">Company</div>
+                    <h2>Company</h2>
                     <a href="index.html">Home</a>
                     <a href="blog/index.html">Research</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
@@ -896,13 +195,11 @@
             </div>
             <div class="footer-bottom">
                 <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
-                <div class="footer-patent">Patent pending</div>
+                <div>Patent pending</div>
             </div>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('footerYear').textContent = new Date().getFullYear();
-    </script>
+    <script src="js/site.js"></script>
 </body>
 </html>

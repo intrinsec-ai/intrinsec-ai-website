@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research · Intrinsec AI · Cure the Amnesia</title>
     <meta name="description" content="Research and writing from Intrinsec AI on cross-session threat detection, dynamic agent identity, trajectory-based security, and the geometry of agentic AI.">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0a0b0d">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#F3EFE4">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:title" content="Intrinsec AI · Research">
     <meta property="og:description" content="Cross-session threats, agent identity, trajectory-based detection. Patent-pending I2TP from Intrinsec AI.">
@@ -17,583 +17,140 @@
     <link rel="apple-touch-icon" href="../intrinsec-ai-logo-dark-on-bg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0b0d;
-            --bg-2: #101216;
-            --ink: #f3f4f6;
-            --ink-dim: #a1a7b3;
-            --ink-subtle: #6b7280;
-            --rule: #1f2329;
-            --rule-strong: #2a2f37;
-            --accent: #7dd3fc;
-            --accent-2: #34d399;
-            --warn: #fca5a5;
-            --container: 1180px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--ink);
-            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, sans-serif;
-            font-feature-settings: "ss01", "cv11", "ss03";
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.5;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(52, 211, 153, 0.04), transparent 60%);
-            background-attachment: fixed;
-        }
-
-        a { color: inherit; text-decoration: none; }
-
-        .skip-link {
-            position: absolute;
-            left: 12px;
-            top: -100px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            background: var(--bg-2);
-            color: var(--ink);
-            border: 1px solid var(--rule);
-            font-size: 13px;
-            z-index: 1000;
-        }
-        .skip-link:focus { top: 12px; }
-
-        .container {
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        /* ===== Header (same lockup as home/products) ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            background: rgba(10, 11, 13, 0.78);
-            border-bottom: 1px solid var(--rule);
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            gap: 24px;
-        }
-        .header-left { display: flex; align-items: center; gap: 36px; }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .brand-mark {
-            height: 40px;
-            width: auto;
-            display: block;
-            filter: invert(1) hue-rotate(180deg) saturate(1.05);
-        }
-        .footer-brand .brand-mark { height: 44px; }
-        .nav { display: flex; gap: 24px; }
-        .nav-link {
-            font-size: 14px;
-            color: var(--ink-dim);
-            transition: color 0.15s ease;
-        }
-        .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink); }
-        .header-cta {
-            font-size: 13px;
-            padding: 8px 14px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
-            color: var(--ink);
-            transition: border-color 0.15s ease, background 0.15s ease;
-        }
-        .header-cta:hover {
-            border-color: var(--accent);
-            background: rgba(125, 211, 252, 0.06);
-        }
-
-        /* ===== Sections ===== */
-        section { padding: 96px 0; border-top: 1px solid var(--rule); }
-        section:first-of-type { border-top: none; }
-
-        .eyebrow {
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 18px;
-        }
-
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(40px, 5.4vw, 64px); line-height: 1.05; }
-        h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; }
-        h3 { font-size: 20px; line-height: 1.3; }
-
-        p { color: var(--ink-dim); font-size: 17px; line-height: 1.6; }
-
-        .accent { color: var(--accent); }
-        .accent-2 { color: var(--accent-2); }
-
-        /* ===== Hero ===== */
-        .blog-hero { padding: 100px 0 64px; }
-        .blog-hero h1 { max-width: 16ch; margin-bottom: 24px; }
-        .blog-hero .lede { color: var(--ink); font-size: clamp(18px, 2vw, 22px); line-height: 1.5; max-width: 680px; }
-        .hero-patent {
-            margin-top: 28px;
-            display: inline-block;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-dim);
-            padding: 6px 14px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-        }
-        .hero-patent .accent { color: var(--accent); }
-
-        /* ===== Featured card ===== */
-        .blog-list { padding: 56px 0 96px; border-top: 1px solid var(--rule); }
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .blog-card-featured {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1.3fr 1fr;
-            gap: 48px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 16px;
-            padding: 48px;
-            background: linear-gradient(180deg, rgba(125, 211, 252, 0.04), rgba(125, 211, 252, 0));
-            position: relative;
-            transition: border-color 0.15s ease, transform 0.15s ease;
-        }
-        .blog-card-featured:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .featured-eyebrow {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 16px;
-        }
-        .featured-title {
-            font-size: clamp(24px, 2.8vw, 32px);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.18;
-            color: var(--ink);
-            margin-bottom: 18px;
-        }
-        .featured-excerpt {
-            color: var(--ink-dim);
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-            max-width: 56ch;
-        }
-        .featured-paper-meta {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 28px;
-        }
-        .featured-paper-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            padding: 4px 10px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            color: var(--ink-dim);
-            transition: border-color 0.15s ease, color 0.15s ease;
-        }
-        .featured-paper-tag:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--accent);
-            font-weight: 500;
-        }
-        .read-more::after { content: "→"; transition: transform 0.15s ease; }
-        .blog-card-featured:hover .read-more::after { transform: translateX(4px); }
-
-        .featured-visual {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-2);
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 24px;
-        }
-        .featured-visual svg { width: 100%; height: auto; }
-
-        /* ===== Standard card ===== */
-        .blog-card {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 32px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            display: flex;
-            flex-direction: column;
-            transition: border-color 0.15s ease, transform 0.15s ease;
-        }
-        .blog-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .blog-card-title {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.25;
-            color: var(--ink);
-            margin-bottom: 14px;
-        }
-        .blog-card-excerpt {
-            color: var(--ink-dim);
-            font-size: 15px;
-            line-height: 1.55;
-            margin-bottom: 24px;
-            flex: 1;
-        }
-        .blog-card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-        }
-        .blog-card-date {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .blog-card-tag {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            color: var(--ink-dim);
-        }
-
-        /* ===== Footer ===== */
-        footer {
-            border-top: 1px solid var(--rule);
-            padding: 64px 0 40px;
-            background: var(--bg);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-        .footer-brand .brand { margin-bottom: 16px; }
-        .footer-tag {
-            font-size: 14px;
-            color: var(--ink-dim);
-            max-width: 36ch;
-            line-height: 1.55;
-        }
-        .footer-col-title {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 16px;
-        }
-        .footer-col a {
-            display: block;
-            font-size: 14px;
-            color: var(--ink-dim);
-            padding: 6px 0;
-            transition: color 0.15s ease;
-        }
-        .footer-col a:hover { color: var(--ink); }
-        .footer-bottom {
-            border-top: 1px solid var(--rule);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--ink-subtle);
-            letter-spacing: 0.08em;
-        }
-        .footer-patent {
-            padding: 4px 12px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 900px) {
-            .container { padding: 0 24px; }
-            section { padding: 64px 0; }
-            .blog-hero { padding: 64px 0 48px; }
-            .blog-list { padding: 40px 0 64px; }
-            .blog-grid { grid-template-columns: 1fr; }
-            .blog-card-featured {
-                grid-template-columns: 1fr;
-                padding: 32px;
-                gap: 32px;
-            }
-            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 12px; }
-            .nav { display: none; }
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 0 20px; }
-            .blog-card { padding: 24px; }
-            .header-cta { display: none; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="header-left">
-                    <a href="../index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="../intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
-                    </a>
-                    <nav class="nav" aria-label="Primary">
-                        <a class="nav-link" href="../index.html">Home</a>
-                        <a class="nav-link" href="../products.html">Products</a>
-                        <a class="nav-link" href="index.html" aria-current="page">Research</a>
-                    </nav>
-                </div>
-                <div class="header-right">
-                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai">Request demo</a>
-                </div>
+    <header class="site-header">
+        <div class="container header-bar">
+            <a href="../index.html" class="brand" aria-label="Intrinsec AI home">
+                <img src="../intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
+            </a>
+            <nav class="nav" aria-label="Primary">
+                <a href="../index.html">Home</a>
+                <a href="../products.html">Products</a>
+                <a href="index.html" aria-current="page">Research</a>
+            </nav>
+            <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
+            <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav">Menu</button>
+        </div>
+        <div class="nav-panel" id="mobile-nav" data-nav-panel hidden>
+            <div class="container">
+                <a href="../index.html">Home</a>
+                <a href="../products.html">Products</a>
+                <a href="index.html" aria-current="page">Research</a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
             </div>
         </div>
     </header>
 
     <main id="main">
 
-    <section class="blog-hero">
+    <section class="hero">
         <div class="container">
-            <p class="eyebrow">Research &amp; notes</p>
+            <p class="kicker">Research &amp; notes</p>
             <h1>Notes from the inside view of agent security.</h1>
             <p class="lede">Cross-session threats, dynamic agent identity, trajectory-based detection, and the geometry of agentic AI.</p>
-            <span class="hero-patent"><span class="accent">I²TP</span> · Information-Theoretic Identity &amp; Threat Protocol · Patent pending</span>
+            <span class="patent-line">I²TP · Information-Theoretic Identity &amp; Threat Protocol · Patent pending</span>
         </div>
     </section>
 
-    <section class="blog-list">
+    <section class="section is-flush">
         <div class="container">
-            <div class="blog-grid">
+            <article class="lead">
+                <p class="kicker">Latest paper · April 2026</p>
+                <h2><a href="cross-session-threats-cstm-bench.html">Cross-Session Threats: When the Attack Lives in the Aggregate</a></h2>
+                <p class="lede">
+                    Guardrails are memoryless. An adversary spreads one attack across sessions and slips past every detector. We show that bounded coreset memory is the architecture whose recall survives rewriting.
+                </p>
+                <p class="lead-meta">
+                    <a href="https://arxiv.org/abs/2604.21131" target="_blank" rel="noopener noreferrer">arXiv:2604.21131</a>
+                    ·
+                    <a href="https://huggingface.co/datasets/intrinsec-ai/cstm-bench" target="_blank" rel="noopener noreferrer">intrinsec-ai/cstm-bench</a>
+                    · 26 attack taxonomies
+                    ·
+                    <a href="cross-session-threats-cstm-bench.html">Read the gist</a>
+                </p>
+            </article>
 
-                <!-- Featured -->
-                <a href="cross-session-threats-cstm-bench.html" class="blog-card-featured">
-                    <div>
-                        <div class="featured-eyebrow">Latest paper · April 2026</div>
-                        <div class="featured-title">Cross-Session Threats: When the Attack Lives in the Aggregate</div>
-                        <p class="featured-excerpt">
-                            AI agent guardrails are memoryless. An adversary spreads a single attack across dozens of sessions and slips past every session-bound detector. We frame cross-session threat detection as an information bottleneck, release a benchmark (CSTM-Bench), and show that bounded coreset memory is the only architecture whose recall survives adversarial rewriting.
-                        </p>
-                        <div class="featured-paper-meta">
-                            <span class="featured-paper-tag" onclick="event.preventDefault(); event.stopPropagation(); window.open('https://arxiv.org/abs/2604.21131','_blank','noopener,noreferrer');">arXiv:2604.21131</span>
-                            <span class="featured-paper-tag" onclick="event.preventDefault(); event.stopPropagation(); window.open('https://huggingface.co/datasets/intrinsec-ai/cstm-bench','_blank','noopener,noreferrer');">intrinsec-ai/cstm-bench</span>
-                            <span class="featured-paper-tag">26 attack taxonomies</span>
-                        </div>
-                        <span class="read-more">Read the gist</span>
-                    </div>
-                    <div class="featured-visual" aria-hidden="true">
-                        <svg viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <marker id="featArr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
-                                    <path d="M0,0 L6,3 L0,6" fill="#7dd3fc"/>
-                                </marker>
-                            </defs>
-                            <g opacity="0.85">
-                                <rect x="20" y="56" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                                <rect x="20" y="70" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                                <rect x="20" y="84" width="22" height="9" rx="2" fill="rgba(252,165,165,0.22)" stroke="#fca5a5" stroke-width="0.7"/>
-                                <rect x="20" y="98" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                                <rect x="20" y="112" width="22" height="9" rx="2" fill="rgba(252,165,165,0.22)" stroke="#fca5a5" stroke-width="0.7"/>
-                                <rect x="20" y="126" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                                <rect x="20" y="140" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                                <rect x="20" y="154" width="22" height="9" rx="2" fill="rgba(252,165,165,0.22)" stroke="#fca5a5" stroke-width="0.7"/>
-                                <rect x="20" y="168" width="22" height="9" rx="2" fill="rgba(125,211,252,0.18)" stroke="#7dd3fc" stroke-width="0.7"/>
-                            </g>
-                            <text x="31" y="46" text-anchor="middle" fill="#6b7280" font-family="Inter,sans-serif" font-size="9" letter-spacing="2">STREAM</text>
-
-                            <line x1="46" y1="115" x2="100" y2="115" stroke="#a1a7b3" stroke-width="1" marker-end="url(#featArr)" opacity="0.9"/>
-                            <rect x="102" y="92" width="64" height="46" rx="10" fill="rgba(52,211,153,0.06)" stroke="#34d399" stroke-width="1.2"/>
-                            <text x="134" y="110" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="10" font-weight="600">ranker</text>
-                            <text x="134" y="124" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="9" opacity="0.85">bottleneck</text>
-
-                            <line x1="166" y1="115" x2="200" y2="115" stroke="#7dd3fc" stroke-width="1.4" marker-end="url(#featArr)"/>
-                            <rect x="202" y="80" width="86" height="70" rx="6" fill="rgba(125,211,252,0.06)" stroke="#7dd3fc" stroke-width="1.2"/>
-                            <text x="245" y="98" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">K</text>
-                            <rect x="212" y="106" width="66" height="6" rx="1" fill="rgba(252,165,165,0.55)"/>
-                            <rect x="212" y="116" width="66" height="6" rx="1" fill="rgba(125,211,252,0.4)"/>
-                            <rect x="212" y="126" width="66" height="6" rx="1" fill="rgba(252,165,165,0.45)"/>
-                            <rect x="212" y="136" width="66" height="6" rx="1" fill="rgba(125,211,252,0.28)"/>
-
-                            <line x1="288" y1="115" x2="318" y2="115" stroke="#7dd3fc" stroke-width="1.6" marker-end="url(#featArr)"/>
-                            <rect x="320" y="88" width="46" height="54" rx="10" fill="rgba(125,211,252,0.06)" stroke="#7dd3fc" stroke-width="1.4"/>
-                            <text x="343" y="112" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" font-weight="600">LLM</text>
-                            <text x="343" y="125" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="9">verdict</text>
-
-                            <text x="190" y="216" text-anchor="middle" fill="#6b7280" font-family="Inter,sans-serif" font-size="10" letter-spacing="2">BOUNDED MEMORY · TOP-K BY SURPRISE</text>
-                        </svg>
-                    </div>
-                </a>
-
-                <a href="codes-not-explanations.html" class="blog-card">
-                    <div class="blog-card-title">Codes, Not Explanations</div>
-                    <p class="blog-card-excerpt">
-                        Two blockers kept security at the perimeter: massive activations, model-specific vectors. Platonic codes compress routes into a shared frame so behavioral anomaly detection can sit next to inference, including zero-day prompt injection attacks.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">June 2026</span>
-                        <span class="blog-card-tag">Agent Behavior Analytics</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-                <a href="agent-behavior-analytics.html" class="blog-card">
-                    <div class="blog-card-title">Agent Behavior Analytics through the Residual Stream</div>
-                    <p class="blog-card-excerpt">
-                        A unifying picture for ABA: anomaly detection across event, intent, and residual-stream space — from pub/sub tool calls to belief-state geometry inside the model.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">May 2026</span>
-                        <span class="blog-card-tag">Agent Behavior Analytics</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-                <a href="the-missing-lens-on-agent-identity.html" class="blog-card">
-                    <div class="blog-card-title">The Missing Lens on AI Agent Identity</div>
-                    <p class="blog-card-excerpt">
-                        Agent identity is not a static concept. It's a trajectory through an information manifold — and every threat is a deviation from the intended path.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">February 2026</span>
-                        <span class="blog-card-tag">Agent Identity</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-                <a href="adaptive-prompt-injections.html" class="blog-card">
-                    <div class="blog-card-title">The Future of Generative AI Security is Compressive</div>
-                    <p class="blog-card-excerpt">
-                        Exploring adaptive prompt injections and how reasoning-layer security provides superior protection against evolving AI threats.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">Research</span>
-                        <span class="blog-card-tag">AI Security Robustness</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-                <a href="multi-stage-attack-analysis.html" class="blog-card">
-                    <div class="blog-card-title">Multi-Stage Attack Analysis: How Thought Entities Combine into Complex Threats</div>
-                    <p class="blog-card-excerpt">
-                        Understanding how atomic attack components combine to form multi-stage threats, and how token-level analysis reveals complex attack patterns before they execute.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">Research</span>
-                        <span class="blog-card-tag">Multi-Stage Attacks</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-                <a href="conceptual-security-monitoring.html" class="blog-card">
-                    <div class="blog-card-title">Conceptual Security Monitoring: From Events to Thoughts</div>
-                    <p class="blog-card-excerpt">
-                        As agentic AI systems take actions, security shifts from 'what happened?' to 'what was the model trying to do — and why?' Thought-level entities must become first-class in security monitoring.
-                    </p>
-                    <div class="blog-card-meta">
-                        <span class="blog-card-date">Research</span>
-                        <span class="blog-card-tag">Conceptual Security</span>
-                    </div>
-                    <span class="read-more">Read article</span>
-                </a>
-
-            </div>
+            <ol class="index">
+                <li>
+                    <time datetime="2026-06">June 2026</time>
+                    <a href="codes-not-explanations.html">
+                        <h3>Codes, Not Explanations</h3>
+                        <p>Two blockers kept security at the perimeter: massive activations, model-specific vectors. Platonic codes compress routes into a shared frame so behavioral anomaly detection can sit next to inference, including zero-day prompt injection attacks.</p>
+                    </a>
+                </li>
+                <li>
+                    <time datetime="2026-05">May 2026</time>
+                    <a href="agent-behavior-analytics.html">
+                        <h3>Agent Behavior Analytics through the Residual Stream</h3>
+                        <p>A unifying picture for ABA: anomaly detection across event, intent, and residual-stream space — from pub/sub tool calls to belief-state geometry inside the model.</p>
+                    </a>
+                </li>
+                <li>
+                    <time datetime="2026-02">February 2026</time>
+                    <a href="the-missing-lens-on-agent-identity.html">
+                        <h3>The Missing Lens on AI Agent Identity</h3>
+                        <p>Agent identity is not a static concept. It's a trajectory through an information manifold — and every threat is a deviation from the intended path.</p>
+                    </a>
+                </li>
+                <li>
+                    <time>Research</time>
+                    <a href="adaptive-prompt-injections.html">
+                        <h3>The Future of Generative AI Security is Compressive</h3>
+                        <p>Exploring adaptive prompt injections and how reasoning-layer security provides superior protection against evolving AI threats.</p>
+                    </a>
+                </li>
+                <li>
+                    <time>Research</time>
+                    <a href="multi-stage-attack-analysis.html">
+                        <h3>Multi-Stage Attack Analysis: How Thought Entities Combine into Complex Threats</h3>
+                        <p>Understanding how atomic attack components combine to form multi-stage threats, and how token-level analysis reveals complex attack patterns before they execute.</p>
+                    </a>
+                </li>
+                <li>
+                    <time>Research</time>
+                    <a href="conceptual-security-monitoring.html">
+                        <h3>Conceptual Security Monitoring: From Events to Thoughts</h3>
+                        <p>As agentic AI systems take actions, security shifts from 'what happened?' to 'what was the model trying to do — and why?' Thought-level entities must become first-class in security monitoring.</p>
+                    </a>
+                </li>
+            </ol>
         </div>
     </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="../index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="../intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                        <img src="../intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
                     <p class="footer-tag">Adaptive intent and computational memory for AI agents. Cross-session threats caught at intention time.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
-                    <div class="footer-col-title">Product</div>
+                    <h2>Product</h2>
                     <a href="../products.html">Products</a>
                     <a href="https://github.com/intrinsec-ai/openclaw-identity-plane" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
                 <div class="footer-col" aria-label="Company">
-                    <div class="footer-col-title">Company</div>
+                    <h2>Company</h2>
                     <a href="../index.html">Home</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
-                <div class="footer-patent">Patent pending</div>
+                <div>Patent pending</div>
             </div>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('footerYear').textContent = new Date().getFullYear();
-    </script>
+    <script src="../js/site.js"></script>
 </body>
 </html>

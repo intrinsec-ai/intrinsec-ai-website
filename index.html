@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intrinsec AI · Anomaly detection on AI agent inference traffic</title>
     <meta name="description" content="Anomaly detection on AI agent inference traffic. Intrinsec AI baselines how the model behind your agent computes during normal traffic, then surfaces and tags what doesn't match: prompt injection, rogue and broken tool calls, sensitive-data exposure, hallucination, and drift. Detection runs off the request path: no extra pass over your traffic, no added latency.">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0a0b0d">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#F3EFE4">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:title" content="Intrinsec AI · Anomaly detection on AI agent inference traffic">
     <meta property="og:description" content="The action happens inside the model. We baseline how yours computes on normal traffic and tag everything that doesn't match, the way DLP tagged data.">
@@ -17,650 +17,66 @@
     <link rel="apple-touch-icon" href="intrinsec-ai-logo-dark-on-bg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0b0d;
-            --bg-2: #101216;
-            --ink: #f3f4f6;
-            --ink-dim: #a1a7b3;
-            --ink-subtle: #6b7280;
-            --rule: #1f2329;
-            --rule-strong: #2a2f37;
-            --accent: #7dd3fc;
-            --accent-2: #34d399;
-            --warn: #fca5a5;
-            --container: 1180px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--ink);
-            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, sans-serif;
-            font-feature-settings: "ss01", "cv11", "ss03";
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.5;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(52, 211, 153, 0.04), transparent 60%);
-            background-attachment: fixed;
-        }
-
-        a { color: inherit; text-decoration: none; }
-
-        /* ===== Skip link ===== */
-        .skip-link {
-            position: absolute;
-            left: 12px;
-            top: -100px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            background: var(--bg-2);
-            color: var(--ink);
-            border: 1px solid var(--rule);
-            font-size: 13px;
-            z-index: 1000;
-        }
-        .skip-link:focus { top: 12px; }
-
-        /* ===== Layout ===== */
-        .container {
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        /* ===== Header ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            background: rgba(10, 11, 13, 0.78);
-            border-bottom: 1px solid var(--rule);
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            gap: 24px;
-        }
-        .header-left { display: flex; align-items: center; gap: 36px; }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            font-size: 13px;
-            text-transform: uppercase;
-            color: var(--ink);
-        }
-        .brand-mark {
-            height: 40px;
-            width: auto;
-            display: block;
-            /* The logo PNG is dark-navy + teal on white. invert(1) flips light/dark,
-               hue-rotate(180deg) returns the teal close to its original hue. */
-            filter: invert(1) hue-rotate(180deg) saturate(1.05);
-        }
-        .footer-brand .brand-mark { height: 44px; }
-        .nav { display: flex; gap: 24px; }
-        .nav-link {
-            font-size: 14px;
-            color: var(--ink-dim);
-            transition: color 0.15s ease;
-        }
-        .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink); }
-        .header-cta {
-            font-size: 13px;
-            padding: 8px 14px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
-            color: var(--ink);
-            transition: border-color 0.15s ease, background 0.15s ease;
-        }
-        .header-cta:hover {
-            border-color: var(--accent);
-            background: rgba(125, 211, 252, 0.06);
-        }
-
-        /* ===== Section base ===== */
-        section { padding: 104px 0; border-top: 1px solid var(--rule); }
-        section:first-of-type { border-top: none; }
-
-        .eyebrow {
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 18px;
-        }
-
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
-        h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.06; }
-        h2 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.1; }
-        h3 { font-size: 22px; line-height: 1.3; }
-
-        p { color: var(--ink-dim); font-size: 17px; line-height: 1.65; }
-        .lede { color: var(--ink-dim); font-size: clamp(18px, 2vw, 21px); line-height: 1.6; max-width: 60ch; text-wrap: pretty; }
-
-        .accent-2 { color: var(--accent-2); }
-
-        /* ===== Hero ===== */
-        .hero { padding: 112px 0 104px; }
-        .hero h1 { max-width: 28ch; }
-        .hero-sub {
-            margin-top: 30px;
-            max-width: 92ch;
-            font-size: 19px;
-            line-height: 1.7;
-            color: var(--ink-dim);
-            text-wrap: pretty;
-        }
-        .hero-sub .line { display: block; }
-        .hero-sub b { color: var(--ink); font-weight: 500; }
-        .hero-sub.is-secondary {
-            margin-top: 14px;
-            font-size: 16.5px;
-            color: var(--ink-subtle);
-        }
-        .hero-cta {
-            margin-top: 40px;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 22px;
-            background: var(--ink);
-            color: var(--bg);
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            transition: transform 0.15s ease, background 0.15s ease;
-        }
-        .btn-primary:hover {
-            background: var(--accent);
-            transform: translateY(-1px);
-        }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 22px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 8px;
-            font-size: 15px;
-            color: var(--ink);
-            transition: border-color 0.15s ease;
-        }
-        .btn-secondary:hover { border-color: var(--accent); }
-
-        .proof-pills {
-            margin-top: 52px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .pill::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-2);
-        }
-
-        /* ===== Video ===== */
-        .video-wrap {
-            margin-top: 48px;
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 14px;
-            background: var(--bg-2);
-        }
-        .video-frame {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-        }
-        .video-frame iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .video-caption {
-            margin-top: 14px;
-            font-size: 12px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            text-align: center;
-        }
-
-        /* ===== Layer stack: what inference traffic means ===== */
-        .layer-stack { margin-top: 52px; }
-        .surface-label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            text-align: center;
-            margin-bottom: 14px;
-        }
-        .surface-chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-        }
-        .surface-chip {
-            padding: 6px 14px;
-            border: 1px dashed var(--rule-strong);
-            border-radius: 999px;
-            font-size: 12px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink-dim);
-        }
-        .layer-arrow {
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-subtle);
-            font-size: 15px;
-            line-height: 1;
-        }
-        .layer-arrow::before { content: "↓"; }
-        .layer-arrow.is-focus { color: var(--accent-2); }
-        .layer {
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .layer-title { font-size: 18px; font-weight: 600; color: var(--ink-dim); }
-        .layer-sub { font-size: 14px; color: var(--ink-subtle); margin-top: 4px; }
-        .layer-tag {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-        }
-        .layer.is-focus {
-            border-color: rgba(52, 211, 153, 0.5);
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.07), rgba(255, 255, 255, 0));
-            padding: 28px 24px;
-        }
-        .layer.is-focus .layer-title { font-size: 24px; color: var(--ink); }
-        .layer.is-focus .layer-sub { color: var(--ink-dim); }
-        .layer.is-focus .layer-tag { color: var(--accent-2); }
-
-        /* ===== Flow diagram: baseline, surface, tag ===== */
-        .flow { margin-top: 52px; }
-        .flow-row { display: flex; align-items: stretch; gap: 14px; }
-        .flow-box {
-            flex: 1;
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 20px 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .flow-box-label {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 10px;
-        }
-        .flow-box-title { font-size: 16px; color: var(--ink); line-height: 1.4; }
-        .flow-box-note { font-size: 14px; color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
-        .flow-box.is-model { border-color: var(--rule-strong); }
-        .flow-tag {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 4px 12px;
-            border: 1px solid rgba(52, 211, 153, 0.5);
-            border-radius: 999px;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-        }
-        .flow-box.is-baseline {
-            border-color: rgba(52, 211, 153, 0.5);
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.06), rgba(255, 255, 255, 0));
-        }
-        .flow-box.is-baseline .flow-box-label { color: var(--accent-2); }
-        .flow-box.is-anomaly {
-            border-color: rgba(252, 165, 165, 0.4);
-            background: linear-gradient(180deg, rgba(252, 165, 165, 0.05), rgba(255, 255, 255, 0));
-        }
-        .flow-box.is-anomaly .flow-box-label { color: var(--warn); }
-        .flow-arrow {
-            align-self: center;
-            color: var(--ink-subtle);
-            font-size: 18px;
-            line-height: 1;
-        }
-        .flow-arrow::before { content: "→"; }
-        .flow-tap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            padding: 18px 0;
-        }
-        .flow-tap::before {
-            content: "";
-            width: 2px;
-            height: 24px;
-            background: repeating-linear-gradient(180deg, var(--accent-2) 0 5px, transparent 5px 10px);
-            opacity: 0.8;
-        }
-        .flow-tap span {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-        }
-        .flow-tap::after {
-            content: "";
-            width: 2px;
-            height: 24px;
-            background: repeating-linear-gradient(180deg, var(--accent-2) 0 5px, transparent 5px 10px);
-            opacity: 0.8;
-        }
-
-        /* ===== Failure-modes strip ===== */
-        .modes-strip {
-            margin-top: 52px;
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 40px 32px;
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.03), rgba(255, 255, 255, 0));
-            text-align: center;
-        }
-        .modes-label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            margin-bottom: 20px;
-        }
-        .modes-chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-        }
-        .mode-chip {
-            padding: 9px 18px;
-            border: 1px solid var(--rule-strong);
-            border-radius: 999px;
-            font-size: 14px;
-            color: var(--ink);
-        }
-        .modes-note {
-            margin-top: 28px;
-            font-size: 15px;
-            color: var(--ink-dim);
-            max-width: 62ch;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* ===== How it works ===== */
-        .steps-grid {
-            margin-top: 56px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .step-card {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 34px 30px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-        }
-        .step-num {
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            margin-bottom: 14px;
-        }
-        .step-card h3 { color: var(--ink); margin-bottom: 12px; font-size: 22px; }
-        .step-card p { font-size: 15px; line-height: 1.55; }
-
-        .diagram-footnote {
-            margin-top: 22px;
-            font-size: 13px;
-            color: var(--ink-dim);
-            text-align: center;
-        }
-        .diagram-footnote.is-dim {
-            margin-top: 6px;
-            color: var(--ink-subtle);
-        }
-
-        /* ===== Beyond binary verdicts strip ===== */
-        .beyond-strip {
-            border: 1px solid var(--rule);
-            border-radius: 14px;
-            padding: 36px 32px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 32px;
-            align-items: start;
-        }
-        .beyond-label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            padding: 6px 14px;
-            border: 1px solid rgba(52, 211, 153, 0.35);
-            border-radius: 999px;
-            white-space: nowrap;
-        }
-        .beyond-label.is-warn {
-            color: var(--warn);
-            border-color: rgba(252, 165, 165, 0.35);
-        }
-        .beyond-strip h3 { color: var(--ink); margin-bottom: 12px; }
-        .beyond-strip p { font-size: 16px; max-width: 72ch; }
-        @media (max-width: 720px) {
-            .beyond-strip { grid-template-columns: 1fr; gap: 18px; }
-        }
-
-        /* ===== CTA ===== */
-        .cta { padding: 88px 0; text-align: center; }
-        .cta h2 { margin-bottom: 24px; max-width: 22ch; margin-left: auto; margin-right: auto; }
-        .cta p { max-width: 60ch; margin: 0 auto 32px; }
-
-        /* ===== Footer ===== */
-        footer {
-            border-top: 1px solid var(--rule);
-            padding: 64px 0 40px;
-            background: var(--bg);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-        .footer-brand .brand { margin-bottom: 16px; }
-        .footer-tag {
-            font-size: 14px;
-            color: var(--ink-dim);
-            max-width: 36ch;
-            line-height: 1.55;
-        }
-        .footer-col-title {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-subtle);
-            margin-bottom: 16px;
-        }
-        .footer-col a {
-            display: block;
-            font-size: 14px;
-            color: var(--ink-dim);
-            padding: 6px 0;
-            transition: color 0.15s ease;
-        }
-        .footer-col a:hover { color: var(--ink); }
-        .footer-bottom {
-            border-top: 1px solid var(--rule);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--ink-subtle);
-            letter-spacing: 0.08em;
-        }
-        .footer-patent {
-            padding: 4px 12px;
-            border: 1px solid var(--rule);
-            border-radius: 999px;
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 900px) {
-            .container { padding: 0 24px; }
-            section { padding: 72px 0; }
-            .hero { padding: 80px 0 64px; }
-            .steps-grid { grid-template-columns: 1fr; }
-            .flow-row { flex-direction: column; gap: 12px; }
-            .flow-arrow { align-self: center; }
-            .flow-arrow::before { content: "↓"; }
-            .layer, .layer.is-focus { padding: 18px 20px; }
-            .layer-stack, .flow { margin-top: 40px; }
-            .modes-strip { margin-top: 40px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 12px; }
-            .nav { display: none; }
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 0 20px; }
-            h1 { font-size: 38px; }
-            .hero-cta { flex-direction: column; align-items: stretch; }
-            .btn-primary, .btn-secondary { justify-content: center; }
-            .header-cta { display: none; }
-            .layer { align-items: flex-start; gap: 12px; }
-            .layer-title { font-size: 17px; }
-            .layer.is-focus .layer-title { font-size: 20px; }
-            .modes-strip { padding: 26px 20px; }
-            .beyond-strip { padding: 28px 22px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="header-left">
-                    <a href="index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
-                    </a>
-                    <nav class="nav" aria-label="Primary">
-                        <a class="nav-link" href="index.html" aria-current="page">Home</a>
-                        <a class="nav-link" href="products.html">Products</a>
-                        <a class="nav-link" href="blog/index.html">Research</a>
-                    </nav>
-                </div>
-                <div class="header-right">
-                    <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
-                </div>
+    <header class="site-header">
+        <div class="container header-bar">
+            <a href="index.html" class="brand" aria-label="Intrinsec AI home">
+                <img src="intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
+            </a>
+            <nav class="nav" aria-label="Primary">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="products.html">Products</a>
+                <a href="blog/index.html">Research</a>
+            </nav>
+            <a class="header-cta" href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
+            <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav">Menu</button>
+        </div>
+        <div class="nav-panel" id="mobile-nav" data-nav-panel hidden>
+            <div class="container">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="products.html">Products</a>
+                <a href="blog/index.html">Research</a>
+                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI">Become a design partner</a>
             </div>
         </div>
     </header>
 
     <main id="main">
 
-    <!-- ===== Hero ===== -->
     <section class="hero">
-        <div class="container">
-            <p class="eyebrow">For agentic applications</p>
-            <h1>Anomaly detection on<br>AI agent <span class="accent-2">inference traffic.</span></h1>
-            <p class="hero-sub"><span class="line">Today's AI security products read the text going into a model and the text coming out.</span> <b class="line">We read the computation in between.</b></p>
-            <p class="hero-sub is-secondary"><span class="line">We baseline how the model behind your agent computes during normal traffic,</span> <span class="line">then surface and tag everything that doesn't match.</span></p>
-            <div class="hero-cta">
-                <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
-                <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
+        <div class="container hero-split">
+            <div class="hero-copy">
+                <p class="kicker">For agentic applications</p>
+                <h1>Anomaly detection on AI agent <em>inference traffic.</em></h1>
+                <p class="hero-sub">Today's products read the text in and the text out. <b>We read the computation in between</b> — then tag what doesn't match the baseline.</p>
+                <div class="hero-cta">
+                    <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner</a>
+                    <a href="#demo" class="btn-secondary">Watch the 2-minute demo</a>
+                </div>
+                <p class="proof">No added latency. Content never leaves your infrastructure. Model-agnostic.</p>
             </div>
-            <div class="proof-pills" aria-label="Key facts">
-                <span class="pill">No added latency</span>
-                <span class="pill">Content never leaves your infrastructure</span>
-                <span class="pill">Plugs into your inference engine or gateway</span>
-                <span class="pill">Model-agnostic · Qwen, GLM, Llama</span>
-            </div>
+            <figure class="hero-figure">
+                <img class="photo" src="ui-zoom-hq.png"
+                     alt="Plato's traffic view: detections over live inference, scored and tagged per page, with no prompt or response text."
+                     width="3074" height="2254">
+                <figcaption class="media-caption">What your security team sees.</figcaption>
+            </figure>
         </div>
     </section>
 
-    <!-- ===== Demo ===== -->
-    <section id="demo">
+    <section class="section is-band" id="demo">
         <div class="container">
-            <p class="eyebrow">See it work</p>
-            <h2>Two minutes, on live inference traffic.</h2>
-            <p class="lede" style="margin-top: 22px;">Anomalies surfacing against a learned inference baseline, with nothing added to the request path.</p>
-            <div class="video-wrap">
-                <div class="video-frame">
+            <header class="section-head">
+                <p class="kicker">See it work</p>
+                <h2>Two minutes, on live inference traffic.</h2>
+            </header>
+            <div class="media">
+                <div class="media-frame">
                     <iframe
                         src="https://www.youtube-nocookie.com/embed/qKcYDObQcvE"
                         title="Intrinsec AI: anomaly detection on AI agent inference traffic, 2-minute demo"
@@ -669,261 +85,162 @@
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">2-minute demo · anomalies surfacing against an inference baseline</div>
+                <p class="media-caption">2-minute demo · anomalies surfacing against an inference baseline</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== What inference traffic means ===== -->
-    <section id="inference-traffic">
+    <section class="section" id="inference-traffic">
         <div class="container">
-            <p class="eyebrow">The layer that matters</p>
-            <h2>Inference traffic is what happens <span class="accent-2">inside the model</span>.</h2>
-            <p class="lede" style="margin-top: 22px;">Packets on a wire. Prompts at an endpoint. We watch one layer deeper: the computation the model performs when it answers.</p>
+            <header class="section-head">
+                <p class="kicker">The layer that matters</p>
+                <h2>Inference traffic is what happens <em>inside the model</em>.</h2>
+                <p class="lede">Packets on a wire. Prompts at an endpoint. We watch the computation the model performs when it answers.</p>
+            </header>
 
-            <div class="layer-stack" role="img" aria-label="Three layers of traffic. Every input modality (text, images, audio, video, documents, tool results) passes down through network traffic, where pre-agentic security lives, and prompt and API traffic, where gateways and guardrails live, into inference traffic inside the model, where Intrinsec AI watches.">
-                <div class="surface-label">Growing surface</div>
-                <div class="surface-chips">
-                    <span class="surface-chip">Text</span>
-                    <span class="surface-chip">Images</span>
-                    <span class="surface-chip">Audio</span>
-                    <span class="surface-chip">Video</span>
-                    <span class="surface-chip">Documents</span>
-                    <span class="surface-chip">Tool results</span>
-                </div>
-                <div class="layer-arrow" aria-hidden="true"></div>
-                <div class="layer">
+            <ol class="layers" aria-label="Three layers of traffic. Every input modality passes down through network traffic, where pre-agentic security lives, and prompt and API traffic, where gateways and guardrails live, into inference traffic inside the model, where Intrinsec AI watches.">
+                <li>
                     <div>
                         <div class="layer-title">Network traffic</div>
                         <div class="layer-sub">Packets, TLS, egress</div>
                     </div>
-                    <div class="layer-tag">Pre-agentic security</div>
-                </div>
-                <div class="layer-arrow" aria-hidden="true"></div>
-                <div class="layer">
+                    <span class="layer-tag">Pre-agentic security</span>
+                </li>
+                <li>
                     <div>
                         <div class="layer-title">Prompt and API traffic</div>
                         <div class="layer-sub">Inbound requests, text filters</div>
                     </div>
-                    <div class="layer-tag">Gateways and guardrails</div>
-                </div>
-                <div class="layer-arrow is-focus" aria-hidden="true"></div>
-                <div class="layer is-focus">
+                    <span class="layer-tag">Gateways and guardrails</span>
+                </li>
+                <li class="is-focus">
                     <div>
                         <div class="layer-title">Inference traffic</div>
                         <div class="layer-sub">Inside the model, where the action actually happens</div>
                     </div>
-                    <div class="layer-tag">Intrinsec AI</div>
-                </div>
-            </div>
-            <p class="diagram-footnote">Every new surface and modality adds another thing to filter at the edge. All of them still have to run through the same computation.</p>
+                    <span class="layer-tag">Intrinsec AI</span>
+                </li>
+            </ol>
         </div>
     </section>
 
-    <!-- ===== What goes wrong ===== -->
-    <section id="what-goes-wrong">
+    <section class="section is-band" id="what-goes-wrong">
         <div class="container">
-            <p class="eyebrow">Why a baseline</p>
-            <h2>The list of things that go wrong keeps growing.</h2>
-            <p class="lede" style="margin-top: 22px;">Some failures are attacks. Some are just a deep stack breaking. From the outside they look the same: traffic that passes every check, behavior that isn't what you deployed.</p>
+            <header class="section-head">
+                <p class="kicker">Why a baseline</p>
+                <h2>The list of things that go wrong keeps growing.</h2>
+                <p class="lede">Attacks and ordinary breakage look the same from the outside. Both are deviations from how your workload normally computes.</p>
+            </header>
 
-            <div class="modes-strip">
-                <div class="modes-label">One baseline surfaces</div>
-                <div class="modes-chips">
-                    <span class="mode-chip">Prompt injection</span>
-                    <span class="mode-chip">Jailbreaks</span>
-                    <span class="mode-chip">Sensitive-data exposure</span>
-                    <span class="mode-chip">Rogue tool calls</span>
-                    <span class="mode-chip">Broken tool calls</span>
-                    <span class="mode-chip">Hallucination</span>
-                    <span class="mode-chip">Drift and off-domain use</span>
-                </div>
-                <p class="modes-note">The list isn't the product; the baseline is. Anything that doesn't match how your workload normally computes surfaces, including the failure modes no one has named yet.</p>
-            </div>
-
-            <div class="beyond-strip" style="margin-top: 20px;">
-                <span class="beyond-label is-warn">Not just attacks</span>
-                <div>
-                    <h3>Tool calls that quietly fail.</h3>
-                    <p>Sometimes a tool call just breaks: a malformed argument, a schema that drifted, a result the model answers around. Nobody attacked you and nothing threw an error, but the model still computes differently, so it surfaces the same way an injection does.</p>
-                </div>
-            </div>
+            <ul class="names" aria-label="Failure modes one baseline surfaces">
+                <li>Prompt injection</li>
+                <li>Jailbreaks</li>
+                <li>Sensitive-data exposure</li>
+                <li>Rogue tool calls</li>
+                <li>Broken tool calls</li>
+                <li>Hallucination</li>
+                <li>Drift and off-domain use</li>
+                <li>Multimodal (image, audio, video)</li>
+            </ul>
         </div>
     </section>
 
-    <!-- ===== How it works ===== -->
-    <section id="how-it-works">
+    <section class="section" id="how-it-works">
         <div class="container">
-            <p class="eyebrow">How it works</p>
-            <h2>Baseline. Surface. Tag.</h2>
+            <header class="section-head">
+                <p class="kicker">How it works</p>
+                <h2>Baseline. Surface. Tag.</h2>
+            </header>
 
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-num">Baseline</div>
+            <ol class="steps">
+                <li>
+                    <span class="step-num">01 · Baseline</span>
                     <h3>Learn how your model fires.</h3>
                     <p>We watch the model behind your agent during normal traffic and build a baseline of normal for your workload, learned from your own traffic rather than a generic attack list.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">Surface</div>
+                </li>
+                <li>
+                    <span class="step-num">02 · Surface</span>
                     <h3>Score every request against it.</h3>
                     <p>Anything atypical stands out, whatever the source or modality, even when the input itself reads perfectly fine.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">Tag</div>
+                </li>
+                <li>
+                    <span class="step-num">03 · Tag</span>
                     <h3>Label what surfaced.</h3>
-                    <p>DLP tagged data. We tag computation: domain, task, disposition, safety flags. Anomalies reach your alerting stack already labeled.</p>
-                </div>
-            </div>
-
-            <div class="flow" role="img" aria-label="Agent inputs flow into the model and out as actions. Intrinsec AI taps the model's computation off the request path to build an inference baseline, and tagged anomalies flow to your alerting stack.">
-                <div class="flow-row">
-                    <div class="flow-box">
-                        <div class="flow-box-label">Agent loop</div>
-                        <div class="flow-box-title">Prompts, tool results, retrieved documents, media</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box is-model">
-                        <div class="flow-box-label">Inference</div>
-                        <div class="flow-box-title">The model behind your agent</div>
-                        <span class="flow-tag">Computation</span>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box">
-                        <div class="flow-box-label">Actions</div>
-                        <div class="flow-box-title">Tool call, file write, response</div>
-                    </div>
-                </div>
-
-                <div class="flow-tap" aria-hidden="true"><span>Tap, off the request path</span></div>
-
-                <div class="flow-row">
-                    <div class="flow-box is-baseline">
-                        <div class="flow-box-label">Inference baseline</div>
-                        <div class="flow-box-title">How your workload normally computes</div>
-                        <div class="flow-box-note">Learned from your own traffic, and updated as it shifts.</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box is-anomaly">
-                        <div class="flow-box-label">Tagged anomalies</div>
-                        <div class="flow-box-title">Domain · task · disposition · safety flag</div>
-                        <div class="flow-box-note">Into the alerting stack you already run.</div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="diagram-footnote">Modern inference engines (vLLM, SGLang) and inference gateways. On-prem or cloud, always inside your infrastructure.</p>
-            <p class="diagram-footnote is-dim">Detection rides along with inference, off the request path: no extra pass over your traffic, no added latency.</p>
-
-            <div class="beyond-strip" style="margin-top: 56px;">
-                <span class="beyond-label">Privacy by construction</span>
-                <div>
-                    <h3>The wire has no field for your prompts.</h3>
-                    <p>The protocol between the tap and the scorer carries fingerprints and page identifiers — there is no field for prompt or response text. Verdicts come back keyed to pages; matching them to content is a local join inside your infrastructure. Content can't leave because the wire can't express it. Not a policy — a structural property.</p>
-                </div>
-            </div>
-
-            <div class="beyond-strip" style="margin-top: 20px;">
-                <span class="beyond-label">Where this goes</span>
-                <div>
-                    <h3>DLP tagged data. We tag computation.</h3>
-                    <p>A prompt is a control input: what matters is not what was said to the model, but how the model fires in response. We label that firing pattern on every KV page (domain, task, disposition, safety flags), off the request path. And because computation lives in one unified representation space, the labels are not bound to text or to any one modality.</p>
-                </div>
-            </div>
+                    <p>Domain, task, disposition, safety flags — already labeled when they reach your alerting stack.</p>
+                </li>
+            </ol>
+            <p class="footnote">Off the request path. vLLM, SGLang, and inference gateways. On-prem or cloud.</p>
         </div>
     </section>
 
-    <!-- ===== The operator view ===== -->
-    <section id="traffic-view">
+    <section class="section is-band" id="direction">
         <div class="container">
-            <p class="eyebrow">The operator view</p>
-            <h2>What your security team sees.</h2>
-            <p class="lede" style="margin-top: 22px;">Live inference traffic, scored and tagged page by page — verdicts, behavioral tags, drift.</p>
-            <div class="video-wrap">
-                <img src="traffic-view.png"
-                     alt="Plato's traffic view: a detections feed over live inference traffic. Each row shows an anomaly score, behavioral tags such as tool-invocation-request and personal-data-handling, the flagged page range, and a per-page sparkline — with no prompt or response text anywhere."
-                     width="1024" height="593" loading="lazy"
-                     style="width: 100%; height: auto; border-radius: 8px; display: block;">
-                <div class="video-caption">Plato's traffic view · live inference, tagged per page</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== Where this is heading ===== -->
-    <section id="direction">
-        <div class="container">
-            <p class="eyebrow">Where this is heading</p>
-            <h2>The gateway keeps moving <span class="accent-2">toward the model</span>.</h2>
-            <p class="lede" style="margin-top: 22px;">Each generation of gateway governs one layer deeper. The first two are settled history. The third is where we build.</p>
+            <header class="section-head">
+                <p class="kicker">Where this is heading</p>
+                <h2>The gateway keeps moving <em>toward the model</em>.</h2>
+            </header>
 
             <div class="flow" role="img" aria-label="Three generations of gateway. The API gateway, 2009 to 2023, governed HTTP calls. The AI gateway, 2023 to 2026, governs prompts and tokens. The secure inference gateway, next and still unclaimed, governs the computation itself — where Intrinsec AI builds.">
-                <div class="flow-row">
-                    <div class="flow-box">
-                        <div class="flow-box-label">2009 – 2023</div>
-                        <div class="flow-box-title">API gateway</div>
-                        <div class="flow-box-note">Governs HTTP calls. Auth, quotas, routing for ordinary service traffic.</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box">
-                        <div class="flow-box-label">2023 – 2026</div>
-                        <div class="flow-box-title">AI gateway</div>
-                        <div class="flow-box-note">Governs prompts and tokens. One API, spend control, guardrail hooks.</div>
-                    </div>
-                    <div class="flow-arrow" aria-hidden="true"></div>
-                    <div class="flow-box is-baseline">
-                        <div class="flow-box-label">Next</div>
-                        <div class="flow-box-title">Secure inference gateway</div>
-                        <div class="flow-box-note">Governs the computation itself.</div>
-                        <span class="flow-tag">Intrinsec AI</span>
-                    </div>
-                </div>
+                <ol class="flow-row">
+                    <li>
+                        <span class="flow-label">2009 – 2023</span>
+                        <p class="flow-title">API gateway</p>
+                        <p class="flow-note">Governs HTTP calls. Auth, quotas, routing for ordinary service traffic.</p>
+                    </li>
+                    <li>
+                        <span class="flow-label">2023 – 2026</span>
+                        <p class="flow-title">AI gateway</p>
+                        <p class="flow-note">Governs prompts and tokens. One API, spend control, guardrail hooks.</p>
+                    </li>
+                    <li class="is-baseline">
+                        <span class="flow-label">Next</span>
+                        <p class="flow-title">Secure inference gateway</p>
+                        <p class="flow-note">Governs the computation itself.</p>
+                        <span class="flow-mark">Intrinsec AI</span>
+                    </li>
+                </ol>
             </div>
-
-            <p class="diagram-footnote">Serving engines already read the model's internal state on every request — and use it only to go faster. No security signal has ever been derived from it. That is the layer we claim.</p>
-            <p class="diagram-footnote is-dim">And because fingerprints carry no content, a behavior learned in one fleet can protect another — the way the malware world shares IOCs.</p>
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
-    <section class="cta">
+    <section class="cta-band">
         <div class="container">
-            <p class="eyebrow" style="text-align: center;">Design partners</p>
+            <p class="kicker">Design partners</p>
             <h2>Running agents in production?</h2>
-            <p>We're working with a small number of design partners to baseline detection against their own inference traffic. You bring a workload; we bring the integration and sit with your team until it proves itself, or doesn't.</p>
-            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner →</a>
+            <p>A small number of design partners. You bring a workload; we sit with your team until it proves itself, or doesn't.</p>
+            <a href="mailto:ari.azarafrooz@intrinsec.ai?subject=Design%20partner%20%C2%B7%20Intrinsec%20AI" class="btn-primary">Become a design partner</a>
         </div>
     </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="brand" aria-label="Intrinsec AI home">
-                        <img src="intrinsec-ai-logo.png" alt="Intrinsec AI" class="brand-mark">
+                        <img src="intrinsec-ai-logo-trim.png" alt="Intrinsec AI" class="brand-mark">
                     </a>
                     <p class="footer-tag">Anomaly detection on AI agent inference traffic. Baseline how your model computes, tag what doesn't match.</p>
                 </div>
                 <div class="footer-col" aria-label="Product">
-                    <div class="footer-col-title">Product</div>
+                    <h2>Product</h2>
                     <a href="products.html">Products</a>
-                    <a href="index.html#traffic-view">The operator view</a>
+                    <a href="products.html#traffic-view">The operator view</a>
                 </div>
                 <div class="footer-col" aria-label="Company">
-                    <div class="footer-col-title">Company</div>
+                    <h2>Company</h2>
                     <a href="blog/index.html">Research</a>
                     <a href="mailto:ari.azarafrooz@intrinsec.ai">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div>© <span id="footerYear">2026</span> Intrinsec AI</div>
-                <div class="footer-patent">Patent pending</div>
+                <div>Patent pending</div>
             </div>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('footerYear').textContent = new Date().getFullYear();
-    </script>
+    <script src="js/site.js"></script>
 </body>
 </html>
